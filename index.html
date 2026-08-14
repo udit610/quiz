@@ -3,21 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Great Saturday Quiz — Vardhman Convent School, Moonak</title>
+<title>The Great Independence Day Quiz — Vardhman Convent School, Moonak</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --board: #1F3D2E;
-    --board-2: #234934;
+    --board: #0B1F4D;
+    --board-2: #122a5e;
     --chalk: #F5F1E6;
     --paper: #FBF8F0;
     --line: #D8CFB8;
-    --mustard: #E4B94A;
+    --mustard: #FF9933;
     --red: #C1443C;
-    --blue: #4C6E91;
-    --sage: #8FAF8B;
+    --blue: #0B1F4D;
+    --sage: #138808;
     --ink: #2B2620;
+    --saffron: #FF9933;
+    --tri-white: #FFFFFF;
+    --tri-green: #138808;
+    --chakra: #0B1F4D;
   }
   *{box-sizing:border-box;}
   body{
@@ -29,6 +33,43 @@
       radial-gradient(circle at 80% 70%, rgba(255,255,255,0.025) 0%, transparent 40%);
     color: var(--ink);
     min-height:100vh;
+  }
+  .happy-banner{
+    text-align:center;
+    font-family:'Kalam',cursive;
+    font-weight:700;
+    font-size:1.15rem;
+    color:#fff;
+    background: linear-gradient(90deg, var(--saffron), var(--tri-green));
+    padding:10px 14px;
+    margin: 0 0 0;
+    letter-spacing:0.02em;
+  }
+  .flag-band{
+    height:8px;
+    width:100%;
+    background: linear-gradient(to bottom,
+      var(--saffron) 0%, var(--saffron) 33.3%,
+      var(--tri-white) 33.3%, var(--tri-white) 66.6%,
+      var(--tri-green) 66.6%, var(--tri-green) 100%);
+  }
+  .chakra{
+    display:block;
+    margin: 0 auto 10px;
+    animation: spin 14s linear infinite;
+  }
+  @keyframes spin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+  .badge80{
+    display:inline-block;
+    background: var(--saffron);
+    color:#fff;
+    font-family:'Kalam',cursive;
+    font-weight:700;
+    font-size:0.78rem;
+    padding:3px 12px;
+    border-radius:20px;
+    letter-spacing:0.03em;
+    margin-top:8px;
   }
   .wrap{
     max-width: 720px;
@@ -56,6 +97,13 @@
     margin:0 0 10px;
     font-size:1.3rem;
     font-weight:800;
+    letter-spacing:0.02em;
+  }
+  header .school-phone{
+    color: var(--sage);
+    margin:-6px 0 10px;
+    font-size:0.9rem;
+    font-weight:700;
     letter-spacing:0.02em;
   }
   header p{
@@ -174,17 +222,17 @@
     padding:13px 28px;
     border-radius:9px;
     cursor:pointer;
-    box-shadow: 0 6px 0 #12261b;
+    box-shadow: 0 6px 0 #071433;
     transition: transform 0.08s ease;
   }
   .btn:active{
     transform: translateY(4px);
-    box-shadow: 0 2px 0 #12261b;
+    box-shadow: 0 2px 0 #071433;
   }
   .btn:disabled{
     opacity:0.45;
     cursor:not-allowed;
-    box-shadow: 0 6px 0 #12261b;
+    box-shadow: 0 6px 0 #071433;
   }
   .btn-row{ text-align:center; margin-top:22px; }
   .btn.secondary{
@@ -351,12 +399,35 @@
 </style>
 </head>
 <body>
+<div class="flag-band"></div>
+<div class="happy-banner">Happy 80th Independence Day 🇮🇳</div>
 <div class="wrap">
   <header>
+    <svg class="chakra" width="44" height="44" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="44" fill="none" stroke="var(--chakra)" stroke-width="4"/>
+      <circle cx="50" cy="50" r="4" fill="var(--chakra)"/>
+      <g stroke="var(--chakra)" stroke-width="2.5">
+        <!-- 24 spokes -->
+        <line x1="50" y1="50" x2="50" y2="8"/><line x1="50" y1="50" x2="50" y2="92"/>
+        <line x1="50" y1="50" x2="8" y2="50"/><line x1="50" y1="50" x2="92" y2="50"/>
+        <line x1="50" y1="50" x2="20.2" y2="20.2"/><line x1="50" y1="50" x2="79.8" y2="79.8"/>
+        <line x1="50" y1="50" x2="20.2" y2="79.8"/><line x1="50" y1="50" x2="79.8" y2="20.2"/>
+        <line x1="50" y1="50" x2="35.4" y2="10.9"/><line x1="50" y1="50" x2="64.6" y2="89.1"/>
+        <line x1="50" y1="50" x2="10.9" y2="35.4"/><line x1="50" y1="50" x2="89.1" y2="64.6"/>
+        <line x1="50" y1="50" x2="10.9" y2="64.6"/><line x1="50" y1="50" x2="89.1" y2="35.4"/>
+        <line x1="50" y1="50" x2="35.4" y2="89.1"/><line x1="50" y1="50" x2="64.6" y2="10.9"/>
+        <line x1="50" y1="50" x2="43" y2="9.5"/><line x1="50" y1="50" x2="57" y2="90.5"/>
+        <line x1="50" y1="50" x2="9.5" y2="43"/><line x1="50" y1="50" x2="90.5" y2="57"/>
+        <line x1="50" y1="50" x2="9.5" y2="57"/><line x1="50" y1="50" x2="90.5" y2="43"/>
+        <line x1="50" y1="50" x2="43" y2="90.5"/><line x1="50" y1="50" x2="57" y2="9.5"/>
+      </g>
+    </svg>
     <p class="school-name">Vardhman Convent School, Moonak</p>
+    <p class="school-phone">+91 9855458530</p>
     <div class="chalk-line"></div>
-    <h1>The Great Saturday Quiz</h1>
+    <h1>The Great Independence Day Quiz 🇮🇳</h1>
     <p id="headerSub"></p>
+    <div class="badge80">Celebrating 79 Years of Independence</div>
   </header>
 
   <!-- SETUP -->
@@ -370,7 +441,7 @@
       <div class="custom-select" id="classDropdown">
         <button type="button" class="custom-select-trigger" id="classTrigger" aria-haspopup="listbox" aria-expanded="false">
           <span id="classTriggerText">Choose a class</span>
-          <svg class="chevron" width="14" height="9" viewBox="0 0 14 9"><path d="M1 1L7 7L13 1" stroke="#1F3D2E" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="chevron" width="14" height="9" viewBox="0 0 14 9"><path d="M1 1L7 7L13 1" stroke="#0B1F4D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <ul class="custom-select-options hidden" id="classOptions" role="listbox"></ul>
       </div>
@@ -430,7 +501,12 @@ const QUIZZES = {
     {q:"What comes after the number 7?", o:["6","8","9"], a:1},
     {q:"Which one do we use to write?", o:["Pencil","Spoon","Comb"], a:0},
     {q:"Where do fish live?", o:["Tree","Sky","Water"], a:2},
-    {q:"Which is a baby animal?", o:["Table","Kitten","Chair"], a:1}
+    {q:"Which is a baby animal?", o:["Table","Kitten","Chair"], a:1},
+    {q:"What is the colour on top of our national flag?", o:["Green","Saffron","Blue"], a:1},
+    {q:"When do we celebrate Independence Day?", o:["15 August","15 September","15 January"], a:0},
+    {q:"What do we call our national flag?", o:["Tiranga","Rainbow","Sky"], a:0},
+    {q:"What is our country called?", o:["Bharat","China","Japan"], a:0},
+    {q:"Which is our national animal?", o:["Tiger","Cat","Dog"], a:0}
   ],
   "1": [
     {q:'Which animal says "Moo"?', o:["Cow","Dog","Cat"], a:0},
@@ -442,7 +518,12 @@ const QUIZZES = {
     {q:"Which is bigger — Elephant or Ant?", o:["Ant","Same","Elephant"], a:2},
     {q:"What do we drink when thirsty?", o:["Sand","Stone","Water"], a:2},
     {q:"Which one flies in the sky?", o:["Fish","Dog","Bird"], a:2},
-    {q:"Sun rises in the?", o:["Bag","East","Book"], a:1}
+    {q:"Sun rises in the?", o:["Bag","East","Book"], a:1},
+    {q:"How many colours are there in our national flag?", o:["Two","Three","Four"], a:1},
+    {q:"Which colour is at the bottom of our flag?", o:["Green","White","Saffron"], a:0},
+    {q:"What is at the centre of our flag?", o:["A star","A wheel (Chakra)","A sun"], a:1},
+    {q:"What is another name for India?", o:["Bharat","Nepal","Bhutan"], a:0},
+    {q:"Which is our national flower?", o:["Lotus","Rose","Sunflower"], a:0}
   ],
   "2": [
     {q:"How many days are there in a week?", o:["7","5","10"], a:0},
@@ -454,7 +535,12 @@ const QUIZZES = {
     {q:"What do plants need to grow?", o:["Toys","Books","Water & Sunlight"], a:2},
     {q:"Which is our national bird?", o:["Duck","Peacock","Crow"], a:1},
     {q:"What do we call our father's father?", o:["Brother","Grandfather","Uncle"], a:1},
-    {q:"Which is a vegetable?", o:["Apple","Mango","Potato"], a:2}
+    {q:"Which is a vegetable?", o:["Apple","Mango","Potato"], a:2},
+    {q:"What is our national anthem called?", o:["Vande Mataram","Jana Gana Mana","Sare Jahan Se Achha"], a:1},
+    {q:"Who is known as 'Bapu'?", o:["Jawaharlal Nehru","Mahatma Gandhi","Sardar Patel"], a:1},
+    {q:"How many spokes are there on the Ashoka Chakra?", o:["24","12","20"], a:0},
+    {q:"Which is India's national river?", o:["Ganga","Yamuna","Godavari"], a:0},
+    {q:"Which is our national game?", o:["Hockey","Cricket","Football"], a:0}
   ],
   "3": [
     {q:"Which planet do we live on?", o:["Earth","Moon","Mars"], a:0},
@@ -466,7 +552,12 @@ const QUIZZES = {
     {q:"Which animal gives us milk?", o:["Lion","Cow","Rabbit"], a:1},
     {q:"Which day comes after Monday?", o:["Sunday","Tuesday","Friday"], a:1},
     {q:"What do we use to write?", o:["Spoon","Comb","Pencil"], a:2},
-    {q:"Which is a mode of communication?", o:["Chair","Telephone","Table"], a:1}
+    {q:"Which is a mode of communication?", o:["Chair","Telephone","Table"], a:1},
+    {q:"On which date did India get independence?", o:["26 January 1950","15 August 1947","2 October 1869"], a:1},
+    {q:"Who wrote our national anthem?", o:["Rabindranath Tagore","Bankim Chandra Chattopadhyay","Sarojini Naidu"], a:0},
+    {q:"From which fort does the PM hoist the flag on Independence Day?", o:["Amber Fort","Red Fort","Agra Fort"], a:1},
+    {q:"Our Constitution begins with 'India, that is ___'", o:["Bharat","Hindustan","Aryavarta"], a:0},
+    {q:"Which state is home to the Taj Mahal?", o:["Uttar Pradesh","Rajasthan","Bihar"], a:0}
   ],
   "4": [
     {q:"Which gas do we need to breathe to live?", o:["Smoke","Steam","Oxygen"], a:2},
@@ -478,7 +569,12 @@ const QUIZZES = {
     {q:'Which animal is known as "man\'s best friend"?', o:["Cat","Dog","Cow"], a:1},
     {q:"Which instrument tells us the time?", o:["Thermometer","Clock","Scale"], a:1},
     {q:"Which is a wild animal?", o:["Cow","Lion","Goat"], a:1},
-    {q:"How many months are there in a year?", o:["7","10","12"], a:2}
+    {q:"How many months are there in a year?", o:["7","10","12"], a:2},
+    {q:"What is India's Independence Day?", o:["15 August","26 January","2 October"], a:0},
+    {q:"Who gave the slogan 'Jai Hind'?", o:["Subhas Chandra Bose","Bhagat Singh","Lal Bahadur Shastri"], a:0},
+    {q:"Which is our national song (not the anthem)?", o:["Jana Gana Mana","Vande Mataram","Sare Jahan Se Achha"], a:1},
+    {q:"India's national emblem is taken from a pillar at which site?", o:["Sarnath","Sanchi","Bodh Gaya"], a:0},
+    {q:"What does 'Satyameva Jayate' mean?", o:["Truth alone triumphs","Unity is strength","Work is worship"], a:0}
   ],
   "5": [
     {q:"Which is the process of water turning into vapour?", o:["Evaporation","Melting","Freezing"], a:0},
@@ -490,7 +586,12 @@ const QUIZZES = {
     {q:"Which festival marks the harvest season in Punjab?", o:["Onam","Pongal","Baisakhi"], a:2},
     {q:"Which layer of Earth do we live on?", o:["Crust","Core","Mantle"], a:0},
     {q:"How many continents are there?", o:["9","5","7"], a:2},
-    {q:"Which is a natural source of energy?", o:["Sun","Wire","Battery"], a:0}
+    {q:"Which is a natural source of energy?", o:["Sun","Wire","Battery"], a:0},
+    {q:"Who founded the Indian National Army (INA)?", o:["Subhas Chandra Bose","Bhagat Singh","Chandrashekhar Azad"], a:0},
+    {q:"Who is known as the 'Nightingale of India'?", o:["Sarojini Naidu","Kasturba Gandhi","Annie Besant"], a:0},
+    {q:"In which year was India's Constitution adopted?", o:["1947","1950","1952"], a:1},
+    {q:"Who designed India's national flag?", o:["Pingali Venkayya","Rabindranath Tagore","Jawaharlal Nehru"], a:0},
+    {q:"Which city is known as the 'Pink City'?", o:["Jaipur","Udaipur","Jodhpur"], a:0}
   ],
   "6": [
     {q:"Which is the smallest unit of life?", o:["Organ","Tissue","Cell"], a:2},
@@ -502,7 +603,13 @@ const QUIZZES = {
     {q:"Which is the closest star to Earth?", o:["Sirius","Moon","Sun"], a:2},
     {q:"Which is the longest river in India?", o:["Yamuna","Godavari","Ganga"], a:2},
     {q:"Which gas do plants release during the day?", o:["Nitrogen","Carbon dioxide","Oxygen"], a:2},
-    {q:"Which is the tallest mountain in the world?", o:["K2","Mount Everest","Kanchenjunga"], a:1}
+    {q:"Which is the tallest mountain in the world?", o:["K2","Mount Everest","Kanchenjunga"], a:1},
+    {q:"In which year did the Quit India Movement begin?", o:["1942","1930","1857"], a:0},
+    {q:"Who was known as 'Jhansi Ki Rani'?", o:["Rani Lakshmibai","Sarojini Naidu","Kasturba Gandhi"], a:0},
+    {q:"Which revolutionary threw a bomb in the Central Legislative Assembly?", o:["Bhagat Singh","Khudiram Bose","Udham Singh"], a:0},
+    {q:"What does the Ashoka Chakra symbolise?", o:["The wheel of law (Dharma)","A cart wheel","The sun"], a:0},
+    {q:"Which classical dance originated in Tamil Nadu?", o:["Bharatanatyam","Kathak","Odissi"], a:0},
+    {q:"What is India's national space agency called?", o:["ISRO","NASA","DRDO"], a:0}
   ],
   "7": [
     {q:"Which gas makes up most of Earth's atmosphere?", o:["Nitrogen","Oxygen","Carbon dioxide"], a:0},
@@ -514,7 +621,12 @@ const QUIZZES = {
     {q:'Which Indian city is called the "Silicon Valley of India"?', o:["Pune","Bengaluru","Hyderabad"], a:1},
     {q:"Which part of the brain controls balance?", o:["Cerebellum","Cerebrum","Medulla"], a:0},
     {q:"Which is the largest planet in our solar system?", o:["Jupiter","Saturn","Earth"], a:0},
-    {q:"Which is the process of splitting light into colours?", o:["Refraction","Reflection","Dispersion"], a:2}
+    {q:"Which is the process of splitting light into colours?", o:["Refraction","Reflection","Dispersion"], a:2},
+    {q:"In which year was the Indian National Congress founded?", o:["1857","1885","1905"], a:1},
+    {q:"The Non-Cooperation Movement was launched in which year?", o:["1920","1942","1930"], a:0},
+    {q:"Who was the Viceroy of India at the time of independence?", o:["Lord Mountbatten","Lord Curzon","Lord Wavell"], a:0},
+    {q:"Which is India's largest island group?", o:["Andaman & Nicobar","Lakshadweep","Daman & Diu"], a:0},
+    {q:"Who is called the 'Missile Man of India'?", o:["A.P.J. Abdul Kalam","Vikram Sarabhai","Homi Bhabha"], a:0}
   ],
   "8": [
     {q:"Which organ produces insulin?", o:["Kidney","Pancreas","Liver"], a:1},
@@ -526,7 +638,13 @@ const QUIZZES = {
     {q:"Which battle was fought between Babur and Ibrahim Lodi?", o:["Battle of Plassey","First Battle of Panipat","Battle of Haldighati"], a:1},
     {q:"Which organisation deals with world health, headquartered in Geneva?", o:["UNICEF","UNESCO","WHO"], a:2},
     {q:"Which process causes plants to lose water through leaves?", o:["Respiration","Excretion","Transpiration"], a:2},
-    {q:"Newton's Third Law says every action has a/an?", o:["Equal & opposite reaction","Bigger reaction","No reaction"], a:0}
+    {q:"Newton's Third Law says every action has a/an?", o:["Equal & opposite reaction","Bigger reaction","No reaction"], a:0},
+    {q:"In which year was the Quit India Movement launched?", o:["1942","1930","1919"], a:0},
+    {q:"The Jallianwala Bagh massacre took place in which year?", o:["1919","1930","1942"], a:0},
+    {q:"Who was India's first Governor-General after independence?", o:["Lord Mountbatten","C. Rajagopalachari","Dr. Rajendra Prasad"], a:0},
+    {q:"The word 'India' comes from which river?", o:["Indus (Sindhu)","Ganga","Yamuna"], a:0},
+    {q:"Which is India's national aquatic animal?", o:["Ganges River Dolphin","Whale Shark","Gharial"], a:0},
+    {q:"Which is the oldest civilisation found in India?", o:["Indus Valley Civilisation","Vedic Civilisation","Maurya Empire"], a:0}
   ]
 };
 
