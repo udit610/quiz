@@ -51,6 +51,13 @@
     margin: 0 0 6px;
     letter-spacing: 0.5px;
   }
+  header .school-name{
+    color: var(--chalk);
+    margin:0 0 10px;
+    font-size:1.3rem;
+    font-weight:800;
+    letter-spacing:0.02em;
+  }
   header p{
     color: var(--sage);
     margin:0;
@@ -346,9 +353,10 @@
 <body>
 <div class="wrap">
   <header>
+    <p class="school-name">Vardhman Convent School, Moonak</p>
     <div class="chalk-line"></div>
     <h1>The Great Saturday Quiz</h1>
-    <p id="headerSub">Vardhman Convent School, Moonak</p>
+    <p id="headerSub"></p>
   </header>
 
   <!-- SETUP -->
@@ -403,14 +411,13 @@
     </div>
   </div>
 
-  <footer>Vardhman Convent School, Moonak — made for quick practice, not a graded assessment.</footer>
 </div>
 
 <script>
 // Point this at your deployed Google Apps Script Web App URL.
 // See APPS_SCRIPT_SETUP.md for how to get this URL — it will look like:
 // "https://script.google.com/macros/s/AKfycb.../exec"
-const API_URL = "https://script.google.com/macros/s/AKfycbyHaH0Q82kj_8_i05vNY1O231l_00_82YCJvNzGuWvApNyt7GSdT1_qlXltBOZMtY9y/exec";
+const API_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
 
 const QUIZZES = {
   "UKG": [
@@ -728,7 +735,7 @@ retryBtn.addEventListener('click', ()=>{
   selectedClass = '';
   classTriggerText.textContent = 'Choose a class';
   classOptions.querySelectorAll('li').forEach(o=>o.classList.remove('selected'));
-  document.getElementById('headerSub').textContent = 'Vardhman Convent School, Moonak';
+  document.getElementById('headerSub').textContent = '';
   window.scrollTo({top:0, behavior:'smooth'});
 });
 </script>
