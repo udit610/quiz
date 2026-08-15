@@ -710,6 +710,10 @@ let currentQuestions = [];
 let answers = [];
 let currentStudentName = '';
 
+function normalizeKey(name, cls){
+  return (cls + '_' + name).trim().toLowerCase().replace(/\s+/g,' ');
+}
+
 function shuffle(arr){
   const a = arr.slice();
   for(let i=a.length-1;i>0;i--){
@@ -719,14 +723,46 @@ function shuffle(arr){
   return a;
 }
 
-startBtn.addEventListener('click', ()=>{
+startBtn.addEventListener('click', async ()=>{
   const name = studentNameInput.value.trim();
   const cls = selectedClass;
   if(!name || !cls){
+    setupWarn.textContent = 'Please enter your name and choose a class.';
     setupWarn.style.display = 'block';
     return;
   }
   setupWarn.style.display = 'none';
+
+  const key = normalizeKey(name, cls);
+  if(localStorage.getItem('quizDone_'+key)){
+    setupWarn.textContent = 'This name has already submitted the quiz for this class on this device.';
+    setupWarn.style.display = 'block';
+    return;
+  }
+
+  startBtn.disabled = true;
+  const originalBtnText = startBtn.textContent;
+  startBtn.textContent = 'Checking…';
+  try{
+    if(API_URL.indexOf('PASTE_YOUR') !== 0){
+      const checkUrl = API_URL + '?name=' + encodeURIComponent(name) + '&className=' + encodeURIComponent(cls);
+      const res = await fetch(checkUrl);
+      const data = await res.json();
+      if(data.ok && data.exists){
+        setupWarn.textContent = 'A submission already exists for this name & class. Please check with your teacher if this is a mistake.';
+        setupWarn.style.display = 'block';
+        startBtn.disabled = false;
+        startBtn.textContent = originalBtnText;
+        return;
+      }
+    }
+  }catch(err){
+    // If the check itself fails (e.g. offline), let the student proceed —
+    // the server still blocks true duplicates when the result is submitted.
+  }
+  startBtn.disabled = false;
+  startBtn.textContent = originalBtnText;
+
   currentClass = cls;
   currentStudentName = name;
   currentQuestions = QUIZZES[cls];
@@ -837,7 +873,14 @@ async function saveScore(score, total){
       })
     });
     const data = await res.json();
+    if(data.error === 'duplicate'){
+      statusEl.textContent = 'This name already has a saved result for this class — not saved again.';
+      statusEl.className = 'save-status fail';
+      localStorage.setItem('quizDone_'+normalizeKey(currentStudentName, currentClass), '1');
+      return;
+    }
     if(!res.ok || !data.ok) throw new Error('Server rejected the submission');
+    localStorage.setItem('quizDone_'+normalizeKey(currentStudentName, currentClass), '1');
     statusEl.textContent = 'Result saved.';
     statusEl.className = 'save-status ok';
   }catch(err){
