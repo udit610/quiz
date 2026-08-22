@@ -689,13 +689,6 @@ startBtn.addEventListener('click', async ()=>{
   }
   setupWarn.style.display = 'none';
 
-  const key = normalizeKey(name, cls);
-  if(localStorage.getItem('quizDone_'+key)){
-    setupWarn.textContent = 'This name has already submitted the quiz for this class on this device.';
-    setupWarn.style.display = 'block';
-    return;
-  }
-
   startBtn.disabled = true;
   const originalBtnText = startBtn.textContent;
   startBtn.textContent = 'Checking…';
@@ -870,11 +863,9 @@ async function saveScore(score, total, unattempted){
     if(data.error === 'duplicate'){
       statusEl.textContent = 'This name already has a saved result for this class — not saved again.';
       statusEl.className = 'save-status fail';
-      localStorage.setItem('quizDone_'+normalizeKey(currentStudentName, currentClass), '1');
       return;
     }
     if(!res.ok || !data.ok) throw new Error('Server rejected the submission');
-    localStorage.setItem('quizDone_'+normalizeKey(currentStudentName, currentClass), '1');
     statusEl.textContent = 'Result saved.';
     statusEl.className = 'save-status ok';
   }catch(err){
