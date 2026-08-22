@@ -458,7 +458,7 @@
 // Point this at your deployed Google Apps Script Web App URL.
 // See APPS_SCRIPT_SETUP.md for how to get this URL — it will look like:
 // "https://script.google.com/macros/s/AKfycb.../exec"
-const API_URL = "https://script.google.com/macros/s/AKfycbzIg_eCvLANSv3qP8GttCQWN5ptgXnlhjZB_v_owYGqY6WdPfGBC75oZguAVCBfgUmw_w/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzfO9qZ4mySjLFGnEU8EASEtHpBx9jp0QugF8u6FcKUVXX8giN2OZl4vltJT42wrlKVPA/exec";
 
 const QUIZZES = {
   "UKG": [
@@ -659,6 +659,17 @@ function normalizeKey(name, cls){
   return (cls + '_' + name).trim().toLowerCase().replace(/\s+/g,' ');
 }
 
+// Fisher-Yates shuffle — used to randomize option display order per question
+// so the correct answer isn't predictably in the same position every time.
+function shuffleArray(arr){
+  const a = arr.slice();
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 function shuffle(arr){
   const a = arr.slice();
   for(let i=a.length-1;i>0;i--){
@@ -726,7 +737,7 @@ function renderQuestion(name, cls, qi){
   quizWarn.style.display = 'none';
 
   const item = currentQuestions[qi];
-  const displayOptions = item.o.map((text, idx)=>({text, idx}));
+  const displayOptions = shuffleArray(item.o.map((text, idx)=>({text, idx})));
 
   questionsContainer.innerHTML = '';
   const block = document.createElement('div');
