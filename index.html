@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Great Independence Day Quiz — Vardhman Convent School, Moonak</title>
+<title>The Great Saturday Quiz — Vardhman Convent School, Moonak</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -13,15 +13,11 @@
     --chalk: #F5F1E6;
     --paper: #FBF8F0;
     --line: #D8CFB8;
-    --mustard: #FF9933;
+    --mustard: #E8A33D;
     --red: #C1443C;
     --blue: #0B1F4D;
-    --sage: #138808;
+    --sage: #2E7D46;
     --ink: #2B2620;
-    --saffron: #FF9933;
-    --tri-white: #FFFFFF;
-    --tri-green: #138808;
-    --chakra: #0B1F4D;
   }
   *{box-sizing:border-box;}
   body{
@@ -34,39 +30,14 @@
     color: var(--ink);
     min-height:100vh;
   }
-  .happy-banner{
-    text-align:center;
-    font-family:'Kalam',cursive;
-    font-weight:700;
-    font-size:1.15rem;
-    color:#fff;
-    background: linear-gradient(90deg, var(--saffron), var(--tri-green));
-    padding:10px 14px;
-    margin: 0 0 0;
-    letter-spacing:0.02em;
-  }
-  .flag-band{
-    height:8px;
-    width:100%;
-    background: linear-gradient(to bottom,
-      var(--saffron) 0%, var(--saffron) 33.3%,
-      var(--tri-white) 33.3%, var(--tri-white) 66.6%,
-      var(--tri-green) 66.6%, var(--tri-green) 100%);
-  }
-  .chakra{
-    display:block;
-    margin: 0 auto 10px;
-    animation: spin 14s linear infinite;
-  }
-  @keyframes spin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
-  .badge80{
+  .theme-badge{
     display:inline-block;
-    background: var(--saffron);
-    color:#fff;
+    background: var(--mustard);
+    color: var(--board);
     font-family:'Kalam',cursive;
     font-weight:700;
-    font-size:0.78rem;
-    padding:3px 12px;
+    font-size:0.8rem;
+    padding:4px 14px;
     border-radius:20px;
     letter-spacing:0.03em;
     margin-top:8px;
@@ -256,6 +227,25 @@
   .quiz-header .prog{
     font-size:0.85rem; color:#7a7362; font-weight:700;
   }
+  .timer-wrap{
+    height:8px;
+    width:100%;
+    background: var(--line);
+    border-radius:6px;
+    overflow:hidden;
+    margin: 0 0 18px;
+  }
+  .timer-bar{
+    height:100%;
+    width:100%;
+    background: var(--sage);
+    transition: width 1s linear, background-color 0.3s;
+  }
+  .timer-bar.urgent{ background: var(--red); }
+  #questionsContainer{
+    user-select:none;
+    -webkit-user-select:none;
+  }
   .q-block{
     padding: 16px 0;
     border-bottom: 1px solid var(--line);
@@ -399,35 +389,14 @@
 </style>
 </head>
 <body>
-<div class="flag-band"></div>
-<div class="happy-banner">Happy 80th Independence Day 🇮🇳</div>
 <div class="wrap">
   <header>
-    <svg class="chakra" width="44" height="44" viewBox="0 0 100 100">
-      <circle cx="50" cy="50" r="44" fill="none" stroke="var(--chakra)" stroke-width="4"/>
-      <circle cx="50" cy="50" r="4" fill="var(--chakra)"/>
-      <g stroke="var(--chakra)" stroke-width="2.5">
-        <!-- 24 spokes -->
-        <line x1="50" y1="50" x2="50" y2="8"/><line x1="50" y1="50" x2="50" y2="92"/>
-        <line x1="50" y1="50" x2="8" y2="50"/><line x1="50" y1="50" x2="92" y2="50"/>
-        <line x1="50" y1="50" x2="20.2" y2="20.2"/><line x1="50" y1="50" x2="79.8" y2="79.8"/>
-        <line x1="50" y1="50" x2="20.2" y2="79.8"/><line x1="50" y1="50" x2="79.8" y2="20.2"/>
-        <line x1="50" y1="50" x2="35.4" y2="10.9"/><line x1="50" y1="50" x2="64.6" y2="89.1"/>
-        <line x1="50" y1="50" x2="10.9" y2="35.4"/><line x1="50" y1="50" x2="89.1" y2="64.6"/>
-        <line x1="50" y1="50" x2="10.9" y2="64.6"/><line x1="50" y1="50" x2="89.1" y2="35.4"/>
-        <line x1="50" y1="50" x2="35.4" y2="89.1"/><line x1="50" y1="50" x2="64.6" y2="10.9"/>
-        <line x1="50" y1="50" x2="43" y2="9.5"/><line x1="50" y1="50" x2="57" y2="90.5"/>
-        <line x1="50" y1="50" x2="9.5" y2="43"/><line x1="50" y1="50" x2="90.5" y2="57"/>
-        <line x1="50" y1="50" x2="9.5" y2="57"/><line x1="50" y1="50" x2="90.5" y2="43"/>
-        <line x1="50" y1="50" x2="43" y2="90.5"/><line x1="50" y1="50" x2="57" y2="9.5"/>
-      </g>
-    </svg>
     <p class="school-name">Vardhman Convent School, Moonak</p>
     <p class="school-phone">+91 9855458530</p>
     <div class="chalk-line"></div>
-    <h1>The Great Independence Day Quiz 🇮🇳</h1>
+    <h1>The Great Saturday Quiz</h1>
     <p id="headerSub"></p>
-    <div class="badge80">Celebrating 79 Years of Independence</div>
+    <div class="theme-badge">This Week: Sports &amp; Games — 22 Aug</div>
   </header>
 
   <!-- SETUP -->
@@ -458,6 +427,7 @@
       <div class="who" id="quizWho"></div>
       <div class="prog" id="quizProg"></div>
     </div>
+    <div class="timer-wrap"><div class="timer-bar" id="timerBar"></div></div>
     <div id="questionsContainer"></div>
     <div class="warn" id="quizWarn">Please answer all questions before submitting.</div>
     <div class="btn-row">
@@ -488,163 +458,116 @@
 // Point this at your deployed Google Apps Script Web App URL.
 // See APPS_SCRIPT_SETUP.md for how to get this URL — it will look like:
 // "https://script.google.com/macros/s/AKfycb.../exec"
-const API_URL = "https://script.google.com/macros/s/AKfycbyHaH0Q82kj_8_i05vNY1O231l_00_82YCJvNzGuWvApNyt7GSdT1_qlXltBOZMtY9y/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzIg_eCvLANSv3qP8GttCQWN5ptgXnlhjZB_v_owYGqY6WdPfGBC75oZguAVCBfgUmw_w/exec";
 
 const QUIZZES = {
   "UKG": [
-    {q:"Which letter comes after B?", o:["C","A","D"], a:0},
-    {q:"How many legs does a cat have?", o:["6","4","2"], a:1},
-    {q:"What color is the sun?", o:["Blue","Green","Yellow"], a:2},
-    {q:"Which one is a fruit?", o:["Carrot","Apple","Potato"], a:1},
-    {q:"What sound does a dog make?", o:["Bark","Moo","Meow"], a:0},
-    {q:"Which shape has 3 sides?", o:["Circle","Square","Triangle"], a:2},
-    {q:"What comes after the number 7?", o:["6","8","9"], a:1},
-    {q:"Which one do we use to write?", o:["Pencil","Spoon","Comb"], a:0},
-    {q:"Where do fish live?", o:["Tree","Sky","Water"], a:2},
-    {q:"Which is a baby animal?", o:["Table","Kitten","Chair"], a:1},
-    {q:"What is the colour on top of our national flag?", o:["Green","Saffron","Blue"], a:1},
-    {q:"When do we celebrate Independence Day?", o:["15 August","15 September","15 January"], a:0},
-    {q:"What do we call our national flag?", o:["Tiranga","Rainbow","Sky"], a:0},
-    {q:"What is our country called?", o:["Bharat","China","Japan"], a:0},
-    {q:"Which is our national animal?", o:["Tiger","Cat","Dog"], a:0}
+    {q:"What do we hit a cricket ball with?", o:["Bat","Spoon","Pencil"], a:0},
+    {q:"Which shape is a football?", o:["Round","Square","Triangle"], a:0},
+    {q:"What do we wear on our feet to run fast?", o:["Shoes","Gloves","Hat"], a:0},
+    {q:"Which of these is a sport?", o:["Sleeping","Swimming","Eating"], a:1},
+    {q:"What do we use to play basketball?", o:["Ball","Bat","Racket"], a:0},
+    {q:"Which game uses a racket?", o:["Badminton","Kabaddi","Football"], a:0},
+    {q:"What colour is a cricket ball usually?", o:["Red","Blue","Green"], a:0},
+    {q:"Where do we usually play outdoor games?", o:["Playground","Kitchen","Bedroom"], a:0},
+    {q:"What do swimmers wear in the pool?", o:["Swimming costume","Winter coat","Raincoat"], a:0},
+    {q:"Which animal is famous for racing?", o:["Horse","Cat","Cow"], a:0}
   ],
   "1": [
-    {q:'Which animal says "Moo"?', o:["Cow","Dog","Cat"], a:0},
-    {q:"How many fingers do we have on one hand?", o:["6","4","5"], a:2},
-    {q:"What color is grass?", o:["Red","Blue","Green"], a:2},
-    {q:"Where do fish live?", o:["Tree","Sky","Water"], a:2},
-    {q:"Which is a fruit?", o:["Chair","Banana","Shoe"], a:1},
-    {q:"What do we wear on our feet?", o:["Shoes","Gloves","Cap"], a:0},
-    {q:"Which is bigger — Elephant or Ant?", o:["Ant","Same","Elephant"], a:2},
-    {q:"What do we drink when thirsty?", o:["Sand","Stone","Water"], a:2},
-    {q:"Which one flies in the sky?", o:["Fish","Dog","Bird"], a:2},
-    {q:"Sun rises in the?", o:["Bag","East","Book"], a:1},
-    {q:"How many colours are there in our national flag?", o:["Two","Three","Four"], a:1},
-    {q:"Which colour is at the bottom of our flag?", o:["Green","White","Saffron"], a:0},
-    {q:"What is at the centre of our flag?", o:["A star","A wheel (Chakra)","A sun"], a:1},
-    {q:"What is another name for India?", o:["Bharat","Nepal","Bhutan"], a:0},
-    {q:"Which is our national flower?", o:["Lotus","Rose","Sunflower"], a:0}
+    {q:"Which game do we play with a bat and ball?", o:["Cricket","Chess","Carrom"], a:0},
+    {q:"How many players are there in a football team on the field?", o:["11","5","20"], a:0},
+    {q:"Which game is played in a swimming pool?", o:["Swimming","Chess","Cricket"], a:0},
+    {q:"What do we call a person who plays a sport?", o:["Player","Teacher","Doctor"], a:0},
+    {q:"Badminton is played with a racket and a?", o:["Shuttlecock","Ball","Bat"], a:0},
+    {q:"Which of these is an indoor game?", o:["Chess","Football","Cricket"], a:0},
+    {q:"What do runners run on?", o:["Track","River","Roof"], a:0},
+    {q:"Which sport uses a hoop and a ball for shooting baskets?", o:["Basketball","Hockey","Tennis"], a:0},
+    {q:"What do we blow to start a race?", o:["Whistle","Balloon","Trumpet"], a:0},
+    {q:"Which sport do we play on ice with skates?", o:["Ice skating","Football","Cricket"], a:0}
   ],
   "2": [
-    {q:"How many days are there in a week?", o:["7","5","10"], a:0},
-    {q:"Which is a means of transport?", o:["Fan","Table","Car"], a:2},
-    {q:"Which season comes after summer?", o:["Winter","Rainy","Spring"], a:1},
-    {q:"Who takes care of us when we are sick?", o:["Driver","Cook","Doctor"], a:2},
-    {q:"What do bees make?", o:["Honey","Milk","Bread"], a:0},
-    {q:"Which is a farm animal?", o:["Cow","Tiger","Lion"], a:0},
-    {q:"What do plants need to grow?", o:["Toys","Books","Water & Sunlight"], a:2},
-    {q:"Which is our national bird?", o:["Duck","Peacock","Crow"], a:1},
-    {q:"What do we call our father's father?", o:["Brother","Grandfather","Uncle"], a:1},
-    {q:"Which is a vegetable?", o:["Apple","Mango","Potato"], a:2},
-    {q:"What is our national anthem called?", o:["Vande Mataram","Jana Gana Mana","Sare Jahan Se Achha"], a:1},
-    {q:"Who is known as 'Bapu'?", o:["Jawaharlal Nehru","Mahatma Gandhi","Sardar Patel"], a:1},
-    {q:"How many spokes are there on the Ashoka Chakra?", o:["24","12","20"], a:0},
-    {q:"Which is India's national river?", o:["Ganga","Yamuna","Godavari"], a:0},
-    {q:"Whose birthday is celebrated as National Sports Day in India?", o:["Major Dhyan Chand","Sachin Tendulkar","Milkha Singh"], a:0}
+    {q:"Which sport is called the 'gentleman's game'?", o:["Cricket","Football","Hockey"], a:0},
+    {q:"How many players are on a cricket team?", o:["11","15","9"], a:0},
+    {q:"Kabaddi originated in which country?", o:["India","China","Japan"], a:0},
+    {q:"Which game do you play on a chessboard?", o:["Chess","Ludo","Carrom"], a:0},
+    {q:"Hitting the ball out of the ground in cricket scores how many runs?", o:["Six","Four","Ten"], a:0},
+    {q:"Which equipment is used in Table Tennis?", o:["Paddle and ball","Bat and ball","Stick and ball"], a:0},
+    {q:"In football, who stops the ball from going into the goal?", o:["Goalkeeper","Striker","Referee"], a:0},
+    {q:"In Kabaddi, two teams of seven players play on a?", o:["Court","Pool","Track"], a:0},
+    {q:"What do athletes do in a marathon?", o:["Run a long distance","Swim","Jump"], a:0},
+    {q:"Which equipment do badminton players hit the shuttlecock with?", o:["Racket","Bat","Stick"], a:0}
   ],
   "3": [
-    {q:"Which planet do we live on?", o:["Earth","Moon","Mars"], a:0},
-    {q:"Which organ helps us to breathe?", o:["Nose only","Ears","Lungs"], a:2},
-    {q:"Which is the capital of India?", o:["Mumbai","New Delhi","Jaipur"], a:1},
-    {q:"What do we call baby cats?", o:["Calf","Kitten","Puppy"], a:1},
-    {q:'Which festival is called the "festival of colors"?', o:["Holi","Diwali","Eid"], a:0},
-    {q:"Which is a source of light?", o:["Sun","Table","Water"], a:0},
-    {q:"Which animal gives us milk?", o:["Lion","Cow","Rabbit"], a:1},
-    {q:"Which day comes after Monday?", o:["Sunday","Tuesday","Friday"], a:1},
-    {q:"What do we use to write?", o:["Spoon","Comb","Pencil"], a:2},
-    {q:"Which is a mode of communication?", o:["Chair","Telephone","Table"], a:1},
-    {q:"On which date did India get independence?", o:["26 January 1950","15 August 1947","2 October 1869"], a:1},
-    {q:"Who wrote our national anthem?", o:["Rabindranath Tagore","Bankim Chandra Chattopadhyay","Sarojini Naidu"], a:0},
-    {q:"From which fort does the PM hoist the flag on Independence Day?", o:["Amber Fort","Red Fort","Agra Fort"], a:1},
-    {q:"Our Constitution begins with 'India, that is ___'", o:["Bharat","Hindustan","Aryavarta"], a:0},
-    {q:"Which state is home to the Taj Mahal?", o:["Uttar Pradesh","Rajasthan","Bihar"], a:0}
+    {q:"How many players are on a volleyball team on court?", o:["6","11","5"], a:0},
+    {q:"Football's biggest tournament, held every 4 years with many countries, is called the?", o:["World Cup","Premier League","Champions League"], a:0},
+    {q:"What is the name of India's premier T20 cricket league?", o:["IPL","NBA","EPL"], a:0},
+    {q:"How many rings are there in the Olympic symbol?", o:["5","4","6"], a:0},
+    {q:"Which sport did Sachin Tendulkar play?", o:["Cricket","Football","Badminton"], a:0},
+    {q:"In badminton, what do players hit instead of a ball?", o:["Shuttlecock","Puck","Frisbee"], a:0},
+    {q:"Which sport is played at the Wimbledon tournament?", o:["Tennis","Golf","Cricket"], a:0},
+    {q:"In cricket, scoring 100 runs by one batsman in an innings is called a?", o:["Century","Half-century","Duck"], a:0},
+    {q:"Which equipment protects a cricketer's legs while batting?", o:["Pads","Helmet","Gloves"], a:0},
+    {q:"Which Indian city hosted the 2010 Commonwealth Games?", o:["New Delhi","Mumbai","Chennai"], a:0}
   ],
   "4": [
-    {q:"Which gas do we need to breathe to live?", o:["Smoke","Steam","Oxygen"], a:2},
-    {q:"Which is the largest ocean?", o:["Pacific","Atlantic","Indian"], a:0},
-    {q:'Who is known as the "Father of the Nation" in India?', o:["Mahatma Gandhi","Bose","Nehru"], a:0},
-    {q:"Which part of a plant is underground?", o:["Flower","Leaf","Root"], a:2},
-    {q:"Which is a state of matter?", o:["Circle","Solid","Sunday"], a:1},
-    {q:"What is the currency of India?", o:["Rupee","Dollar","Pound"], a:0},
-    {q:'Which animal is known as "man\'s best friend"?', o:["Cat","Dog","Cow"], a:1},
-    {q:"Which instrument tells us the time?", o:["Thermometer","Clock","Scale"], a:1},
-    {q:"Which is a wild animal?", o:["Cow","Lion","Goat"], a:1},
-    {q:"How many months are there in a year?", o:["7","10","12"], a:2},
-    {q:"What is India's Independence Day?", o:["15 August","26 January","2 October"], a:0},
-    {q:"Who gave the slogan 'Jai Hind'?", o:["Subhas Chandra Bose","Bhagat Singh","Lal Bahadur Shastri"], a:0},
-    {q:"Which is our national song (not the anthem)?", o:["Jana Gana Mana","Vande Mataram","Sare Jahan Se Achha"], a:1},
-    {q:"India's national emblem is taken from a pillar at which site?", o:["Sarnath","Sanchi","Bodh Gaya"], a:0},
-    {q:"What does 'Satyameva Jayate' mean?", o:["Truth alone triumphs","Unity is strength","Work is worship"], a:0}
+    {q:"Where were the first modern Olympic Games held in 1896?", o:["Athens","Paris","London"], a:0},
+    {q:"Which country has won the most FIFA World Cups?", o:["Brazil","Germany","Argentina"], a:0},
+    {q:"Which sport did Major Dhyan Chand play?", o:["Hockey","Cricket","Football"], a:0},
+    {q:"In cricket, what does LBW stand for?", o:["Leg Before Wicket","Left Ball Wide","Long Ball Wicket"], a:0},
+    {q:"How many players are on a basketball team on court at once?", o:["5","6","7"], a:0},
+    {q:"Which Grand Slam tennis tournament is played on clay courts?", o:["French Open","Wimbledon","US Open"], a:0},
+    {q:"What is a score of zero for a batsman in cricket called?", o:["Duck","Zero","Blank"], a:0},
+    {q:"In chess, which piece moves only diagonally?", o:["Bishop","Rook","Knight"], a:0},
+    {q:"A powerful overhead shot in badminton is called a?", o:["Smash","Serve","Lob"], a:0},
+    {q:"How often are the Summer Olympic Games held?", o:["Every 4 years","Every 2 years","Every year"], a:0}
   ],
   "5": [
-    {q:"Which is the process of water turning into vapour?", o:["Evaporation","Melting","Freezing"], a:0},
-    {q:"Who was the first Prime Minister of India?", o:["Indira Gandhi","Jawaharlal Nehru","Sardar Patel"], a:1},
-    {q:"Which vitamin comes from sunlight?", o:["Vitamin D","Vitamin A","Vitamin C"], a:0},
-    {q:"What is the freezing point of water?", o:["50°C","100°C","0°C"], a:2},
-    {q:"Which is the largest desert in India?", o:["Gobi","Sahara","Thar"], a:2},
-    {q:"Which is the study of plants called?", o:["Botany","Geology","Zoology"], a:0},
-    {q:"Which festival marks the harvest season in Punjab?", o:["Onam","Pongal","Baisakhi"], a:2},
-    {q:"Which layer of Earth do we live on?", o:["Crust","Core","Mantle"], a:0},
-    {q:"How many continents are there?", o:["9","5","7"], a:2},
-    {q:"Which is a natural source of energy?", o:["Sun","Wire","Battery"], a:0},
-    {q:"Who led the Indian National Army (INA) in its fight for independence?", o:["Subhas Chandra Bose","Bhagat Singh","Chandrashekhar Azad"], a:0},
-    {q:"Who is known as the 'Nightingale of India'?", o:["Sarojini Naidu","Kasturba Gandhi","Annie Besant"], a:0},
-    {q:"In which year did India's Constitution come into force?", o:["1947","1950","1952"], a:1},
-    {q:"Who designed India's national flag?", o:["Pingali Venkayya","Rabindranath Tagore","Jawaharlal Nehru"], a:0},
-    {q:"Which city is known as the 'Pink City'?", o:["Jaipur","Udaipur","Jodhpur"], a:0}
+    {q:"Who is popularly known as the 'God of Cricket' in India?", o:["Sachin Tendulkar","Virat Kohli","MS Dhoni"], a:0},
+    {q:"Which city will host the 2028 Summer Olympics?", o:["Los Angeles","Paris","Tokyo"], a:0},
+    {q:"What is the maximum number of players a football team can field?", o:["11","9","13"], a:0},
+    {q:"In which sport would you perform a 'slam dunk'?", o:["Basketball","Volleyball","Badminton"], a:0},
+    {q:"A bowler taking three wickets on three consecutive balls achieves a?", o:["Hat-trick","Century","Maiden over"], a:0},
+    {q:"How many squares are there on a chessboard?", o:["64","100","81"], a:0},
+    {q:"Which Indian athlete won an Olympic silver medal in weightlifting at Tokyo 2020?", o:["Mirabai Chanu","PV Sindhu","Sania Mirza"], a:0},
+    {q:"Which racket sport is PV Sindhu famous for?", o:["Badminton","Tennis","Squash"], a:0},
+    {q:"When a fielder catches the ball to dismiss a batsman, it is called?", o:["Caught out","Run out","Stumped"], a:0},
+    {q:"How many players from each team are on the field in Kabaddi?", o:["7","11","5"], a:0}
   ],
   "6": [
-    {q:"Which is the smallest unit of life?", o:["Organ","Tissue","Cell"], a:2},
-    {q:"What is the chemical formula for water?", o:["CO2","O2","H2O"], a:2},
-    {q:"Who built the Taj Mahal?", o:["Shah Jahan","Akbar","Aurangzeb"], a:0},
-    {q:"Which force pulls things toward the Earth?", o:["Gravity","Friction","Magnetism"], a:0},
-    {q:'Which continent is called the "Dark Continent"?', o:["Africa","Asia","Europe"], a:0},
-    {q:"Who discovered gravity?", o:["Galileo","Isaac Newton","Einstein"], a:1},
-    {q:"Which is the closest star to Earth?", o:["Sirius","Moon","Sun"], a:2},
-    {q:"Which is the longest river in India?", o:["Yamuna","Godavari","Ganga"], a:2},
-    {q:"Which gas do plants release during the day?", o:["Nitrogen","Carbon dioxide","Oxygen"], a:2},
-    {q:"Which is the tallest mountain in the world?", o:["K2","Mount Everest","Kanchenjunga"], a:1},
-    {q:"In which year did the Quit India Movement begin?", o:["1942","1930","1857"], a:0},
-    {q:"Who was known as 'Jhansi Ki Rani'?", o:["Rani Lakshmibai","Sarojini Naidu","Kasturba Gandhi"], a:0},
-    {q:"Which revolutionary threw a bomb in the Central Legislative Assembly?", o:["Bhagat Singh","Khudiram Bose","Udham Singh"], a:0},
-    {q:"What does the Ashoka Chakra symbolise?", o:["The wheel of law (Dharma)","A cart wheel","The sun"], a:0},
-    {q:"Which classical dance originated in Tamil Nadu?", o:["Bharatanatyam","Kathak","Odissi"], a:0},
-    {q:"What is India's national space agency called?", o:["ISRO","NASA","DRDO"], a:0}
+    {q:"Which country won the ICC Cricket World Cup in 2011?", o:["India","Australia","Sri Lanka"], a:0},
+    {q:"The Olympic Games were first held in ancient times in which country?", o:["Greece","Italy","Egypt"], a:0},
+    {q:"Which Indian won an individual Olympic gold medal in javelin throw at Tokyo 2020?", o:["Neeraj Chopra","Abhinav Bindra","Milkha Singh"], a:0},
+    {q:"How long is a standard football match, excluding stoppage time?", o:["90 minutes","60 minutes","120 minutes"], a:0},
+    {q:"The 22-yard strip in the centre of a cricket ground is called the?", o:["Pitch","Crease","Boundary"], a:0},
+    {q:"Which sport is played at the US Open, French Open, and Wimbledon?", o:["Tennis","Golf","Badminton"], a:0},
+    {q:"What is the maximum number of clubs a golfer is allowed to carry?", o:["14","10","20"], a:0},
+    {q:"Abhinav Bindra won India's first individual Olympic gold medal in which sport?", o:["Shooting","Wrestling","Boxing"], a:0},
+    {q:"Which country hosted the 2016 Summer Olympics?", o:["Brazil","China","United Kingdom"], a:0},
+    {q:"What is it called when a bowler dismisses three batsmen with three consecutive balls?", o:["Hat-trick","Century","Maiden over"], a:0}
   ],
   "7": [
-    {q:"Which gas makes up most of Earth's atmosphere?", o:["Nitrogen","Oxygen","Carbon dioxide"], a:0},
-    {q:"Who was the first President of India?", o:["A.P.J. Abdul Kalam","Dr. Rajendra Prasad","Zakir Husain"], a:1},
-    {q:"Which acid is found in lemon?", o:["Citric acid","Sulphuric acid","Acetic acid"], a:0},
-    {q:"Which is India's largest state by area?", o:["Rajasthan","Maharashtra","Kerala"], a:0},
-    {q:"Which is the SI unit of force?", o:["Newton","Joule","Watt"], a:0},
-    {q:"Which movement did Gandhi lead in 1930 against the salt tax?", o:["Quit India","Dandi March","Non-Cooperation"], a:1},
-    {q:'Which Indian city is called the "Silicon Valley of India"?', o:["Pune","Bengaluru","Hyderabad"], a:1},
-    {q:"Which part of the brain controls balance?", o:["Cerebellum","Cerebrum","Medulla"], a:0},
-    {q:"Which is the largest planet in our solar system?", o:["Jupiter","Saturn","Earth"], a:0},
-    {q:"Which is the process of splitting light into colours?", o:["Refraction","Reflection","Dispersion"], a:2},
-    {q:"In which year was the Indian National Congress founded?", o:["1857","1885","1905"], a:1},
-    {q:"The Non-Cooperation Movement was launched in which year?", o:["1920","1942","1930"], a:0},
-    {q:"Who was the Viceroy of India at the time of independence?", o:["Lord Mountbatten","Lord Curzon","Lord Wavell"], a:0},
-    {q:"Which is India's largest island group?", o:["Andaman & Nicobar","Lakshadweep","Daman & Diu"], a:0},
-    {q:"Who is called the 'Missile Man of India'?", o:["A.P.J. Abdul Kalam","Vikram Sarabhai","Homi Bhabha"], a:0}
+    {q:"The FIFA World Cup is held every how many years?", o:["4 years","2 years","5 years"], a:0},
+    {q:"Who holds the record for the most international centuries in cricket?", o:["Sachin Tendulkar","Virat Kohli","Ricky Ponting"], a:0},
+    {q:"Which country won the first-ever Cricket World Cup in 1975?", o:["West Indies","England","Australia"], a:0},
+    {q:"In tennis, what is a score of zero called?", o:["Love","Nil","Zero"], a:0},
+    {q:"Which Indian badminton player has won two individual Olympic medals (2016 & 2020)?", o:["PV Sindhu","Saina Nehwal","Sania Mirza"], a:0},
+    {q:"What is the maximum number of players a cricket team can field in an innings?", o:["11","12","10"], a:0},
+    {q:"Which trophy is contested between India and Australia in Test cricket?", o:["Border-Gavaskar Trophy","The Ashes","World Test Championship Cup"], a:0},
+    {q:"The modern Olympic Games were revived by which Frenchman?", o:["Pierre de Coubertin","Jules Rimet","Henri Delaunay"], a:0},
+    {q:"Which sport is associated with the 'Ryder Cup'?", o:["Golf","Tennis","Cricket"], a:0},
+    {q:"In cricket, a ball bowled at the batsman's feet or base of the stumps is called a?", o:["Yorker","Bouncer","Full toss"], a:0}
   ],
   "8": [
-    {q:"Which organ produces insulin?", o:["Kidney","Pancreas","Liver"], a:1},
-    {q:"Who chaired the Drafting Committee of the Indian Constitution?", o:["Patel","Dr. B.R. Ambedkar","Nehru"], a:1},
-    {q:"What is the process by which iron rusts called?", o:["Oxidation","Reduction","Sublimation"], a:0},
-    {q:"Which Indian state has the highest literacy rate?", o:["Bihar","Kerala","UP"], a:1},
-    {q:"Which is the hardest natural substance?", o:["Iron","Diamond","Gold"], a:1},
-    {q:'Which organelle is the "powerhouse of the cell"?', o:["Mitochondria","Ribosome","Golgi body"], a:0},
-    {q:"Which battle was fought between Babur and Ibrahim Lodi?", o:["Battle of Plassey","First Battle of Panipat","Battle of Haldighati"], a:1},
-    {q:"Which organisation deals with world health, headquartered in Geneva?", o:["UNICEF","UNESCO","WHO"], a:2},
-    {q:"Which process causes plants to lose water through leaves?", o:["Respiration","Excretion","Transpiration"], a:2},
-    {q:"Newton's Third Law says every action has a/an?", o:["Equal & opposite reaction","Bigger reaction","No reaction"], a:0},
-    {q:"In which year was the Quit India Movement launched?", o:["1942","1930","1919"], a:0},
-    {q:"The Jallianwala Bagh massacre took place in which year?", o:["1919","1930","1942"], a:0},
-    {q:"Who was India's first Governor-General after independence?", o:["Lord Mountbatten","C. Rajagopalachari","Dr. Rajendra Prasad"], a:0},
-    {q:"The word 'India' comes from which river?", o:["Indus (Sindhu)","Ganga","Yamuna"], a:0},
-    {q:"Which is India's national aquatic animal?", o:["Ganges River Dolphin","Whale Shark","Gharial"], a:0},
-    {q:"Which is the oldest civilisation found in India?", o:["Indus Valley Civilisation","Vedic Civilisation","Maurya Empire"], a:0}
+    {q:"Which country has won the most Olympic gold medals overall in history?", o:["United States","Russia/Soviet Union","China"], a:0},
+    {q:"Who holds the men's 100m world record (9.58 seconds)?", o:["Usain Bolt","Carl Lewis","Justin Gatlin"], a:0},
+    {q:"In which year did India win its first Cricket World Cup?", o:["1983","1975","2011"], a:0},
+    {q:"Which of these is NOT a tennis Grand Slam tournament?", o:["Wimbledon","French Open","All England Badminton Championship"], a:2},
+    {q:"Who captained India to victory in the 1983 Cricket World Cup?", o:["Kapil Dev","Sunil Gavaskar","MS Dhoni"], a:0},
+    {q:"What is the maximum number of overs per side in a One Day International (ODI)?", o:["50","20","60"], a:0},
+    {q:"In chess, when the king is under direct attack but can still escape, it is called?", o:["Check","Checkmate","Stalemate"], a:0},
+    {q:"Which Indian wrestler became the first Indian to win two individual Olympic medals (bronze 2008, silver 2012)?", o:["Sushil Kumar","Yogeshwar Dutt","Bajrang Punia"], a:0},
+    {q:"What is the approximate standard distance of a marathon race?", o:["42.195 km","21 km","100 km"], a:0},
+    {q:"What is the highest sporting honour given by the Government of India?", o:["Major Dhyan Chand Khel Ratna Award","Arjuna Award","Padma Shri"], a:0}
   ]
 };
 
@@ -709,6 +632,28 @@ let currentClass = null;
 let currentQuestions = [];
 let answers = [];
 let currentStudentName = '';
+let currentQIndex = 0;
+let tabSwitchCount = 0;
+let timerInterval = null;
+const QUESTION_SECONDS = 15;
+const QUESTION_SECONDS_BY_CLASS = { "UKG": 20, "1": 20 };
+
+function getQuestionSeconds(cls){
+  return QUESTION_SECONDS_BY_CLASS[cls] || QUESTION_SECONDS;
+}
+
+// Silently logs when the student leaves this tab/app mid-quiz (switches to
+// another app, tab, or window) and comes back. Not shown to the student —
+// only reported to the teacher alongside the score.
+document.addEventListener('visibilitychange', ()=>{
+  if(document.hidden) return;
+  if(quizCard && !quizCard.classList.contains('hidden')){
+    tabSwitchCount++;
+  }
+});
+
+questionsContainer.addEventListener('contextmenu', (e)=>{ e.preventDefault(); });
+questionsContainer.addEventListener('copy', (e)=>{ e.preventDefault(); });
 
 function normalizeKey(name, cls){
   return (cls + '_' + name).trim().toLowerCase().replace(/\s+/g,' ');
@@ -767,67 +712,103 @@ startBtn.addEventListener('click', async ()=>{
   currentStudentName = name;
   currentQuestions = QUIZZES[cls];
   answers = new Array(currentQuestions.length).fill(null);
-  renderQuiz(name, cls);
+  currentQIndex = 0;
+  tabSwitchCount = 0;
   setupCard.classList.add('hidden');
   quizCard.classList.remove('hidden');
+  renderQuestion(name, cls, 0);
 });
 
-function renderQuiz(name, cls){
+function renderQuestion(name, cls, qi){
   quizWho.textContent = name + ' — ' + classLabel(cls);
-  document.getElementById('headerSub').textContent = classLabel(cls) + ' — General Knowledge & EVS';
-  quizProg.textContent = currentQuestions.length + ' Questions';
+  document.getElementById('headerSub').textContent = classLabel(cls) + ' — Sports & Games';
+  quizProg.textContent = 'Question ' + (qi+1) + ' of ' + currentQuestions.length;
+  quizWarn.style.display = 'none';
+
+  const item = currentQuestions[qi];
+  const displayOptions = item.o.map((text, idx)=>({text, idx}));
+
   questionsContainer.innerHTML = '';
-  currentQuestions.forEach((item, qi)=>{
-    const block = document.createElement('div');
-    block.className = 'q-block';
-    const displayOptions = item.o.map((text, idx)=>({text, idx}));
+  const block = document.createElement('div');
+  block.className = 'q-block';
 
-    const qLine = document.createElement('div');
-    qLine.innerHTML = '<span class="q-num">'+(qi+1)+'</span><span class="q-text">'+item.q+'</span>';
-    block.appendChild(qLine);
+  const qLine = document.createElement('div');
+  qLine.innerHTML = '<span class="q-num">'+(qi+1)+'</span><span class="q-text">'+item.q+'</span>';
+  block.appendChild(qLine);
 
-    const optsWrap = document.createElement('div');
-    optsWrap.className = 'options';
-    displayOptions.forEach((opt)=>{
-      const label = document.createElement('label');
-      label.className = 'opt';
-      label.innerHTML = '<input type="radio" name="q'+qi+'" value="'+opt.idx+'"><span class="opt-text">'+opt.text+'</span>';
-      const radio = label.querySelector('input');
-      radio.addEventListener('change', ()=>{
-        answers[qi] = opt.idx;
-        optsWrap.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
-        label.classList.add('selected');
-      });
-      optsWrap.appendChild(label);
+  const optsWrap = document.createElement('div');
+  optsWrap.className = 'options';
+  displayOptions.forEach((opt)=>{
+    const label = document.createElement('label');
+    label.className = 'opt';
+    label.innerHTML = '<input type="radio" name="q'+qi+'" value="'+opt.idx+'"><span class="opt-text">'+opt.text+'</span>';
+    if(answers[qi] === opt.idx) { label.classList.add('selected'); label.querySelector('input').checked = true; }
+    const radio = label.querySelector('input');
+    radio.addEventListener('change', ()=>{
+      answers[qi] = opt.idx;
+      optsWrap.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
+      label.classList.add('selected');
     });
-    block.appendChild(optsWrap);
-    questionsContainer.appendChild(block);
+    optsWrap.appendChild(label);
   });
+  block.appendChild(optsWrap);
+  questionsContainer.appendChild(block);
+
+  submitBtn.textContent = (qi === currentQuestions.length - 1) ? 'Turn In Paper' : 'Next Question';
+
+  startTimer();
+}
+
+function startTimer(){
+  clearInterval(timerInterval);
+  const seconds = getQuestionSeconds(currentClass);
+  let timeLeft = seconds;
+  const bar = document.getElementById('timerBar');
+  bar.classList.remove('urgent');
+  bar.style.width = '100%';
+
+  timerInterval = setInterval(()=>{
+    timeLeft--;
+    const pct = Math.max(0, (timeLeft / seconds) * 100);
+    bar.style.width = pct + '%';
+    if(timeLeft <= 5) bar.classList.add('urgent');
+    if(timeLeft <= 0){
+      clearInterval(timerInterval);
+      advanceQuestion();
+    }
+  }, 1000);
+}
+
+function advanceQuestion(){
+  clearInterval(timerInterval);
+  if(currentQIndex < currentQuestions.length - 1){
+    currentQIndex++;
+    renderQuestion(currentStudentName, currentClass, currentQIndex);
+  } else {
+    showResults();
+  }
 }
 
 submitBtn.addEventListener('click', ()=>{
-  if(answers.includes(null)){
-    quizWarn.style.display = 'block';
-    quizWarn.scrollIntoView({behavior:'smooth', block:'center'});
-    return;
-  }
-  quizWarn.style.display = 'none';
-  showResults();
+  advanceQuestion();
 });
 
 function showResults(){
   let score = 0;
+  let unattempted = 0;
   const reviewContainer = document.getElementById('reviewContainer');
   reviewContainer.innerHTML = '';
   currentQuestions.forEach((item, qi)=>{
     const isCorrect = answers[qi] === item.a;
     if(isCorrect) score++;
+    if(answers[qi] === null) unattempted++;
+    const yourAnswerText = answers[qi] === null ? 'No answer (time ran out)' : item.o[answers[qi]];
     const block = document.createElement('div');
     block.className = 'q-block ' + (isCorrect ? 'correct' : 'wrong');
     block.innerHTML =
       '<span class="q-num">'+(qi+1)+'</span><span class="q-text">'+item.q+'</span>' +
       '<span class="tag '+(isCorrect?'correct':'wrong')+'">'+(isCorrect?'Correct':'Incorrect')+'</span>' +
-      '<div class="your-ans">Your answer: '+item.o[answers[qi]]+'</div>' +
+      '<div class="your-ans">Your answer: '+yourAnswerText+'</div>' +
       (isCorrect ? '' : '<div class="correct-ans">Correct answer: '+item.o[item.a]+'</div>');
     reviewContainer.appendChild(block);
   });
@@ -846,12 +827,12 @@ function showResults(){
   resultsCard.classList.remove('hidden');
   window.scrollTo({top:0, behavior:'smooth'});
 
-  saveScore(score, currentQuestions.length);
+  saveScore(score, currentQuestions.length, unattempted);
 }
 
 // Sends the result to the teacher's backend. Shown to the student so they know
 // whether it actually reached the teacher, not just that grading finished locally.
-async function saveScore(score, total){
+async function saveScore(score, total, unattempted){
   const statusEl = document.getElementById('saveStatus');
   statusEl.textContent = 'Saving your result…';
   statusEl.className = 'save-status pending';
@@ -869,7 +850,9 @@ async function saveScore(score, total){
         studentName: currentStudentName,
         className: currentClass,
         score: score,
-        total: total
+        total: total,
+        tabSwitches: tabSwitchCount,
+        unattempted: unattempted
       })
     });
     const data = await res.json();
@@ -890,6 +873,9 @@ async function saveScore(score, total){
 }
 
 retryBtn.addEventListener('click', ()=>{
+  clearInterval(timerInterval);
+  currentQIndex = 0;
+  tabSwitchCount = 0;
   resultsCard.classList.add('hidden');
   setupCard.classList.remove('hidden');
   studentNameInput.value = '';
