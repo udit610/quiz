@@ -90,6 +90,7 @@
     border-radius: 14px;
     padding: 26px 24px;
     box-shadow: 0 14px 34px rgba(0,0,0,0.28);
+    border-top: 3px solid var(--mustard);
   }
   .field{
     margin-bottom:18px;
@@ -396,7 +397,7 @@
     <div class="chalk-line"></div>
     <h1>The Great Saturday Quiz</h1>
     <p id="headerSub"></p>
-    <div class="theme-badge">This Week: Sports &amp; Games — 22 Aug</div>
+    <div class="theme-badge">This Week: 🌍 Amazing India — 29 Aug</div>
   </header>
 
   <!-- SETUP -->
@@ -458,116 +459,116 @@
 // Point this at your deployed Google Apps Script Web App URL.
 // See APPS_SCRIPT_SETUP.md for how to get this URL — it will look like:
 // "https://script.google.com/macros/s/AKfycb.../exec"
-const API_URL = "https://script.google.com/macros/s/AKfycbzfO9qZ4mySjLFGnEU8EASEtHpBx9jp0QugF8u6FcKUVXX8giN2OZl4vltJT42wrlKVPA/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyhqskE5INvwaCkCXj0bgysl979ZOUw5hIL9BpSnO4_y2YrjgbprrcovuVf7sZaEEm1qA/exec";
 
 const QUIZZES = {
   "UKG": [
-    {q:"What do we hit a cricket ball with?", o:["Bat","Spoon","Pencil"], a:0},
-    {q:"Which shape is a football?", o:["Round","Square","Triangle"], a:0},
-    {q:"What do we wear on our feet to run fast?", o:["Shoes","Gloves","Hat"], a:0},
-    {q:"Which of these is a sport?", o:["Sleeping","Swimming","Eating"], a:1},
-    {q:"What do we use to play basketball?", o:["Ball","Bat","Racket"], a:0},
-    {q:"Which game uses a racket?", o:["Badminton","Kabaddi","Football"], a:0},
-    {q:"What colour is a cricket ball usually?", o:["Red","Blue","Green"], a:0},
-    {q:"Where do we usually play outdoor games?", o:["Playground","Kitchen","Bedroom"], a:0},
-    {q:"What do swimmers wear in the pool?", o:["Swimming costume","Winter coat","Raincoat"], a:0},
-    {q:"Which animal is famous for racing?", o:["Horse","Cat","Cow"], a:0}
+    {q:"What is our national bird?", o:["Peacock","Crow","Sparrow"], a:0},
+    {q:"What is our national animal?", o:["Tiger","Cat","Dog"], a:0},
+    {q:"Which famous white monument is in Agra?", o:["Taj Mahal","Red Fort","Qutub Minar"], a:0},
+    {q:"Which animal has black and orange stripes and lives in Indian forests?", o:["Tiger","Elephant","Rabbit"], a:0},
+    {q:"Which festival is called the 'festival of lights'?", o:["Diwali","Holi","Eid"], a:0},
+    {q:"Which festival do we play with colours?", o:["Holi","Diwali","Christmas"], a:0},
+    {q:"What is the name of our country?", o:["India","China","Japan"], a:0},
+    {q:"What is our national flower?", o:["Lotus","Rose","Sunflower"], a:0},
+    {q:"Which is taller — a mountain or a hill?", o:["Mountain","Hill","They are the same"], a:0},
+    {q:"Where do we go to see wild animals safely?", o:["Zoo","School","Kitchen"], a:0}
   ],
   "1": [
-    {q:"Which game do we play with a bat and ball?", o:["Cricket","Chess","Carrom"], a:0},
-    {q:"How many players are there in a football team on the field?", o:["11","5","20"], a:0},
-    {q:"Which game is played in a swimming pool?", o:["Swimming","Chess","Cricket"], a:0},
-    {q:"What do we call a person who plays a sport?", o:["Player","Teacher","Doctor"], a:0},
-    {q:"Badminton is played with a racket and a?", o:["Shuttlecock","Ball","Bat"], a:0},
-    {q:"Which of these is an indoor game?", o:["Chess","Football","Cricket"], a:0},
-    {q:"What do runners run on?", o:["Track","River","Roof"], a:0},
-    {q:"Which sport uses a hoop and a ball for shooting baskets?", o:["Basketball","Hockey","Tennis"], a:0},
-    {q:"What do we blow to start a race?", o:["Whistle","Balloon","Trumpet"], a:0},
-    {q:"Which sport do we play on ice with skates?", o:["Ice skating","Football","Cricket"], a:0}
+    {q:"What is our national tree?", o:["Banyan","Mango","Neem"], a:0},
+    {q:"What is the capital of India?", o:["New Delhi","Mumbai","Chennai"], a:0},
+    {q:"The Red Fort is located in which city?", o:["Delhi","Agra","Jaipur"], a:0},
+    {q:"Who is known as 'Bapu'?", o:["Mahatma Gandhi","Jawaharlal Nehru","B.R. Ambedkar"], a:0},
+    {q:"Which river flows through Varanasi and is considered holy?", o:["Ganga","Yamuna","Godavari"], a:0},
+    {q:"Which harvest festival is popular in Punjab?", o:["Baisakhi","Diwali","Holi"], a:0},
+    {q:"Which national park in Assam is famous for the one-horned rhinoceros?", o:["Kaziranga","Jim Corbett","Sundarbans"], a:0},
+    {q:"Which organisation launches India's rockets and satellites?", o:["ISRO","NASA","DRDO"], a:0},
+    {q:"Which mountain range with India's tallest peaks lies in the north?", o:["Himalayas","Aravalli","Western Ghats"], a:0},
+    {q:"Which festival do Muslims celebrate by breaking their fast?", o:["Eid","Diwali","Onam"], a:0}
   ],
   "2": [
-    {q:"Which sport is called the 'gentleman's game'?", o:["Cricket","Football","Hockey"], a:0},
-    {q:"How many players are on a cricket team?", o:["11","15","9"], a:0},
-    {q:"Kabaddi originated in which country?", o:["India","China","Japan"], a:0},
-    {q:"Which game do you play on a chessboard?", o:["Chess","Ludo","Carrom"], a:0},
-    {q:"Hitting the ball out of the ground in cricket scores how many runs?", o:["Six","Four","Ten"], a:0},
-    {q:"Which equipment is used in Table Tennis?", o:["Paddle and ball","Bat and ball","Stick and ball"], a:0},
-    {q:"In football, who stops the ball from going into the goal?", o:["Goalkeeper","Striker","Referee"], a:0},
-    {q:"In Kabaddi, two teams of seven players play on a?", o:["Court","Pool","Track"], a:0},
-    {q:"What do athletes do in a marathon?", o:["Run a long distance","Swim","Jump"], a:0},
-    {q:"Which equipment do badminton players hit the shuttlecock with?", o:["Racket","Bat","Stick"], a:0}
+    {q:"Our national emblem is taken from a pillar located at?", o:["Sarnath","Sanchi","Bodh Gaya"], a:0},
+    {q:"What is the capital of Rajasthan?", o:["Jaipur","Jodhpur","Udaipur"], a:0},
+    {q:"The Qutub Minar is located in which city?", o:["Delhi","Agra","Mumbai"], a:0},
+    {q:"Who was India's first Prime Minister?", o:["Jawaharlal Nehru","Mahatma Gandhi","Sardar Patel"], a:0},
+    {q:"Which is the longest river in India?", o:["Ganga","Yamuna","Narmada"], a:0},
+    {q:"Onam is a major festival celebrated in which state?", o:["Kerala","Punjab","Gujarat"], a:0},
+    {q:"Which is India's national aquatic animal?", o:["Ganges River Dolphin","Whale Shark","Gharial"], a:0},
+    {q:"Who was the first Indian to travel to space?", o:["Rakesh Sharma","Kalpana Chawla","Vikram Sarabhai"], a:0},
+    {q:"Which desert is located in Rajasthan?", o:["Thar Desert","Sahara Desert","Gobi Desert"], a:0},
+    {q:"What is the capital of Tamil Nadu?", o:["Chennai","Bengaluru","Hyderabad"], a:0}
   ],
   "3": [
-    {q:"How many players are on a volleyball team on court?", o:["6","11","5"], a:0},
-    {q:"Football's biggest tournament, held every 4 years with many countries, is called the?", o:["World Cup","Premier League","Champions League"], a:0},
-    {q:"What is the name of India's premier T20 cricket league?", o:["IPL","NBA","EPL"], a:0},
-    {q:"How many rings are there in the Olympic symbol?", o:["5","4","6"], a:0},
-    {q:"Which sport did Sachin Tendulkar play?", o:["Cricket","Football","Badminton"], a:0},
-    {q:"In badminton, what do players hit instead of a ball?", o:["Shuttlecock","Puck","Frisbee"], a:0},
-    {q:"Which sport is played at the Wimbledon tournament?", o:["Tennis","Golf","Cricket"], a:0},
-    {q:"In cricket, scoring 100 runs by one batsman in an innings is called a?", o:["Century","Half-century","Duck"], a:0},
-    {q:"Which equipment protects a cricketer's legs while batting?", o:["Pads","Helmet","Gloves"], a:0},
-    {q:"Which Indian city hosted the 2010 Commonwealth Games?", o:["New Delhi","Mumbai","Chennai"], a:0}
+    {q:"How many spokes does the Ashoka Chakra have?", o:["24","12","20"], a:0},
+    {q:"What is the capital of Maharashtra?", o:["Mumbai","Pune","Nagpur"], a:0},
+    {q:"Who built the Taj Mahal?", o:["Shah Jahan","Akbar","Babur"], a:0},
+    {q:"Who was known as the 'Iron Man of India'?", o:["Sardar Vallabhbhai Patel","Bhagat Singh","Subhas Chandra Bose"], a:0},
+    {q:"Which river is called the 'Dakshin Ganga' (Ganga of the South)?", o:["Godavari","Kaveri","Krishna"], a:0},
+    {q:"Pongal, a harvest festival, is celebrated mainly in which state?", o:["Tamil Nadu","Kerala","Karnataka"], a:0},
+    {q:"Which national park in Madhya Pradesh is famous for tigers?", o:["Kanha National Park","Gir National Park","Bandipur National Park"], a:0},
+    {q:"India's Mars mission is called?", o:["Mangalyaan","Chandrayaan","Gaganyaan"], a:0},
+    {q:"Which is the highest mountain peak located entirely within India?", o:["Kanchenjunga","Nanda Devi","K2"], a:0},
+    {q:"What is the capital of West Bengal?", o:["Kolkata","Patna","Ranchi"], a:0}
   ],
   "4": [
-    {q:"Where were the first modern Olympic Games held in 1896?", o:["Athens","Paris","London"], a:0},
-    {q:"Which country has won the most FIFA World Cups?", o:["Brazil","Germany","Argentina"], a:0},
-    {q:"Which sport did Major Dhyan Chand play?", o:["Hockey","Cricket","Football"], a:0},
-    {q:"In cricket, what does LBW stand for?", o:["Leg Before Wicket","Left Ball Wide","Long Ball Wicket"], a:0},
-    {q:"How many players are on a basketball team on court at once?", o:["5","6","7"], a:0},
-    {q:"Which Grand Slam tennis tournament is played on clay courts?", o:["French Open","Wimbledon","US Open"], a:0},
-    {q:"What is a score of zero for a batsman in cricket called?", o:["Duck","Zero","Blank"], a:0},
-    {q:"In chess, which piece moves only diagonally?", o:["Bishop","Rook","Knight"], a:0},
-    {q:"A powerful overhead shot in badminton is called a?", o:["Smash","Serve","Lob"], a:0},
-    {q:"How often are the Summer Olympic Games held?", o:["Every 4 years","Every 2 years","Every year"], a:0}
+    {q:"What is written below the national emblem, meaning 'truth alone triumphs'?", o:["Satyameva Jayate","Vande Mataram","Jai Hind"], a:0},
+    {q:"What is the capital of Karnataka?", o:["Bengaluru","Mysuru","Hubli"], a:0},
+    {q:"Which Delhi monument honours soldiers who died in World War I?", o:["India Gate","Red Fort","Humayun's Tomb"], a:0},
+    {q:"Who wrote India's national anthem?", o:["Rabindranath Tagore","Bankim Chandra Chattopadhyay","Sarojini Naidu"], a:0},
+    {q:"The Indus River originates in which region?", o:["Tibet","Nepal","Bhutan"], a:0},
+    {q:"Which festival marks the birth of Lord Krishna?", o:["Janmashtami","Ram Navami","Mahashivratri"], a:0},
+    {q:"Gir National Park in Gujarat is famous for which animal?", o:["Asiatic Lion","Bengal Tiger","Snow Leopard"], a:0},
+    {q:"Who was the first India-born woman to travel to space?", o:["Kalpana Chawla","Sunita Williams","Rakesh Sharma"], a:0},
+    {q:"Which is the southernmost point of mainland India?", o:["Kanyakumari","Chennai","Kochi"], a:0},
+    {q:"What is the capital of Punjab?", o:["Chandigarh","Amritsar","Ludhiana"], a:0}
   ],
   "5": [
-    {q:"Who is popularly known as the 'God of Cricket' in India?", o:["Sachin Tendulkar","Virat Kohli","MS Dhoni"], a:0},
-    {q:"Which city will host the 2028 Summer Olympics?", o:["Los Angeles","Paris","Tokyo"], a:0},
-    {q:"What is the maximum number of players a football team can field?", o:["11","9","13"], a:0},
-    {q:"In which sport would you perform a 'slam dunk'?", o:["Basketball","Volleyball","Badminton"], a:0},
-    {q:"A bowler taking three wickets on three consecutive balls achieves a?", o:["Hat-trick","Century","Maiden over"], a:0},
-    {q:"How many squares are there on a chessboard?", o:["64","100","81"], a:0},
-    {q:"Which Indian athlete won an Olympic silver medal in weightlifting at Tokyo 2020?", o:["Mirabai Chanu","PV Sindhu","Sania Mirza"], a:0},
-    {q:"Which racket sport is PV Sindhu famous for?", o:["Badminton","Tennis","Squash"], a:0},
-    {q:"When a fielder catches the ball to dismiss a batsman, it is called?", o:["Caught out","Run out","Stumped"], a:0},
-    {q:"How many players from each team are on the field in Kabaddi?", o:["7","11","5"], a:0}
+    {q:"What is India's national song (different from the national anthem)?", o:["Vande Mataram","Jana Gana Mana","Sare Jahan Se Achha"], a:0},
+    {q:"What is the capital of Gujarat?", o:["Gandhinagar","Ahmedabad","Surat"], a:0},
+    {q:"The Sanchi Stupa, an important Buddhist monument, is located in which state?", o:["Madhya Pradesh","Bihar","Uttar Pradesh"], a:0},
+    {q:"Who was the first woman to become President of India?", o:["Pratibha Patil","Indira Gandhi","Droupadi Murmu"], a:0},
+    {q:"The Brahmaputra flows mainly through which Indian state before entering Bangladesh?", o:["Assam","West Bengal","Bihar"], a:0},
+    {q:"Bihu is a major festival of which state?", o:["Assam","Odisha","Manipur"], a:0},
+    {q:"Sundarbans National Park, famous for tigers, is located in which state?", o:["West Bengal","Odisha","Kerala"], a:0},
+    {q:"Chandrayaan-3 successfully landed near which region of the Moon in 2023?", o:["South Pole","North Pole","Equator"], a:0},
+    {q:"Which is the largest state in India by area?", o:["Rajasthan","Madhya Pradesh","Maharashtra"], a:0},
+    {q:"What is the capital of Uttar Pradesh?", o:["Lucknow","Kanpur","Agra"], a:0}
   ],
   "6": [
-    {q:"Which country won the ICC Cricket World Cup in 2011?", o:["India","Australia","Sri Lanka"], a:0},
-    {q:"The Olympic Games were first held in ancient times in which country?", o:["Greece","Italy","Egypt"], a:0},
-    {q:"Which Indian won an individual Olympic gold medal in javelin throw at Tokyo 2020?", o:["Neeraj Chopra","Abhinav Bindra","Milkha Singh"], a:0},
-    {q:"How long is a standard football match, excluding stoppage time?", o:["90 minutes","60 minutes","120 minutes"], a:0},
-    {q:"The 22-yard strip in the centre of a cricket ground is called the?", o:["Pitch","Crease","Boundary"], a:0},
-    {q:"Which sport is played at the US Open, French Open, and Wimbledon?", o:["Tennis","Golf","Badminton"], a:0},
-    {q:"What is the maximum number of clubs a golfer is allowed to carry?", o:["14","10","20"], a:0},
-    {q:"Abhinav Bindra won India's first individual Olympic gold medal in which sport?", o:["Shooting","Wrestling","Boxing"], a:0},
-    {q:"Which country hosted the 2016 Summer Olympics?", o:["Brazil","China","United Kingdom"], a:0},
-    {q:"What is it called when a bowler dismisses three batsmen with three consecutive balls?", o:["Hat-trick","Century","Maiden over"], a:0}
+    {q:"The Lion Capital on our national emblem originally stood atop a pillar built by which emperor?", o:["Ashoka","Akbar","Chandragupta Maurya"], a:0},
+    {q:"What is the capital of Kerala?", o:["Thiruvananthapuram","Kochi","Kozhikode"], a:0},
+    {q:"Hampi, a UNESCO World Heritage site with ancient temple ruins, is in which state?", o:["Karnataka","Odisha","Tamil Nadu"], a:0},
+    {q:"Who is credited with unifying over 500 princely states into India after independence?", o:["Sardar Vallabhbhai Patel","Jawaharlal Nehru","Rajendra Prasad"], a:0},
+    {q:"Which river flows entirely within India and is its longest such river?", o:["Godavari","Ganga","Narmada"], a:0},
+    {q:"Durga Puja is celebrated with great enthusiasm particularly in which state?", o:["West Bengal","Odisha","Bihar"], a:0},
+    {q:"Periyar National Park, known for elephants, is located in which state?", o:["Kerala","Karnataka","Tamil Nadu"], a:0},
+    {q:"Who was the first Indian to win a Nobel Prize?", o:["Rabindranath Tagore","C.V. Raman","Mother Teresa"], a:0},
+    {q:"The Western Ghats run along which coast of India?", o:["Western coast","Eastern coast","Northern border"], a:0},
+    {q:"What is the capital of Telangana?", o:["Hyderabad","Warangal","Vijayawada"], a:0}
   ],
   "7": [
-    {q:"The FIFA World Cup is held every how many years?", o:["4 years","2 years","5 years"], a:0},
-    {q:"Who holds the record for the most international centuries in cricket?", o:["Sachin Tendulkar","Virat Kohli","Ricky Ponting"], a:0},
-    {q:"Which country won the first-ever Cricket World Cup in 1975?", o:["West Indies","England","Australia"], a:0},
-    {q:"In tennis, what is a score of zero called?", o:["Love","Nil","Zero"], a:0},
-    {q:"Which Indian badminton player has won two individual Olympic medals (2016 & 2020)?", o:["PV Sindhu","Saina Nehwal","Sania Mirza"], a:0},
-    {q:"What is the maximum number of players a cricket team can field in an innings?", o:["11","12","10"], a:0},
-    {q:"Which trophy is contested between India and Australia in Test cricket?", o:["Border-Gavaskar Trophy","The Ashes","World Test Championship Cup"], a:0},
-    {q:"The modern Olympic Games were revived by which Frenchman?", o:["Pierre de Coubertin","Jules Rimet","Henri Delaunay"], a:0},
-    {q:"Which sport is associated with the 'Ryder Cup'?", o:["Golf","Tennis","Cricket"], a:0},
-    {q:"In cricket, a ball bowled at the batsman's feet or base of the stumps is called a?", o:["Yorker","Bouncer","Full toss"], a:0}
+    {q:"India's national calendar is based on which era?", o:["Saka era","Vikram era","Gregorian era"], a:0},
+    {q:"What is the capital of Odisha?", o:["Bhubaneswar","Cuttack","Puri"], a:0},
+    {q:"The Konark Sun Temple, shaped like a chariot, is located in which state?", o:["Odisha","Tamil Nadu","Gujarat"], a:0},
+    {q:"Who founded the Mauryan Empire?", o:["Chandragupta Maurya","Ashoka","Bindusara"], a:0},
+    {q:"The Kaveri river is a major water-sharing dispute between which two states?", o:["Tamil Nadu and Karnataka","Kerala and Tamil Nadu","Andhra Pradesh and Telangana"], a:0},
+    {q:"Chhath Puja, dedicated to the Sun God, is widely celebrated in which states?", o:["Bihar and Uttar Pradesh","Punjab and Haryana","Gujarat and Rajasthan"], a:0},
+    {q:"Jim Corbett National Park, India's oldest national park, is located in which state?", o:["Uttarakhand","Uttar Pradesh","Himachal Pradesh"], a:0},
+    {q:"Homi J. Bhabha is regarded as the father of India's?", o:["Nuclear programme","Space programme","Green Revolution"], a:0},
+    {q:"Which Indian state has the longest coastline?", o:["Gujarat","Andhra Pradesh","Tamil Nadu"], a:0},
+    {q:"What is the capital of Assam?", o:["Dispur","Guwahati","Silchar"], a:0}
   ],
   "8": [
-    {q:"Which country has won the most Olympic gold medals overall in history?", o:["United States","Russia/Soviet Union","China"], a:0},
-    {q:"Who holds the men's 100m world record (9.58 seconds)?", o:["Usain Bolt","Carl Lewis","Justin Gatlin"], a:0},
-    {q:"In which year did India win its first Cricket World Cup?", o:["1983","1975","2011"], a:0},
-    {q:"Which of these is NOT a tennis Grand Slam tournament?", o:["Wimbledon","French Open","All England Badminton Championship"], a:2},
-    {q:"Who captained India to victory in the 1983 Cricket World Cup?", o:["Kapil Dev","Sunil Gavaskar","MS Dhoni"], a:0},
-    {q:"What is the maximum number of overs per side in a One Day International (ODI)?", o:["50","20","60"], a:0},
-    {q:"In chess, when the king is under direct attack but can still escape, it is called?", o:["Check","Checkmate","Stalemate"], a:0},
-    {q:"Which Indian wrestler became the first Indian to win two individual Olympic medals (bronze 2008, silver 2012)?", o:["Sushil Kumar","Yogeshwar Dutt","Bajrang Punia"], a:0},
-    {q:"What is the approximate standard distance of a marathon race?", o:["42.195 km","21 km","100 km"], a:0},
-    {q:"What is the highest sporting honour given by the Government of India?", o:["Major Dhyan Chand Khel Ratna Award","Arjuna Award","Padma Shri"], a:0}
+    {q:"In which year was 'Jana Gana Mana' first sung publicly?", o:["1911","1857","1947"], a:0},
+    {q:"What is the capital of Himachal Pradesh?", o:["Shimla","Manali","Dharamshala"], a:0},
+    {q:"Which UNESCO site was built by Akbar as his capital city near Agra?", o:["Fatehpur Sikri","Humayun's Tomb","Agra Fort"], a:0},
+    {q:"Who is known as the architect of the Indian Constitution?", o:["Dr. B.R. Ambedkar","Jawaharlal Nehru","Rajendra Prasad"], a:0},
+    {q:"The Tehri Dam, one of India's tallest dams, is built on which river?", o:["Bhagirathi","Yamuna","Ganga"], a:0},
+    {q:"Which Sikh festival celebrates the formation of the Khalsa Panth?", o:["Baisakhi","Gurpurab","Lohri"], a:0},
+    {q:"Project Tiger, a major tiger conservation programme, was launched in which year?", o:["1973","1947","2000"], a:0},
+    {q:"India's first satellite, launched in 1975, was named after which ancient Indian astronomer?", o:["Aryabhata","Bhaskara","Varahamihira"], a:0},
+    {q:"Which is the highest mountain peak located entirely within India?", o:["Kanchenjunga","Nanda Devi","K2"], a:0},
+    {q:"What is the capital of Jharkhand?", o:["Ranchi","Jamshedpur","Dhanbad"], a:0}
   ]
 };
 
@@ -635,8 +636,8 @@ let currentStudentName = '';
 let currentQIndex = 0;
 let tabSwitchCount = 0;
 let timerInterval = null;
-const QUESTION_SECONDS = 15;
-const QUESTION_SECONDS_BY_CLASS = { "UKG": 20, "1": 20 };
+const QUESTION_SECONDS = 20;
+const QUESTION_SECONDS_BY_CLASS = { "UKG": 30, "1": 30, "2": 25 };
 
 function getQuestionSeconds(cls){
   return QUESTION_SECONDS_BY_CLASS[cls] || QUESTION_SECONDS;
@@ -694,10 +695,22 @@ startBtn.addEventListener('click', async ()=>{
   startBtn.textContent = 'Checking…';
   try{
     if(API_URL.indexOf('PASTE_YOUR') !== 0){
-      const checkUrl = API_URL + '?name=' + encodeURIComponent(name) + '&className=' + encodeURIComponent(cls);
-      const res = await fetch(checkUrl);
+      // Registers the attempt on the server the moment the quiz starts (not
+      // when it finishes). If this name+class already has a row — started
+      // OR completed — it's blocked here, so closing the tab mid-quiz and
+      // retrying with full knowledge of the questions no longer works.
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: {'Content-Type': 'text/plain;charset=utf-8'},
+        body: JSON.stringify({
+          action: 'start',
+          studentName: name,
+          className: cls,
+          total: (QUIZZES[cls] || []).length
+        })
+      });
       const data = await res.json();
-      if(data.ok && data.exists){
+      if(data.error === 'duplicate'){
         setupWarn.textContent = 'A submission already exists for this name & class. Please check with your teacher if this is a mistake.';
         setupWarn.style.display = 'block';
         startBtn.disabled = false;
@@ -725,7 +738,7 @@ startBtn.addEventListener('click', async ()=>{
 
 function renderQuestion(name, cls, qi){
   quizWho.textContent = name + ' — ' + classLabel(cls);
-  document.getElementById('headerSub').textContent = classLabel(cls) + ' — Sports & Games';
+  document.getElementById('headerSub').textContent = classLabel(cls) + ' — Amazing India';
   quizProg.textContent = 'Question ' + (qi+1) + ' of ' + currentQuestions.length;
   quizWarn.style.display = 'none';
 
