@@ -397,7 +397,7 @@
     <div class="chalk-line"></div>
     <h1>The Great Saturday Quiz</h1>
     <p id="headerSub"></p>
-    <div class="theme-badge">This Week: 🌍 Amazing India — 29 Aug</div>
+    <div class="theme-badge">This Week: 🌌 Space & Beyond — 05 Sep</div>
   </header>
 
   <!-- SETUP -->
@@ -459,116 +459,116 @@
 // Point this at your deployed Google Apps Script Web App URL.
 // See APPS_SCRIPT_SETUP.md for how to get this URL — it will look like:
 // "https://script.google.com/macros/s/AKfycb.../exec"
-const API_URL = "https://script.google.com/macros/s/AKfycbyhqskE5INvwaCkCXj0bgysl979ZOUw5hIL9BpSnO4_y2YrjgbprrcovuVf7sZaEEm1qA/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzH3MA7th1wJYm4vDJDLYy6QoLb__7bCAVYucmkatFibxJR9A3sAfHF_reYHvTNLfFG/exec";
 
 const QUIZZES = {
   "UKG": [
-    {q:"What is our national bird?", o:["Peacock","Crow","Sparrow"], a:0},
-    {q:"What is our national animal?", o:["Tiger","Cat","Dog"], a:0},
-    {q:"Which famous white monument is in Agra?", o:["Taj Mahal","Red Fort","Qutub Minar"], a:0},
-    {q:"Which animal has black and orange stripes and lives in Indian forests?", o:["Tiger","Elephant","Rabbit"], a:0},
-    {q:"Which festival is called the 'festival of lights'?", o:["Diwali","Holi","Eid"], a:0},
-    {q:"Which festival do we play with colours?", o:["Holi","Diwali","Christmas"], a:0},
-    {q:"What is the name of our country?", o:["India","China","Japan"], a:0},
-    {q:"What is our national flower?", o:["Lotus","Rose","Sunflower"], a:0},
-    {q:"Which is taller — a mountain or a hill?", o:["Mountain","Hill","They are the same"], a:0},
-    {q:"Where do we go to see wild animals safely?", o:["Zoo","School","Kitchen"], a:0}
+    {q:"Which one do we see in the sky at night?", o:["Moon","Sun","Cloud"], a:0},
+    {q:"What gives us light and heat during the day?", o:["Sun","Moon","Star"], a:0},
+    {q:"What do we call a person who travels to space?", o:["Astronaut","Doctor","Farmer"], a:0},
+    {q:"Which shape is the Sun?", o:["Round","Square","Triangle"], a:0},
+    {q:"What do we call the huge vehicle that goes to space?", o:["Rocket","Car","Bicycle"], a:0},
+    {q:"Is the Moon bigger or smaller than the Sun?", o:["Smaller","Bigger","Same size"], a:0},
+    {q:"What colour is the sky during a clear day?", o:["Blue","Green","Red"], a:0},
+    {q:"Which twinkling little lights do we see in the night sky?", o:["Stars","Trees","Flowers"], a:0},
+    {q:"Which planet do we live on?", o:["Earth","Mars","Moon"], a:0},
+    {q:"What do astronauts wear to breathe in space?", o:["Space suit","Raincoat","Cap"], a:0}
   ],
   "1": [
-    {q:"What is our national tree?", o:["Banyan","Mango","Neem"], a:0},
-    {q:"What is the capital of India?", o:["New Delhi","Mumbai","Chennai"], a:0},
-    {q:"The Red Fort is located in which city?", o:["Delhi","Agra","Jaipur"], a:0},
-    {q:"Who is known as 'Bapu'?", o:["Mahatma Gandhi","Jawaharlal Nehru","B.R. Ambedkar"], a:0},
-    {q:"Which river flows through Varanasi and is considered holy?", o:["Ganga","Yamuna","Godavari"], a:0},
-    {q:"Which harvest festival is popular in Punjab?", o:["Baisakhi","Diwali","Holi"], a:0},
-    {q:"Which national park in Assam is famous for the one-horned rhinoceros?", o:["Kaziranga","Jim Corbett","Sundarbans"], a:0},
-    {q:"Which organisation launches India's rockets and satellites?", o:["ISRO","NASA","DRDO"], a:0},
-    {q:"Which mountain range with India's tallest peaks lies in the north?", o:["Himalayas","Aravalli","Western Ghats"], a:0},
-    {q:"Which festival do Muslims celebrate by breaking their fast?", o:["Eid","Diwali","Onam"], a:0}
+    {q:"How many planets are there in our solar system?", o:["8","5","10"], a:0},
+    {q:"Which planet is closest to the Sun?", o:["Mercury","Earth","Venus"], a:0},
+    {q:"Which planet do we live on?", o:["Earth","Mars","Jupiter"], a:0},
+    {q:"What is the name of Earth's only natural satellite?", o:["Moon","Sun","Star"], a:0},
+    {q:"Who was the first man to walk on the Moon?", o:["Neil Armstrong","Rakesh Sharma","Yuri Gagarin"], a:0},
+    {q:"What do we call a huge ball of hot gas that shines in the sky, like our Sun?", o:["Star","Planet","Comet"], a:0},
+    {q:"Which vehicle takes astronauts into space?", o:["Rocket","Aeroplane","Submarine"], a:0},
+    {q:"Is the Sun a planet or a star?", o:["Star","Planet","Moon"], a:0},
+    {q:"Which planet is known as the 'Red Planet'?", o:["Mars","Venus","Jupiter"], a:0},
+    {q:"What do we call an object that orbits a star, like Earth does?", o:["Planet","Comet","Asteroid"], a:0}
   ],
   "2": [
-    {q:"Our national emblem is taken from a pillar located at?", o:["Sarnath","Sanchi","Bodh Gaya"], a:0},
-    {q:"What is the capital of Rajasthan?", o:["Jaipur","Jodhpur","Udaipur"], a:0},
-    {q:"The Qutub Minar is located in which city?", o:["Delhi","Agra","Mumbai"], a:0},
-    {q:"Who was India's first Prime Minister?", o:["Jawaharlal Nehru","Mahatma Gandhi","Sardar Patel"], a:0},
-    {q:"Which is the longest river in India?", o:["Ganga","Yamuna","Narmada"], a:0},
-    {q:"Onam is a major festival celebrated in which state?", o:["Kerala","Punjab","Gujarat"], a:0},
-    {q:"Which is India's national aquatic animal?", o:["Ganges River Dolphin","Whale Shark","Gharial"], a:0},
-    {q:"Who was the first Indian to travel to space?", o:["Rakesh Sharma","Kalpana Chawla","Vikram Sarabhai"], a:0},
-    {q:"Which desert is located in Rajasthan?", o:["Thar Desert","Sahara Desert","Gobi Desert"], a:0},
-    {q:"What is the capital of Tamil Nadu?", o:["Chennai","Bengaluru","Hyderabad"], a:0}
+    {q:"Which is the largest planet in our solar system?", o:["Jupiter","Saturn","Earth"], a:0},
+    {q:"Which planet has beautiful rings around it?", o:["Saturn","Mars","Mercury"], a:0},
+    {q:"Which is the smallest planet in our solar system?", o:["Mercury","Mars","Venus"], a:0},
+    {q:"What is a group of stars forming a pattern called?", o:["Constellation","Galaxy","Nebula"], a:0},
+    {q:"Which organisation is India's space agency?", o:["ISRO","NASA","DRDO"], a:0},
+    {q:"What do we call the path a planet takes around the Sun?", o:["Orbit","Rotation","Track"], a:0},
+    {q:"Which planet is extremely hot because of its thick atmosphere?", o:["Venus","Mercury","Mars"], a:0},
+    {q:"What is the name of the galaxy that contains our solar system?", o:["Milky Way","Andromeda","Orion"], a:0},
+    {q:"What do we call a rocky object that falls to Earth from space?", o:["Meteorite","Comet","Satellite"], a:0},
+    {q:"Who was the first Indian to travel to space?", o:["Rakesh Sharma","Kalpana Chawla","Vikram Sarabhai"], a:0}
   ],
   "3": [
-    {q:"How many spokes does the Ashoka Chakra have?", o:["24","12","20"], a:0},
-    {q:"What is the capital of Maharashtra?", o:["Mumbai","Pune","Nagpur"], a:0},
-    {q:"Who built the Taj Mahal?", o:["Shah Jahan","Akbar","Babur"], a:0},
-    {q:"Who was known as the 'Iron Man of India'?", o:["Sardar Vallabhbhai Patel","Bhagat Singh","Subhas Chandra Bose"], a:0},
-    {q:"Which river is called the 'Dakshin Ganga' (Ganga of the South)?", o:["Godavari","Kaveri","Krishna"], a:0},
-    {q:"Pongal, a harvest festival, is celebrated mainly in which state?", o:["Tamil Nadu","Kerala","Karnataka"], a:0},
-    {q:"Which national park in Madhya Pradesh is famous for tigers?", o:["Kanha National Park","Gir National Park","Bandipur National Park"], a:0},
-    {q:"India's Mars mission is called?", o:["Mangalyaan","Chandrayaan","Gaganyaan"], a:0},
-    {q:"Which is the highest mountain peak located entirely within India?", o:["Kanchenjunga","Nanda Devi","K2"], a:0},
-    {q:"What is the capital of West Bengal?", o:["Kolkata","Patna","Ranchi"], a:0}
+    {q:"How long does it take Earth to complete one orbit around the Sun?", o:["365 days","30 days","24 hours"], a:0},
+    {q:"How long does it take Earth to complete one rotation on its axis?", o:["24 hours","365 days","1 hour"], a:0},
+    {q:"Which is the hottest planet in our solar system?", o:["Venus","Mercury","Mars"], a:0},
+    {q:"What is the name of India's Moon mission launched in 2023?", o:["Chandrayaan-3","Mangalyaan","Gaganyaan"], a:0},
+    {q:"What do astronauts experience in space due to lack of gravity?", o:["Weightlessness","Extra weight","Nothing changes"], a:0},
+    {q:"Which planet is called Earth's 'twin' because of its similar size?", o:["Venus","Mars","Mercury"], a:0},
+    {q:"What do we call a streaking object made of ice and dust seen in the sky?", o:["Comet","Star","Planet"], a:0},
+    {q:"What do we call a large space rock found mostly in a belt between Mars and Jupiter?", o:["Asteroid","Meteor","Satellite"], a:0},
+    {q:"Which is the outermost planet in our solar system?", o:["Neptune","Uranus","Pluto"], a:0},
+    {q:"What is the name of India's first satellite, launched in 1975?", o:["Aryabhata","Bhaskara","Rohini"], a:0}
   ],
   "4": [
-    {q:"What is written below the national emblem, meaning 'truth alone triumphs'?", o:["Satyameva Jayate","Vande Mataram","Jai Hind"], a:0},
-    {q:"What is the capital of Karnataka?", o:["Bengaluru","Mysuru","Hubli"], a:0},
-    {q:"Which Delhi monument honours soldiers who died in World War I?", o:["India Gate","Red Fort","Humayun's Tomb"], a:0},
-    {q:"Who wrote India's national anthem?", o:["Rabindranath Tagore","Bankim Chandra Chattopadhyay","Sarojini Naidu"], a:0},
-    {q:"The Indus River originates in which region?", o:["Tibet","Nepal","Bhutan"], a:0},
-    {q:"Which festival marks the birth of Lord Krishna?", o:["Janmashtami","Ram Navami","Mahashivratri"], a:0},
-    {q:"Gir National Park in Gujarat is famous for which animal?", o:["Asiatic Lion","Bengal Tiger","Snow Leopard"], a:0},
-    {q:"Who was the first India-born woman to travel to space?", o:["Kalpana Chawla","Sunita Williams","Rakesh Sharma"], a:0},
-    {q:"Which is the southernmost point of mainland India?", o:["Kanyakumari","Chennai","Kochi"], a:0},
-    {q:"What is the capital of Punjab?", o:["Chandigarh","Amritsar","Ludhiana"], a:0}
+    {q:"Who was the first India-born woman to travel to space?", o:["Kalpana Chawla","Sunita Williams","Sania Mirza"], a:0},
+    {q:"Which planet is known as the 'Morning Star' or 'Evening Star' for its brightness?", o:["Venus","Mercury","Mars"], a:0},
+    {q:"What is the name of India's crewed spaceflight mission, currently in development?", o:["Gaganyaan","Chandrayaan","Mangalyaan"], a:0},
+    {q:"What is a light-year used to measure?", o:["Distance","Time","Weight"], a:0},
+    {q:"Which planet has the Great Red Spot, a giant storm?", o:["Jupiter","Saturn","Mars"], a:0},
+    {q:"What do we call a person trained to travel and work in space?", o:["Astronaut","Pilot","Scientist"], a:0},
+    {q:"What is the name of the space laboratory orbiting Earth where astronauts live and work?", o:["International Space Station","Hubble Telescope","Sputnik"], a:0},
+    {q:"Which planet takes the longest to orbit the Sun?", o:["Neptune","Mercury","Earth"], a:0},
+    {q:"What do we call the imaginary line Earth spins around?", o:["Axis","Orbit","Equator"], a:0},
+    {q:"Which spacecraft first landed humans on the Moon in 1969?", o:["Apollo 11","Sputnik 1","Voyager 1"], a:0}
   ],
   "5": [
-    {q:"What is India's national song (different from the national anthem)?", o:["Vande Mataram","Jana Gana Mana","Sare Jahan Se Achha"], a:0},
-    {q:"What is the capital of Gujarat?", o:["Gandhinagar","Ahmedabad","Surat"], a:0},
-    {q:"The Sanchi Stupa, an important Buddhist monument, is located in which state?", o:["Madhya Pradesh","Bihar","Uttar Pradesh"], a:0},
-    {q:"Who was the first woman to become President of India?", o:["Pratibha Patil","Indira Gandhi","Droupadi Murmu"], a:0},
-    {q:"The Brahmaputra flows mainly through which Indian state before entering Bangladesh?", o:["Assam","West Bengal","Bihar"], a:0},
-    {q:"Bihu is a major festival of which state?", o:["Assam","Odisha","Manipur"], a:0},
-    {q:"Sundarbans National Park, famous for tigers, is located in which state?", o:["West Bengal","Odisha","Kerala"], a:0},
-    {q:"Chandrayaan-3 successfully landed near which region of the Moon in 2023?", o:["South Pole","North Pole","Equator"], a:0},
-    {q:"Which is the largest state in India by area?", o:["Rajasthan","Madhya Pradesh","Maharashtra"], a:0},
-    {q:"What is the capital of Uttar Pradesh?", o:["Lucknow","Kanpur","Agra"], a:0}
+    {q:"What is a black hole?", o:["A region where gravity is so strong nothing can escape","A hole in the ground","A type of star"], a:0},
+    {q:"What is the name of our galaxy?", o:["Milky Way","Andromeda","Whirlpool"], a:0},
+    {q:"Chandrayaan-3 landed near which region of the Moon in 2023?", o:["South Pole","North Pole","Equator"], a:0},
+    {q:"Who was the first human to travel into space?", o:["Yuri Gagarin","Neil Armstrong","Rakesh Sharma"], a:0},
+    {q:"What do we call a huge collection of billions of stars, gas, and dust held together by gravity?", o:["Galaxy","Solar System","Nebula"], a:0},
+    {q:"Which NASA telescope has captured famous images of deep space?", o:["Hubble Space Telescope","Voyager","Sputnik"], a:0},
+    {q:"What is India's planned first human spaceflight mission called?", o:["Gaganyaan","Mangalyaan","Aditya-L1"], a:0},
+    {q:"What is the name of India's mission to study the Sun, launched in 2023?", o:["Aditya-L1","Chandrayaan-3","Mangalyaan"], a:0},
+    {q:"How many moons does Earth have?", o:["1","2","0"], a:0},
+    {q:"What is a supernova?", o:["The explosion of a dying star","A new star being born","A type of planet"], a:0}
   ],
   "6": [
-    {q:"The Lion Capital on our national emblem originally stood atop a pillar built by which emperor?", o:["Ashoka","Akbar","Chandragupta Maurya"], a:0},
-    {q:"What is the capital of Kerala?", o:["Thiruvananthapuram","Kochi","Kozhikode"], a:0},
-    {q:"Hampi, a UNESCO World Heritage site with ancient temple ruins, is in which state?", o:["Karnataka","Odisha","Tamil Nadu"], a:0},
-    {q:"Who is credited with unifying over 500 princely states into India after independence?", o:["Sardar Vallabhbhai Patel","Jawaharlal Nehru","Rajendra Prasad"], a:0},
-    {q:"Which river flows entirely within India and is its longest such river?", o:["Godavari","Ganga","Narmada"], a:0},
-    {q:"Durga Puja is celebrated with great enthusiasm particularly in which state?", o:["West Bengal","Odisha","Bihar"], a:0},
-    {q:"Periyar National Park, known for elephants, is located in which state?", o:["Kerala","Karnataka","Tamil Nadu"], a:0},
-    {q:"Who was the first Indian to win a Nobel Prize?", o:["Rabindranath Tagore","C.V. Raman","Mother Teresa"], a:0},
-    {q:"The Western Ghats run along which coast of India?", o:["Western coast","Eastern coast","Northern border"], a:0},
-    {q:"What is the capital of Telangana?", o:["Hyderabad","Warangal","Vijayawada"], a:0}
+    {q:"Who was the first Indian-origin woman to travel to space?", o:["Kalpana Chawla","Sunita Williams","Ritu Karidhal"], a:0},
+    {q:"What is the name of India's Mars orbiter mission, launched in 2013?", o:["Mangalyaan","Chandrayaan","Gaganyaan"], a:0},
+    {q:"What do we call a star that suddenly brightens then fades, marking the death of a massive star?", o:["Supernova","Nebula","Pulsar"], a:0},
+    {q:"What is the name of the force that keeps planets in orbit around the Sun?", o:["Gravity","Magnetism","Friction"], a:0},
+    {q:"Which planet is tilted on its side and has a unique blue-green colour?", o:["Uranus","Neptune","Saturn"], a:0},
+    {q:"Who is known as India's 'Rocket Woman' for her role in the Chandrayaan and Mangalyaan missions?", o:["Ritu Karidhal","Kalpana Chawla","Tessy Thomas"], a:0},
+    {q:"According to the leading scientific theory, what event is believed to have started the universe?", o:["Big Bang","Black Hole","Big Crunch"], a:0},
+    {q:"Which planet has the most extensive ring system in our solar system?", o:["Saturn","Jupiter","Uranus"], a:0},
+    {q:"Which ISRO launch vehicle is designed to carry heavier, geosynchronous payloads?", o:["GSLV","PSLV","SLV"], a:0},
+    {q:"What is the term for a very massive star's final collapsed state?", o:["Black hole","White dwarf","Red giant"], a:0}
   ],
   "7": [
-    {q:"India's national calendar is based on which era?", o:["Saka era","Vikram era","Gregorian era"], a:0},
-    {q:"What is the capital of Odisha?", o:["Bhubaneswar","Cuttack","Puri"], a:0},
-    {q:"The Konark Sun Temple, shaped like a chariot, is located in which state?", o:["Odisha","Tamil Nadu","Gujarat"], a:0},
-    {q:"Who founded the Mauryan Empire?", o:["Chandragupta Maurya","Ashoka","Bindusara"], a:0},
-    {q:"The Kaveri river is a major water-sharing dispute between which two states?", o:["Tamil Nadu and Karnataka","Kerala and Tamil Nadu","Andhra Pradesh and Telangana"], a:0},
-    {q:"Chhath Puja, dedicated to the Sun God, is widely celebrated in which states?", o:["Bihar and Uttar Pradesh","Punjab and Haryana","Gujarat and Rajasthan"], a:0},
-    {q:"Jim Corbett National Park, India's oldest national park, is located in which state?", o:["Uttarakhand","Uttar Pradesh","Himachal Pradesh"], a:0},
-    {q:"Homi J. Bhabha is regarded as the father of India's?", o:["Nuclear programme","Space programme","Green Revolution"], a:0},
-    {q:"Which Indian state has the longest coastline?", o:["Gujarat","Andhra Pradesh","Tamil Nadu"], a:0},
-    {q:"What is the capital of Assam?", o:["Dispur","Guwahati","Silchar"], a:0}
+    {q:"Which Indian mission made India the fourth country to land on the Moon?", o:["Chandrayaan-3","Chandrayaan-2","Mangalyaan"], a:0},
+    {q:"What is the name of the theory that explains the origin and expansion of the universe?", o:["Big Bang Theory","String Theory","Relativity Theory"], a:0},
+    {q:"Who is considered the 'father of India's space programme'?", o:["Vikram Sarabhai","Homi Bhabha","APJ Abdul Kalam"], a:0},
+    {q:"What do we call a region in space where gravity is so strong that not even light can escape?", o:["Black hole","Nebula","Quasar"], a:0},
+    {q:"Which planet is the only one not named after a Roman or Greek god?", o:["Earth","Mars","Venus"], a:0},
+    {q:"What is the name of India's reusable launch vehicle technology demonstrator?", o:["RLV-TD","Gaganyaan","Aditya-L1"], a:0},
+    {q:"What do astronomers call the study of celestial objects and phenomena?", o:["Astronomy","Astrology","Geology"], a:0},
+    {q:"Which NASA spacecraft, launched in 1977, has now travelled beyond our solar system?", o:["Voyager 1","Apollo 11","Sputnik 1"], a:0},
+    {q:"What is the name of India's mission to send an orbiter to study the Sun?", o:["Aditya-L1","Chandrayaan-3","Mangalyaan"], a:0},
+    {q:"What is the term for a cloud of gas and dust in space where new stars are born?", o:["Nebula","Galaxy","Asteroid belt"], a:0}
   ],
   "8": [
-    {q:"In which year was 'Jana Gana Mana' first sung publicly?", o:["1911","1857","1947"], a:0},
-    {q:"What is the capital of Himachal Pradesh?", o:["Shimla","Manali","Dharamshala"], a:0},
-    {q:"Which UNESCO site was built by Akbar as his capital city near Agra?", o:["Fatehpur Sikri","Humayun's Tomb","Agra Fort"], a:0},
-    {q:"Who is known as the architect of the Indian Constitution?", o:["Dr. B.R. Ambedkar","Jawaharlal Nehru","Rajendra Prasad"], a:0},
-    {q:"The Tehri Dam, one of India's tallest dams, is built on which river?", o:["Bhagirathi","Yamuna","Ganga"], a:0},
-    {q:"Which Sikh festival celebrates the formation of the Khalsa Panth?", o:["Baisakhi","Gurpurab","Lohri"], a:0},
-    {q:"Project Tiger, a major tiger conservation programme, was launched in which year?", o:["1973","1947","2000"], a:0},
-    {q:"India's first satellite, launched in 1975, was named after which ancient Indian astronomer?", o:["Aryabhata","Bhaskara","Varahamihira"], a:0},
-    {q:"Which is the highest mountain peak located entirely within India?", o:["Kanchenjunga","Nanda Devi","K2"], a:0},
-    {q:"What is the capital of Jharkhand?", o:["Ranchi","Jamshedpur","Dhanbad"], a:0}
+    {q:"Who is known as India's 'Rocket Woman', credited for her role in the Mangalyaan and Chandrayaan-2 missions?", o:["Ritu Karidhal","Kalpana Chawla","Tessy Thomas"], a:0},
+    {q:"What is the boundary around a black hole beyond which nothing can escape called?", o:["Event horizon","Singularity","Photon sphere"], a:0},
+    {q:"Which ISRO centre in Thiruvananthapuram, named after the father of India's space programme, focuses on launch vehicles?", o:["Vikram Sarabhai Space Centre","Satish Dhawan Space Centre","U R Rao Satellite Centre"], a:0},
+    {q:"From which ISRO centre in Sriharikota are most Indian rockets launched?", o:["Satish Dhawan Space Centre","Vikram Sarabhai Space Centre","ISRO Headquarters"], a:0},
+    {q:"Which spacecraft made India the first country to reach Mars orbit on its very first attempt?", o:["Mangalyaan (Mars Orbiter Mission)","Chandrayaan-1","Gaganyaan"], a:0},
+    {q:"What is at the centre of most galaxies, including the Milky Way?", o:["A supermassive black hole","A giant star","A planet"], a:0},
+    {q:"How many major planets are there in our solar system since Pluto was reclassified in 2006?", o:["8","9","10"], a:0},
+    {q:"What is the term for the moment a rocket separates from a spent launch stage?", o:["Stage separation","Ignition","Splashdown"], a:0},
+    {q:"What is the name of India's mission being developed to send astronauts into orbit?", o:["Gaganyaan","Aditya-L1","Chandrayaan-3"], a:0},
+    {q:"What is a light-year?", o:["The distance light travels in one year","The time it takes for a year to pass","The brightness of a star"], a:0}
   ]
 };
 
@@ -636,8 +636,8 @@ let currentStudentName = '';
 let currentQIndex = 0;
 let tabSwitchCount = 0;
 let timerInterval = null;
-const QUESTION_SECONDS = 20;
-const QUESTION_SECONDS_BY_CLASS = { "UKG": 30, "1": 30, "2": 25 };
+const QUESTION_SECONDS = 25;
+const QUESTION_SECONDS_BY_CLASS = { "UKG": 40, "1": 40, "2": 35 };
 
 function getQuestionSeconds(cls){
   return QUESTION_SECONDS_BY_CLASS[cls] || QUESTION_SECONDS;
@@ -738,7 +738,7 @@ startBtn.addEventListener('click', async ()=>{
 
 function renderQuestion(name, cls, qi){
   quizWho.textContent = name + ' — ' + classLabel(cls);
-  document.getElementById('headerSub').textContent = classLabel(cls) + ' — Amazing India';
+  document.getElementById('headerSub').textContent = classLabel(cls) + ' — Space & Beyond';
   quizProg.textContent = 'Question ' + (qi+1) + ' of ' + currentQuestions.length;
   quizWarn.style.display = 'none';
 
