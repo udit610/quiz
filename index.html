@@ -626,7 +626,7 @@
     <p id="headerSub"></p>
 
     <div class="theme-badge">
-      This Week: 🌎 Famous Places & Wonders of the World — 19 Sep
+      This Week: 💡 Inventions That Changed the World — 26 Sep
     </div>
 
   </header>
@@ -844,178 +844,211 @@ const API_URL =
    QUIZ QUESTIONS
    ============================================================ */
 
-const LANDMARK_IMAGES = {
+const QUESTION_IMAGES = {
 
-  "ajanta":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Ajanta_%2863%29.jpg/500px-Ajanta_%2863%29.jpg",
+  "airliner":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/United_A320_N405UA_at_BOS_%2833787222465%29.jpg/500px-United_A320_N405UA_at_BOS_%2833787222465%29.jpg",
 
-  "alexandria":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Lighthouse_-_Thiersch.png/500px-Lighthouse_-_Thiersch.png",
+  "aryabhata":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Aryabhatta_of_Bihar.jpg/500px-Aryabhatta_of_Bihar.jpg",
 
-  "amazon":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Amazon_Rainforest.jpg/500px-Amazon_Rainforest.jpg",
+  "babbage":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Charles_Babbage_-_1860.jpg/500px-Charles_Babbage_-_1860.jpg",
 
-  "angel":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/SaltoAngel1.jpg/500px-SaltoAngel1.jpg",
+  "bell":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Alexander_Graham_Bell_1895_NPG_77_363.jpg/500px-Alexander_Graham_Bell_1895_NPG_77_363.jpg",
 
-  "angkor":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Angkor_Wat.jpg/500px-Angkor_Wat.jpg",
+  "benz":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Benz_Patent_Motorwagen_1886.jpg/500px-Benz_Patent_Motorwagen_1886.jpg",
 
-  "antarctica":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Ice-and-mountains.jpg/500px-Ice-and-mountains.jpg",
+  "bernerslee":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Tim_Berners-Lee_at_the_2025_Web_Summit_%28Cropped%29.jpg/500px-Tim_Berners-Lee_at_the_2025_Web_Summit_%28Cropped%29.jpg",
 
-  "babylon":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Hanging_Gardens_of_Babylon.jpg/500px-Hanging_Gardens_of_Babylon.jpg",
+  "bicycle":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Left_side_of_Flying_Pigeon.jpg/500px-Left_side_of_Flying_Pigeon.jpg",
 
-  "baikal":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Lake_Baikal_I_%2830000703600%29.jpg/500px-Lake_Baikal_I_%2830000703600%29.jpg",
+  "bose":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/J.C.Bose.JPG/500px-J.C.Bose.JPG",
 
-  "bigben":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Elizabeth_Tower_and_the_north_front_of_the_Palace_of_Westminster%2C_London.jpg/500px-Elizabeth_Tower_and_the_north_front_of_the_Palace_of_Westminster%2C_London.jpg",
+  "braille":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Reading_Braille.jpg/500px-Reading_Braille.jpg",
 
-  "burj":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Burj_Khalifa_%2816260269606%29.jpg/500px-Burj_Khalifa_%2816260269606%29.jpg",
+  "bullockcart":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Bullock_cart_in_Punjab%2C_India.jpg/500px-Bullock_cart_in_Punjab%2C_India.jpg",
 
-  "causeway":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Causeway-code_poet-4.jpg/500px-Causeway-code_poet-4.jpg",
+  "camera":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/LEI0440_Leica_IIIf_chrom_-_Sn._580566_1951-52-M39_Blitzsynchron_front_view-6531_hf-.jpg/330px-LEI0440_Leica_IIIf_chrom_-_Sn._580566_1951-52-M39_Blitzsynchron_front_view-6531_hf-.jpg",
 
-  "chichen":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Chichen_Itza_3.jpg/500px-Chichen_Itza_3.jpg",
+  "candle":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/LA2_Skultuna_kontorsljusstake.jpg/500px-LA2_Skultuna_kontorsljusstake.jpg",
 
-  "christ":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Christ_the_Redeemer_-_Cristo_Redentor.jpg/500px-Christ_the_Redeemer_-_Cristo_Redentor.jpg",
+  "clock":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/2010-07-20_Black_windup_alarm_clock_face.jpg/330px-2010-07-20_Black_windup_alarm_clock_face.jpg",
 
-  "colosseum":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Colosseo_2020.jpg/500px-Colosseo_2020.jpg",
+  "compass":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/2016_Busola.JPG/500px-2016_Busola.JPG",
 
-  "darvaza":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Darvasa_gas_crater_panorama.jpg/500px-Darvasa_gas_crater_panorama.jpg",
+  "curie":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Marie_Curie_c._1920s.jpg/500px-Marie_Curie_c._1920s.jpg",
 
-  "deadsea":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Dead_sea_newspaper.jpg/500px-Dead_sea_newspaper.jpg",
+  "dynatac":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/2007Computex_e21Forum-MartinCooper.jpg/500px-2007Computex_e21Forum-MartinCooper.jpg",
 
-  "eiffel":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Tour_Eiffel_Wikimedia_Commons.jpg/500px-Tour_Eiffel_Wikimedia_Commons.jpg",
+  "edison":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Thomas_Edison2.jpg/500px-Thomas_Edison2.jpg",
 
-  "everest":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Mt._Everest_from_Gokyo_Ri_November_5%2C_2012.jpg/500px-Mt._Everest_from_Gokyo_Ri_November_5%2C_2012.jpg",
+  "fan":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Ventilatore_a_soffitto_%283%29.png/500px-Ventilatore_a_soffitto_%283%29.png",
 
-  "gateway":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Mumbai_03-2016_30_Gateway_of_India.jpg/500px-Mumbai_03-2016_30_Gateway_of_India.jpg",
+  "faraday":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Michael_Faraday_sitting_crop.jpg/500px-Michael_Faraday_sitting_crop.jpg",
 
-  "goldentemple":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/The_Golden_Temple_of_Amrithsar_7.jpg/500px-The_Golden_Temple_of_Amrithsar_7.jpg",
+  "fleming":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Synthetic_Production_of_Penicillin_TR1468.jpg/500px-Synthetic_Production_of_Penicillin_TR1468.jpg",
 
-  "goldengate":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Golden_Gate_Bridge_as_seen_from_Battery_East.jpg/500px-Golden_Gate_Bridge_as_seen_from_Battery_East.jpg",
+  "franklin":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg/500px-Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg",
 
-  "grandcanyon":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Canyon_River_Tree_%28165872763%29.jpeg/500px-Canyon_River_Tree_%28165872763%29.jpeg",
+  "fridge":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Open_refrigerator_with_food_at_night.jpg/500px-Open_refrigerator_with_food_at_night.jpg",
 
-  "greatwall":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/The_Great_Wall_of_China_at_Jinshanling-edit.jpg/500px-The_Great_Wall_of_China_at_Jinshanling-edit.jpg",
+  "galileo":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Galileo_Galilei_%281564-1642%29_RMG_BHC2700.tiff/lossy-page1-330px-Galileo_Galilei_%281564-1642%29_RMG_BHC2700.tiff.jpg",
 
-  "halong":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Ha_Long_Bay_in_2019.jpg/500px-Ha_Long_Bay_in_2019.jpg",
+  "glasses":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/2023_Okulary_korekcyjne.jpg/500px-2023_Okulary_korekcyjne.jpg",
 
-  "hampi":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Wide_angle_of_Galigopuram_of_Virupaksha_Temple%2C_Hampi_%2804%29_%28cropped%29.jpg/500px-Wide_angle_of_Galigopuram_of_Virupaksha_Temple%2C_Hampi_%2804%29_%28cropped%29.jpg",
+  "gutenberg":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Mainz_Gutenbergdenkmal_2016_%28cropped%29.jpg/500px-Mainz_Gutenbergdenkmal_2016_%28cropped%29.jpg",
 
-  "hawamahal":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg/330px-East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg",
+  "helicopter":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/VH-SUF_Taking_Off.jpg/500px-VH-SUF_Taking_Off.jpg",
 
-  "himalayas":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg/500px-Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg",
+  "jenner":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Edward_Jenner.jpg/500px-Edward_Jenner.jpg",
 
-  "kilimanjaro":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Kilimanjaro_from_Amboseli.jpg/500px-Kilimanjaro_from_Amboseli.jpg",
+  "kalam":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/A._P._J._Abdul_Kalam.jpg/500px-A._P._J._Abdul_Kalam.jpg",
 
-  "konark":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Konarka_Temple.jpg/500px-Konarka_Temple.jpg",
+  "laptop":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/A_One_Laptop_per_Child_computer_%281273754008%29.jpg/500px-A_One_Laptop_per_Child_computer_%281273754008%29.jpg",
 
-  "liberty":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Front_view_of_Statue_of_Liberty_%28cropped%29.jpg/500px-Front_view_of_Statue_of_Liberty_%28cropped%29.jpg",
+  "lightbulb":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Gluehlampe_01_KMJ.png/500px-Gluehlampe_01_KMJ.png",
 
-  "machu":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Machu_Picchu%2C_2023_%28012%29.jpg/500px-Machu_Picchu%2C_2023_%28012%29.jpg",
+  "lumiere":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Lumi%C3%A8re_brothers.jpg/500px-Lumi%C3%A8re_brothers.jpg",
 
-  "mausoleum":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Mausoleum_at_Halicarnassus_at_the_Bodrum_Museum_of_Underwater_Archaeology.jpg/500px-Mausoleum_at_Halicarnassus_at_the_Bodrum_Museum_of_Underwater_Archaeology.jpg",
+  "marconi":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Guglielmo_Marconi.jpg/500px-Guglielmo_Marconi.jpg",
 
-  "moai":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/AhuTongariki.JPG/500px-AhuTongariki.JPG",
+  "microscope":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Ukrainian_microscope_%28cropped%29.jpg/500px-Ukrainian_microscope_%28cropped%29.jpg",
 
-  "mountfuji":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/View_of_Mount_Fuji_from_%C5%8Cwakudani_20211202.jpg/500px-View_of_Mount_Fuji_from_%C5%8Cwakudani_20211202.jpg",
+  "microwave":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Panasonic_NN-SD69LS_20220410.jpg/500px-Panasonic_NN-SD69LS_20220410.jpg",
 
-  "nazca":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/L%C3%ADneas_de_Nazca%2C_Nazca%2C_Per%C3%BA%2C_2015-07-29%2C_DD_49.JPG/500px-L%C3%ADneas_de_Nazca%2C_Nazca%2C_Per%C3%BA%2C_2015-07-29%2C_DD_49.JPG",
+  "mobilephone":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Wikipedia_homepage_on_a_large_Android_phone%2C_2015-04-16.jpg/500px-Wikipedia_homepage_on_a_large_Android_phone%2C_2015-04-16.jpg",
 
-  "niagara":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/3Falls_Niagara.jpg/500px-3Falls_Niagara.jpg",
+  "nobel":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Alfred_Nobel3.jpg/500px-Alfred_Nobel3.jpg",
 
-  "nile":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Beautiful_nature_along_Nile_River_01.jpg/500px-Beautiful_nature_along_Nile_River_01.jpg",
+  "pasteur":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Louis_Pasteur%2C_foto_av_Paul_Nadar%2C_Crisco_edit.jpg/500px-Louis_Pasteur%2C_foto_av_Paul_Nadar%2C_Crisco_edit.jpg",
 
-  "panama":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Panama_Canal_locks_1994_ships.jpg/500px-Panama_Canal_locks_1994_ships.jpg",
+  "pencil":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Pencils_hb.jpg/500px-Pencils_hb.jpg",
 
-  "petra":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Al_Deir_Petra.JPG/500px-Al_Deir_Petra.JPG",
+  "phonograph":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Edison_and_phonograph_edit1.jpg/500px-Edison_and_phonograph_edit1.jpg",
 
-  "pisa":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Italy_-_Pisa_-_Leaning_Tower.jpg/500px-Italy_-_Pisa_-_Leaning_Tower.jpg",
+  "printingpress":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Gutenberg_press.png/500px-Gutenberg_press.png",
 
-  "pompeii":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Aerial_image_of_Pompeii_and_Mount_Vesuvius_%28view_from_the_southeast%29.jpg/500px-Aerial_image_of_Pompeii_and_Mount_Vesuvius_%28view_from_the_southeast%29.jpg",
+  "pslv":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/PSLVC62.webp/500px-PSLVC62.webp",
 
-  "pyramids":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Pyramids_of_the_Giza_Necropolis.jpg/500px-Pyramids_of_the_Giza_Necropolis.jpg",
+  "quill":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/%D7%A7%D7%9C%D7%A3%2C_%D7%A0%D7%95%D7%A6%D7%94_%D7%95%D7%93%D7%99%D7%95.jpg/500px-%D7%A7%D7%9C%D7%A3%2C_%D7%A0%D7%95%D7%A6%D7%94_%D7%95%D7%93%D7%99%D7%95.jpg",
 
-  "qutub":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Qutb_Minar_2022.jpg/500px-Qutb_Minar_2022.jpg",
+  "rocketloco":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Stephenson%27s_Rocket_drawing.jpg/500px-Stephenson%27s_Rocket_drawing.jpg",
 
-  "redfort":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Delhi_fort.jpg/500px-Delhi_fort.jpg",
+  "satellite":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Iridium_satellite.jpg/500px-Iridium_satellite.jpg",
 
-  "reef":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Great_Barrier_Reef_005_%285389541898%29.jpg/500px-Great_Barrier_Reef_005_%285389541898%29.jpg",
+  "ship":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/MAERSK_MC_KINNEY_M%C3%96LLER_%26_MARSEILLE_MAERSK_%2848694054418%29.jpg/500px-MAERSK_MC_KINNEY_M%C3%96LLER_%26_MARSEILLE_MAERSK_%2848694054418%29.jpg",
 
-  "sahara":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Erg_Chebbi_in_the_evening_light.jpg/500px-Erg_Chebbi_in_the_evening_light.jpg",
+  "solarpanel":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Photovoltaic_Panels.JPG/500px-Photovoltaic_Panels.JPG",
 
-  "sondoong":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Son_Doong_Cave_5.jpg/500px-Son_Doong_Cave_5.jpg",
+  "sputnik":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/%D0%9F%D0%B5%D1%80%D0%B2%D1%8B%D0%B9_%D0%B2_%D0%BC%D0%B8%D1%80%D0%B5_%D0%B8%D1%81%D0%BA%D1%83%D1%81%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9_%D1%81%D0%BF%D1%83%D1%82%D0%BD%D0%B8%D0%BA_%D0%97%D0%B5%D0%BC%D0%BB%D0%B8.jpg/500px-%D0%9F%D0%B5%D1%80%D0%B2%D1%8B%D0%B9_%D0%B2_%D0%BC%D0%B8%D1%80%D0%B5_%D0%B8%D1%81%D0%BA%D1%83%D1%81%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9_%D1%81%D0%BF%D1%83%D1%82%D0%BD%D0%B8%D0%BA_%D0%97%D0%B5%D0%BC%D0%BB%D0%B8.jpg",
 
-  "sphinx":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Sphinx_with_the_third_pyramid.jpg/500px-Sphinx_with_the_third_pyramid.jpg",
+  "steamengine":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Maquina_vapor_Watt_ETSIIM.jpg/500px-Maquina_vapor_Watt_ETSIIM.jpg",
 
-  "stonehenge":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Stonehenge2007_07_30.jpg/500px-Stonehenge2007_07_30.jpg",
+  "stethoscope":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Stethoscope-2.png/500px-Stethoscope-2.png",
 
-  "sundarbans":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Save_the_sundarbans_20.jpg/500px-Save_the_sundarbans_20.jpg",
+  "submarine":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/US_Navy_040730-N-1234E-002_PCU_Virginia_%28SSN_774%29_returns_to_the_General_Dynamics_Electric_Boat_shipyard.jpg/500px-US_Navy_040730-N-1234E-002_PCU_Virginia_%28SSN_774%29_returns_to_the_General_Dynamics_Electric_Boat_shipyard.jpg",
 
-  "sydney":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Sydney_Australia._%2821339175489%29.jpg/500px-Sydney_Australia._%2821339175489%29.jpg",
+  "telegraph":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Morse_Telegraph_1837.jpg/500px-Morse_Telegraph_1837.jpg",
 
-  "taj":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Taj_Mahal_%28Edited%29.jpeg/500px-Taj_Mahal_%28Edited%29.jpeg",
+  "telegraphkey":
+    "https://upload.wikimedia.org/wikipedia/commons/9/9c/J38TelegraphKey.jpg",
 
-  "unity":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Statue_of_Unity.jpg/500px-Statue_of_Unity.jpg",
+  "telephone":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Western_Electric_deskstand-Candlestick-telephone-w-subset-kbrose-2022-11-22.jpg/500px-Western_Electric_deskstand-Candlestick-telephone-w-subset-kbrose-2022-11-22.jpg",
 
-  "uyuni":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Salar_Uyuni_au01.jpg/500px-Salar_Uyuni_au01.jpg",
+  "telescope":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/SmallAltAzMount.jpg/500px-SmallAltAzMount.jpg",
 
-  "venice":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Venezia_aerial_view.jpg/500px-Venezia_aerial_view.jpg",
+  "television":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Philips_Fernsehempf%C3%A4nger_TD1422A_von_1950.jpg/500px-Philips_Fernsehempf%C3%A4nger_TD1422A_von_1950.jpg",
 
-  "victoria":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Cataratas_Victoria%2C_Zambia-Zimbabue%2C_2018-07-27%2C_DD_04.jpg/500px-Cataratas_Victoria%2C_Zambia-Zimbabue%2C_2018-07-27%2C_DD_04.jpg",
+  "tesla":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Tesla_circa_1890.jpeg/500px-Tesla_circa_1890.jpeg",
 
-  "yellowstone":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Yellowstone_National_Park_%28WY%2C_USA%29%2C_Old_Faithful_Geyser_--_2022_--_2599.jpg/330px-Yellowstone_National_Park_%28WY%2C_USA%29%2C_Old_Faithful_Geyser_--_2022_--_2599.jpg"
+  "toothbrush":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Toothbrush_20050716_004.jpg/500px-Toothbrush_20050716_004.jpg",
+
+  "train":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Vande_Bharat_Express_around_Mumbai.jpg/500px-Vande_Bharat_Express_around_Mumbai.jpg",
+
+  "transistor":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Transbauformen.jpg/500px-Transbauformen.jpg",
+
+  "ultrasound":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Sonographer_doing_pediatric_echocardiography.JPG/500px-Sonographer_doing_pediatric_echocardiography.JPG",
+
+  "umbrella":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/M0354_000727-005_1.jpg/500px-M0354_000727-005_1.jpg",
+
+  "vaccine":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Smallpox_vaccine.jpg/500px-Smallpox_vaccine.jpg",
+
+  "voltaic":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Reproduction_of_first_electric_Voltaic_Pile_cr56n2016_47429b20d_dl_full_size.jpg/500px-Reproduction_of_first_electric_Voltaic_Pile_cr56n2016_47429b20d_dl_full_size.jpg",
+
+  "washingmachine":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/LG_%EB%93%9C%EB%9F%BC%EC%84%B8%ED%83%81%EA%B8%B0%EC%99%80_%EC%8B%9D%EA%B8%B0%EC%84%B8%EC%B2%99%EA%B8%B0%2C_%EC%98%81%EA%B5%AD%EC%84%9C_%EB%AC%BC%EC%82%AC%EC%9A%A9_%ED%9A%A8%EC%9C%A8_%EC%B5%9C%EC%9A%B0%EC%88%98_%EC%A0%9C%ED%92%88_%EC%88%98%EC%83%81.jpg/500px-LG_%EB%93%9C%EB%9F%BC%EC%84%B8%ED%83%81%EA%B8%B0%EC%99%80_%EC%8B%9D%EA%B8%B0%EC%84%B8%EC%B2%99%EA%B8%B0%2C_%EC%98%81%EA%B5%AD%EC%84%9C_%EB%AC%BC%EC%82%AC%EC%9A%A9_%ED%9A%A8%EC%9C%A8_%EC%B5%9C%EC%9A%B0%EC%88%98_%EC%A0%9C%ED%92%88_%EC%88%98%EC%83%81.jpg",
+
+  "watt":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Watt_James_von_Breda.jpg/500px-Watt_James_von_Breda.jpg",
+
+  "wheel":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Landesmuseum_W%C3%BCrttemberg_Kelten_011.4.jpg/500px-Landesmuseum_W%C3%BCrttemberg_Kelten_011.4.jpg",
+
+  "wrightflyer":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/First_flight2.jpg/500px-First_flight2.jpg",
+
+  "xray":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/First_medical_X-ray_by_Wilhelm_R%C3%B6ntgen_of_his_wife_Anna_Bertha_Ludwig%27s_hand_-_18951222.jpg/500px-First_medical_X-ray_by_Wilhelm_R%C3%B6ntgen_of_his_wife_Anna_Bertha_Ludwig%27s_hand_-_18951222.jpg"
 
 };
 
@@ -1024,225 +1057,225 @@ const QUIZZES = {
 
   "UKG":[
 
-    {q:"Which famous monument is this?",o:["Taj Mahal","Eiffel Tower","Big Ben"],a:0,img:"taj",e:"🕌"},
+    {q:"What is this?",o:["Light bulb","Spoon","Shoe"],a:0,img:"lightbulb",e:"💡"},
 
-    {q:"Which tall iron tower is this?",o:["Eiffel Tower","Taj Mahal","Red Fort"],a:0,img:"eiffel",e:"🗼"},
+    {q:"Which invention helps us talk to people far away?",o:["Telephone","Pencil","Chair"],a:0,img:"telephone",e:"📞"},
 
-    {q:"Which big statue is this?",o:["Statue of Liberty","Great Wall of China","Pyramid"],a:0,img:"liberty",e:"🗽"},
+    {q:"What do we use to see the time?",o:["Clock","Cup","Ball"],a:0,img:"clock",e:"⏰"},
 
-    {q:"The Taj Mahal is in which country?",o:["India","China","Egypt"],a:0,img:"taj",e:"🕌"},
+    {q:"What is this?",o:["Bicycle","Aeroplane","Boat"],a:0,img:"bicycle",e:"🚲"},
 
-    {q:"Which very long wall is this?",o:["Great Wall of China","Gateway of India","Big Ben"],a:0,img:"greatwall",e:"🧱"},
+    {q:"Which invention flies high in the sky?",o:["Aeroplane","Car","Train"],a:0,img:"airliner",e:"✈️"},
 
-    {q:"What are these big pointed buildings in Egypt called?",o:["Pyramids","Bridges","Boats"],a:0,img:"pyramids",e:"🔺"},
+    {q:"What keeps us dry in the rain?",o:["Umbrella","Fan","Television"],a:0,img:"umbrella",e:"☂️"},
 
-    {q:"Which one of these is a waterfall?",o:["Niagara Falls","Mount Everest","Sahara Desert"],a:0,img:"niagara",e:"💦"},
+    {q:"Which invention keeps our food cold?",o:["Refrigerator","Oven","Fan"],a:0,img:"fridge",e:"🧊"},
 
-    {q:"Which is the highest mountain in the world?",o:["Mount Everest","Eiffel Tower","Red Fort"],a:0,img:"everest",e:"🏔️"},
+    {q:"What do we use to write in our notebooks?",o:["Pencil","Spoon","Comb"],a:0,img:"pencil",e:"✏️"},
 
-    {q:"A desert is full of…?",o:["Sand","Snow","Trees"],a:0,img:"sahara",e:"🏜️"},
+    {q:"This round invention helps cars, bikes and carts to move. What is it?",o:["Wheel","Box","Book"],a:0,img:"wheel",e:"🛞"},
 
-    {q:"Which famous clock tower is this?",o:["Big Ben","Taj Mahal","Qutub Minar"],a:0,img:"bigben",e:"🕰️"}
+    {q:"Which invention do we watch cartoons on?",o:["Television","Refrigerator","Umbrella"],a:0,img:"television",e:"📺"}
 
   ],
 
 
   "1":[
 
-    {q:"The Statue of Liberty is in which country?",o:["United States of America","India","China"],a:0,img:"liberty",e:"🗽"},
+    {q:"What do we use this invention for?",o:["Cleaning our teeth","Combing our hair","Eating our food"],a:0,img:"toothbrush",e:"🪥"},
 
-    {q:"Big Ben is a famous clock tower in which city?",o:["London","Paris","Delhi"],a:0,img:"bigben",e:"🕰️"},
+    {q:"Which invention helps us call a friend from anywhere?",o:["Mobile phone","Umbrella","Pencil"],a:0,img:"mobilephone",e:"📱"},
 
-    {q:"The Great Wall is in which country?",o:["China","Japan","Egypt"],a:0,img:"greatwall",e:"🧱"},
+    {q:"A fan helps us by…?",o:["Keeping us cool","Making us wet","Cooking our food"],a:0,img:"fan",e:"🌀"},
 
-    {q:"The pyramids are found in which country?",o:["Egypt","Italy","Nepal"],a:0,img:"pyramids",e:"🔺"},
+    {q:"Which invention carries people across the sky from one country to another?",o:["Aeroplane","Bicycle","Bullock cart"],a:0,img:"airliner",e:"✈️"},
 
-    {q:"Which white marble monument in India was built for a queen?",o:["Taj Mahal","Red Fort","India Gate"],a:0,img:"taj",e:"🕌"},
+    {q:"What can we do on a computer?",o:["Learn, write and play games","Cook rice","Wash clothes"],a:0,img:"laptop",e:"💻"},
 
-    {q:"Which tower is famous for leaning to one side?",o:["Leaning Tower of Pisa","Eiffel Tower","Qutub Minar"],a:0,img:"pisa",e:"🗼"},
+    {q:"Which invention washes our clothes?",o:["Washing machine","Television","Refrigerator"],a:0,img:"washingmachine",e:"🫧"},
 
-    {q:"Mount Everest is the world's highest what?",o:["Mountain","River","Desert"],a:0,img:"everest",e:"🏔️"},
+    {q:"What do we look through to see the Moon and stars up close?",o:["Telescope","Spoon","Kettle"],a:0,img:"telescope",e:"🔭"},
 
-    {q:"The Sahara is a famous what?",o:["Desert","Waterfall","Forest"],a:0,img:"sahara",e:"🏜️"},
+    {q:"Which invention takes photographs?",o:["Camera","Clock","Pencil"],a:0,img:"camera",e:"📷"},
 
-    {q:"Which famous red fort stands in Delhi?",o:["Red Fort","Gateway of India","Hawa Mahal"],a:0,img:"redfort",e:"🏰"},
+    {q:"Spectacles help people to…?",o:["See clearly","Hear better","Run faster"],a:0,img:"glasses",e:"👓"},
 
-    {q:"Niagara Falls is famous for its…?",o:["Waterfalls","Sand dunes","Snow peaks"],a:0,img:"niagara",e:"💦"}
+    {q:"The Vande Bharat Express is a fast…?",o:["Train","Ship","Aeroplane"],a:0,img:"train",e:"🚆"}
 
   ],
 
 
   "2":[
 
-    {q:"In which city is the Eiffel Tower?",o:["Paris","London","Rome"],a:0,img:"eiffel",e:"🗼"},
+    {q:"Who invented the light bulb?",o:["Thomas Edison","Alexander Graham Bell","Isaac Newton"],a:0,img:"lightbulb",e:"💡"},
 
-    {q:"The Taj Mahal is in which Indian city?",o:["Agra","Jaipur","Mumbai"],a:0,img:"taj",e:"🕌"},
+    {q:"Who invented the telephone?",o:["Alexander Graham Bell","Thomas Edison","Isaac Newton"],a:0,img:"telephone",e:"📞"},
 
-    {q:"The Colosseum is in which country?",o:["Italy","Greece","Spain"],a:0,img:"colosseum",e:"🏟️"},
+    {q:"The first aeroplane was flown in 1903 by two brothers called the…?",o:["Wright brothers","Edison brothers","Newton brothers"],a:0,img:"wrightflyer",e:"✈️"},
 
-    {q:"The Sydney Opera House is in which country?",o:["Australia","Canada","Brazil"],a:0,img:"sydney",e:"🎭"},
+    {q:"Before the light bulb, people lit their homes at night with…?",o:["Candles and oil lamps","Tube lights","Battery torches"],a:0,img:"candle",e:"🕯️"},
 
-    {q:"Which river flows through Egypt, past the pyramids?",o:["Nile","Ganga","Amazon"],a:0,img:"nile",e:"🏞️"},
+    {q:"Before cars, how did many people in India travel between villages?",o:["By bullock cart, horse or on foot","By aeroplane","By metro train"],a:0,img:"bullockcart",e:"🐂"},
 
-    {q:"Who built the Taj Mahal?",o:["Shah Jahan","Akbar","Ashoka"],a:0,img:"taj",e:"🕌"},
+    {q:"Which invention do doctors use to listen to your heartbeat?",o:["Stethoscope","Telescope","Microscope"],a:0,img:"stethoscope",e:"🩺"},
 
-    {q:"The Statue of Liberty was a gift from which country?",o:["France","England","Spain"],a:0,img:"liberty",e:"🗽"},
+    {q:"Before the printing press, how were books made?",o:["Copied out by hand, one at a time","Printed by computers","Downloaded from the internet"],a:0,img:"printingpress",e:"📚"},
 
-    {q:"Niagara Falls lies between which two countries?",o:["USA and Canada","India and Nepal","France and Spain"],a:0,img:"niagara",e:"💦"},
+    {q:"Which very old invention is found on cars, bicycles and trains?",o:["The wheel","The kite","The umbrella"],a:0,img:"wheel",e:"🛞"},
 
-    {q:"Mount Everest is part of which mountain range?",o:["Himalayas","Alps","Andes"],a:0,img:"himalayas",e:"🏔️"},
+    {q:"Which invention lets us send messages and photos to friends in seconds?",o:["Mobile phone","Postcard","Kite"],a:0,img:"mobilephone",e:"📱"},
 
-    {q:"The Gateway of India stands in which city?",o:["Mumbai","Chennai","Kolkata"],a:0,img:"gateway",e:"🏛️"}
+    {q:"Milk used to go bad quickly. Which invention keeps it fresh for days?",o:["Refrigerator","Radio","Ceiling fan"],a:0,img:"fridge",e:"🧊"}
 
   ],
 
 
   "3":[
 
-    {q:"The Colosseum in Rome was built for…?",o:["Gladiator games and public shows","Growing crops","Storing water"],a:0,img:"colosseum",e:"🏟️"},
+    {q:"Alexander Graham Bell is famous for inventing the…?",o:["Telephone","Light bulb","Aeroplane"],a:0,img:"bell",e:"📞"},
 
-    {q:"Why was the Great Wall of China built?",o:["To protect China from invaders","To hold back a river","To carry a railway line"],a:0,img:"greatwall",e:"🧱"},
+    {q:"Thomas Edison is famous for which invention?",o:["Electric light bulb","Telephone","Bicycle"],a:0,img:"edison",e:"💡"},
 
-    {q:"Which is the tallest building in the world?",o:["Burj Khalifa","Eiffel Tower","Qutub Minar"],a:0,img:"burj",e:"🏙️"},
+    {q:"The Wright brothers' very first aeroplane flight in 1903 lasted about…?",o:["12 seconds","12 hours","12 days"],a:0,img:"wrightflyer",e:"✈️"},
 
-    {q:"What slowly carved out the Grand Canyon over millions of years?",o:["A river","A strong wind","A giant machine"],a:0,img:"grandcanyon",e:"🏜️"},
+    {q:"Which invention lets us see tiny germs that are too small for our eyes?",o:["Microscope","Telescope","Periscope"],a:0,img:"microscope",e:"🔬"},
 
-    {q:"The Christ the Redeemer statue stands above a city in which country?",o:["Brazil","Japan","Egypt"],a:0,img:"christ",e:"🗿"},
+    {q:"Johannes Gutenberg's printing press made books…?",o:["Cheaper, so many more people could read","Much more expensive","Disappear completely"],a:0,img:"gutenberg",e:"📚"},
 
-    {q:"The Great Barrier Reef lies off the coast of which country?",o:["Australia","Japan","Kenya"],a:0,img:"reef",e:"🐠"},
+    {q:"Braille uses raised dots that are read with the fingertips. Who is it for?",o:["People who cannot see","People who cannot hear","People who cannot walk"],a:0,img:"braille",e:"👆"},
 
-    {q:"Which is the largest hot desert in the world?",o:["Sahara","Thar","Gobi"],a:0,img:"sahara",e:"🏜️"},
+    {q:"Which kitchen invention heats food in just a few minutes?",o:["Microwave oven","Refrigerator","Washing machine"],a:0,img:"microwave",e:"🍲"},
 
-    {q:"Angel Falls is the world's highest waterfall — the drop is so long that much of the water turns into…?",o:["Mist before it reaches the bottom","Ice before it reaches the bottom","Sand before it reaches the bottom"],a:0,img:"angel",e:"💦"},
+    {q:"Which invention always points north and helps sailors find their way?",o:["Compass","Clock","Kite"],a:0,img:"compass",e:"🧭"},
 
-    {q:"Why does the Tower of Pisa lean?",o:["It was built on soft ground","Strong winds pushed it over","It was built leaning on purpose"],a:0,img:"pisa",e:"🗼"},
+    {q:"Which invention turns sunlight into electricity?",o:["Solar panel","Umbrella","Mirror"],a:0,img:"solarpanel",e:"☀️"},
 
-    {q:"Qutub Minar, a tall brick minaret, is in which city?",o:["Delhi","Agra","Lucknow"],a:0,img:"qutub",e:"🗼"}
+    {q:"Before pencils and pens, people often wrote with a…?",o:["Feather quill dipped in ink","Mobile phone","Laptop"],a:0,img:"quill",e:"🪶"}
 
   ],
 
 
   "4":[
 
-    {q:"Machu Picchu, an ancient city high in the Andes mountains, is in which country?",o:["Peru","Egypt","Japan"],a:0,img:"machu",e:"🏔️"},
+    {q:"James Watt improved which invention that powered factories and trains?",o:["Steam engine","Television","Telephone"],a:0,img:"steamengine",e:"🚂"},
 
-    {q:"What makes the ancient city of Petra so unusual?",o:["Its buildings are carved straight into rock cliffs","It floats on a lake","It is made of blocks of ice"],a:0,img:"petra",e:"🪨"},
+    {q:"Guglielmo Marconi sent messages through the air without any wires. He invented the…?",o:["Radio","Refrigerator","Bicycle"],a:0,img:"marconi",e:"📻"},
 
-    {q:"Angkor Wat in Cambodia is the world's largest…?",o:["Religious monument","Football stadium","Railway station"],a:0,img:"angkor",e:"🛕"},
+    {q:"Edward Jenner made the first vaccine. It protected people from which disease?",o:["Smallpox","Toothache","Sunburn"],a:0,img:"jenner",e:"💉"},
 
-    {q:"Why can people float so easily in the Dead Sea?",o:["Its water is extremely salty","It is very shallow","Its water is frozen"],a:0,img:"deadsea",e:"🧂"},
+    {q:"Alexander Fleming discovered penicillin. What does this medicine do?",o:["Kills harmful bacteria to cure infections","Helps people see better","Makes plants grow faster"],a:0,img:"fleming",e:"💊"},
 
-    {q:"Nobody knows exactly why Stonehenge was built. About how old is it?",o:["About 5,000 years old","About 500 years old","About 50 years old"],a:0,img:"stonehenge",e:"🪨"},
+    {q:"Alexander Graham Bell made the very first telephone call in 1876. What did he say?",o:["“Mr Watson, come here, I want to see you.”","“Happy birthday to you!”","“Hello, is anybody home?”"],a:0,img:"telephone",e:"📞"},
 
-    {q:"Victoria Falls is so loud and misty that local people named it…?",o:["'The Smoke that Thunders'","'The Quiet River'","'The Sleeping Water'"],a:0,img:"victoria",e:"💦"},
+    {q:"Karl Benz built one of the first motor cars in 1886. How many wheels did it have?",o:["Three","Six","Ten"],a:0,img:"benz",e:"🚗"},
 
-    {q:"Mount Kilimanjaro is the highest mountain on which continent?",o:["Africa","Europe","Australia"],a:0,img:"kilimanjaro",e:"🏔️"},
+    {q:"Jagadish Chandra Bose invented the crescograph to show that plants…?",o:["Grow and respond like living things","Can walk on their roots","Can talk to each other"],a:0,img:"bose",e:"🌱"},
 
-    {q:"The Amazon rainforest makes so much of the world's oxygen that it is nicknamed the…?",o:["'Lungs of the Earth'","'Roof of the World'","'Sea of Sand'"],a:0,img:"amazon",e:"🌳"},
+    {q:"An X-ray machine lets doctors see…?",o:["The bones inside our body","Our dreams","The sounds we make"],a:0,img:"xray",e:"🦴"},
 
-    {q:"The Golden Temple is in which Indian city?",o:["Amritsar","Varanasi","Patna"],a:0,img:"goldentemple",e:"🛕"},
+    {q:"What did the television let families do for the first time?",o:["Watch moving pictures and news at home","Fly to other countries","Talk to animals"],a:0,img:"television",e:"📺"},
 
-    {q:"The Great Sphinx, with a lion's body and a human head, guards which site?",o:["The pyramids of Giza","The Great Wall","Stonehenge"],a:0,img:"sphinx",e:"🦁"}
+    {q:"Which invention lets people travel deep under the sea?",o:["Submarine","Helicopter","Hot-air balloon"],a:0,img:"submarine",e:"🌊"}
 
   ],
 
 
   "5":[
 
-    {q:"Which is the only Ancient Wonder of the World still standing today?",o:["Great Pyramid of Giza","Hanging Gardens of Babylon","Colossus of Rhodes"],a:0,img:"pyramids",e:"🔺"},
+    {q:"George Stephenson's famous 'Rocket' (1829) was an early…?",o:["Steam railway engine","Space rocket","Racing car"],a:0,img:"rocketloco",e:"🚂"},
 
-    {q:"Why did Shah Jahan build the Taj Mahal?",o:["In memory of his wife Mumtaz Mahal","As a royal palace to live in","As a fort to guard Agra"],a:0,img:"taj",e:"🕌"},
+    {q:"Which invention can fly straight up, hover in one place and land almost anywhere?",o:["Helicopter","Glider","Hot-air balloon"],a:0,img:"helicopter",e:"🚁"},
 
-    {q:"Which ancient civilisation built the Colosseum?",o:["The Romans","The Greeks","The Egyptians"],a:0,img:"colosseum",e:"🏟️"},
+    {q:"Samuel Morse invented a code that sent telegraph messages as…?",o:["Dots and dashes","Pictures","Songs"],a:0,img:"telegraphkey",e:"📡"},
 
-    {q:"How was the Grand Canyon formed?",o:["A river slowly cut down through the rock","A meteor crashed into the desert","People dug it out for mining"],a:0,img:"grandcanyon",e:"🏜️"},
+    {q:"In 1989, Tim Berners-Lee invented something we use every day. What was it?",o:["The World Wide Web","The bicycle","The light bulb"],a:0,img:"bernerslee",e:"🌐"},
 
-    {q:"Which Ancient Wonder was a giant lighthouse?",o:["Lighthouse of Alexandria","Temple of Artemis","Statue of Zeus at Olympia"],a:0,img:"alexandria",e:"🗼"},
+    {q:"Alexander Fleming discovered penicillin when he noticed mould growing on…?",o:["A dish of bacteria he had left out","His breakfast bread","A tree in his garden"],a:0,img:"fleming",e:"🧫"},
 
-    {q:"The Hanging Gardens were said to stand in which ancient city?",o:["Babylon","Athens","Cairo"],a:0,img:"babylon",e:"🌿"},
+    {q:"Which machine uses sound waves to let doctors see inside the body without any cuts?",o:["Ultrasound scanner","Thermometer","Microscope"],a:0,img:"ultrasound",e:"🩺"},
 
-    {q:"Machu Picchu was built high in the mountains by an ancient people called the…?",o:["Incas","Vikings","Knights"],a:0,img:"machu",e:"🏔️"},
+    {q:"Benjamin Franklin flew a kite in a thunderstorm to show that lightning is…?",o:["Electricity","Water","Fire"],a:0,img:"franklin",e:"⚡"},
 
-    {q:"Which is the world's largest coral reef system?",o:["Great Barrier Reef","Red Sea Coral Reef","Belize Barrier Reef"],a:0,img:"reef",e:"🐠"},
+    {q:"Alessandro Volta invented the first electric…?",o:["Battery","Fan","Train"],a:0,img:"voltaic",e:"🔋"},
 
-    {q:"Which of these is true about the Great Wall of China?",o:["It is many walls joined together over hundreds of years","It was built in a single year","It is as short as a football field"],a:0,img:"greatwall",e:"🧱"},
+    {q:"Charles Babbage is called the 'Father of the…'?",o:["Computer","Telephone","Aeroplane"],a:0,img:"babbage",e:"💻"},
 
-    {q:"The Statue of Unity, the world's tallest statue, honours which leader?",o:["Sardar Vallabhbhai Patel","Mahatma Gandhi","Jawaharlal Nehru"],a:0,img:"unity",e:"🗿"}
+    {q:"Which invention orbits the Earth and helps with weather forecasts, TV and phone signals?",o:["Satellite","Submarine","Helicopter"],a:0,img:"satellite",e:"🛰️"}
 
   ],
 
 
   "6":[
 
-    {q:"How does a waterfall usually form?",o:["Soft rock wears away faster than hard rock","Rain collects on top of a hill","Wind pushes water upward"],a:0,img:"niagara",e:"💦"},
+    {q:"What was special about Gutenberg's printing press, around 1440?",o:["It used metal letters that could be moved and reused","It printed colour photographs","It ran on electricity"],a:0,img:"printingpress",e:"📚"},
 
-    {q:"The Himalayas were formed by…?",o:["Two tectonic plates colliding","A single volcano erupting","A great river drying up"],a:0,img:"himalayas",e:"🏔️"},
+    {q:"Michael Faraday discovered that moving a magnet near a coil of wire produces…?",o:["Electricity","Light only","Sound"],a:0,img:"faraday",e:"🧲"},
 
-    {q:"Which is the largest desert in the world?",o:["The Antarctic Desert — a cold desert of ice","The Sahara Desert","The Thar Desert"],a:0,img:"antarctica",e:"❄️"},
+    {q:"Which invention by the Wright brothers in 1903 changed travel for ever?",o:["The first powered aeroplane","The first car","The first steam train"],a:0,img:"wrightflyer",e:"✈️"},
 
-    {q:"In the city of Venice, people travel from street to street by…?",o:["Boat, along the canals","Cable car","Camel"],a:0,img:"venice",e:"🚤"},
+    {q:"Louis Pasteur found a way to make milk safe by heating it. It is called…?",o:["Pasteurisation","Vaccination","Refrigeration"],a:0,img:"pasteur",e:"🥛"},
 
-    {q:"Son Doong in Vietnam is so enormous that inside the cave there is…?",o:["Its own river, jungle and clouds","A shopping mall","A railway station"],a:0,img:"sondoong",e:"🕳️"},
+    {q:"Wilhelm Röntgen discovered X-rays in 1895. The very first X-ray photo showed…?",o:["His wife's hand, wearing her ring","A cat","A tree"],a:0,img:"xray",e:"✋"},
 
-    {q:"Hawa Mahal, the 'Palace of Winds', is in which city?",o:["Jaipur","Udaipur","Jodhpur"],a:0,img:"hawamahal",e:"🏰"},
+    {q:"How does a vaccine protect us?",o:["It trains the body to fight a disease before we catch it","It mends broken bones","It makes us grow taller"],a:0,img:"vaccine",e:"💉"},
 
-    {q:"Chichen Itza, this giant stone pyramid, is in which country?",o:["Mexico","India","Australia"],a:0,img:"chichen",e:"🔺"},
+    {q:"The first mobile phone call was made in 1973 on a phone nicknamed 'the brick'. Why?",o:["It was big and heavy — about 1 kg","It was made of real bricks","It could only call builders"],a:0,img:"dynatac",e:"📱"},
 
-    {q:"The shore of the Dead Sea is famous for being…?",o:["The lowest land on Earth","The highest lake on Earth","The widest sea on Earth"],a:0,img:"deadsea",e:"🧂"},
+    {q:"Indian mathematicians like Aryabhata and Brahmagupta gave the world which idea?",o:["Zero as a number","The telescope","The steam engine"],a:0,img:"aryabhata",e:"0️⃣"},
 
-    {q:"Mount Everest is so high that climbers must carry…?",o:["Bottled oxygen to help them breathe","Umbrellas for the rain","Extra shoes for the sand"],a:0,img:"everest",e:"🏔️"},
+    {q:"Besides the light bulb, Thomas Edison invented the phonograph, which could…?",o:["Record and play back sound","Take photographs","Fly short distances"],a:0,img:"phonograph",e:"🎵"},
 
-    {q:"Mount Fuji, a famous snow-capped volcano, is in which country?",o:["Japan","China","South Korea"],a:0,img:"mountfuji",e:"🗻"}
+    {q:"The Internet lets computers around the world…?",o:["Share information with each other","Cook food","Clean the house"],a:0,img:"laptop",e:"🌐"}
 
   ],
 
 
   "7":[
 
-    {q:"What is a UNESCO World Heritage Site?",o:["A place of special cultural or natural value, protected for the whole world","A place that only scientists are allowed to visit","A newly built tourist resort"],a:0,img:"hampi",e:"🏅"},
+    {q:"Put these inventions in order, from oldest to newest.",o:["Wheel → Printing press → Aeroplane","Aeroplane → Wheel → Printing press","Printing press → Aeroplane → Wheel"],a:0,img:"wheel",e:"🛞"},
 
-    {q:"Which famous bridge in San Francisco is painted a bright orange-red?",o:["Golden Gate Bridge","Tower Bridge","Howrah Bridge"],a:0,img:"goldengate",e:"🌉"},
+    {q:"Why can a huge steel ship float?",o:["The water pushes it up — Archimedes' principle","Magnets under the sea pull it up","Steel is lighter than water"],a:0,img:"ship",e:"🚢"},
 
-    {q:"After rain, Salar de Uyuni, the world's largest salt flat, turns into…?",o:["A giant mirror that reflects the sky","A deep lake full of boats","A field of red flowers"],a:0,img:"uyuni",e:"🧂"},
+    {q:"Galileo improved the telescope in 1609 and was the first to see…?",o:["Moons circling Jupiter","Cities on Mars","Rings around the Sun"],a:0,img:"galileo",e:"🔭"},
 
-    {q:"The crater called the 'Door to Hell' is famous because it has been…?",o:["Burning with fire for over 50 years","Frozen solid for 50 years","Filled with rainwater"],a:0,img:"darvaza",e:"🔥"},
+    {q:"James Watt's steam engine led to factories and railways in a period called the…?",o:["Industrial Revolution","Stone Age","Ice Age"],a:0,img:"watt",e:"🏭"},
 
-    {q:"How were the hexagonal columns of the Giant's Causeway formed?",o:["Lava cooled and cracked into columns","People carved them out of cliffs","Ice pushed loose stones together"],a:0,img:"causeway",e:"🪨"},
+    {q:"Nikola Tesla helped develop AC (alternating current). Where do we use it today?",o:["The electricity supply to our homes","Car tyres","Water pipes"],a:0,img:"tesla",e:"⚡"},
 
-    {q:"Which canal links the Atlantic and Pacific Oceans?",o:["Panama Canal","Suez Canal","Grand Canal"],a:0,img:"panama",e:"🚢"},
+    {q:"Marie Curie, the first woman to win a Nobel Prize, discovered…?",o:["The radioactive elements radium and polonium","The light bulb","The telephone"],a:0,img:"curie",e:"☢️"},
 
-    {q:"The rock-cut city of Petra is carved out of which stone?",o:["Rose-red sandstone","White marble","Black granite"],a:0,img:"petra",e:"🪨"},
+    {q:"The Nobel Prizes were set up with money left by Alfred Nobel, who invented…?",o:["Dynamite","The telephone","The printing press"],a:0,img:"nobel",e:"🏅"},
 
-    {q:"The giant Moai statues of Easter Island are famous for their…?",o:["Enormous heads","Golden crowns","Long stone tails"],a:0,img:"moai",e:"🗿"},
+    {q:"How did the printing press change society?",o:["Books became cheaper, so many more people learned to read","People stopped reading","Letters stopped being written"],a:0,img:"gutenberg",e:"📚"},
 
-    {q:"The Ajanta Caves of India are famous for their…?",o:["Ancient paintings and rock-cut sculptures","Stained glass windows","Iron suspension bridges"],a:0,img:"ajanta",e:"🖼️"},
+    {q:"A refrigerator keeps food cold because a liquid inside it…?",o:["Evaporates and carries heat away from inside","Is replaced with ice cubes every morning","Blows snow through a fan"],a:0,img:"fridge",e:"🧊"},
 
-    {q:"Ha Long Bay is famous for its thousands of…?",o:["Limestone islands rising out of the sea","Sand castles on a beach","Floating icebergs"],a:0,img:"halong",e:"⛰️"}
+    {q:"What was Sputnik 1, launched in 1957?",o:["The first artificial satellite to orbit Earth","The first aeroplane","The first submarine"],a:0,img:"sputnik",e:"🛰️"}
 
   ],
 
 
   "8":[
 
-    {q:"Which ancient city was buried by the eruption of Mount Vesuvius in 79 CE?",o:["Pompeii","Carthage","Troy"],a:0,img:"pompeii",e:"🌋"},
+    {q:"Which of these inventions came first?",o:["The printing press","The telephone","The television"],a:0,img:"printingpress",e:"📚"},
 
-    {q:"The Himalayas keep rising because of the collision of which two plates?",o:["The Indian and Eurasian plates","The Pacific and Nazca plates","The African and Antarctic plates"],a:0,img:"himalayas",e:"🏔️"},
+    {q:"Edward Jenner's smallpox vaccine (1796) eventually led to…?",o:["Smallpox being wiped out worldwide by 1980","The invention of antibiotics","The first X-ray"],a:0,img:"jenner",e:"💉"},
 
-    {q:"What makes the geysers of Yellowstone erupt?",o:["Underground magma heats trapped water until it bursts out","Strong desert winds lift the water","Ocean tides push water through the rock"],a:0,img:"yellowstone",e:"♨️"},
+    {q:"Faraday's discovery of electromagnetic induction is the principle behind…?",o:["Generators that make electricity in power stations","Telescopes","Printing presses"],a:0,img:"faraday",e:"⚡"},
 
-    {q:"Why is Venice slowly sinking?",o:["It was built on soft ground in a lagoon, and the sea is rising","A nearby river is pulling it downhill","Its stone dissolves in ordinary rain"],a:0,img:"venice",e:"🚤"},
+    {q:"The transistor, invented in 1947, made it possible to build…?",o:["Small computers and mobile phones","Bigger steam engines","Faster sailing ships"],a:0,img:"transistor",e:"📟"},
 
-    {q:"What are the Nazca Lines of Peru?",o:["Giant ancient drawings on the desert floor","Ancient stone roads built for carts","Natural cracks left by earthquakes"],a:0,img:"nazca",e:"🛩️"},
+    {q:"In 1895 the Lumière brothers held the world's first public…?",o:["Film screening, the start of cinema","Radio broadcast","Television show"],a:0,img:"lumiere",e:"🎬"},
 
-    {q:"The Great Barrier Reef is the largest living structure on Earth — so large that it can be seen from…?",o:["Space","Only underwater","Only an aeroplane window"],a:0,img:"reef",e:"🐠"},
+    {q:"Tim Berners-Lee chose not to patent the World Wide Web. What was the result?",o:["Anyone could use it free, so it spread worldwide","Nobody was allowed to use it","It only worked in one country"],a:0,img:"bernerslee",e:"🌐"},
 
-    {q:"Which UNESCO site is the world's largest mangrove forest?",o:["The Sundarbans","The Amazon Basin","The Congo Basin"],a:0,img:"sundarbans",e:"🐅"},
+    {q:"Why was the electric light bulb so important for society?",o:["People could work, study and stay safe after dark","It made the days longer","It ended the need for sleep"],a:0,img:"lightbulb",e:"💡"},
 
-    {q:"The Burj Khalifa is so tall that people at the very top can…?",o:["Watch the sunset a few minutes after people at the bottom","See the Moon from close up","Touch the clouds every morning"],a:0,img:"burj",e:"🏙️"},
+    {q:"Dr APJ Abdul Kalam led the team that built India's first satellite launch vehicle, SLV-3. He is known as the…?",o:["Missile Man of India","Iron Man of India","Father of the Nation"],a:0,img:"kalam",e:"🚀"},
 
-    {q:"Which Indian temple is designed as a giant stone chariot with carved wheels?",o:["Konark Sun Temple","Golden Temple","Meenakshi Temple"],a:0,img:"konark",e:"🛕"},
+    {q:"A rocket like ISRO's PSLV rises into space using which principle?",o:["Newton's third law — every action has an equal and opposite reaction","Magnets pulling it upward","Hot air, like a balloon"],a:0,img:"pslv",e:"🚀"},
 
-    {q:"Which of these is one of the New7Wonders of the World?",o:["Chichen Itza","Stonehenge","Mount Fuji"],a:0,img:"chichen",e:"🏛️"}
+    {q:"Arrange these communication inventions from oldest to newest.",o:["Telegraph → Telephone → Internet","Internet → Telegraph → Telephone","Telephone → Internet → Telegraph"],a:0,img:"telegraph",e:"📡"}
 
   ]
 
@@ -1840,7 +1873,7 @@ function buildPhoto(
 
 
   const url =
-    LANDMARK_IMAGES[item.img];
+    QUESTION_IMAGES[item.img];
 
 
   const showEmoji =
@@ -1952,7 +1985,7 @@ function preloadClassImages(cls){
     item=>{
 
       const url =
-        LANDMARK_IMAGES[item.img];
+        QUESTION_IMAGES[item.img];
 
 
       if(url){
@@ -1991,7 +2024,7 @@ function renderQuestion(
     .getElementById('headerSub')
     .textContent =
       classLabel(cls) +
-      ' — Famous Places & Wonders of the World';
+      ' — Inventions That Changed the World';
 
 
   quizProg.textContent =
