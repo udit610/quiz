@@ -489,6 +489,16 @@
     transition:border-color .12s,background .12s;
   }
 
+  /*
+   Options are <label>s, so undo the uppercase heading
+   style that the general label rule gives them.
+  */
+
+  .opt{
+    text-transform:none;
+    letter-spacing:normal;
+  }
+
   .opt:hover{
     border-color:var(--blue);
   }
