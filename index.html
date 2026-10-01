@@ -670,7 +670,7 @@
     <p id="headerSub"></p>
 
     <div class="theme-badge">
-      This Week: 🧩 Logic, Patterns & Puzzles — 3 Oct
+      This Week: 💻 Technology & the Digital World — 3 Oct
     </div>
 
   </header>
@@ -889,237 +889,347 @@ const API_URL =
    ============================================================ */
 
 /*
-   This week has no photos: each question shows a puzzle
-   card instead (the pic field). Photo weeks list their
-   pictures here and give each question an img key.
+   Each question shows either a photo (img, a key into
+   QUESTION_IMAGES) or a puzzle card (pic, text drawn on
+   the page). Weeks with no photos leave this map empty.
 */
 
-const QUESTION_IMAGES = {};
+const QUESTION_IMAGES = {
+
+  "babbage":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Charles_Babbage_-_1860.jpg/500px-Charles_Babbage_-_1860.jpg",
+
+  "bernerslee":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Tim_Berners-Lee_at_the_2025_Web_Summit_%28Cropped%29.jpg/500px-Tim_Berners-Lee_at_the_2025_Web_Summit_%28Cropped%29.jpg",
+
+  "calculator":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Casio_calculator_JS-20WK_in_201901_002.jpg/500px-Casio_calculator_JS-20WK_in_201901_002.jpg",
+
+  "chandrayaan3":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/LVM3_M4%2C_Chandrayaan-3_-_Launch_vehicle_lifting_off_from_the_Second_Launch_Pad_%28SLP%29_of_SDSC-SHAR%2C_Sriharikota_%28edit%29.jpg/500px-LVM3_M4%2C_Chandrayaan-3_-_Launch_vehicle_lifting_off_from_the_Second_Launch_Pad_%28SLP%29_of_SDSC-SHAR%2C_Sriharikota_%28edit%29.jpg",
+
+  "deepblue":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Deep_Blue.jpg/500px-Deep_Blue.jpg",
+
+  "desktop":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/My_view_090909%2C09_09_%283902571235%29.jpg/500px-My_view_090909%2C09_09_%283902571235%29.jpg",
+
+  "drone":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Quadcopter_camera_drone_in_flight.jpg/500px-Quadcopter_camera_drone_in_flight.jpg",
+
+  "eniac":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/ENIAC_Penn1.jpg/500px-ENIAC_Penn1.jpg",
+
+  "fiber":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Fibreoptic.jpg/500px-Fibreoptic.jpg",
+
+  "gps":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/GPS_Block_IIIA.jpg/500px-GPS_Block_IIIA.jpg",
+
+  "headphones":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg/500px-S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg",
+
+  "iss":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/The_station_pictured_from_the_SpaceX_Crew_Dragon_5.jpg/500px-The_station_pictured_from_the_SpaceX_Crew_Dragon_5.jpg",
+
+  "keyboard":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Typing_example.ogv/500px--Typing_example.ogv.jpg",
+
+  "laptop":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/A_One_Laptop_per_Child_computer_%281273754008%29.jpg/500px-A_One_Laptop_per_Child_computer_%281273754008%29.jpg",
+
+  "lock":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Padlock_kl%C3%B3dka_ubt.JPG/500px-Padlock_kl%C3%B3dka_ubt.JPG",
+
+  "lovelace":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png/500px-Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png",
+
+  "microbit":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/BBC_micro_bit_v2.jpg/500px-BBC_micro_bit_v2.jpg",
+
+  "microchip":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/NXP_PCF8577C_LCD_driver_with_I%C2%B2C_%28Colour_Corrected%29.jpg/500px-NXP_PCF8577C_LCD_driver_with_I%C2%B2C_%28Colour_Corrected%29.jpg",
+
+  "mobilephone":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Wikipedia_homepage_on_a_large_Android_phone%2C_2015-04-16.jpg/500px-Wikipedia_homepage_on_a_large_Android_phone%2C_2015-04-16.jpg",
+
+  "monitor":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/MonitorLCDlcd.svg/500px-MonitorLCDlcd.svg.png",
+
+  "mouse":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/3-Tasten-Maus_Microsoft.jpg/500px-3-Tasten-Maus_Microsoft.jpg",
+
+  "printer":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/HP_Laserjet_5_DN_1.jpg/500px-HP_Laserjet_5_DN_1.jpg",
+
+  "printer3d":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg/500px-Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg",
+
+  "qrcode":
+    "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzdtbSIgaGVpZ2h0PSIzN21tIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAzNyAzNyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCBmaWxsPSJ3aGl0ZSIgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgLz48cGF0aCBkPSJNMiwySDNWM0gyek0zLDJINFYzSDN6TTQsMkg1VjNINHpNNSwySDZWM0g1ek02LDJIN1YzSDZ6TTcsMkg4VjNIN3pNOCwySDlWM0g4ek0xMSwySDEyVjNIMTF6TTEyLDJIMTNWM0gxMnpNMTMsMkgxNFYzSDEzek0xNCwySDE1VjNIMTR6TTE1LDJIMTZWM0gxNXpNMTYsMkgxN1YzSDE2ek0xOSwySDIwVjNIMTl6TTIwLDJIMjFWM0gyMHpNMjMsMkgyNFYzSDIzek0yNCwySDI1VjNIMjR6TTI4LDJIMjlWM0gyOHpNMjksMkgzMFYzSDI5ek0zMCwySDMxVjNIMzB6TTMxLDJIMzJWM0gzMXpNMzIsMkgzM1YzSDMyek0zMywySDM0VjNIMzN6TTM0LDJIMzVWM0gzNHpNMiwzSDNWNEgyek04LDNIOVY0SDh6TTEwLDNIMTFWNEgxMHpNMTIsM0gxM1Y0SDEyek0xMywzSDE0VjRIMTN6TTIwLDNIMjFWNEgyMHpNMjIsM0gyM1Y0SDIyek0yNCwzSDI1VjRIMjR6TTI2LDNIMjdWNEgyNnpNMjgsM0gyOVY0SDI4ek0zNCwzSDM1VjRIMzR6TTIsNEgzVjVIMnpNNCw0SDVWNUg0ek01LDRINlY1SDV6TTYsNEg3VjVINnpNOCw0SDlWNUg4ek0xMCw0SDExVjVIMTB6TTExLDRIMTJWNUgxMXpNMTIsNEgxM1Y1SDEyek0xNiw0SDE3VjVIMTZ6TTE4LDRIMTlWNUgxOHpNMjEsNEgyMlY1SDIxek0yMiw0SDIzVjVIMjJ6TTIzLDRIMjRWNUgyM3pNMjUsNEgyNlY1SDI1ek0yOCw0SDI5VjVIMjh6TTMwLDRIMzFWNUgzMHpNMzEsNEgzMlY1SDMxek0zMiw0SDMzVjVIMzJ6TTM0LDRIMzVWNUgzNHpNMiw1SDNWNkgyek00LDVINVY2SDR6TTUsNUg2VjZINXpNNiw1SDdWNkg2ek04LDVIOVY2SDh6TTEwLDVIMTFWNkgxMHpNMTEsNUgxMlY2SDExek0xNiw1SDE3VjZIMTZ6TTE3LDVIMThWNkgxN3pNMTgsNUgxOVY2SDE4ek0xOSw1SDIwVjZIMTl6TTIxLDVIMjJWNkgyMXpNMjIsNUgyM1Y2SDIyek0yMyw1SDI0VjZIMjN6TTI0LDVIMjVWNkgyNHpNMjgsNUgyOVY2SDI4ek0zMCw1SDMxVjZIMzB6TTMxLDVIMzJWNkgzMXpNMzIsNUgzM1Y2SDMyek0zNCw1SDM1VjZIMzR6TTIsNkgzVjdIMnpNNCw2SDVWN0g0ek01LDZINlY3SDV6TTYsNkg3VjdINnpNOCw2SDlWN0g4ek0xMSw2SDEyVjdIMTF6TTEyLDZIMTNWN0gxMnpNMTYsNkgxN1Y3SDE2ek0xNyw2SDE4VjdIMTd6TTE4LDZIMTlWN0gxOHpNMTksNkgyMFY3SDE5ek0yMSw2SDIyVjdIMjF6TTIyLDZIMjNWN0gyMnpNMjMsNkgyNFY3SDIzek0yNSw2SDI2VjdIMjV6TTI4LDZIMjlWN0gyOHpNMzAsNkgzMVY3SDMwek0zMSw2SDMyVjdIMzF6TTMyLDZIMzNWN0gzMnpNMzQsNkgzNVY3SDM0ek0yLDdIM1Y4SDJ6TTgsN0g5VjhIOHpNMTEsN0gxMlY4SDExek0xMyw3SDE0VjhIMTN6TTE0LDdIMTVWOEgxNHpNMTcsN0gxOFY4SDE3ek0xOSw3SDIwVjhIMTl6TTI0LDdIMjVWOEgyNHpNMjgsN0gyOVY4SDI4ek0zNCw3SDM1VjhIMzR6TTIsOEgzVjlIMnpNMyw4SDRWOUgzek00LDhINVY5SDR6TTUsOEg2VjlINXpNNiw4SDdWOUg2ek03LDhIOFY5SDd6TTgsOEg5VjlIOHpNMTAsOEgxMVY5SDEwek0xMiw4SDEzVjlIMTJ6TTE0LDhIMTVWOUgxNHpNMTYsOEgxN1Y5SDE2ek0xOCw4SDE5VjlIMTh6TTIwLDhIMjFWOUgyMHpNMjIsOEgyM1Y5SDIyek0yNCw4SDI1VjlIMjR6TTI2LDhIMjdWOUgyNnpNMjgsOEgyOVY5SDI4ek0yOSw4SDMwVjlIMjl6TTMwLDhIMzFWOUgzMHpNMzEsOEgzMlY5SDMxek0zMiw4SDMzVjlIMzJ6TTMzLDhIMzRWOUgzM3pNMzQsOEgzNVY5SDM0ek0xMCw5SDExVjEwSDEwek0xMiw5SDEzVjEwSDEyek0xMyw5SDE0VjEwSDEzek0xNCw5SDE1VjEwSDE0ek0xNiw5SDE3VjEwSDE2ek0xNyw5SDE4VjEwSDE3ek0xOCw5SDE5VjEwSDE4ek0yMiw5SDIzVjEwSDIyek0yNCw5SDI1VjEwSDI0ek0yNiw5SDI3VjEwSDI2ek0yLDEwSDNWMTFIMnpNOCwxMEg5VjExSDh6TTEwLDEwSDExVjExSDEwek0xMiwxMEgxM1YxMUgxMnpNMTQsMTBIMTVWMTFIMTR6TTE1LDEwSDE2VjExSDE1ek0xNiwxMEgxN1YxMUgxNnpNMTksMTBIMjBWMTFIMTl6TTI0LDEwSDI1VjExSDI0ek0yNywxMEgyOFYxMUgyN3pNMjgsMTBIMjlWMTFIMjh6TTMxLDEwSDMyVjExSDMxek0zMiwxMEgzM1YxMUgzMnpNMzMsMTBIMzRWMTFIMzN6TTMsMTFINFYxMkgzek00LDExSDVWMTJINHpNNSwxMUg2VjEySDV6TTksMTFIMTBWMTJIOXpNMTMsMTFIMTRWMTJIMTN6TTE1LDExSDE2VjEySDE1ek0xNiwxMUgxN1YxMkgxNnpNMTcsMTFIMThWMTJIMTd6TTE5LDExSDIwVjEySDE5ek0yMCwxMUgyMVYxMkgyMHpNMjEsMTFIMjJWMTJIMjF6TTI0LDExSDI1VjEySDI0ek0yNSwxMUgyNlYxMkgyNXpNMjksMTFIMzBWMTJIMjl6TTMwLDExSDMxVjEySDMwek0zMiwxMUgzM1YxMkgzMnpNMzQsMTFIMzVWMTJIMzR6TTIsMTJIM1YxM0gyek0zLDEySDRWMTNIM3pNNSwxMkg2VjEzSDV6TTYsMTJIN1YxM0g2ek03LDEySDhWMTNIN3pNOCwxMkg5VjEzSDh6TTksMTJIMTBWMTNIOXpNMTAsMTJIMTFWMTNIMTB6TTExLDEySDEyVjEzSDExek0xMiwxMkgxM1YxM0gxMnpNMTMsMTJIMTRWMTNIMTN6TTE0LDEySDE1VjEzSDE0ek0xNSwxMkgxNlYxM0gxNXpNMTYsMTJIMTdWMTNIMTZ6TTE3LDEySDE4VjEzSDE3ek0xOCwxMkgxOVYxM0gxOHpNMjAsMTJIMjFWMTNIMjB6TTIzLDEySDI0VjEzSDIzek0yNiwxMkgyN1YxM0gyNnpNMjcsMTJIMjhWMTNIMjd6TTMxLDEySDMyVjEzSDMxek0zMiwxMkgzM1YxM0gzMnpNMzQsMTJIMzVWMTNIMzR6TTIsMTNIM1YxNEgyek0zLDEzSDRWMTRIM3pNNCwxM0g1VjE0SDR6TTUsMTNINlYxNEg1ek0xMiwxM0gxM1YxNEgxMnpNMTQsMTNIMTVWMTRIMTR6TTE1LDEzSDE2VjE0SDE1ek0xNywxM0gxOFYxNEgxN3pNMTgsMTNIMTlWMTRIMTh6TTI1LDEzSDI2VjE0SDI1ek0yNywxM0gyOFYxNEgyN3pNMzEsMTNIMzJWMTRIMzF6TTMyLDEzSDMzVjE0SDMyek0zNCwxM0gzNVYxNEgzNHpNNCwxNEg1VjE1SDR6TTUsMTRINlYxNUg1ek03LDE0SDhWMTVIN3pNOCwxNEg5VjE1SDh6TTEzLDE0SDE0VjE1SDEzek0xNCwxNEgxNVYxNUgxNHpNMTUsMTRIMTZWMTVIMTV6TTE4LDE0SDE5VjE1SDE4ek0yMCwxNEgyMVYxNUgyMHpNMjIsMTRIMjNWMTVIMjJ6TTIzLDE0SDI0VjE1SDIzek0yNiwxNEgyN1YxNUgyNnpNMjcsMTRIMjhWMTVIMjd6TTI4LDE0SDI5VjE1SDI4ek0yOSwxNEgzMFYxNUgyOXpNMzMsMTRIMzRWMTVIMzN6TTM0LDE0SDM1VjE1SDM0ek0yLDE1SDNWMTZIMnpNMywxNUg0VjE2SDN6TTUsMTVINlYxNkg1ek02LDE1SDdWMTZINnpNNywxNUg4VjE2SDd6TTksMTVIMTBWMTZIOXpNMTAsMTVIMTFWMTZIMTB6TTExLDE1SDEyVjE2SDExek0xMywxNUgxNFYxNkgxM3pNMTQsMTVIMTVWMTZIMTR6TTE5LDE1SDIwVjE2SDE5ek0yMCwxNUgyMVYxNkgyMHpNMjEsMTVIMjJWMTZIMjF6TTIyLDE1SDIzVjE2SDIyek0yMywxNUgyNFYxNkgyM3pNMjQsMTVIMjVWMTZIMjR6TTI1LDE1SDI2VjE2SDI1ek0yOCwxNUgyOVYxNkgyOHpNMjksMTVIMzBWMTZIMjl6TTMyLDE1SDMzVjE2SDMyek0zNCwxNUgzNVYxNkgzNHpNMiwxNkgzVjE3SDJ6TTgsMTZIOVYxN0g4ek0xMiwxNkgxM1YxN0gxMnpNMTMsMTZIMTRWMTdIMTN6TTE0LDE2SDE1VjE3SDE0ek0xNiwxNkgxN1YxN0gxNnpNMTcsMTZIMThWMTdIMTd6TTI0LDE2SDI1VjE3SDI0ek0yNywxNkgyOFYxN0gyN3pNMjgsMTZIMjlWMTdIMjh6TTI5LDE2SDMwVjE3SDI5ek0zMiwxNkgzM1YxN0gzMnpNMzMsMTZIMzRWMTdIMzN6TTIsMTdIM1YxOEgyek03LDE3SDhWMThIN3pNMTEsMTdIMTJWMThIMTF6TTEzLDE3SDE0VjE4SDEzek0xNywxN0gxOFYxOEgxN3pNMTgsMTdIMTlWMThIMTh6TTIwLDE3SDIxVjE4SDIwek0yMSwxN0gyMlYxOEgyMXpNMjIsMTdIMjNWMThIMjJ6TTI0LDE3SDI1VjE4SDI0ek0zLDE4SDRWMTlIM3pNNiwxOEg3VjE5SDZ6TTgsMThIOVYxOUg4ek05LDE4SDEwVjE5SDl6TTEyLDE4SDEzVjE5SDEyek0xNSwxOEgxNlYxOUgxNXpNMTYsMThIMTdWMTlIMTZ6TTE5LDE4SDIwVjE5SDE5ek0yMCwxOEgyMVYxOUgyMHpNMjQsMThIMjVWMTlIMjR6TTI2LDE4SDI3VjE5SDI2ek0yOSwxOEgzMFYxOUgyOXpNMzAsMThIMzFWMTlIMzB6TTMxLDE4SDMyVjE5SDMxek0zMiwxOEgzM1YxOUgzMnpNMzMsMThIMzRWMTlIMzN6TTIsMTlIM1YyMEgyek0zLDE5SDRWMjBIM3pNNywxOUg4VjIwSDd6TTksMTlIMTBWMjBIOXpNMTEsMTlIMTJWMjBIMTF6TTE1LDE5SDE2VjIwSDE1ek0xNywxOUgxOFYyMEgxN3pNMTgsMTlIMTlWMjBIMTh6TTIwLDE5SDIxVjIwSDIwek0yMSwxOUgyMlYyMEgyMXpNMjIsMTlIMjNWMjBIMjJ6TTI0LDE5SDI1VjIwSDI0ek0yNSwxOUgyNlYyMEgyNXpNMjgsMTlIMjlWMjBIMjh6TTI5LDE5SDMwVjIwSDI5ek0zMiwxOUgzM1YyMEgzMnpNMzQsMTlIMzVWMjBIMzR6TTYsMjBIN1YyMUg2ek04LDIwSDlWMjFIOHpNMTAsMjBIMTFWMjFIMTB6TTExLDIwSDEyVjIxSDExek0xMywyMEgxNFYyMUgxM3pNMTUsMjBIMTZWMjFIMTV6TTE3LDIwSDE4VjIxSDE3ek0xOSwyMEgyMFYyMUgxOXpNMjAsMjBIMjFWMjFIMjB6TTIxLDIwSDIyVjIxSDIxek0yNCwyMEgyNVYyMUgyNHpNMjUsMjBIMjZWMjFIMjV6TTI3LDIwSDI4VjIxSDI3ek0yOCwyMEgyOVYyMUgyOHpNMzAsMjBIMzFWMjFIMzB6TTMxLDIwSDMyVjIxSDMxek0zLDIxSDRWMjJIM3pNNCwyMUg1VjIySDR6TTUsMjFINlYyMkg1ek02LDIxSDdWMjJINnpNNywyMUg4VjIySDd6TTEyLDIxSDEzVjIySDEyek0xNCwyMUgxNVYyMkgxNHpNMTYsMjFIMTdWMjJIMTZ6TTE3LDIxSDE4VjIySDE3ek0xOCwyMUgxOVYyMkgxOHpNMjAsMjFIMjFWMjJIMjB6TTIxLDIxSDIyVjIySDIxek0yNCwyMUgyNVYyMkgyNHpNMjUsMjFIMjZWMjJIMjV6TTI5LDIxSDMwVjIySDI5ek0zMCwyMUgzMVYyMkgzMHpNMzEsMjFIMzJWMjJIMzF6TTMyLDIxSDMzVjIySDMyek00LDIySDVWMjNINHpNNSwyMkg2VjIzSDV6TTcsMjJIOFYyM0g3ek04LDIySDlWMjNIOHpNOSwyMkgxMFYyM0g5ek0xMCwyMkgxMVYyM0gxMHpNMTIsMjJIMTNWMjNIMTJ6TTE0LDIySDE1VjIzSDE0ek0xOCwyMkgxOVYyM0gxOHpNMjIsMjJIMjNWMjNIMjJ6TTI0LDIySDI1VjIzSDI0ek0yNSwyMkgyNlYyM0gyNXpNMjYsMjJIMjdWMjNIMjZ6TTI3LDIySDI4VjIzSDI3ek0yOSwyMkgzMFYyM0gyOXpNMzAsMjJIMzFWMjNIMzB6TTIsMjNIM1YyNEgyek0zLDIzSDRWMjRIM3pNNCwyM0g1VjI0SDR6TTcsMjNIOFYyNEg3ek05LDIzSDEwVjI0SDl6TTEyLDIzSDEzVjI0SDEyek0xMywyM0gxNFYyNEgxM3pNMTQsMjNIMTVWMjRIMTR6TTE1LDIzSDE2VjI0SDE1ek0xNiwyM0gxN1YyNEgxNnpNMTcsMjNIMThWMjRIMTd6TTE5LDIzSDIwVjI0SDE5ek0yMSwyM0gyMlYyNEgyMXpNMjQsMjNIMjVWMjRIMjR6TTI1LDIzSDI2VjI0SDI1ek0yOCwyM0gyOVYyNEgyOHpNMjksMjNIMzBWMjRIMjl6TTMwLDIzSDMxVjI0SDMwek0zMSwyM0gzMlYyNEgzMXpNMzIsMjNIMzNWMjRIMzJ6TTMzLDIzSDM0VjI0SDMzek0zNCwyM0gzNVYyNEgzNHpNMiwyNEgzVjI1SDJ6TTQsMjRINVYyNUg0ek04LDI0SDlWMjVIOHpNOSwyNEgxMFYyNUg5ek0xMCwyNEgxMVYyNUgxMHpNMTMsMjRIMTRWMjVIMTN6TTE0LDI0SDE1VjI1SDE0ek0xNiwyNEgxN1YyNUgxNnpNMTcsMjRIMThWMjVIMTd6TTE4LDI0SDE5VjI1SDE4ek0yMiwyNEgyM1YyNUgyMnpNMjMsMjRIMjRWMjVIMjN6TTI0LDI0SDI1VjI1SDI0ek0yNiwyNEgyN1YyNUgyNnpNMjksMjRIMzBWMjVIMjl6TTMyLDI0SDMzVjI1SDMyek0zMywyNEgzNFYyNUgzM3pNMiwyNUgzVjI2SDJ6TTcsMjVIOFYyNkg3ek05LDI1SDEwVjI2SDl6TTEyLDI1SDEzVjI2SDEyek0xNCwyNUgxNVYyNkgxNHpNMTUsMjVIMTZWMjZIMTV6TTE2LDI1SDE3VjI2SDE2ek0yMCwyNUgyMVYyNkgyMHpNMjIsMjVIMjNWMjZIMjJ6TTI1LDI1SDI2VjI2SDI1ek0yNiwyNUgyN1YyNkgyNnpNMjksMjVIMzBWMjZIMjl6TTMyLDI1SDMzVjI2SDMyek0zMywyNUgzNFYyNkgzM3pNMzQsMjVIMzVWMjZIMzR6TTIsMjZIM1YyN0gyek0zLDI2SDRWMjdIM3pNNSwyNkg2VjI3SDV6TTYsMjZIN1YyN0g2ek04LDI2SDlWMjdIOHpNMTAsMjZIMTFWMjdIMTB6TTEzLDI2SDE0VjI3SDEzek0xNCwyNkgxNVYyN0gxNHpNMTUsMjZIMTZWMjdIMTV6TTE4LDI2SDE5VjI3SDE4ek0yMCwyNkgyMVYyN0gyMHpNMjEsMjZIMjJWMjdIMjF6TTIyLDI2SDIzVjI3SDIyek0yNCwyNkgyNVYyN0gyNHpNMjUsMjZIMjZWMjdIMjV6TTI2LDI2SDI3VjI3SDI2ek0yNywyNkgyOFYyN0gyN3pNMjgsMjZIMjlWMjdIMjh6TTI5LDI2SDMwVjI3SDI5ek0zMCwyNkgzMVYyN0gzMHpNMzEsMjZIMzJWMjdIMzF6TTMzLDI2SDM0VjI3SDMzek0xMCwyN0gxMVYyOEgxMHpNMTEsMjdIMTJWMjhIMTF6TTEyLDI3SDEzVjI4SDEyek0xNCwyN0gxNVYyOEgxNHpNMTYsMjdIMTdWMjhIMTZ6TTE3LDI3SDE4VjI4SDE3ek0xOCwyN0gxOVYyOEgxOHpNMjAsMjdIMjFWMjhIMjB6TTIxLDI3SDIyVjI4SDIxek0yMiwyN0gyM1YyOEgyMnpNMjYsMjdIMjdWMjhIMjZ6TTMwLDI3SDMxVjI4SDMwek0zMSwyN0gzMlYyOEgzMXpNMzIsMjdIMzNWMjhIMzJ6TTM0LDI3SDM1VjI4SDM0ek0yLDI4SDNWMjlIMnpNMywyOEg0VjI5SDN6TTQsMjhINVYyOUg0ek01LDI4SDZWMjlINXpNNiwyOEg3VjI5SDZ6TTcsMjhIOFYyOUg3ek04LDI4SDlWMjlIOHpNMTMsMjhIMTRWMjlIMTN6TTE2LDI4SDE3VjI5SDE2ek0xNywyOEgxOFYyOUgxN3pNMTgsMjhIMTlWMjlIMTh6TTIwLDI4SDIxVjI5SDIwek0yMiwyOEgyM1YyOUgyMnpNMjMsMjhIMjRWMjlIMjN6TTI1LDI4SDI2VjI5SDI1ek0yNiwyOEgyN1YyOUgyNnpNMjgsMjhIMjlWMjlIMjh6TTMwLDI4SDMxVjI5SDMwek0zMiwyOEgzM1YyOUgzMnpNMiwyOUgzVjMwSDJ6TTgsMjlIOVYzMEg4ek0xMSwyOUgxMlYzMEgxMXpNMTMsMjlIMTRWMzBIMTN6TTE0LDI5SDE1VjMwSDE0ek0xNSwyOUgxNlYzMEgxNXpNMTYsMjlIMTdWMzBIMTZ6TTIxLDI5SDIyVjMwSDIxek0yMiwyOUgyM1YzMEgyMnpNMjUsMjlIMjZWMzBIMjV6TTI2LDI5SDI3VjMwSDI2ek0zMCwyOUgzMVYzMEgzMHpNMzEsMjlIMzJWMzBIMzF6TTMyLDI5SDMzVjMwSDMyek0zMywyOUgzNFYzMEgzM3pNMiwzMEgzVjMxSDJ6TTQsMzBINVYzMUg0ek01LDMwSDZWMzFINXpNNiwzMEg3VjMxSDZ6TTgsMzBIOVYzMUg4ek0xMiwzMEgxM1YzMUgxMnpNMTMsMzBIMTRWMzFIMTN6TTE0LDMwSDE1VjMxSDE0ek0xNSwzMEgxNlYzMUgxNXpNMTYsMzBIMTdWMzFIMTZ6TTE5LDMwSDIwVjMxSDE5ek0yMiwzMEgyM1YzMUgyMnpNMjQsMzBIMjVWMzFIMjR6TTI2LDMwSDI3VjMxSDI2ek0yNywzMEgyOFYzMUgyN3pNMjgsMzBIMjlWMzFIMjh6TTI5LDMwSDMwVjMxSDI5ek0zMCwzMEgzMVYzMUgzMHpNMzQsMzBIMzVWMzFIMzR6TTIsMzFIM1YzMkgyek00LDMxSDVWMzJINHpNNSwzMUg2VjMySDV6TTYsMzFIN1YzMkg2ek04LDMxSDlWMzJIOHpNMTEsMzFIMTJWMzJIMTF6TTEyLDMxSDEzVjMySDEyek0xNCwzMUgxNVYzMkgxNHpNMTUsMzFIMTZWMzJIMTV6TTE3LDMxSDE4VjMySDE3ek0xOCwzMUgxOVYzMkgxOHpNMjEsMzFIMjJWMzJIMjF6TTIyLDMxSDIzVjMySDIyek0yNCwzMUgyNVYzMkgyNHpNMjUsMzFIMjZWMzJIMjV6TTI3LDMxSDI4VjMySDI3ek0zMCwzMUgzMVYzMkgzMHpNMzIsMzFIMzNWMzJIMzJ6TTMzLDMxSDM0VjMySDMzek0zNCwzMUgzNVYzMkgzNHpNMiwzMkgzVjMzSDJ6TTQsMzJINVYzM0g0ek01LDMySDZWMzNINXpNNiwzMkg3VjMzSDZ6TTgsMzJIOVYzM0g4ek0xMSwzMkgxMlYzM0gxMXpNMTMsMzJIMTRWMzNIMTN6TTE1LDMySDE2VjMzSDE1ek0xNiwzMkgxN1YzM0gxNnpNMTcsMzJIMThWMzNIMTd6TTE5LDMySDIwVjMzSDE5ek0yMCwzMkgyMVYzM0gyMHpNMjEsMzJIMjJWMzNIMjF6TTIyLDMySDIzVjMzSDIyek0yMywzMkgyNFYzM0gyM3pNMjQsMzJIMjVWMzNIMjR6TTI1LDMySDI2VjMzSDI1ek0yNiwzMkgyN1YzM0gyNnpNMjcsMzJIMjhWMzNIMjd6TTI4LDMySDI5VjMzSDI4ek0zMCwzMkgzMVYzM0gzMHpNMzEsMzJIMzJWMzNIMzF6TTMyLDMySDMzVjMzSDMyek0zMywzMkgzNFYzM0gzM3pNMzQsMzJIMzVWMzNIMzR6TTIsMzNIM1YzNEgyek04LDMzSDlWMzRIOHpNMTEsMzNIMTJWMzRIMTF6TTE2LDMzSDE3VjM0SDE2ek0xOCwzM0gxOVYzNEgxOHpNMjAsMzNIMjFWMzRIMjB6TTIyLDMzSDIzVjM0SDIyek0yNSwzM0gyNlYzNEgyNXpNMjcsMzNIMjhWMzRIMjd6TTMxLDMzSDMyVjM0SDMxek0zMiwzM0gzM1YzNEgzMnpNMiwzNEgzVjM1SDJ6TTMsMzRINFYzNUgzek00LDM0SDVWMzVINHpNNSwzNEg2VjM1SDV6TTYsMzRIN1YzNUg2ek03LDM0SDhWMzVIN3pNOCwzNEg5VjM1SDh6TTEwLDM0SDExVjM1SDEwek0xMSwzNEgxMlYzNUgxMXpNMTIsMzRIMTNWMzVIMTJ6TTEzLDM0SDE0VjM1SDEzek0xNCwzNEgxNVYzNUgxNHpNMTUsMzRIMTZWMzVIMTV6TTE2LDM0SDE3VjM1SDE2ek0xNywzNEgxOFYzNUgxN3pNMjIsMzRIMjNWMzVIMjJ6TTIzLDM0SDI0VjM1SDIzek0yNCwzNEgyNVYzNUgyNHpNMjUsMzRIMjZWMzVIMjV6TTI2LDM0SDI3VjM1SDI2ek0yNywzNEgyOFYzNUgyN3pNMjgsMzRIMjlWMzVIMjh6TTI5LDM0SDMwVjM1SDI5ek0zMCwzNEgzMVYzNUgzMHpNMzEsMzRIMzJWMzVIMzF6TTMyLDM0SDMzVjM1SDMyek0zMywzNEgzNFYzNUgzM3oiIGlkPSJxci1wYXRoIiBmaWxsPSIjMDAwMDAwIiBmaWxsLW9wYWNpdHk9IjEiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiAvPjwvc3ZnPg==",
+
+  "remote":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Nuon-N2000-Remote-Control.jpg/500px-Nuon-N2000-Remote-Control.jpg",
+
+  "robot":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Honda_ASIMO_%28ver._2011%29_2011_Tokyo_Motor_Show.jpg/500px-Honda_ASIMO_%28ver._2011%29_2011_Tokyo_Motor_Show.jpg",
+
+  "rover":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Perseverance-Selfie-at-Rochette-Horizontal-V2.gif/500px-Perseverance-Selfie-at-Rochette-Horizontal-V2.gif",
+
+  "satellite":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Iridium_satellite.jpg/500px-Iridium_satellite.jpg",
+
+  "selfdriving":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Waymo_self-driving_car_front_view.gk.jpg/500px-Waymo_self-driving_car_front_view.gk.jpg",
+
+  "smartwatch":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Black_Apple_Watch_on_my_wrist_-jcutrer_%2835908678402%29.jpg/500px-Black_Apple_Watch_on_my_wrist_-jcutrer_%2835908678402%29.jpg",
+
+  "sputnik":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/%D0%9F%D0%B5%D1%80%D0%B2%D1%8B%D0%B9_%D0%B2_%D0%BC%D0%B8%D1%80%D0%B5_%D0%B8%D1%81%D0%BA%D1%83%D1%81%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9_%D1%81%D0%BF%D1%83%D1%82%D0%BD%D0%B8%D0%BA_%D0%97%D0%B5%D0%BC%D0%BB%D0%B8.jpg/500px-%D0%9F%D0%B5%D1%80%D0%B2%D1%8B%D0%B9_%D0%B2_%D0%BC%D0%B8%D1%80%D0%B5_%D0%B8%D1%81%D0%BA%D1%83%D1%81%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9_%D1%81%D0%BF%D1%83%D1%82%D0%BD%D0%B8%D0%BA_%D0%97%D0%B5%D0%BC%D0%BB%D0%B8.jpg",
+
+  "tablet":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/12.9_iPad_Pro_1st_Gen_And_Galaxy_Tab_S8_Ultra_Size_Comparison.jpg/500px-12.9_iPad_Pro_1st_Gen_And_Galaxy_Tab_S8_Ultra_Size_Comparison.jpg",
+
+  "turing":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Alan_turing_header.jpg/500px-Alan_turing_header.jpg",
+
+  "usb":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/SanDisk-Cruzer-USB-4GB-ThumbDrive.jpg/500px-SanDisk-Cruzer-USB-4GB-ThumbDrive.jpg",
+
+  "vr":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Collision_2024_-_VR5_3671_%2853804364983%29.jpg/500px-Collision_2024_-_VR5_3671_%2853804364983%29.jpg",
+
+  "webcam":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Logicool_StreamCam_%28cropped%29.jpg/500px-Logicool_StreamCam_%28cropped%29.jpg"
+
+};
 
 
 const QUIZZES = {
 
   "UKG":[
 
-    {q:"What comes next?",o:["🍌 Banana","🍎 Apple","🍇 Grapes"],a:0,pic:"🍎 🍌 🍎 🍌 🍎 ❓",e:"🍌"},
+    {q:"What is this?",o:["Computer","Fridge","Cupboard"],a:0,img:"desktop",e:"🖥️"},
 
-    {q:"Which one is different?",o:["🐱 Cat","🐶 Dog","🐮 Cow"],a:0,pic:"🐶 🐶 🐱 🐶",e:"🐱"},
+    {q:"We type letters with this. What is it?",o:["Keyboard","Spoon","Pillow"],a:0,img:"keyboard",e:"⌨️"},
 
-    {q:"How many stars are there?",o:["5","4","6"],a:0,pic:"⭐ ⭐ ⭐ ⭐ ⭐",e:"⭐"},
+    {q:"This is called a computer…?",o:["Mouse","Cat","Ball"],a:0,img:"mouse",e:"🖱️"},
 
-    {q:"What comes next?",o:["🌙 Moon","🌞 Sun","⭐ Star"],a:0,pic:"🌞 🌞 🌙 🌞 🌞 ❓",e:"🌙"},
+    {q:"Which gadget do we use to call Grandma?",o:["Mobile phone","Umbrella","Toothbrush"],a:0,img:"mobilephone",e:"📱"},
 
-    {q:"Which one is NOT a fruit?",o:["🥕 Carrot","🍎 Apple","🍌 Banana"],a:0,pic:"🍎 🍌 🍇 🥕",e:"🥕"},
+    {q:"We wear these to listen to music. What are they?",o:["Headphones","Glasses","Gloves"],a:0,img:"headphones",e:"🎧"},
 
-    {q:"Which animal is bigger?",o:["🐘 Elephant","🐭 Mouse","Both are the same size"],a:0,pic:"🐘   🐭",e:"🐘"},
+    {q:"Which machine puts our pictures on paper?",o:["Printer","Fan","Fridge"],a:0,img:"printer",e:"🖨️"},
 
-    {q:"Which number comes next?",o:["5","6","3"],a:0,pic:"1, 2, 3, 4, ❓",e:"🔢"},
+    {q:"What is this flat touch-screen gadget called?",o:["Tablet","Plate","Book"],a:0,img:"tablet",e:"📲"},
 
-    {q:"How many fingers are on one hand?",o:["5","4","10"],a:0,pic:"🖐️",e:"🖐️"},
+    {q:"Which gadget changes the TV channel from the sofa?",o:["Remote control","Spoon","Shoe"],a:0,img:"remote",e:"📺"},
 
-    {q:"Which one is NOT a vehicle?",o:["🐄 Cow","🚗 Car","🚌 Bus"],a:0,pic:"🚗 🚌 🚲 🐄",e:"🐄"},
+    {q:"Which gadget helps us add numbers quickly?",o:["Calculator","Pillow","Comb"],a:0,img:"calculator",e:"🧮"},
 
-    {q:"What will the little plant grow into?",o:["🌳 Tree","🌱 Seed","🪨 Stone"],a:0,pic:"🌱 ➜ 🌿 ➜ ❓",e:"🌳"}
+    {q:"What is this?",o:["Robot","Tree","Cake"],a:0,img:"robot",e:"🤖"}
 
   ],
 
 
   "1":[
 
-    {q:"What comes next?",o:["10","9","12"],a:0,pic:"2, 4, 6, 8, ❓",e:"🔢"},
+    {q:"Which part of the computer shows pictures and words?",o:["Screen","Mouse","Keyboard"],a:0,img:"monitor",e:"🖥️"},
 
-    {q:"Which one is the odd one out?",o:["🐟 Fish","🦅 Eagle","🦜 Parrot"],a:0,pic:"🦅 🦜 🐦 🐟",e:"🐟"},
+    {q:"Which key do we press to put a space between words?",o:["Space bar","Power button","Volume button"],a:0,img:"keyboard",e:"⌨️"},
 
-    {q:"How many cookies are there altogether?",o:["5","6","4"],a:0,pic:"🍪 🍪 🍪  +  🍪 🍪",e:"🍪"},
+    {q:"We point and click with the…?",o:["Mouse","Printer","Speaker"],a:0,img:"mouse",e:"🖱️"},
 
-    {q:"Which shape comes next?",o:["🟦 Square","🔺 Triangle","⚪ Circle"],a:0,pic:"🔺 🟦 🔺 🟦 🔺 ❓",e:"🟦"},
+    {q:"Where do we wear a smartwatch?",o:["On the wrist","On the foot","On the head"],a:0,img:"smartwatch",e:"⌚"},
 
-    {q:"Which day comes next?",o:["Wednesday","Sunday","Friday"],a:0,pic:"Monday ➜ Tuesday ➜ ❓",e:"📅"},
+    {q:"A webcam lets people on a video call…?",o:["See you","Smell you","Touch you"],a:0,img:"webcam",e:"📷"},
 
-    {q:"What does a little chick grow into?",o:["🐔 A hen","🐟 A fish","🐸 A frog"],a:0,pic:"🐣 ➜ 🐥 ➜ ❓",e:"🐔"},
+    {q:"What should we do when a phone's battery is low?",o:["Charge it","Water it","Feed it"],a:0,img:"mobilephone",e:"🔋"},
 
-    {q:"What comes next?",o:["6","8","5"],a:0,pic:"10, 9, 8, 7, ❓",e:"🔢"},
+    {q:"A laptop is a computer you can…?",o:["Carry around easily","Eat","Wear on your feet"],a:0,img:"laptop",e:"💻"},
 
-    {q:"Which one do we NOT wear?",o:["🍎 Apple","🧦 Socks","👟 Shoes"],a:0,pic:"🧤 🧦 👟 🍎",e:"🍎"},
+    {q:"This small thing stores photos and files. It is a…?",o:["Pen drive","Pencil","Eraser"],a:0,img:"usb",e:"💾"},
 
-    {q:"What comes after day?",o:["Night","Breakfast","Monday"],a:0,pic:"🌞 Day ➜ ❓",e:"🌙"},
+    {q:"Which gadget lets you listen without disturbing others?",o:["Headphones","Loudspeaker","Drum"],a:0,img:"headphones",e:"🎧"},
 
-    {q:"4 frogs sit on a log. 1 hops away. How many are left?",o:["3","5","4"],a:0,pic:"🐸 🐸 🐸 🐸  −  🐸",e:"🐸"}
+    {q:"When we finish on the computer, we should…?",o:["Shut it down","Pour water on it","Hit it"],a:0,pic:"💻  ➜  ⏻",e:"⏻"}
 
   ],
 
 
   "2":[
 
-    {q:"What comes next?",o:["25","30","21"],a:0,pic:"5, 10, 15, 20, ❓",e:"🔢"},
+    {q:"The Internet connects…?",o:["Computers all around the world","Only two houses","Rivers and mountains"],a:0,pic:"🌐",e:"🌐"},
 
-    {q:"Riddle: I have hands but I cannot clap. What am I?",o:["A clock","A glove","A tree"],a:0,pic:"🤔 Riddle",e:"🕰️"},
+    {q:"Wi-Fi lets our devices join the Internet…?",o:["Without wires","Only with ropes","Through water pipes"],a:0,pic:"📶 Wi-Fi",e:"📶"},
 
-    {q:"The Sun rises in the…?",o:["East","West","North"],a:0,pic:"🌅",e:"🌅"},
+    {q:"Who can you share your password with?",o:["Only your parents or guardian","Everyone in your class","A stranger online"],a:0,pic:"🔑 Password",e:"🔑"},
 
-    {q:"If A = 1, B = 2 and C = 3, what is D?",o:["4","5","3"],a:0,pic:"A = 1   B = 2   C = 3\nD = ❓",e:"🔤"},
+    {q:"What is an app?",o:["A program on a phone or tablet","A type of fruit","A kind of shoe"],a:0,pic:"📱 App",e:"📱"},
 
-    {q:"What comes next?",o:["9","8","10"],a:0,pic:"1, 3, 5, 7, ❓",e:"🔢"},
+    {q:"A stranger online asks where you live. What should you do?",o:["Tell a trusted adult","Tell them","Send them a photo"],a:0,pic:"💬 “Where do you live?”",e:"🛡️"},
 
-    {q:"Riddle: What has to be broken before you can use it?",o:["An egg","A pencil","A book"],a:0,pic:"🤔 Riddle",e:"🥚"},
+    {q:"We scan this with a phone to pay. What is it?",o:["A QR code","A crossword","A chessboard"],a:0,img:"qrcode",e:"🔳"},
 
-    {q:"You face North and turn right. Which way are you facing now?",o:["East","West","South"],a:0,pic:"🧭 Face North ➜ turn right",e:"🧭"},
+    {q:"A video call lets us…?",o:["See and talk to people far away","Cook food","Fly in the sky"],a:0,pic:"📹 📞",e:"📹"},
 
-    {q:"CAT written backwards is TAC. What is DOG written backwards?",o:["GOD","DGO","OGD"],a:0,pic:"CAT ➜ TAC\nDOG ➜ ❓",e:"🔁"},
+    {q:"Which of these helps us search the Internet?",o:["Google","Paint","Calculator"],a:0,pic:"🔍 Search",e:"🔍"},
 
-    {q:"Which month comes next?",o:["April","May","June"],a:0,pic:"January, February,\nMarch, ❓",e:"📅"},
+    {q:"A smartwatch can count your…?",o:["Steps","Hair","Teeth"],a:0,img:"smartwatch",e:"⌚"},
 
-    {q:"There are 3 hens. How many legs do they have altogether?",o:["6","3","9"],a:0,pic:"🐔 🐔 🐔",e:"🐔"}
+    {q:"Spending too long on screens can make our eyes…?",o:["Tired","Blue","Bigger"],a:0,pic:"⏰ Screen time",e:"👀"}
 
   ],
 
 
   "3":[
 
-    {q:"What comes next?",o:["32","20","24"],a:0,pic:"2, 4, 8, 16, ❓",e:"🔢"},
+    {q:"In a website address, what does 'www' stand for?",o:["World Wide Web","Wide Water World","Win Win Win"],a:0,pic:"www",e:"🌐"},
 
-    {q:"Riddle: I have keys, but I cannot open any lock. What am I?",o:["A piano","A door","A car"],a:0,pic:"🤔 Riddle",e:"🎹"},
+    {q:"What is an e-mail?",o:["A message sent over the Internet","A letter carried by a pigeon","A type of stamp"],a:0,pic:"📧",e:"📧"},
 
-    {q:"You face East and turn left. Which way are you facing now?",o:["North","South","West"],a:0,pic:"🧭 Face East ➜ turn left",e:"🧭"},
+    {q:"Which is the strongest password?",o:["Tiger$Jump42","123456","password"],a:0,img:"lock",e:"🔒"},
 
-    {q:"If every letter moves one step forward, CAT becomes DBU. What does DOG become?",o:["EPH","CNF","DOH"],a:0,pic:"CAT ➜ DBU\nDOG ➜ ❓",e:"🔐"},
+    {q:"Tim Berners-Lee invented the…?",o:["World Wide Web","Mobile phone","Television"],a:0,img:"bernerslee",e:"🌐"},
 
-    {q:"What comes next?",o:["60","50","65"],a:0,pic:"100, 90, 80, 70, ❓",e:"🔢"},
+    {q:"Ctrl + C copies. What does Ctrl + V do?",o:["Paste","Delete","Shut down"],a:0,pic:"Ctrl + C   ➜   Ctrl + V",e:"📋"},
 
-    {q:"How many small squares are there?",o:["6","5","8"],a:0,pic:"🟥 🟥 🟥\n🟥 🟥 🟥",e:"🟥"},
+    {q:"Satellites in space help us with…?",o:["TV, phone signals and weather","Cooking dinner","Watering plants"],a:0,img:"satellite",e:"🛰️"},
 
-    {q:"Riya is taller than Aman. Aman is taller than Sonu. Who is the tallest?",o:["Riya","Aman","Sonu"],a:0,pic:"📏",e:"📏"},
+    {q:"A computer virus is…?",o:["A harmful program that can damage a computer","A cold that computers catch","A very fast mouse"],a:0,pic:"🦠 💻",e:"🦠"},
 
-    {q:"What comes next?",o:["GH","FG","HI"],a:0,pic:"AB, CD, EF, ❓",e:"🔤"},
+    {q:"Which device has a touch screen and no separate keyboard?",o:["Tablet","Desktop computer","Printer"],a:0,img:"tablet",e:"📲"},
 
-    {q:"Riddle: What has a neck but no head?",o:["A bottle","A giraffe","A snake"],a:0,pic:"🤔 Riddle",e:"🧴"},
+    {q:"What do we call small pictures like 😀 used in messages?",o:["Emojis","Maps","Stamps"],a:0,pic:"😀 😂 👍 🎉",e:"😀"},
 
-    {q:"If today is Monday, what day will it be 2 days from now?",o:["Wednesday","Tuesday","Thursday"],a:0,pic:"📅 Monday ➜ ➜ ❓",e:"📅"}
+    {q:"In 2023, India's Chandrayaan-3 landed near the south pole of the…?",o:["Moon","Sun","Earth"],a:0,img:"chandrayaan3",e:"🌙"}
 
   ],
 
 
   "4":[
 
-    {q:"What comes next?",o:["48","36","30"],a:0,pic:"3, 6, 12, 24, ❓",e:"🔢"},
+    {q:"Which is the biggest?",o:["1 GB","1 MB","1 KB"],a:0,pic:"KB   MB   GB",e:"💾"},
 
-    {q:"What comes next?",o:["25","20","24"],a:0,pic:"1, 4, 9, 16, ❓",e:"🔢"},
+    {q:"A message says “You won! Click here.” What should you do?",o:["Don't click; tell an adult","Click it quickly","Send it to friends"],a:0,pic:"🎁 “You won! Click here”",e:"🛡️"},
 
-    {q:"You walk 3 steps North, then 3 steps South. Where are you now?",o:["Back where you started","6 steps North","3 steps East"],a:0,pic:"🧭 3 North ➜ 3 South",e:"🧭"},
+    {q:"A 3D printer makes…?",o:["Solid objects, layer by layer","Only flat paper pictures","Music"],a:0,img:"printer3d",e:"🧊"},
 
-    {q:"If 🍎 = 2 and 🍌 = 3, what is 🍎 + 🍌 + 🍌?",o:["8","7","5"],a:0,pic:"🍎 = 2    🍌 = 3\n🍎 + 🍌 + 🍌 = ❓",e:"🍎"},
+    {q:"A drone is an aircraft that…?",o:["Flies with no pilot inside","Swims underwater","Only drives on roads"],a:0,img:"drone",e:"🚁"},
 
-    {q:"In a code, BOOK is written as CPPL. How is LOOK written?",o:["MPPL","KNNJ","MOOL"],a:0,pic:"BOOK ➜ CPPL\nLOOK ➜ ❓",e:"🔐"},
+    {q:"Ada Lovelace is known as the world's first computer…?",o:["Programmer","Chef","Footballer"],a:0,img:"lovelace",e:"👩‍💻"},
 
-    {q:"Which number is the odd one out?",o:["7","8","10"],a:0,pic:"2, 4, 7, 8, 10",e:"🔢"},
+    {q:"The CPU is often called the computer's…?",o:["Brain","Stomach","Shoes"],a:0,img:"microchip",e:"🧠"},
 
-    {q:"Riddle: The more of me you take, the more you leave behind. What am I?",o:["Footsteps","Money","Water"],a:0,pic:"🤔 Riddle",e:"👣"},
+    {q:"GPS uses satellites to help us…?",o:["Find our way","Cook food","Grow plants"],a:0,img:"gps",e:"🧭"},
 
-    {q:"A clock shows 3 o'clock. What time will it be after 2 hours?",o:["5 o'clock","1 o'clock","4 o'clock"],a:0,pic:"🕒 + 2 hours",e:"🕔"},
+    {q:"Astronauts live and work in space aboard the…?",o:["International Space Station","Eiffel Tower","Titanic"],a:0,img:"iss",e:"👩‍🚀"},
 
-    {q:"All roses are flowers. This is a rose. So it is a…?",o:["Flower","Tree","Fruit"],a:0,pic:"🌹",e:"🌹"},
+    {q:"Why should we keep apps and computers updated?",o:["To fix problems and stay safe","To make the screen bigger","To change the keyboard's colour"],a:0,pic:"🔄 Update",e:"🔄"},
 
-    {q:"What comes next?",o:["V","U","A"],a:0,pic:"Z, Y, X, W, ❓",e:"🔤"}
+    {q:"NASA's Perseverance is a robot car exploring…?",o:["Mars","Delhi","The Amazon river"],a:0,img:"rover",e:"🔴"}
 
   ],
 
 
   "5":[
 
-    {q:"What comes next?",o:["13","11","16"],a:0,pic:"1, 1, 2, 3, 5, 8, ❓",e:"🔢"},
+    {q:"Which of these is an INPUT device?",o:["Keyboard","Printer","Speaker"],a:0,pic:"Input ➜ Process\n➜ Output",e:"⌨️"},
 
-    {q:"What comes next?",o:["42","40","36"],a:0,pic:"2, 6, 12, 20, 30, ❓",e:"🔢"},
+    {q:"Which of these is an OUTPUT device?",o:["Printer","Mouse","Microphone"],a:0,img:"printer",e:"🖨️"},
 
-    {q:"Riddle: What comes once in a minute, twice in a moment, but never in a thousand years?",o:["The letter M","A second","A clock tick"],a:0,pic:"🤔 Riddle",e:"Ⓜ️"},
+    {q:"In coding, an 'if' instruction lets a program…?",o:["Make a decision","Turn off the screen","Print a photo"],a:0,pic:"if 🌧️  ➜  take ☂️",e:"🔀"},
 
-    {q:"Ali, Ben and Chetan sit in a row. Ali is to the left of Ben. Chetan is to the right of Ben. Who is in the middle?",o:["Ben","Ali","Chetan"],a:0,pic:"🪑 🪑 🪑",e:"🪑"},
+    {q:"A robot follows: “repeat 4 times: move forward, then make a quarter turn right”. What shape does it draw?",o:["A square","A triangle","A circle"],a:0,pic:"repeat 4 times:\nmove ➜ quarter turn ↱",e:"🤖"},
 
-    {q:"A farmer has 10 sheep. All but 7 run away. How many are left?",o:["7","3","10"],a:0,pic:"🐑 🐑 🐑 🐑 🐑\n🐑 🐑 🐑 🐑 🐑",e:"🐑"},
+    {q:"Charles Babbage designed the Analytical Engine. He is called the Father of the…?",o:["Computer","Internet","Telephone"],a:0,img:"babbage",e:"💻"},
 
-    {q:"5 pencils cost ₹20. How much do 8 pencils cost?",o:["₹32","₹40","₹28"],a:0,pic:"✏️ × 5 = ₹20\n✏️ × 8 = ❓",e:"✏️"},
+    {q:"In 2014, Mangalyaan made India the first country to reach Mars orbit on its…?",o:["First try","Tenth try","Hundredth try"],a:0,pic:"🇮🇳 🚀  ➜  🔴 Mars",e:"🚀"},
 
-    {q:"If A = 1, B = 2, C = 3 and so on, what do the letters of CAB add up to?",o:["6","312","5"],a:0,pic:"C + A + B = ❓",e:"🔤"},
+    {q:"Robots in factories are mostly used to…?",o:["Do repetitive or dangerous jobs","Eat lunch","Sleep"],a:0,img:"robot",e:"🤖"},
 
-    {q:"Raju walks 5 m North, then 5 m East, then 5 m South. In which direction is he from where he started?",o:["East","West","North"],a:0,pic:"🧭 5 N ➜ 5 E ➜ 5 S",e:"🧭"},
+    {q:"Computers store everything using only two digits. Which two?",o:["0 and 1","5 and 6","8 and 9"],a:0,pic:"0 1 1 0 1 0 0 1",e:"🔢"},
 
-    {q:"A brick weighs 1 kg plus half a brick. How much does a whole brick weigh?",o:["2 kg","1.5 kg","1 kg"],a:0,pic:"🧱 = 1 kg + ½ 🧱",e:"🧱"},
+    {q:"Websites from India often end with…?",o:[".in",".uk",".jp"],a:0,pic:"www.example ❓",e:"🇮🇳"},
 
-    {q:"Which number is the odd one out?",o:["30","25","36"],a:0,pic:"9, 16, 25, 30, 36",e:"🔢"}
+    {q:"What does the G in 4G and 5G stand for?",o:["Generation","Gold","Game"],a:0,pic:"📶 4G ➜ 5G",e:"📶"}
 
   ],
 
 
   "6":[
 
-    {q:"What comes next?",o:["243","162","108"],a:0,pic:"3, 9, 27, 81, ❓",e:"🔢"},
+    {q:"Scratch is a website where children learn…?",o:["Coding by snapping blocks together","Cooking","Football"],a:0,pic:"🐱 Scratch\n[ when clicked ]\n[ move 10 steps ]",e:"🧩"},
 
-    {q:"What comes next?",o:["720","240","600"],a:0,pic:"1, 2, 6, 24, 120, ❓",e:"🔢"},
+    {q:"In binary, 1 = 1, 10 = 2 and 11 = 3. What is 100?",o:["4","5","100"],a:0,pic:"1 ➜ 1    10 ➜ 2    11 ➜ 3\n100 ➜ ❓",e:"🔢"},
 
-    {q:"What comes next?",o:["U","T","S"],a:0,pic:"A, C, F, J, O, ❓",e:"🔤"},
+    {q:"ENIAC, one of the first electronic computers in the 1940s, was so big it filled…?",o:["A whole room","A schoolbag","A pencil box"],a:0,img:"eniac",e:"🏛️"},
 
-    {q:"Pinky is older than Rinky. Tinky is younger than Rinky. Who is the youngest?",o:["Tinky","Rinky","Pinky"],a:0,pic:"🎂",e:"🎂"},
+    {q:"What does two-step verification add to your password?",o:["A second check, like a code sent to your phone","A second keyboard","A bigger screen"],a:0,img:"lock",e:"🔐"},
 
-    {q:"Riddle: I am tall when I am young and short when I am old. What am I?",o:["A candle","A tree","A person"],a:0,pic:"🤔 Riddle",e:"🕯️"},
+    {q:"The International Space Station goes once around the Earth about every…?",o:["90 minutes","90 days","9 years"],a:0,img:"iss",e:"🛰️"},
 
-    {q:"In a mirror code, A ↔ Z, B ↔ Y, C ↔ X and so on. TEA is written GVZ. How is BAD written?",o:["YZW","CBE","ZYW"],a:0,pic:"A ↔ Z   B ↔ Y   C ↔ X …\nTEA ➜ GVZ\nBAD ➜ ❓",e:"🔐"},
+    {q:"Which of these is a pocket-sized computer used to learn coding in schools?",o:["BBC micro:bit","Washing machine","Bicycle"],a:0,img:"microbit",e:"🔌"},
 
-    {q:"A train leaves at 9:45 and the journey takes 2 hours 30 minutes. When does it arrive?",o:["12:15","11:15","12:45"],a:0,pic:"🚆 9:45 + 2 h 30 min",e:"🚆"},
+    {q:"Which is safe to share with people online?",o:["Your favourite colour","Your home address","Your password"],a:0,pic:"🎨 🏠 🔑",e:"🛡️"},
 
-    {q:"3 cats catch 3 mice in 3 minutes. How many cats are needed to catch 100 mice in 100 minutes?",o:["3","100","33"],a:0,pic:"🐈 🐈 🐈  ➜  🐭 🐭 🐭\nin 3 minutes",e:"🐈"},
+    {q:"Chandrayaan-3's rover, which explored the Moon, was called…?",o:["Pragyan","Mangal","Surya"],a:0,img:"chandrayaan3",e:"🌙"},
 
-    {q:"Today is Wednesday. What day will it be 10 days from now?",o:["Saturday","Friday","Sunday"],a:0,pic:"📅 Wednesday + 10 days",e:"📅"},
+    {q:"How many bits make one byte?",o:["8","2","100"],a:0,pic:"bit  ➜  byte",e:"🔢"},
 
-    {q:"What is the angle between the hands of a clock at 3 o'clock?",o:["90°","180°","45°"],a:0,pic:"🕒",e:"🕒"}
+    {q:"Optical fibres carry Internet data as flashes of…?",o:["Light","Water","Sound"],a:0,img:"fiber",e:"💡"}
 
   ],
 
 
   "7":[
 
-    {q:"A bag has 3 red balls and 1 blue ball. If you pick one without looking, which colour are you more likely to get?",o:["Red","Blue","Both are equally likely"],a:0,pic:"🔴 🔴 🔴 🔵",e:"🎲"},
+    {q:"What does AI stand for?",o:["Artificial Intelligence","Automatic Internet","Air India"],a:0,pic:"🤖 AI",e:"🤖"},
 
-    {q:"You toss a fair coin. What is the chance of getting heads?",o:["1 in 2","1 in 4","It is certain"],a:0,pic:"🪙",e:"🪙"},
+    {q:"Alan Turing suggested a test to check whether a machine can…?",o:["Think like a human","Fly","Cook"],a:0,img:"turing",e:"🧠"},
 
-    {q:"What comes next?",o:["17","15","19"],a:0,pic:"2, 3, 5, 7, 11, 13, ❓",e:"🔢"},
+    {q:"A 'phishing' message tries to…?",o:["Trick you into sharing passwords or details","Teach you to fish","Fix your computer for free"],a:0,pic:"🎣 📧 🔑",e:"🎣"},
 
-    {q:"In a code, PEN is 345 and NET is 546. What is TEN?",o:["645","456","564"],a:0,pic:"PEN = 345\nNET = 546\nTEN = ❓",e:"🔐"},
+    {q:"The Internet grew from ARPANET, which first linked computers in…?",o:["The USA, in 1969","India, in 2010","Egypt, in 1800"],a:0,pic:"💻 ── 💻 ── 💻\nARPANET",e:"🌐"},
 
-    {q:"A shop sells 3 pens for ₹10. How much do 12 pens cost?",o:["₹40","₹36","₹30"],a:0,pic:"🖊️ × 3 = ₹10\n🖊️ × 12 = ❓",e:"🖊️"},
+    {q:"In 1997, IBM's Deep Blue computer beat the world champion at…?",o:["Chess","Cricket","Football"],a:0,img:"deepblue",e:"♟️"},
 
-    {q:"In a race, Anu finished before Bina but after Chirag. Who came first?",o:["Chirag","Anu","Bina"],a:0,pic:"🏃 🏃 🏃 🏁",e:"🏁"},
+    {q:"A loop prints i for i = 1 to 5. How many numbers does it print?",o:["5","1","10"],a:0,pic:"for i = 1 to 5:\n    print i",e:"🔁"},
 
-    {q:"What comes next?",o:["125","100","81"],a:0,pic:"1, 8, 27, 64, ❓",e:"🔢"},
+    {q:"Self-driving cars use cameras, sensors and…?",o:["AI software to make driving decisions","Horses hidden inside","Magic"],a:0,img:"selfdriving",e:"🚗"},
 
-    {q:"A dice is rolled. What is the chance of getting an even number?",o:["1 in 2","1 in 6","1 in 3"],a:0,pic:"🎲",e:"🎲"},
+    {q:"A padlock and 'https' at the start of a web address mean the connection is…?",o:["Encrypted (scrambled to keep it safe)","Very slow","Closed for ever"],a:0,pic:"🔒 https://",e:"🔒"},
 
-    {q:"Rearrange the letters TAHER to make a part of the body.",o:["HEART","EARTH","HATER"],a:0,pic:"T  A  H  E  R",e:"🔀"},
+    {q:"A VR headset lets you…?",o:["Feel as if you are inside a 3D world","Only listen to the radio","Charge your phone"],a:0,img:"vr",e:"🥽"},
 
-    {q:"If 1 January is a Monday, what day is 8 January?",o:["Monday","Tuesday","Sunday"],a:0,pic:"📅 1 Jan = Monday\n8 Jan = ❓",e:"📅"}
+    {q:"Chandrayaan-3 made India the first country to land near the Moon's…?",o:["South pole","North pole","Brightest crater"],a:0,img:"chandrayaan3",e:"🌙"}
 
   ],
 
 
   "8":[
 
-    {q:"A bag has 2 red, 3 green and 5 blue marbles. What is the probability of picking a green one?",o:["3/10","3/5","1/3"],a:0,pic:"🔴🔴 🟢🟢🟢 🔵🔵🔵🔵🔵",e:"🎲"},
+    {q:"In machine learning, a computer learns mainly from…?",o:["Lots of examples (data)","Sleeping","Reading a single rule"],a:0,pic:"📷 🐱 × 1000  ➜  🤖 “cat!”",e:"🧠"},
 
-    {q:"Two coins are tossed together. What is the probability that both show heads?",o:["1/4","1/2","1/3"],a:0,pic:"🪙 🪙",e:"🪙"},
+    {q:"Why should you double-check answers from an AI chatbot?",o:["AI can make mistakes","AI is always perfect","Reading them is against the law"],a:0,pic:"🤖 💬 ❓",e:"🤖"},
 
-    {q:"What comes next?",o:["37","35","36"],a:0,pic:"2, 5, 10, 17, 26, ❓",e:"🔢"},
+    {q:"Which is the best way to keep your accounts safe?",o:["A different strong password for each account","The same password everywhere","Your name as the password"],a:0,img:"lock",e:"🔐"},
 
-    {q:"What comes next?",o:["F","G","E"],a:0,pic:"Z, X, U, Q, L, ❓",e:"🔤"},
+    {q:"What is the binary number 1010 in ordinary numbers?",o:["10","1010","5"],a:0,pic:"8   4   2   1\n1   0   1   0",e:"🔢"},
 
-    {q:"In a code, each letter is replaced by the letter two places after it. What is the code for CODE?",o:["EQFG","DPEF","AMBC"],a:0,pic:"A ➜ C   B ➜ D   C ➜ E …\nCODE ➜ ❓",e:"🔐"},
+    {q:"Sputnik 1, the first artificial satellite, was launched in…?",o:["1957","1857","2007"],a:0,img:"sputnik",e:"🛰️"},
 
-    {q:"Six friends each shake hands with every other friend once. How many handshakes are there?",o:["15","36","12"],a:0,pic:"🤝 × 6 friends",e:"🤝"},
+    {q:"Moore's law said the number of transistors on a chip doubles about every…?",o:["Two years","Two days","Two hundred years"],a:0,img:"microchip",e:"📈"},
 
-    {q:"A snail climbs up a 5 m wall. Each day it climbs 3 m, and each night it slips back 2 m. On which day does it reach the top?",o:["Day 3","Day 5","Day 2"],a:0,pic:"🐌 ⬆️ 3 m by day\n⬇️ 2 m at night\n🧱 Wall: 5 m",e:"🐌"},
+    {q:"Ransomware is harmful software that…?",o:["Locks your files and demands money","Speeds up your computer","Backs up your photos"],a:0,pic:"🔒 📁  ➜  💰 ❓",e:"⚠️"},
 
-    {q:"Ram is 4 years older than Shyam. Together their ages add up to 20. How old is Shyam?",o:["8","10","12"],a:0,pic:"Ram = Shyam + 4\nRam + Shyam = 20",e:"🎂"},
+    {q:"How does a GPS receiver work out where it is?",o:["By timing signals from several satellites","By asking the nearest person","By measuring the temperature"],a:0,img:"gps",e:"🛰️"},
 
-    {q:"All birds have feathers. A penguin is a bird. Which conclusion is correct?",o:["A penguin has feathers","A penguin can fly","Every animal with feathers is a penguin"],a:0,pic:"🐦 ➜ 🪶\n🐧 = 🐦",e:"🐧"},
+    {q:"Files saved 'in the cloud' are actually stored on…?",o:["Computers in data centres","Real clouds in the sky","The phone's battery"],a:0,pic:"☁️ = 🖥️🖥️🖥️ ?",e:"☁️"},
 
-    {q:"Read each number aloud to get the next: 1 is \u201cone 1\u201d, so the next is 11. What comes after 1211?",o:["111221","1221","2111"],a:0,pic:"1, 11, 21, 1211, ❓",e:"🗣️"}
+    {q:"An algorithm is…?",o:["A step-by-step set of instructions to solve a problem","A type of computer virus","A musical instrument"],a:0,pic:"1️⃣ ➜ 2️⃣ ➜ 3️⃣ ➜ ✅",e:"📝"}
 
   ]
 
@@ -1945,7 +2055,7 @@ function renderQuestion(
     .getElementById('headerSub')
     .textContent =
       classLabel(cls) +
-      ' — Logic, Patterns & Puzzles';
+      ' — Technology & the Digital World';
 
 
   quizProg.textContent =
