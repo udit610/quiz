@@ -419,6 +419,50 @@
     overflow:hidden;
   }
 
+  /*
+   Puzzle card: shows the pattern, sequence or code
+   itself, for weeks where the question is the picture.
+  */
+
+  .q-pic{
+    margin:0 0 14px;
+    padding:22px 16px;
+    min-height:120px;
+    border-radius:12px;
+    border:2px solid var(--line);
+    background:
+      linear-gradient(
+        180deg,
+        #FFF7E6,
+        #FBEFD6
+      );
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    white-space:pre-wrap;
+    font-weight:800;
+    font-size:1.65rem;
+    line-height:1.5;
+    letter-spacing:.02em;
+    color:var(--board);
+    overflow-wrap:anywhere;
+  }
+
+  .q-pic span{
+    display:inline-block;
+    max-width:100%;
+  }
+
+  .review .pic-line{
+    clear:none;
+    margin:6px 0 2px;
+    font-weight:700;
+    font-size:.9rem;
+    color:#7a7362;
+    white-space:pre-line;
+  }
+
   .photo-credit{
     text-align:center;
     color:rgba(245,241,230,.45);
@@ -443,6 +487,16 @@
     border:2px solid var(--line);
     cursor:pointer;
     transition:border-color .12s,background .12s;
+  }
+
+  /*
+   Options are <label>s, so undo the uppercase heading
+   style that the general label rule gives them.
+  */
+
+  .opt{
+    text-transform:none;
+    letter-spacing:normal;
   }
 
   .opt:hover{
@@ -626,7 +680,7 @@
     <p id="headerSub"></p>
 
     <div class="theme-badge">
-      This Week: 💡 Inventions That Changed the World — 26 Sep
+      This Week: 💻 Technology & the Digital World — 3 Oct
     </div>
 
   </header>
@@ -822,7 +876,7 @@
   </div>
 
 
-  <p class="photo-credit">
+  <p class="photo-credit" id="photoCredit">
     Photographs from Wikimedia Commons,
     used under their free licences.
   </p>
@@ -844,211 +898,121 @@ const API_URL =
    QUIZ QUESTIONS
    ============================================================ */
 
+/*
+   Each question shows either a photo (img, a key into
+   QUESTION_IMAGES) or a puzzle card (pic, text drawn on
+   the page). Weeks with no photos leave this map empty.
+*/
+
 const QUESTION_IMAGES = {
-
-  "airliner":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/United_A320_N405UA_at_BOS_%2833787222465%29.jpg/500px-United_A320_N405UA_at_BOS_%2833787222465%29.jpg",
-
-  "aryabhata":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Aryabhatta_of_Bihar.jpg/500px-Aryabhatta_of_Bihar.jpg",
 
   "babbage":
     "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Charles_Babbage_-_1860.jpg/500px-Charles_Babbage_-_1860.jpg",
 
-  "bell":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Alexander_Graham_Bell_1895_NPG_77_363.jpg/500px-Alexander_Graham_Bell_1895_NPG_77_363.jpg",
-
-  "benz":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Benz_Patent_Motorwagen_1886.jpg/500px-Benz_Patent_Motorwagen_1886.jpg",
-
   "bernerslee":
     "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Tim_Berners-Lee_at_the_2025_Web_Summit_%28Cropped%29.jpg/500px-Tim_Berners-Lee_at_the_2025_Web_Summit_%28Cropped%29.jpg",
 
-  "bicycle":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Left_side_of_Flying_Pigeon.jpg/500px-Left_side_of_Flying_Pigeon.jpg",
+  "calculator":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Casio_calculator_JS-20WK_in_201901_002.jpg/500px-Casio_calculator_JS-20WK_in_201901_002.jpg",
 
-  "bose":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/J.C.Bose.JPG/500px-J.C.Bose.JPG",
+  "chandrayaan3":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/LVM3_M4%2C_Chandrayaan-3_-_Launch_vehicle_lifting_off_from_the_Second_Launch_Pad_%28SLP%29_of_SDSC-SHAR%2C_Sriharikota_%28edit%29.jpg/500px-LVM3_M4%2C_Chandrayaan-3_-_Launch_vehicle_lifting_off_from_the_Second_Launch_Pad_%28SLP%29_of_SDSC-SHAR%2C_Sriharikota_%28edit%29.jpg",
 
-  "braille":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Reading_Braille.jpg/500px-Reading_Braille.jpg",
+  "deepblue":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Deep_Blue.jpg/500px-Deep_Blue.jpg",
 
-  "bullockcart":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Bullock_cart_in_Punjab%2C_India.jpg/500px-Bullock_cart_in_Punjab%2C_India.jpg",
+  "desktop":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/My_view_090909%2C09_09_%283902571235%29.jpg/500px-My_view_090909%2C09_09_%283902571235%29.jpg",
 
-  "camera":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/LEI0440_Leica_IIIf_chrom_-_Sn._580566_1951-52-M39_Blitzsynchron_front_view-6531_hf-.jpg/330px-LEI0440_Leica_IIIf_chrom_-_Sn._580566_1951-52-M39_Blitzsynchron_front_view-6531_hf-.jpg",
+  "drone":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Quadcopter_camera_drone_in_flight.jpg/500px-Quadcopter_camera_drone_in_flight.jpg",
 
-  "candle":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/LA2_Skultuna_kontorsljusstake.jpg/500px-LA2_Skultuna_kontorsljusstake.jpg",
+  "eniac":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/ENIAC_Penn1.jpg/500px-ENIAC_Penn1.jpg",
 
-  "clock":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/2010-07-20_Black_windup_alarm_clock_face.jpg/330px-2010-07-20_Black_windup_alarm_clock_face.jpg",
+  "fiber":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Fibreoptic.jpg/500px-Fibreoptic.jpg",
 
-  "compass":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/2016_Busola.JPG/500px-2016_Busola.JPG",
+  "gps":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/GPS_Block_IIIA.jpg/500px-GPS_Block_IIIA.jpg",
 
-  "curie":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Marie_Curie_c._1920s.jpg/500px-Marie_Curie_c._1920s.jpg",
+  "headphones":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg/500px-S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg",
 
-  "dynatac":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/2007Computex_e21Forum-MartinCooper.jpg/500px-2007Computex_e21Forum-MartinCooper.jpg",
+  "iss":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/The_station_pictured_from_the_SpaceX_Crew_Dragon_5.jpg/500px-The_station_pictured_from_the_SpaceX_Crew_Dragon_5.jpg",
 
-  "edison":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Thomas_Edison2.jpg/500px-Thomas_Edison2.jpg",
-
-  "fan":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Ventilatore_a_soffitto_%283%29.png/500px-Ventilatore_a_soffitto_%283%29.png",
-
-  "faraday":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Michael_Faraday_sitting_crop.jpg/500px-Michael_Faraday_sitting_crop.jpg",
-
-  "fleming":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Synthetic_Production_of_Penicillin_TR1468.jpg/500px-Synthetic_Production_of_Penicillin_TR1468.jpg",
-
-  "franklin":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg/500px-Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg",
-
-  "fridge":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Open_refrigerator_with_food_at_night.jpg/500px-Open_refrigerator_with_food_at_night.jpg",
-
-  "galileo":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Galileo_Galilei_%281564-1642%29_RMG_BHC2700.tiff/lossy-page1-330px-Galileo_Galilei_%281564-1642%29_RMG_BHC2700.tiff.jpg",
-
-  "glasses":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/2023_Okulary_korekcyjne.jpg/500px-2023_Okulary_korekcyjne.jpg",
-
-  "gutenberg":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Mainz_Gutenbergdenkmal_2016_%28cropped%29.jpg/500px-Mainz_Gutenbergdenkmal_2016_%28cropped%29.jpg",
-
-  "helicopter":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/VH-SUF_Taking_Off.jpg/500px-VH-SUF_Taking_Off.jpg",
-
-  "jenner":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Edward_Jenner.jpg/500px-Edward_Jenner.jpg",
-
-  "kalam":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/A._P._J._Abdul_Kalam.jpg/500px-A._P._J._Abdul_Kalam.jpg",
+  "keyboard":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Typing_example.ogv/500px--Typing_example.ogv.jpg",
 
   "laptop":
     "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/A_One_Laptop_per_Child_computer_%281273754008%29.jpg/500px-A_One_Laptop_per_Child_computer_%281273754008%29.jpg",
 
-  "lightbulb":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Gluehlampe_01_KMJ.png/500px-Gluehlampe_01_KMJ.png",
+  "lock":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Padlock_kl%C3%B3dka_ubt.JPG/500px-Padlock_kl%C3%B3dka_ubt.JPG",
 
-  "lumiere":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Lumi%C3%A8re_brothers.jpg/500px-Lumi%C3%A8re_brothers.jpg",
+  "lovelace":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png/500px-Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png",
 
-  "marconi":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Guglielmo_Marconi.jpg/500px-Guglielmo_Marconi.jpg",
+  "microbit":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/BBC_micro_bit_v2.jpg/500px-BBC_micro_bit_v2.jpg",
 
-  "microscope":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Ukrainian_microscope_%28cropped%29.jpg/500px-Ukrainian_microscope_%28cropped%29.jpg",
-
-  "microwave":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Panasonic_NN-SD69LS_20220410.jpg/500px-Panasonic_NN-SD69LS_20220410.jpg",
+  "microchip":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/NXP_PCF8577C_LCD_driver_with_I%C2%B2C_%28Colour_Corrected%29.jpg/500px-NXP_PCF8577C_LCD_driver_with_I%C2%B2C_%28Colour_Corrected%29.jpg",
 
   "mobilephone":
     "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Wikipedia_homepage_on_a_large_Android_phone%2C_2015-04-16.jpg/500px-Wikipedia_homepage_on_a_large_Android_phone%2C_2015-04-16.jpg",
 
-  "nobel":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Alfred_Nobel3.jpg/500px-Alfred_Nobel3.jpg",
+  "monitor":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/MonitorLCDlcd.svg/500px-MonitorLCDlcd.svg.png",
 
-  "pasteur":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Louis_Pasteur%2C_foto_av_Paul_Nadar%2C_Crisco_edit.jpg/500px-Louis_Pasteur%2C_foto_av_Paul_Nadar%2C_Crisco_edit.jpg",
+  "mouse":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/3-Tasten-Maus_Microsoft.jpg/500px-3-Tasten-Maus_Microsoft.jpg",
 
-  "pencil":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Pencils_hb.jpg/500px-Pencils_hb.jpg",
+  "printer":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/HP_Laserjet_5_DN_1.jpg/500px-HP_Laserjet_5_DN_1.jpg",
 
-  "phonograph":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Edison_and_phonograph_edit1.jpg/500px-Edison_and_phonograph_edit1.jpg",
+  "printer3d":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg/500px-Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg",
 
-  "printingpress":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Gutenberg_press.png/500px-Gutenberg_press.png",
+  "qrcode":
+    "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzdtbSIgaGVpZ2h0PSIzN21tIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAzNyAzNyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCBmaWxsPSJ3aGl0ZSIgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgLz48cGF0aCBkPSJNMiwySDNWM0gyek0zLDJINFYzSDN6TTQsMkg1VjNINHpNNSwySDZWM0g1ek02LDJIN1YzSDZ6TTcsMkg4VjNIN3pNOCwySDlWM0g4ek0xMSwySDEyVjNIMTF6TTEyLDJIMTNWM0gxMnpNMTMsMkgxNFYzSDEzek0xNCwySDE1VjNIMTR6TTE1LDJIMTZWM0gxNXpNMTYsMkgxN1YzSDE2ek0xOSwySDIwVjNIMTl6TTIwLDJIMjFWM0gyMHpNMjMsMkgyNFYzSDIzek0yNCwySDI1VjNIMjR6TTI4LDJIMjlWM0gyOHpNMjksMkgzMFYzSDI5ek0zMCwySDMxVjNIMzB6TTMxLDJIMzJWM0gzMXpNMzIsMkgzM1YzSDMyek0zMywySDM0VjNIMzN6TTM0LDJIMzVWM0gzNHpNMiwzSDNWNEgyek04LDNIOVY0SDh6TTEwLDNIMTFWNEgxMHpNMTIsM0gxM1Y0SDEyek0xMywzSDE0VjRIMTN6TTIwLDNIMjFWNEgyMHpNMjIsM0gyM1Y0SDIyek0yNCwzSDI1VjRIMjR6TTI2LDNIMjdWNEgyNnpNMjgsM0gyOVY0SDI4ek0zNCwzSDM1VjRIMzR6TTIsNEgzVjVIMnpNNCw0SDVWNUg0ek01LDRINlY1SDV6TTYsNEg3VjVINnpNOCw0SDlWNUg4ek0xMCw0SDExVjVIMTB6TTExLDRIMTJWNUgxMXpNMTIsNEgxM1Y1SDEyek0xNiw0SDE3VjVIMTZ6TTE4LDRIMTlWNUgxOHpNMjEsNEgyMlY1SDIxek0yMiw0SDIzVjVIMjJ6TTIzLDRIMjRWNUgyM3pNMjUsNEgyNlY1SDI1ek0yOCw0SDI5VjVIMjh6TTMwLDRIMzFWNUgzMHpNMzEsNEgzMlY1SDMxek0zMiw0SDMzVjVIMzJ6TTM0LDRIMzVWNUgzNHpNMiw1SDNWNkgyek00LDVINVY2SDR6TTUsNUg2VjZINXpNNiw1SDdWNkg2ek04LDVIOVY2SDh6TTEwLDVIMTFWNkgxMHpNMTEsNUgxMlY2SDExek0xNiw1SDE3VjZIMTZ6TTE3LDVIMThWNkgxN3pNMTgsNUgxOVY2SDE4ek0xOSw1SDIwVjZIMTl6TTIxLDVIMjJWNkgyMXpNMjIsNUgyM1Y2SDIyek0yMyw1SDI0VjZIMjN6TTI0LDVIMjVWNkgyNHpNMjgsNUgyOVY2SDI4ek0zMCw1SDMxVjZIMzB6TTMxLDVIMzJWNkgzMXpNMzIsNUgzM1Y2SDMyek0zNCw1SDM1VjZIMzR6TTIsNkgzVjdIMnpNNCw2SDVWN0g0ek01LDZINlY3SDV6TTYsNkg3VjdINnpNOCw2SDlWN0g4ek0xMSw2SDEyVjdIMTF6TTEyLDZIMTNWN0gxMnpNMTYsNkgxN1Y3SDE2ek0xNyw2SDE4VjdIMTd6TTE4LDZIMTlWN0gxOHpNMTksNkgyMFY3SDE5ek0yMSw2SDIyVjdIMjF6TTIyLDZIMjNWN0gyMnpNMjMsNkgyNFY3SDIzek0yNSw2SDI2VjdIMjV6TTI4LDZIMjlWN0gyOHpNMzAsNkgzMVY3SDMwek0zMSw2SDMyVjdIMzF6TTMyLDZIMzNWN0gzMnpNMzQsNkgzNVY3SDM0ek0yLDdIM1Y4SDJ6TTgsN0g5VjhIOHpNMTEsN0gxMlY4SDExek0xMyw3SDE0VjhIMTN6TTE0LDdIMTVWOEgxNHpNMTcsN0gxOFY4SDE3ek0xOSw3SDIwVjhIMTl6TTI0LDdIMjVWOEgyNHpNMjgsN0gyOVY4SDI4ek0zNCw3SDM1VjhIMzR6TTIsOEgzVjlIMnpNMyw4SDRWOUgzek00LDhINVY5SDR6TTUsOEg2VjlINXpNNiw4SDdWOUg2ek03LDhIOFY5SDd6TTgsOEg5VjlIOHpNMTAsOEgxMVY5SDEwek0xMiw4SDEzVjlIMTJ6TTE0LDhIMTVWOUgxNHpNMTYsOEgxN1Y5SDE2ek0xOCw4SDE5VjlIMTh6TTIwLDhIMjFWOUgyMHpNMjIsOEgyM1Y5SDIyek0yNCw4SDI1VjlIMjR6TTI2LDhIMjdWOUgyNnpNMjgsOEgyOVY5SDI4ek0yOSw4SDMwVjlIMjl6TTMwLDhIMzFWOUgzMHpNMzEsOEgzMlY5SDMxek0zMiw4SDMzVjlIMzJ6TTMzLDhIMzRWOUgzM3pNMzQsOEgzNVY5SDM0ek0xMCw5SDExVjEwSDEwek0xMiw5SDEzVjEwSDEyek0xMyw5SDE0VjEwSDEzek0xNCw5SDE1VjEwSDE0ek0xNiw5SDE3VjEwSDE2ek0xNyw5SDE4VjEwSDE3ek0xOCw5SDE5VjEwSDE4ek0yMiw5SDIzVjEwSDIyek0yNCw5SDI1VjEwSDI0ek0yNiw5SDI3VjEwSDI2ek0yLDEwSDNWMTFIMnpNOCwxMEg5VjExSDh6TTEwLDEwSDExVjExSDEwek0xMiwxMEgxM1YxMUgxMnpNMTQsMTBIMTVWMTFIMTR6TTE1LDEwSDE2VjExSDE1ek0xNiwxMEgxN1YxMUgxNnpNMTksMTBIMjBWMTFIMTl6TTI0LDEwSDI1VjExSDI0ek0yNywxMEgyOFYxMUgyN3pNMjgsMTBIMjlWMTFIMjh6TTMxLDEwSDMyVjExSDMxek0zMiwxMEgzM1YxMUgzMnpNMzMsMTBIMzRWMTFIMzN6TTMsMTFINFYxMkgzek00LDExSDVWMTJINHpNNSwxMUg2VjEySDV6TTksMTFIMTBWMTJIOXpNMTMsMTFIMTRWMTJIMTN6TTE1LDExSDE2VjEySDE1ek0xNiwxMUgxN1YxMkgxNnpNMTcsMTFIMThWMTJIMTd6TTE5LDExSDIwVjEySDE5ek0yMCwxMUgyMVYxMkgyMHpNMjEsMTFIMjJWMTJIMjF6TTI0LDExSDI1VjEySDI0ek0yNSwxMUgyNlYxMkgyNXpNMjksMTFIMzBWMTJIMjl6TTMwLDExSDMxVjEySDMwek0zMiwxMUgzM1YxMkgzMnpNMzQsMTFIMzVWMTJIMzR6TTIsMTJIM1YxM0gyek0zLDEySDRWMTNIM3pNNSwxMkg2VjEzSDV6TTYsMTJIN1YxM0g2ek03LDEySDhWMTNIN3pNOCwxMkg5VjEzSDh6TTksMTJIMTBWMTNIOXpNMTAsMTJIMTFWMTNIMTB6TTExLDEySDEyVjEzSDExek0xMiwxMkgxM1YxM0gxMnpNMTMsMTJIMTRWMTNIMTN6TTE0LDEySDE1VjEzSDE0ek0xNSwxMkgxNlYxM0gxNXpNMTYsMTJIMTdWMTNIMTZ6TTE3LDEySDE4VjEzSDE3ek0xOCwxMkgxOVYxM0gxOHpNMjAsMTJIMjFWMTNIMjB6TTIzLDEySDI0VjEzSDIzek0yNiwxMkgyN1YxM0gyNnpNMjcsMTJIMjhWMTNIMjd6TTMxLDEySDMyVjEzSDMxek0zMiwxMkgzM1YxM0gzMnpNMzQsMTJIMzVWMTNIMzR6TTIsMTNIM1YxNEgyek0zLDEzSDRWMTRIM3pNNCwxM0g1VjE0SDR6TTUsMTNINlYxNEg1ek0xMiwxM0gxM1YxNEgxMnpNMTQsMTNIMTVWMTRIMTR6TTE1LDEzSDE2VjE0SDE1ek0xNywxM0gxOFYxNEgxN3pNMTgsMTNIMTlWMTRIMTh6TTI1LDEzSDI2VjE0SDI1ek0yNywxM0gyOFYxNEgyN3pNMzEsMTNIMzJWMTRIMzF6TTMyLDEzSDMzVjE0SDMyek0zNCwxM0gzNVYxNEgzNHpNNCwxNEg1VjE1SDR6TTUsMTRINlYxNUg1ek03LDE0SDhWMTVIN3pNOCwxNEg5VjE1SDh6TTEzLDE0SDE0VjE1SDEzek0xNCwxNEgxNVYxNUgxNHpNMTUsMTRIMTZWMTVIMTV6TTE4LDE0SDE5VjE1SDE4ek0yMCwxNEgyMVYxNUgyMHpNMjIsMTRIMjNWMTVIMjJ6TTIzLDE0SDI0VjE1SDIzek0yNiwxNEgyN1YxNUgyNnpNMjcsMTRIMjhWMTVIMjd6TTI4LDE0SDI5VjE1SDI4ek0yOSwxNEgzMFYxNUgyOXpNMzMsMTRIMzRWMTVIMzN6TTM0LDE0SDM1VjE1SDM0ek0yLDE1SDNWMTZIMnpNMywxNUg0VjE2SDN6TTUsMTVINlYxNkg1ek02LDE1SDdWMTZINnpNNywxNUg4VjE2SDd6TTksMTVIMTBWMTZIOXpNMTAsMTVIMTFWMTZIMTB6TTExLDE1SDEyVjE2SDExek0xMywxNUgxNFYxNkgxM3pNMTQsMTVIMTVWMTZIMTR6TTE5LDE1SDIwVjE2SDE5ek0yMCwxNUgyMVYxNkgyMHpNMjEsMTVIMjJWMTZIMjF6TTIyLDE1SDIzVjE2SDIyek0yMywxNUgyNFYxNkgyM3pNMjQsMTVIMjVWMTZIMjR6TTI1LDE1SDI2VjE2SDI1ek0yOCwxNUgyOVYxNkgyOHpNMjksMTVIMzBWMTZIMjl6TTMyLDE1SDMzVjE2SDMyek0zNCwxNUgzNVYxNkgzNHpNMiwxNkgzVjE3SDJ6TTgsMTZIOVYxN0g4ek0xMiwxNkgxM1YxN0gxMnpNMTMsMTZIMTRWMTdIMTN6TTE0LDE2SDE1VjE3SDE0ek0xNiwxNkgxN1YxN0gxNnpNMTcsMTZIMThWMTdIMTd6TTI0LDE2SDI1VjE3SDI0ek0yNywxNkgyOFYxN0gyN3pNMjgsMTZIMjlWMTdIMjh6TTI5LDE2SDMwVjE3SDI5ek0zMiwxNkgzM1YxN0gzMnpNMzMsMTZIMzRWMTdIMzN6TTIsMTdIM1YxOEgyek03LDE3SDhWMThIN3pNMTEsMTdIMTJWMThIMTF6TTEzLDE3SDE0VjE4SDEzek0xNywxN0gxOFYxOEgxN3pNMTgsMTdIMTlWMThIMTh6TTIwLDE3SDIxVjE4SDIwek0yMSwxN0gyMlYxOEgyMXpNMjIsMTdIMjNWMThIMjJ6TTI0LDE3SDI1VjE4SDI0ek0zLDE4SDRWMTlIM3pNNiwxOEg3VjE5SDZ6TTgsMThIOVYxOUg4ek05LDE4SDEwVjE5SDl6TTEyLDE4SDEzVjE5SDEyek0xNSwxOEgxNlYxOUgxNXpNMTYsMThIMTdWMTlIMTZ6TTE5LDE4SDIwVjE5SDE5ek0yMCwxOEgyMVYxOUgyMHpNMjQsMThIMjVWMTlIMjR6TTI2LDE4SDI3VjE5SDI2ek0yOSwxOEgzMFYxOUgyOXpNMzAsMThIMzFWMTlIMzB6TTMxLDE4SDMyVjE5SDMxek0zMiwxOEgzM1YxOUgzMnpNMzMsMThIMzRWMTlIMzN6TTIsMTlIM1YyMEgyek0zLDE5SDRWMjBIM3pNNywxOUg4VjIwSDd6TTksMTlIMTBWMjBIOXpNMTEsMTlIMTJWMjBIMTF6TTE1LDE5SDE2VjIwSDE1ek0xNywxOUgxOFYyMEgxN3pNMTgsMTlIMTlWMjBIMTh6TTIwLDE5SDIxVjIwSDIwek0yMSwxOUgyMlYyMEgyMXpNMjIsMTlIMjNWMjBIMjJ6TTI0LDE5SDI1VjIwSDI0ek0yNSwxOUgyNlYyMEgyNXpNMjgsMTlIMjlWMjBIMjh6TTI5LDE5SDMwVjIwSDI5ek0zMiwxOUgzM1YyMEgzMnpNMzQsMTlIMzVWMjBIMzR6TTYsMjBIN1YyMUg2ek04LDIwSDlWMjFIOHpNMTAsMjBIMTFWMjFIMTB6TTExLDIwSDEyVjIxSDExek0xMywyMEgxNFYyMUgxM3pNMTUsMjBIMTZWMjFIMTV6TTE3LDIwSDE4VjIxSDE3ek0xOSwyMEgyMFYyMUgxOXpNMjAsMjBIMjFWMjFIMjB6TTIxLDIwSDIyVjIxSDIxek0yNCwyMEgyNVYyMUgyNHpNMjUsMjBIMjZWMjFIMjV6TTI3LDIwSDI4VjIxSDI3ek0yOCwyMEgyOVYyMUgyOHpNMzAsMjBIMzFWMjFIMzB6TTMxLDIwSDMyVjIxSDMxek0zLDIxSDRWMjJIM3pNNCwyMUg1VjIySDR6TTUsMjFINlYyMkg1ek02LDIxSDdWMjJINnpNNywyMUg4VjIySDd6TTEyLDIxSDEzVjIySDEyek0xNCwyMUgxNVYyMkgxNHpNMTYsMjFIMTdWMjJIMTZ6TTE3LDIxSDE4VjIySDE3ek0xOCwyMUgxOVYyMkgxOHpNMjAsMjFIMjFWMjJIMjB6TTIxLDIxSDIyVjIySDIxek0yNCwyMUgyNVYyMkgyNHpNMjUsMjFIMjZWMjJIMjV6TTI5LDIxSDMwVjIySDI5ek0zMCwyMUgzMVYyMkgzMHpNMzEsMjFIMzJWMjJIMzF6TTMyLDIxSDMzVjIySDMyek00LDIySDVWMjNINHpNNSwyMkg2VjIzSDV6TTcsMjJIOFYyM0g3ek04LDIySDlWMjNIOHpNOSwyMkgxMFYyM0g5ek0xMCwyMkgxMVYyM0gxMHpNMTIsMjJIMTNWMjNIMTJ6TTE0LDIySDE1VjIzSDE0ek0xOCwyMkgxOVYyM0gxOHpNMjIsMjJIMjNWMjNIMjJ6TTI0LDIySDI1VjIzSDI0ek0yNSwyMkgyNlYyM0gyNXpNMjYsMjJIMjdWMjNIMjZ6TTI3LDIySDI4VjIzSDI3ek0yOSwyMkgzMFYyM0gyOXpNMzAsMjJIMzFWMjNIMzB6TTIsMjNIM1YyNEgyek0zLDIzSDRWMjRIM3pNNCwyM0g1VjI0SDR6TTcsMjNIOFYyNEg3ek05LDIzSDEwVjI0SDl6TTEyLDIzSDEzVjI0SDEyek0xMywyM0gxNFYyNEgxM3pNMTQsMjNIMTVWMjRIMTR6TTE1LDIzSDE2VjI0SDE1ek0xNiwyM0gxN1YyNEgxNnpNMTcsMjNIMThWMjRIMTd6TTE5LDIzSDIwVjI0SDE5ek0yMSwyM0gyMlYyNEgyMXpNMjQsMjNIMjVWMjRIMjR6TTI1LDIzSDI2VjI0SDI1ek0yOCwyM0gyOVYyNEgyOHpNMjksMjNIMzBWMjRIMjl6TTMwLDIzSDMxVjI0SDMwek0zMSwyM0gzMlYyNEgzMXpNMzIsMjNIMzNWMjRIMzJ6TTMzLDIzSDM0VjI0SDMzek0zNCwyM0gzNVYyNEgzNHpNMiwyNEgzVjI1SDJ6TTQsMjRINVYyNUg0ek04LDI0SDlWMjVIOHpNOSwyNEgxMFYyNUg5ek0xMCwyNEgxMVYyNUgxMHpNMTMsMjRIMTRWMjVIMTN6TTE0LDI0SDE1VjI1SDE0ek0xNiwyNEgxN1YyNUgxNnpNMTcsMjRIMThWMjVIMTd6TTE4LDI0SDE5VjI1SDE4ek0yMiwyNEgyM1YyNUgyMnpNMjMsMjRIMjRWMjVIMjN6TTI0LDI0SDI1VjI1SDI0ek0yNiwyNEgyN1YyNUgyNnpNMjksMjRIMzBWMjVIMjl6TTMyLDI0SDMzVjI1SDMyek0zMywyNEgzNFYyNUgzM3pNMiwyNUgzVjI2SDJ6TTcsMjVIOFYyNkg3ek05LDI1SDEwVjI2SDl6TTEyLDI1SDEzVjI2SDEyek0xNCwyNUgxNVYyNkgxNHpNMTUsMjVIMTZWMjZIMTV6TTE2LDI1SDE3VjI2SDE2ek0yMCwyNUgyMVYyNkgyMHpNMjIsMjVIMjNWMjZIMjJ6TTI1LDI1SDI2VjI2SDI1ek0yNiwyNUgyN1YyNkgyNnpNMjksMjVIMzBWMjZIMjl6TTMyLDI1SDMzVjI2SDMyek0zMywyNUgzNFYyNkgzM3pNMzQsMjVIMzVWMjZIMzR6TTIsMjZIM1YyN0gyek0zLDI2SDRWMjdIM3pNNSwyNkg2VjI3SDV6TTYsMjZIN1YyN0g2ek04LDI2SDlWMjdIOHpNMTAsMjZIMTFWMjdIMTB6TTEzLDI2SDE0VjI3SDEzek0xNCwyNkgxNVYyN0gxNHpNMTUsMjZIMTZWMjdIMTV6TTE4LDI2SDE5VjI3SDE4ek0yMCwyNkgyMVYyN0gyMHpNMjEsMjZIMjJWMjdIMjF6TTIyLDI2SDIzVjI3SDIyek0yNCwyNkgyNVYyN0gyNHpNMjUsMjZIMjZWMjdIMjV6TTI2LDI2SDI3VjI3SDI2ek0yNywyNkgyOFYyN0gyN3pNMjgsMjZIMjlWMjdIMjh6TTI5LDI2SDMwVjI3SDI5ek0zMCwyNkgzMVYyN0gzMHpNMzEsMjZIMzJWMjdIMzF6TTMzLDI2SDM0VjI3SDMzek0xMCwyN0gxMVYyOEgxMHpNMTEsMjdIMTJWMjhIMTF6TTEyLDI3SDEzVjI4SDEyek0xNCwyN0gxNVYyOEgxNHpNMTYsMjdIMTdWMjhIMTZ6TTE3LDI3SDE4VjI4SDE3ek0xOCwyN0gxOVYyOEgxOHpNMjAsMjdIMjFWMjhIMjB6TTIxLDI3SDIyVjI4SDIxek0yMiwyN0gyM1YyOEgyMnpNMjYsMjdIMjdWMjhIMjZ6TTMwLDI3SDMxVjI4SDMwek0zMSwyN0gzMlYyOEgzMXpNMzIsMjdIMzNWMjhIMzJ6TTM0LDI3SDM1VjI4SDM0ek0yLDI4SDNWMjlIMnpNMywyOEg0VjI5SDN6TTQsMjhINVYyOUg0ek01LDI4SDZWMjlINXpNNiwyOEg3VjI5SDZ6TTcsMjhIOFYyOUg3ek04LDI4SDlWMjlIOHpNMTMsMjhIMTRWMjlIMTN6TTE2LDI4SDE3VjI5SDE2ek0xNywyOEgxOFYyOUgxN3pNMTgsMjhIMTlWMjlIMTh6TTIwLDI4SDIxVjI5SDIwek0yMiwyOEgyM1YyOUgyMnpNMjMsMjhIMjRWMjlIMjN6TTI1LDI4SDI2VjI5SDI1ek0yNiwyOEgyN1YyOUgyNnpNMjgsMjhIMjlWMjlIMjh6TTMwLDI4SDMxVjI5SDMwek0zMiwyOEgzM1YyOUgzMnpNMiwyOUgzVjMwSDJ6TTgsMjlIOVYzMEg4ek0xMSwyOUgxMlYzMEgxMXpNMTMsMjlIMTRWMzBIMTN6TTE0LDI5SDE1VjMwSDE0ek0xNSwyOUgxNlYzMEgxNXpNMTYsMjlIMTdWMzBIMTZ6TTIxLDI5SDIyVjMwSDIxek0yMiwyOUgyM1YzMEgyMnpNMjUsMjlIMjZWMzBIMjV6TTI2LDI5SDI3VjMwSDI2ek0zMCwyOUgzMVYzMEgzMHpNMzEsMjlIMzJWMzBIMzF6TTMyLDI5SDMzVjMwSDMyek0zMywyOUgzNFYzMEgzM3pNMiwzMEgzVjMxSDJ6TTQsMzBINVYzMUg0ek01LDMwSDZWMzFINXpNNiwzMEg3VjMxSDZ6TTgsMzBIOVYzMUg4ek0xMiwzMEgxM1YzMUgxMnpNMTMsMzBIMTRWMzFIMTN6TTE0LDMwSDE1VjMxSDE0ek0xNSwzMEgxNlYzMUgxNXpNMTYsMzBIMTdWMzFIMTZ6TTE5LDMwSDIwVjMxSDE5ek0yMiwzMEgyM1YzMUgyMnpNMjQsMzBIMjVWMzFIMjR6TTI2LDMwSDI3VjMxSDI2ek0yNywzMEgyOFYzMUgyN3pNMjgsMzBIMjlWMzFIMjh6TTI5LDMwSDMwVjMxSDI5ek0zMCwzMEgzMVYzMUgzMHpNMzQsMzBIMzVWMzFIMzR6TTIsMzFIM1YzMkgyek00LDMxSDVWMzJINHpNNSwzMUg2VjMySDV6TTYsMzFIN1YzMkg2ek04LDMxSDlWMzJIOHpNMTEsMzFIMTJWMzJIMTF6TTEyLDMxSDEzVjMySDEyek0xNCwzMUgxNVYzMkgxNHpNMTUsMzFIMTZWMzJIMTV6TTE3LDMxSDE4VjMySDE3ek0xOCwzMUgxOVYzMkgxOHpNMjEsMzFIMjJWMzJIMjF6TTIyLDMxSDIzVjMySDIyek0yNCwzMUgyNVYzMkgyNHpNMjUsMzFIMjZWMzJIMjV6TTI3LDMxSDI4VjMySDI3ek0zMCwzMUgzMVYzMkgzMHpNMzIsMzFIMzNWMzJIMzJ6TTMzLDMxSDM0VjMySDMzek0zNCwzMUgzNVYzMkgzNHpNMiwzMkgzVjMzSDJ6TTQsMzJINVYzM0g0ek01LDMySDZWMzNINXpNNiwzMkg3VjMzSDZ6TTgsMzJIOVYzM0g4ek0xMSwzMkgxMlYzM0gxMXpNMTMsMzJIMTRWMzNIMTN6TTE1LDMySDE2VjMzSDE1ek0xNiwzMkgxN1YzM0gxNnpNMTcsMzJIMThWMzNIMTd6TTE5LDMySDIwVjMzSDE5ek0yMCwzMkgyMVYzM0gyMHpNMjEsMzJIMjJWMzNIMjF6TTIyLDMySDIzVjMzSDIyek0yMywzMkgyNFYzM0gyM3pNMjQsMzJIMjVWMzNIMjR6TTI1LDMySDI2VjMzSDI1ek0yNiwzMkgyN1YzM0gyNnpNMjcsMzJIMjhWMzNIMjd6TTI4LDMySDI5VjMzSDI4ek0zMCwzMkgzMVYzM0gzMHpNMzEsMzJIMzJWMzNIMzF6TTMyLDMySDMzVjMzSDMyek0zMywzMkgzNFYzM0gzM3pNMzQsMzJIMzVWMzNIMzR6TTIsMzNIM1YzNEgyek04LDMzSDlWMzRIOHpNMTEsMzNIMTJWMzRIMTF6TTE2LDMzSDE3VjM0SDE2ek0xOCwzM0gxOVYzNEgxOHpNMjAsMzNIMjFWMzRIMjB6TTIyLDMzSDIzVjM0SDIyek0yNSwzM0gyNlYzNEgyNXpNMjcsMzNIMjhWMzRIMjd6TTMxLDMzSDMyVjM0SDMxek0zMiwzM0gzM1YzNEgzMnpNMiwzNEgzVjM1SDJ6TTMsMzRINFYzNUgzek00LDM0SDVWMzVINHpNNSwzNEg2VjM1SDV6TTYsMzRIN1YzNUg2ek03LDM0SDhWMzVIN3pNOCwzNEg5VjM1SDh6TTEwLDM0SDExVjM1SDEwek0xMSwzNEgxMlYzNUgxMXpNMTIsMzRIMTNWMzVIMTJ6TTEzLDM0SDE0VjM1SDEzek0xNCwzNEgxNVYzNUgxNHpNMTUsMzRIMTZWMzVIMTV6TTE2LDM0SDE3VjM1SDE2ek0xNywzNEgxOFYzNUgxN3pNMjIsMzRIMjNWMzVIMjJ6TTIzLDM0SDI0VjM1SDIzek0yNCwzNEgyNVYzNUgyNHpNMjUsMzRIMjZWMzVIMjV6TTI2LDM0SDI3VjM1SDI2ek0yNywzNEgyOFYzNUgyN3pNMjgsMzRIMjlWMzVIMjh6TTI5LDM0SDMwVjM1SDI5ek0zMCwzNEgzMVYzNUgzMHpNMzEsMzRIMzJWMzVIMzF6TTMyLDM0SDMzVjM1SDMyek0zMywzNEgzNFYzNUgzM3oiIGlkPSJxci1wYXRoIiBmaWxsPSIjMDAwMDAwIiBmaWxsLW9wYWNpdHk9IjEiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiAvPjwvc3ZnPg==",
 
-  "pslv":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/PSLVC62.webp/500px-PSLVC62.webp",
+  "remote":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Nuon-N2000-Remote-Control.jpg/500px-Nuon-N2000-Remote-Control.jpg",
 
-  "quill":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/%D7%A7%D7%9C%D7%A3%2C_%D7%A0%D7%95%D7%A6%D7%94_%D7%95%D7%93%D7%99%D7%95.jpg/500px-%D7%A7%D7%9C%D7%A3%2C_%D7%A0%D7%95%D7%A6%D7%94_%D7%95%D7%93%D7%99%D7%95.jpg",
+  "robot":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Honda_ASIMO_%28ver._2011%29_2011_Tokyo_Motor_Show.jpg/500px-Honda_ASIMO_%28ver._2011%29_2011_Tokyo_Motor_Show.jpg",
 
-  "rocketloco":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Stephenson%27s_Rocket_drawing.jpg/500px-Stephenson%27s_Rocket_drawing.jpg",
+  "rover":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Perseverance-Selfie-at-Rochette-Horizontal-V2.gif/500px-Perseverance-Selfie-at-Rochette-Horizontal-V2.gif",
 
   "satellite":
     "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Iridium_satellite.jpg/500px-Iridium_satellite.jpg",
 
-  "ship":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/MAERSK_MC_KINNEY_M%C3%96LLER_%26_MARSEILLE_MAERSK_%2848694054418%29.jpg/500px-MAERSK_MC_KINNEY_M%C3%96LLER_%26_MARSEILLE_MAERSK_%2848694054418%29.jpg",
+  "selfdriving":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Waymo_self-driving_car_front_view.gk.jpg/500px-Waymo_self-driving_car_front_view.gk.jpg",
 
-  "solarpanel":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Photovoltaic_Panels.JPG/500px-Photovoltaic_Panels.JPG",
+  "smartwatch":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Black_Apple_Watch_on_my_wrist_-jcutrer_%2835908678402%29.jpg/500px-Black_Apple_Watch_on_my_wrist_-jcutrer_%2835908678402%29.jpg",
 
   "sputnik":
     "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/%D0%9F%D0%B5%D1%80%D0%B2%D1%8B%D0%B9_%D0%B2_%D0%BC%D0%B8%D1%80%D0%B5_%D0%B8%D1%81%D0%BA%D1%83%D1%81%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9_%D1%81%D0%BF%D1%83%D1%82%D0%BD%D0%B8%D0%BA_%D0%97%D0%B5%D0%BC%D0%BB%D0%B8.jpg/500px-%D0%9F%D0%B5%D1%80%D0%B2%D1%8B%D0%B9_%D0%B2_%D0%BC%D0%B8%D1%80%D0%B5_%D0%B8%D1%81%D0%BA%D1%83%D1%81%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9_%D1%81%D0%BF%D1%83%D1%82%D0%BD%D0%B8%D0%BA_%D0%97%D0%B5%D0%BC%D0%BB%D0%B8.jpg",
 
-  "steamengine":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Maquina_vapor_Watt_ETSIIM.jpg/500px-Maquina_vapor_Watt_ETSIIM.jpg",
+  "tablet":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/12.9_iPad_Pro_1st_Gen_And_Galaxy_Tab_S8_Ultra_Size_Comparison.jpg/500px-12.9_iPad_Pro_1st_Gen_And_Galaxy_Tab_S8_Ultra_Size_Comparison.jpg",
 
-  "stethoscope":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Stethoscope-2.png/500px-Stethoscope-2.png",
+  "turing":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Alan_turing_header.jpg/500px-Alan_turing_header.jpg",
 
-  "submarine":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/US_Navy_040730-N-1234E-002_PCU_Virginia_%28SSN_774%29_returns_to_the_General_Dynamics_Electric_Boat_shipyard.jpg/500px-US_Navy_040730-N-1234E-002_PCU_Virginia_%28SSN_774%29_returns_to_the_General_Dynamics_Electric_Boat_shipyard.jpg",
+  "usb":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/SanDisk-Cruzer-USB-4GB-ThumbDrive.jpg/500px-SanDisk-Cruzer-USB-4GB-ThumbDrive.jpg",
 
-  "telegraph":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Morse_Telegraph_1837.jpg/500px-Morse_Telegraph_1837.jpg",
+  "vr":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Collision_2024_-_VR5_3671_%2853804364983%29.jpg/500px-Collision_2024_-_VR5_3671_%2853804364983%29.jpg",
 
-  "telegraphkey":
-    "https://upload.wikimedia.org/wikipedia/commons/9/9c/J38TelegraphKey.jpg",
-
-  "telephone":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Western_Electric_deskstand-Candlestick-telephone-w-subset-kbrose-2022-11-22.jpg/500px-Western_Electric_deskstand-Candlestick-telephone-w-subset-kbrose-2022-11-22.jpg",
-
-  "telescope":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/SmallAltAzMount.jpg/500px-SmallAltAzMount.jpg",
-
-  "television":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Philips_Fernsehempf%C3%A4nger_TD1422A_von_1950.jpg/500px-Philips_Fernsehempf%C3%A4nger_TD1422A_von_1950.jpg",
-
-  "tesla":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Tesla_circa_1890.jpeg/500px-Tesla_circa_1890.jpeg",
-
-  "toothbrush":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Toothbrush_20050716_004.jpg/500px-Toothbrush_20050716_004.jpg",
-
-  "train":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Vande_Bharat_Express_around_Mumbai.jpg/500px-Vande_Bharat_Express_around_Mumbai.jpg",
-
-  "transistor":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Transbauformen.jpg/500px-Transbauformen.jpg",
-
-  "ultrasound":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Sonographer_doing_pediatric_echocardiography.JPG/500px-Sonographer_doing_pediatric_echocardiography.JPG",
-
-  "umbrella":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/M0354_000727-005_1.jpg/500px-M0354_000727-005_1.jpg",
-
-  "vaccine":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Smallpox_vaccine.jpg/500px-Smallpox_vaccine.jpg",
-
-  "voltaic":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Reproduction_of_first_electric_Voltaic_Pile_cr56n2016_47429b20d_dl_full_size.jpg/500px-Reproduction_of_first_electric_Voltaic_Pile_cr56n2016_47429b20d_dl_full_size.jpg",
-
-  "washingmachine":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/LG_%EB%93%9C%EB%9F%BC%EC%84%B8%ED%83%81%EA%B8%B0%EC%99%80_%EC%8B%9D%EA%B8%B0%EC%84%B8%EC%B2%99%EA%B8%B0%2C_%EC%98%81%EA%B5%AD%EC%84%9C_%EB%AC%BC%EC%82%AC%EC%9A%A9_%ED%9A%A8%EC%9C%A8_%EC%B5%9C%EC%9A%B0%EC%88%98_%EC%A0%9C%ED%92%88_%EC%88%98%EC%83%81.jpg/500px-LG_%EB%93%9C%EB%9F%BC%EC%84%B8%ED%83%81%EA%B8%B0%EC%99%80_%EC%8B%9D%EA%B8%B0%EC%84%B8%EC%B2%99%EA%B8%B0%2C_%EC%98%81%EA%B5%AD%EC%84%9C_%EB%AC%BC%EC%82%AC%EC%9A%A9_%ED%9A%A8%EC%9C%A8_%EC%B5%9C%EC%9A%B0%EC%88%98_%EC%A0%9C%ED%92%88_%EC%88%98%EC%83%81.jpg",
-
-  "watt":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Watt_James_von_Breda.jpg/500px-Watt_James_von_Breda.jpg",
-
-  "wheel":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Landesmuseum_W%C3%BCrttemberg_Kelten_011.4.jpg/500px-Landesmuseum_W%C3%BCrttemberg_Kelten_011.4.jpg",
-
-  "wrightflyer":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/First_flight2.jpg/500px-First_flight2.jpg",
-
-  "xray":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/First_medical_X-ray_by_Wilhelm_R%C3%B6ntgen_of_his_wife_Anna_Bertha_Ludwig%27s_hand_-_18951222.jpg/500px-First_medical_X-ray_by_Wilhelm_R%C3%B6ntgen_of_his_wife_Anna_Bertha_Ludwig%27s_hand_-_18951222.jpg"
+  "webcam":
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Logicool_StreamCam_%28cropped%29.jpg/500px-Logicool_StreamCam_%28cropped%29.jpg"
 
 };
 
@@ -1057,229 +1021,240 @@ const QUIZZES = {
 
   "UKG":[
 
-    {q:"What is this?",o:["Light bulb","Spoon","Shoe"],a:0,img:"lightbulb",e:"💡"},
+    {q:"What is this?",o:["Computer","Fridge","Cupboard"],a:0,img:"desktop",e:"🖥️"},
 
-    {q:"Which invention helps us talk to people far away?",o:["Telephone","Pencil","Chair"],a:0,img:"telephone",e:"📞"},
+    {q:"We type letters with this. What is it?",o:["Keyboard","Spoon","Pillow"],a:0,img:"keyboard",e:"⌨️"},
 
-    {q:"What do we use to see the time?",o:["Clock","Cup","Ball"],a:0,img:"clock",e:"⏰"},
+    {q:"This is called a computer…?",o:["Mouse","Cat","Ball"],a:0,img:"mouse",e:"🖱️"},
 
-    {q:"What is this?",o:["Bicycle","Aeroplane","Boat"],a:0,img:"bicycle",e:"🚲"},
+    {q:"Which gadget do we use to call Grandma?",o:["Mobile phone","Umbrella","Toothbrush"],a:0,img:"mobilephone",e:"📱"},
 
-    {q:"Which invention flies high in the sky?",o:["Aeroplane","Car","Train"],a:0,img:"airliner",e:"✈️"},
+    {q:"We wear these to listen to music. What are they?",o:["Headphones","Glasses","Gloves"],a:0,img:"headphones",e:"🎧"},
 
-    {q:"What keeps us dry in the rain?",o:["Umbrella","Fan","Television"],a:0,img:"umbrella",e:"☂️"},
+    {q:"Which machine puts our pictures on paper?",o:["Printer","Fan","Fridge"],a:0,img:"printer",e:"🖨️"},
 
-    {q:"Which invention keeps our food cold?",o:["Refrigerator","Oven","Fan"],a:0,img:"fridge",e:"🧊"},
+    {q:"What is this flat touch-screen gadget called?",o:["Tablet","Plate","Book"],a:0,img:"tablet",e:"📲"},
 
-    {q:"What do we use to write in our notebooks?",o:["Pencil","Spoon","Comb"],a:0,img:"pencil",e:"✏️"},
+    {q:"Which gadget changes the TV channel from the sofa?",o:["Remote control","Spoon","Shoe"],a:0,img:"remote",e:"📺"},
 
-    {q:"This round invention helps cars, bikes and carts to move. What is it?",o:["Wheel","Box","Book"],a:0,img:"wheel",e:"🛞"},
+    {q:"Which gadget helps us add numbers quickly?",o:["Calculator","Pillow","Comb"],a:0,img:"calculator",e:"🧮"},
 
-    {q:"Which invention do we watch cartoons on?",o:["Television","Refrigerator","Umbrella"],a:0,img:"television",e:"📺"}
+    {q:"What is this?",o:["Robot","Tree","Cake"],a:0,img:"robot",e:"🤖"}
 
   ],
 
 
   "1":[
 
-    {q:"What do we use this invention for?",o:["Cleaning our teeth","Combing our hair","Eating our food"],a:0,img:"toothbrush",e:"🪥"},
+    {q:"Which part of the computer shows pictures and words?",o:["Screen","Mouse","Keyboard"],a:0,img:"monitor",e:"🖥️"},
 
-    {q:"Which invention helps us call a friend from anywhere?",o:["Mobile phone","Umbrella","Pencil"],a:0,img:"mobilephone",e:"📱"},
+    {q:"Which key do we press to put a space between words?",o:["Space bar","Power button","Volume button"],a:0,img:"keyboard",e:"⌨️"},
 
-    {q:"A fan helps us by…?",o:["Keeping us cool","Making us wet","Cooking our food"],a:0,img:"fan",e:"🌀"},
+    {q:"We point and click with the…?",o:["Mouse","Printer","Speaker"],a:0,img:"mouse",e:"🖱️"},
 
-    {q:"Which invention carries people across the sky from one country to another?",o:["Aeroplane","Bicycle","Bullock cart"],a:0,img:"airliner",e:"✈️"},
+    {q:"Where do we wear a smartwatch?",o:["On the wrist","On the foot","On the head"],a:0,img:"smartwatch",e:"⌚"},
 
-    {q:"What can we do on a computer?",o:["Learn, write and play games","Cook rice","Wash clothes"],a:0,img:"laptop",e:"💻"},
+    {q:"A webcam lets people on a video call…?",o:["See you","Smell you","Touch you"],a:0,img:"webcam",e:"📷"},
 
-    {q:"Which invention washes our clothes?",o:["Washing machine","Television","Refrigerator"],a:0,img:"washingmachine",e:"🫧"},
+    {q:"What should we do when a phone's battery is low?",o:["Charge it","Water it","Feed it"],a:0,img:"mobilephone",e:"🔋"},
 
-    {q:"What do we look through to see the Moon and stars up close?",o:["Telescope","Spoon","Kettle"],a:0,img:"telescope",e:"🔭"},
+    {q:"A laptop is a computer you can…?",o:["Carry around easily","Eat","Wear on your feet"],a:0,img:"laptop",e:"💻"},
 
-    {q:"Which invention takes photographs?",o:["Camera","Clock","Pencil"],a:0,img:"camera",e:"📷"},
+    {q:"This small thing stores photos and files. It is a…?",o:["Pen drive","Pencil","Eraser"],a:0,img:"usb",e:"💾"},
 
-    {q:"Spectacles help people to…?",o:["See clearly","Hear better","Run faster"],a:0,img:"glasses",e:"👓"},
+    {q:"Which gadget lets you listen without disturbing others?",o:["Headphones","Loudspeaker","Drum"],a:0,img:"headphones",e:"🎧"},
 
-    {q:"The Vande Bharat Express is a fast…?",o:["Train","Ship","Aeroplane"],a:0,img:"train",e:"🚆"}
+    {q:"When we finish on the computer, we should…?",o:["Shut it down","Pour water on it","Hit it"],a:0,pic:"💻  ➜  ⏻",e:"⏻"}
 
   ],
 
 
   "2":[
 
-    {q:"Who invented the light bulb?",o:["Thomas Edison","Alexander Graham Bell","Isaac Newton"],a:0,img:"lightbulb",e:"💡"},
+    {q:"The Internet connects…?",o:["Computers all around the world","Only two houses","Rivers and mountains"],a:0,pic:"🌐",e:"🌐"},
 
-    {q:"Who invented the telephone?",o:["Alexander Graham Bell","Thomas Edison","Isaac Newton"],a:0,img:"telephone",e:"📞"},
+    {q:"Wi-Fi lets our devices join the Internet…?",o:["Without wires","Only with ropes","Through water pipes"],a:0,pic:"📶 Wi-Fi",e:"📶"},
 
-    {q:"The first aeroplane was flown in 1903 by two brothers called the…?",o:["Wright brothers","Edison brothers","Newton brothers"],a:0,img:"wrightflyer",e:"✈️"},
+    {q:"Who can you share your password with?",o:["Only your parents or guardian","Everyone in your class","A stranger online"],a:0,pic:"🔑 Password",e:"🔑"},
 
-    {q:"Before the light bulb, people lit their homes at night with…?",o:["Candles and oil lamps","Tube lights","Battery torches"],a:0,img:"candle",e:"🕯️"},
+    {q:"What is an app?",o:["A program on a phone or tablet","A type of fruit","A kind of shoe"],a:0,pic:"📱 App",e:"📱"},
 
-    {q:"Before cars, how did many people in India travel between villages?",o:["By bullock cart, horse or on foot","By aeroplane","By metro train"],a:0,img:"bullockcart",e:"🐂"},
+    {q:"A stranger online asks where you live. What should you do?",o:["Tell a trusted adult","Tell them","Send them a photo"],a:0,pic:"💬 “Where do you live?”",e:"🛡️"},
 
-    {q:"Which invention do doctors use to listen to your heartbeat?",o:["Stethoscope","Telescope","Microscope"],a:0,img:"stethoscope",e:"🩺"},
+    {q:"We scan this with a phone to pay. What is it?",o:["A QR code","A crossword","A chessboard"],a:0,img:"qrcode",e:"🔳"},
 
-    {q:"Before the printing press, how were books made?",o:["Copied out by hand, one at a time","Printed by computers","Downloaded from the internet"],a:0,img:"printingpress",e:"📚"},
+    {q:"A video call lets us…?",o:["See and talk to people far away","Cook food","Fly in the sky"],a:0,pic:"📹 📞",e:"📹"},
 
-    {q:"Which very old invention is found on cars, bicycles and trains?",o:["The wheel","The kite","The umbrella"],a:0,img:"wheel",e:"🛞"},
+    {q:"Which of these helps us search the Internet?",o:["Google","Paint","Calculator"],a:0,pic:"🔍 Search",e:"🔍"},
 
-    {q:"Which invention lets us send messages and photos to friends in seconds?",o:["Mobile phone","Postcard","Kite"],a:0,img:"mobilephone",e:"📱"},
+    {q:"A smartwatch can count your…?",o:["Steps","Hair","Teeth"],a:0,img:"smartwatch",e:"⌚"},
 
-    {q:"Milk used to go bad quickly. Which invention keeps it fresh for days?",o:["Refrigerator","Radio","Ceiling fan"],a:0,img:"fridge",e:"🧊"}
+    {q:"Spending too long on screens can make our eyes…?",o:["Tired","Blue","Bigger"],a:0,pic:"⏰ Screen time",e:"👀"}
 
   ],
 
 
   "3":[
 
-    {q:"Alexander Graham Bell is famous for inventing the…?",o:["Telephone","Light bulb","Aeroplane"],a:0,img:"bell",e:"📞"},
+    {q:"In a website address, what does 'www' stand for?",o:["World Wide Web","Wide Water World","Win Win Win"],a:0,pic:"www",e:"🌐"},
 
-    {q:"Thomas Edison is famous for which invention?",o:["Electric light bulb","Telephone","Bicycle"],a:0,img:"edison",e:"💡"},
+    {q:"What is an e-mail?",o:["A message sent over the Internet","A letter carried by a pigeon","A type of stamp"],a:0,pic:"📧",e:"📧"},
 
-    {q:"The Wright brothers' very first aeroplane flight in 1903 lasted about…?",o:["12 seconds","12 hours","12 days"],a:0,img:"wrightflyer",e:"✈️"},
+    {q:"Which is the strongest password?",o:["Tiger$Jump42","123456","password"],a:0,img:"lock",e:"🔒"},
 
-    {q:"Which invention lets us see tiny germs that are too small for our eyes?",o:["Microscope","Telescope","Periscope"],a:0,img:"microscope",e:"🔬"},
+    {q:"Tim Berners-Lee invented the…?",o:["World Wide Web","Mobile phone","Television"],a:0,img:"bernerslee",e:"🌐"},
 
-    {q:"Johannes Gutenberg's printing press made books…?",o:["Cheaper, so many more people could read","Much more expensive","Disappear completely"],a:0,img:"gutenberg",e:"📚"},
+    {q:"Ctrl + C copies. What does Ctrl + V do?",o:["Paste","Delete","Shut down"],a:0,pic:"Ctrl + C   ➜   Ctrl + V",e:"📋"},
 
-    {q:"Braille uses raised dots that are read with the fingertips. Who is it for?",o:["People who cannot see","People who cannot hear","People who cannot walk"],a:0,img:"braille",e:"👆"},
+    {q:"Satellites in space help us with…?",o:["TV, phone signals and weather","Cooking dinner","Watering plants"],a:0,img:"satellite",e:"🛰️"},
 
-    {q:"Which kitchen invention heats food in just a few minutes?",o:["Microwave oven","Refrigerator","Washing machine"],a:0,img:"microwave",e:"🍲"},
+    {q:"A computer virus is…?",o:["A harmful program that can damage a computer","A cold that computers catch","A very fast mouse"],a:0,pic:"🦠 💻",e:"🦠"},
 
-    {q:"Which invention always points north and helps sailors find their way?",o:["Compass","Clock","Kite"],a:0,img:"compass",e:"🧭"},
+    {q:"Which device has a touch screen and no separate keyboard?",o:["Tablet","Desktop computer","Printer"],a:0,img:"tablet",e:"📲"},
 
-    {q:"Which invention turns sunlight into electricity?",o:["Solar panel","Umbrella","Mirror"],a:0,img:"solarpanel",e:"☀️"},
+    {q:"What do we call small pictures like 😀 used in messages?",o:["Emojis","Maps","Stamps"],a:0,pic:"😀 😂 👍 🎉",e:"😀"},
 
-    {q:"Before pencils and pens, people often wrote with a…?",o:["Feather quill dipped in ink","Mobile phone","Laptop"],a:0,img:"quill",e:"🪶"}
+    {q:"In 2023, India's Chandrayaan-3 landed near the south pole of the…?",o:["Moon","Sun","Earth"],a:0,img:"chandrayaan3",e:"🌙"}
 
   ],
 
 
   "4":[
 
-    {q:"James Watt improved which invention that powered factories and trains?",o:["Steam engine","Television","Telephone"],a:0,img:"steamengine",e:"🚂"},
+    {q:"Which is the biggest?",o:["1 GB","1 MB","1 KB"],a:0,pic:"KB   MB   GB",e:"💾"},
 
-    {q:"Guglielmo Marconi sent messages through the air without any wires. He invented the…?",o:["Radio","Refrigerator","Bicycle"],a:0,img:"marconi",e:"📻"},
+    {q:"A message says “You won! Click here.” What should you do?",o:["Don't click; tell an adult","Click it quickly","Send it to friends"],a:0,pic:"🎁 “You won! Click here”",e:"🛡️"},
 
-    {q:"Edward Jenner made the first vaccine. It protected people from which disease?",o:["Smallpox","Toothache","Sunburn"],a:0,img:"jenner",e:"💉"},
+    {q:"A 3D printer makes…?",o:["Solid objects, layer by layer","Only flat paper pictures","Music"],a:0,img:"printer3d",e:"🧊"},
 
-    {q:"Alexander Fleming discovered penicillin. What does this medicine do?",o:["Kills harmful bacteria to cure infections","Helps people see better","Makes plants grow faster"],a:0,img:"fleming",e:"💊"},
+    {q:"A drone is an aircraft that…?",o:["Flies with no pilot inside","Swims underwater","Only drives on roads"],a:0,img:"drone",e:"🚁"},
 
-    {q:"Alexander Graham Bell made the very first telephone call in 1876. What did he say?",o:["“Mr Watson, come here, I want to see you.”","“Happy birthday to you!”","“Hello, is anybody home?”"],a:0,img:"telephone",e:"📞"},
+    {q:"Ada Lovelace is known as the world's first computer…?",o:["Programmer","Chef","Footballer"],a:0,img:"lovelace",e:"👩‍💻"},
 
-    {q:"Karl Benz built one of the first motor cars in 1886. How many wheels did it have?",o:["Three","Six","Ten"],a:0,img:"benz",e:"🚗"},
+    {q:"The CPU is often called the computer's…?",o:["Brain","Stomach","Shoes"],a:0,img:"microchip",e:"🧠"},
 
-    {q:"Jagadish Chandra Bose invented the crescograph to show that plants…?",o:["Grow and respond like living things","Can walk on their roots","Can talk to each other"],a:0,img:"bose",e:"🌱"},
+    {q:"GPS uses satellites to help us…?",o:["Find our way","Cook food","Grow plants"],a:0,img:"gps",e:"🧭"},
 
-    {q:"An X-ray machine lets doctors see…?",o:["The bones inside our body","Our dreams","The sounds we make"],a:0,img:"xray",e:"🦴"},
+    {q:"Astronauts live and work in space aboard the…?",o:["International Space Station","Eiffel Tower","Titanic"],a:0,img:"iss",e:"👩‍🚀"},
 
-    {q:"What did the television let families do for the first time?",o:["Watch moving pictures and news at home","Fly to other countries","Talk to animals"],a:0,img:"television",e:"📺"},
+    {q:"Why should we keep apps and computers updated?",o:["To fix problems and stay safe","To make the screen bigger","To change the keyboard's colour"],a:0,pic:"🔄 Update",e:"🔄"},
 
-    {q:"Which invention lets people travel deep under the sea?",o:["Submarine","Helicopter","Hot-air balloon"],a:0,img:"submarine",e:"🌊"}
+    {q:"NASA's Perseverance is a robot car exploring…?",o:["Mars","Delhi","The Amazon river"],a:0,img:"rover",e:"🔴"}
 
   ],
 
 
   "5":[
 
-    {q:"George Stephenson's famous 'Rocket' (1829) was an early…?",o:["Steam railway engine","Space rocket","Racing car"],a:0,img:"rocketloco",e:"🚂"},
+    {q:"Which of these is an INPUT device?",o:["Keyboard","Printer","Speaker"],a:0,pic:"Input ➜ Process\n➜ Output",e:"⌨️"},
 
-    {q:"Which invention can fly straight up, hover in one place and land almost anywhere?",o:["Helicopter","Glider","Hot-air balloon"],a:0,img:"helicopter",e:"🚁"},
+    {q:"Which of these is an OUTPUT device?",o:["Printer","Mouse","Microphone"],a:0,img:"printer",e:"🖨️"},
 
-    {q:"Samuel Morse invented a code that sent telegraph messages as…?",o:["Dots and dashes","Pictures","Songs"],a:0,img:"telegraphkey",e:"📡"},
+    {q:"In coding, an 'if' instruction lets a program…?",o:["Make a decision","Turn off the screen","Print a photo"],a:0,pic:"if 🌧️  ➜  take ☂️",e:"🔀"},
 
-    {q:"In 1989, Tim Berners-Lee invented something we use every day. What was it?",o:["The World Wide Web","The bicycle","The light bulb"],a:0,img:"bernerslee",e:"🌐"},
+    {q:"A set of instructions that tells a computer what to do is called a…?",o:["Program","Painting","Poem"],a:0,pic:"📜  ➜  💻",e:"📜"},
 
-    {q:"Alexander Fleming discovered penicillin when he noticed mould growing on…?",o:["A dish of bacteria he had left out","His breakfast bread","A tree in his garden"],a:0,img:"fleming",e:"🧫"},
+    {q:"Charles Babbage designed the Analytical Engine. He is called the Father of the…?",o:["Computer","Internet","Telephone"],a:0,img:"babbage",e:"💻"},
 
-    {q:"Which machine uses sound waves to let doctors see inside the body without any cuts?",o:["Ultrasound scanner","Thermometer","Microscope"],a:0,img:"ultrasound",e:"🩺"},
+    {q:"In 2014, Mangalyaan made India the first country to reach Mars orbit on its…?",o:["First try","Tenth try","Hundredth try"],a:0,pic:"🇮🇳 🚀  ➜  🔴 Mars",e:"🚀"},
 
-    {q:"Benjamin Franklin flew a kite in a thunderstorm to show that lightning is…?",o:["Electricity","Water","Fire"],a:0,img:"franklin",e:"⚡"},
+    {q:"Robots in factories are mostly used to…?",o:["Do repetitive or dangerous jobs","Eat lunch","Sleep"],a:0,img:"robot",e:"🤖"},
 
-    {q:"Alessandro Volta invented the first electric…?",o:["Battery","Fan","Train"],a:0,img:"voltaic",e:"🔋"},
+    {q:"Computers store everything using only two digits. Which two?",o:["0 and 1","5 and 6","8 and 9"],a:0,pic:"0 1 1 0 1 0 0 1",e:"🔢"},
 
-    {q:"Charles Babbage is called the 'Father of the…'?",o:["Computer","Telephone","Aeroplane"],a:0,img:"babbage",e:"💻"},
+    {q:"Websites from India often end with…?",o:[".in",".uk",".jp"],a:0,pic:"www.example ❓",e:"🇮🇳"},
 
-    {q:"Which invention orbits the Earth and helps with weather forecasts, TV and phone signals?",o:["Satellite","Submarine","Helicopter"],a:0,img:"satellite",e:"🛰️"}
+    {q:"What does the G in 4G and 5G stand for?",o:["Generation","Gold","Game"],a:0,pic:"📶 4G ➜ 5G",e:"📶"}
 
   ],
 
 
   "6":[
 
-    {q:"What was special about Gutenberg's printing press, around 1440?",o:["It used metal letters that could be moved and reused","It printed colour photographs","It ran on electricity"],a:0,img:"printingpress",e:"📚"},
+    {q:"Scratch is a website where children learn…?",o:["Coding by snapping blocks together","Cooking","Football"],a:0,pic:"🐱 Scratch\n[ when clicked ]\n[ move 10 steps ]",e:"🧩"},
 
-    {q:"Michael Faraday discovered that moving a magnet near a coil of wire produces…?",o:["Electricity","Light only","Sound"],a:0,img:"faraday",e:"🧲"},
+    {q:"Which of these is a programming language?",o:["Python","Hindi","Football"],a:0,pic:"⌨️  </>  💻",e:"💻"},
 
-    {q:"Which invention by the Wright brothers in 1903 changed travel for ever?",o:["The first powered aeroplane","The first car","The first steam train"],a:0,img:"wrightflyer",e:"✈️"},
+    {q:"ENIAC, one of the first electronic computers in the 1940s, was so big it filled…?",o:["A whole room","A schoolbag","A pencil box"],a:0,img:"eniac",e:"🏛️"},
 
-    {q:"Louis Pasteur found a way to make milk safe by heating it. It is called…?",o:["Pasteurisation","Vaccination","Refrigeration"],a:0,img:"pasteur",e:"🥛"},
+    {q:"What does two-step verification add to your password?",o:["A second check, like a code sent to your phone","A second keyboard","A bigger screen"],a:0,img:"lock",e:"🔐"},
 
-    {q:"Wilhelm Röntgen discovered X-rays in 1895. The very first X-ray photo showed…?",o:["His wife's hand, wearing her ring","A cat","A tree"],a:0,img:"xray",e:"✋"},
+    {q:"The International Space Station goes once around the Earth about every…?",o:["90 minutes","90 days","9 years"],a:0,img:"iss",e:"🛰️"},
 
-    {q:"How does a vaccine protect us?",o:["It trains the body to fight a disease before we catch it","It mends broken bones","It makes us grow taller"],a:0,img:"vaccine",e:"💉"},
+    {q:"Which of these is a pocket-sized computer used to learn coding in schools?",o:["BBC micro:bit","Washing machine","Bicycle"],a:0,img:"microbit",e:"🔌"},
 
-    {q:"The first mobile phone call was made in 1973 on a phone nicknamed 'the brick'. Why?",o:["It was big and heavy — about 1 kg","It was made of real bricks","It could only call builders"],a:0,img:"dynatac",e:"📱"},
+    {q:"Which is safe to share with people online?",o:["Your favourite colour","Your home address","Your password"],a:0,pic:"🎨 🏠 🔑",e:"🛡️"},
 
-    {q:"Indian mathematicians like Aryabhata and Brahmagupta gave the world which idea?",o:["Zero as a number","The telescope","The steam engine"],a:0,img:"aryabhata",e:"0️⃣"},
+    {q:"Chandrayaan-3's rover, which explored the Moon, was called…?",o:["Pragyan","Mangal","Surya"],a:0,img:"chandrayaan3",e:"🌙"},
 
-    {q:"Besides the light bulb, Thomas Edison invented the phonograph, which could…?",o:["Record and play back sound","Take photographs","Fly short distances"],a:0,img:"phonograph",e:"🎵"},
+    {q:"How many bits make one byte?",o:["8","2","100"],a:0,pic:"bit  ➜  byte",e:"🔢"},
 
-    {q:"The Internet lets computers around the world…?",o:["Share information with each other","Cook food","Clean the house"],a:0,img:"laptop",e:"🌐"}
+    {q:"Optical fibres carry Internet data as flashes of…?",o:["Light","Water","Sound"],a:0,img:"fiber",e:"💡"}
 
   ],
 
 
   "7":[
 
-    {q:"Put these inventions in order, from oldest to newest.",o:["Wheel → Printing press → Aeroplane","Aeroplane → Wheel → Printing press","Printing press → Aeroplane → Wheel"],a:0,img:"wheel",e:"🛞"},
+    {q:"What does AI stand for?",o:["Artificial Intelligence","Automatic Internet","Air India"],a:0,pic:"🤖 AI",e:"🤖"},
 
-    {q:"Why can a huge steel ship float?",o:["The water pushes it up — Archimedes' principle","Magnets under the sea pull it up","Steel is lighter than water"],a:0,img:"ship",e:"🚢"},
+    {q:"Alan Turing suggested a test to check whether a machine can…?",o:["Think like a human","Fly","Cook"],a:0,img:"turing",e:"🧠"},
 
-    {q:"Galileo improved the telescope in 1609 and was the first to see…?",o:["Moons circling Jupiter","Cities on Mars","Rings around the Sun"],a:0,img:"galileo",e:"🔭"},
+    {q:"A 'phishing' message tries to…?",o:["Trick you into sharing passwords or details","Teach you to fish","Fix your computer for free"],a:0,pic:"🎣 📧 🔑",e:"🎣"},
 
-    {q:"James Watt's steam engine led to factories and railways in a period called the…?",o:["Industrial Revolution","Stone Age","Ice Age"],a:0,img:"watt",e:"🏭"},
+    {q:"The Internet grew from ARPANET, which first linked computers in…?",o:["The USA, in 1969","India, in 2010","Egypt, in 1800"],a:0,pic:"💻 ── 💻 ── 💻\nARPANET",e:"🌐"},
 
-    {q:"Nikola Tesla helped develop AC (alternating current). Where do we use it today?",o:["The electricity supply to our homes","Car tyres","Water pipes"],a:0,img:"tesla",e:"⚡"},
+    {q:"In 1997, IBM's Deep Blue computer beat the world champion at…?",o:["Chess","Cricket","Football"],a:0,img:"deepblue",e:"♟️"},
 
-    {q:"Marie Curie, the first woman to win a Nobel Prize, discovered…?",o:["The radioactive elements radium and polonium","The light bulb","The telephone"],a:0,img:"curie",e:"☢️"},
+    {q:"A mistake in a computer program is called a…?",o:["Bug","Butterfly","Bat"],a:0,pic:"💻  ❌  Error!",e:"🐞"},
 
-    {q:"The Nobel Prizes were set up with money left by Alfred Nobel, who invented…?",o:["Dynamite","The telephone","The printing press"],a:0,img:"nobel",e:"🏅"},
+    {q:"Self-driving cars use cameras, sensors and…?",o:["AI software to make driving decisions","Horses hidden inside","Magic"],a:0,img:"selfdriving",e:"🚗"},
 
-    {q:"How did the printing press change society?",o:["Books became cheaper, so many more people learned to read","People stopped reading","Letters stopped being written"],a:0,img:"gutenberg",e:"📚"},
+    {q:"A padlock and 'https' at the start of a web address mean the connection is…?",o:["Encrypted (scrambled to keep it safe)","Very slow","Closed for ever"],a:0,pic:"🔒 https://",e:"🔒"},
 
-    {q:"A refrigerator keeps food cold because a liquid inside it…?",o:["Evaporates and carries heat away from inside","Is replaced with ice cubes every morning","Blows snow through a fan"],a:0,img:"fridge",e:"🧊"},
+    {q:"A VR headset lets you…?",o:["Feel as if you are inside a 3D world","Only listen to the radio","Charge your phone"],a:0,img:"vr",e:"🥽"},
 
-    {q:"What was Sputnik 1, launched in 1957?",o:["The first artificial satellite to orbit Earth","The first aeroplane","The first submarine"],a:0,img:"sputnik",e:"🛰️"}
+    {q:"Chandrayaan-3 made India the first country to land near the Moon's…?",o:["South pole","North pole","Brightest crater"],a:0,img:"chandrayaan3",e:"🌙"}
 
   ],
 
 
   "8":[
 
-    {q:"Which of these inventions came first?",o:["The printing press","The telephone","The television"],a:0,img:"printingpress",e:"📚"},
+    {q:"In machine learning, a computer learns mainly from…?",o:["Lots of examples (data)","Sleeping","Reading a single rule"],a:0,pic:"📷 🐱 × 1000  ➜  🤖 “cat!”",e:"🧠"},
 
-    {q:"Edward Jenner's smallpox vaccine (1796) eventually led to…?",o:["Smallpox being wiped out worldwide by 1980","The invention of antibiotics","The first X-ray"],a:0,img:"jenner",e:"💉"},
+    {q:"Why should you double-check answers from an AI chatbot?",o:["AI can make mistakes","AI is always perfect","Reading them is against the law"],a:0,pic:"🤖 💬 ❓",e:"🤖"},
 
-    {q:"Faraday's discovery of electromagnetic induction is the principle behind…?",o:["Generators that make electricity in power stations","Telescopes","Printing presses"],a:0,img:"faraday",e:"⚡"},
+    {q:"Which is the best way to keep your accounts safe?",o:["A different strong password for each account","The same password everywhere","Your name as the password"],a:0,img:"lock",e:"🔐"},
 
-    {q:"The transistor, invented in 1947, made it possible to build…?",o:["Small computers and mobile phones","Bigger steam engines","Faster sailing ships"],a:0,img:"transistor",e:"📟"},
+    {q:"Which technology lets a phone show a 3D dinosaur standing in your real room?",o:["Augmented reality (AR)","Radio","Morse code"],a:0,pic:"📱 + 🛋️  ➜  🦖",e:"🦖"},
 
-    {q:"In 1895 the Lumière brothers held the world's first public…?",o:["Film screening, the start of cinema","Radio broadcast","Television show"],a:0,img:"lumiere",e:"🎬"},
+    {q:"Sputnik 1, the first artificial satellite, was launched in…?",o:["1957","1857","2007"],a:0,img:"sputnik",e:"🛰️"},
 
-    {q:"Tim Berners-Lee chose not to patent the World Wide Web. What was the result?",o:["Anyone could use it free, so it spread worldwide","Nobody was allowed to use it","It only worked in one country"],a:0,img:"bernerslee",e:"🌐"},
+    {q:"Moore's law said the number of transistors on a chip doubles about every…?",o:["Two years","Two days","Two hundred years"],a:0,img:"microchip",e:"📈"},
 
-    {q:"Why was the electric light bulb so important for society?",o:["People could work, study and stay safe after dark","It made the days longer","It ended the need for sleep"],a:0,img:"lightbulb",e:"💡"},
+    {q:"Ransomware is harmful software that…?",o:["Locks your files and demands money","Speeds up your computer","Backs up your photos"],a:0,pic:"🔒 📁  ➜  💰 ❓",e:"⚠️"},
 
-    {q:"Dr APJ Abdul Kalam led the team that built India's first satellite launch vehicle, SLV-3. He is known as the…?",o:["Missile Man of India","Iron Man of India","Father of the Nation"],a:0,img:"kalam",e:"🚀"},
+    {q:"How does a GPS receiver work out where it is?",o:["By timing signals from several satellites","By asking the nearest person","By measuring the temperature"],a:0,img:"gps",e:"🛰️"},
 
-    {q:"A rocket like ISRO's PSLV rises into space using which principle?",o:["Newton's third law — every action has an equal and opposite reaction","Magnets pulling it upward","Hot air, like a balloon"],a:0,img:"pslv",e:"🚀"},
+    {q:"Files saved 'in the cloud' are actually stored on…?",o:["Computers in data centres","Real clouds in the sky","The phone's battery"],a:0,pic:"☁️ = 🖥️🖥️🖥️ ?",e:"☁️"},
 
-    {q:"Arrange these communication inventions from oldest to newest.",o:["Telegraph → Telephone → Internet","Internet → Telegraph → Telephone","Telephone → Internet → Telegraph"],a:0,img:"telegraph",e:"📡"}
+    {q:"An algorithm is…?",o:["A step-by-step set of instructions to solve a problem","A type of computer virus","A musical instrument"],a:0,pic:"1️⃣ ➜ 2️⃣ ➜ 3️⃣ ➜ ✅",e:"📝"}
 
   ]
 
 };
+
+
+if(
+  Object.keys(QUESTION_IMAGES).length === 0
+){
+
+  document
+    .getElementById('photoCredit')
+    .classList.add('hidden');
+
+}
 
 
 /* ============================================================
@@ -1865,6 +1840,30 @@ function buildPhoto(
   small
 ){
 
+  if(
+    item.pic &&
+    !small
+  ){
+
+    const card =
+      document.createElement('div');
+
+    card.className =
+      'q-pic';
+
+    const text =
+      document.createElement('span');
+
+    text.textContent =
+      item.pic;
+
+    card.appendChild(text);
+
+    return card;
+
+  }
+
+
   const fig =
     document.createElement('div');
 
@@ -2004,6 +2003,48 @@ function preloadClassImages(cls){
 }
 
 
+function fitPuzzleCard(card){
+
+  const text =
+    card.querySelector('span');
+
+  const wantLines =
+    text.textContent.split('\n').length;
+
+  let rem = 1.65;
+
+
+  while(rem > 1.05){
+
+    card.style.fontSize =
+      rem + 'rem';
+
+    const linePx =
+      parseFloat(
+        getComputedStyle(text).lineHeight
+      );
+
+    const lines =
+      Math.round(
+        text.getBoundingClientRect().height /
+        linePx
+      );
+
+
+    if(lines <= wantLines){
+
+      return;
+
+    }
+
+
+    rem -= 0.05;
+
+  }
+
+}
+
+
 /* ============================================================
    RENDER QUESTION
    ============================================================ */
@@ -2024,7 +2065,7 @@ function renderQuestion(
     .getElementById('headerSub')
     .textContent =
       classLabel(cls) +
-      ' — Inventions That Changed the World';
+      ' — Technology & the Digital World';
 
 
   quizProg.textContent =
@@ -2186,6 +2227,16 @@ function renderQuestion(
   questionsContainer.appendChild(
     block
   );
+
+
+  const puzzleCard =
+    block.querySelector('.q-pic');
+
+  if(puzzleCard){
+
+    fitPuzzleCard(puzzleCard);
+
+  }
 
 
   submitBtn.textContent =
@@ -2447,6 +2498,24 @@ function showResults(){
         ),
         block.firstChild
       );
+
+
+      if(item.pic){
+
+        const picLine =
+          document.createElement('div');
+
+        picLine.className =
+          'pic-line';
+
+        picLine.textContent =
+          item.pic;
+
+        block
+          .querySelector('.your-ans')
+          .before(picLine);
+
+      }
 
 
       reviewContainer.appendChild(
