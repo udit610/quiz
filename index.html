@@ -904,188 +904,240 @@ const API_URL =
    the page). Weeks with no photos leave this map empty.
 */
 
-const QUESTION_IMAGES = {};
+const QUESTION_IMAGES = {
+
+  "elephant": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/African_elephant_standing.jpg/960px-African_elephant_standing.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "giraffe": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/006_Giraffe_portrait_in_the_Lake_Manyara_National_Park_Photo_by_Giles_Laurent.jpg/960px-006_Giraffe_portrait_in_the_Lake_Manyara_National_Park_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "jupiter": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Portrait_of_Jupiter_from_Cassini.jpg/960px-Portrait_of_Jupiter_from_Cassini.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "mouse": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/House_mouse_%28Mus_musculus%29_2732.jpg/960px-House_mouse_%28Mus_musculus%29_2732.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "penguin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/Aptenodytes_forsteri_-_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9_%D0%9B%D0%BE%D0%B3%D0%B8%D0%BD%D0%BE%D0%B2_-_465113420.jpeg/960px-Aptenodytes_forsteri_-_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9_%D0%9B%D0%BE%D0%B3%D0%B8%D0%BD%D0%BE%D0%B2_-_465113420.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "cheetah": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/037_Cheetah_close-up_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg/960px-037_Cheetah_close-up_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "ocean": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Over_North_Pacific_Ocean_%28504704%29_%2823877519829%29.jpg/960px-Over_North_Pacific_Ocean_%28504704%29_%2823877519829%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "bluewhale": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Bluewhale877.jpg/960px-Bluewhale877.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "everest": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Everest%2C_Himalayas.jpg/960px-Everest%2C_Himalayas.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "sahara": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Sand_dune_in_the_desert%2C_Sahara_Desert%2C_Egypt.jpg/960px-Sand_dune_in_the_desert%2C_Sahara_Desert%2C_Egypt.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "antarctica": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Antarctica_Landscape.jpg/960px-Antarctica_Landscape.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "russia": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/Catedral_de_San_Basilio%2C_Mosc%C3%BA%2C_Rusia%2C_2016-10-03%2C_DD_05-06_HDR.jpg/960px-Catedral_de_San_Basilio%2C_Mosc%C3%BA%2C_Rusia%2C_2016-10-03%2C_DD_05-06_HDR.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "vatican": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/St_Peter%27s_Square%2C_Vatican_City_-_April_2007.jpg/960px-St_Peter%27s_Square%2C_Vatican_City_-_April_2007.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "greenland": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Iceberg_in_North_Star_Bay%2C_Greenland.jpg/960px-Iceberg_in_North_Star_Bay%2C_Greenland.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "burjkhalifa": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/Burj_Khalifa_Image.jpg/960px-Burj_Khalifa_Image.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "ostrich": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/104_Juvenile_South_African_ostrich_in_the_Kalahari_Desert_of_Namibia_Photo_by_Giles_Laurent.jpg/960px-104_Juvenile_South_African_ostrich_in_the_Kalahari_Desert_of_Namibia_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "ganymede": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f0/Ganymede_-_Perijove_34_Composite.jpg/960px-Ganymede_-_Perijove_34_Composite.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "titan": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Titan_in_front_of_the_ring_and_Saturn.jpg/960px-Titan_in_front_of_the_ring_and_Saturn.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "mercury": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Mercury_in_true_color.jpg/960px-Mercury_in_true_color.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "venus": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/85/Venus_globe.jpg/960px-Venus_globe.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "saturn": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Saturn_from_Cassini_Orbiter_%282004-10-06%29.jpg/960px-Saturn_from_Cassini_Orbiter_%282004-10-06%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "whaleshark": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Whale_Shark_%28Rhincodon_typus%29.jpg/960px-Whale_Shark_%28Rhincodon_typus%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "pluto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Pluto_in_True_Color_-_High-Res.jpg/960px-Pluto_in_True_Color_-_High-Res.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "india": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Taj_Mahal%2C_Agra%2C_India_edit2.jpg/960px-Taj_Mahal%2C_Agra%2C_India_edit2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+  "australia": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Sydney_Opera_House_and_Harbour_Bridge_Dusk_%282%29_2019-06-21.jpg/960px-Sydney_Opera_House_and_Harbour_Bridge_Dusk_%282%29_2019-06-21.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+
+};
 
 
 const QUIZZES = {
 
   "UKG":[
 
-    {q:"Which is the largest land animal?",o:["Horse","Elephant","Dog","Goat"],a:1,e:"🐘"},
+    {img:"elephant",q:"Which is the largest land animal?",o:["Horse","Elephant","Dog","Goat"],a:1,e:"🐘"},
 
-    {q:"Which animal is the tallest in the world?",o:["Giraffe","Camel","Horse","Zebra"],a:0,e:"🦒"},
+    {img:"giraffe",q:"Which animal is the tallest in the world?",o:["Giraffe","Camel","Horse","Zebra"],a:0,e:"🦒"},
 
-    {q:"Which is the biggest planet in our solar system?",o:["Earth","Mars","Jupiter","Venus"],a:2,e:"🪐"},
+    {img:"jupiter",q:"Which is the biggest planet in our solar system?",o:["Earth","Mars","Jupiter","Venus"],a:2,e:"🪐"},
 
-    {q:"Which is the smallest of these animals?",o:["Elephant","Mouse","Horse","Cow"],a:1,e:"🐭"},
+    {img:"mouse",q:"Which is the smallest of these animals?",o:["Elephant","Mouse","Horse","Cow"],a:1,e:"🐭"},
 
-    {q:"Which bird cannot fly and lives in Antarctica?",o:["Eagle","Parrot","Penguin","Crow"],a:2,e:"🐧"},
+    {img:"penguin",q:"Which bird cannot fly and lives in Antarctica?",o:["Eagle","Parrot","Penguin","Crow"],a:2,e:"🐧"},
 
-    {q:"Which is the fastest land animal?",o:["Lion","Cheetah","Tiger","Deer"],a:1,e:"🐆"},
+    {img:"cheetah",q:"Which is the fastest land animal?",o:["Lion","Cheetah","Tiger","Deer"],a:1,e:"🐆"},
 
-    {q:"Which is the largest ocean in the world?",o:["Indian Ocean","Arctic Ocean","Pacific Ocean","Atlantic Ocean"],a:2,e:"🌊"},
+    {img:"ocean",q:"Which is the largest ocean in the world?",o:["Indian Ocean","Arctic Ocean","Pacific Ocean","Atlantic Ocean"],a:2,e:"🌊"},
 
-    {q:"Which is the tallest animal among these?",o:["Giraffe","Lion","Panda","Monkey"],a:0,e:"🦒"}
+    {img:"giraffe",q:"Which is the tallest animal among these?",o:["Giraffe","Lion","Panda","Monkey"],a:0,e:"🦒"}
 
   ],
 
   "1":[
 
-    {q:"Which is the biggest planet in our solar system?",o:["Earth","Jupiter","Mars","Venus"],a:1,e:"🪐"},
+    {img:"jupiter",q:"Which is the biggest planet in our solar system?",o:["Earth","Jupiter","Mars","Venus"],a:1,e:"🪐"},
 
-    {q:"Which is the fastest land animal?",o:["Cheetah","Elephant","Horse","Bear"],a:0,e:"🐆"},
+    {img:"cheetah",q:"Which is the fastest land animal?",o:["Cheetah","Elephant","Horse","Bear"],a:0,e:"🐆"},
 
-    {q:"Which is the largest land animal?",o:["Tiger","Elephant","Giraffe","Lion"],a:1,e:"🐘"},
+    {img:"elephant",q:"Which is the largest land animal?",o:["Tiger","Elephant","Giraffe","Lion"],a:1,e:"🐘"},
 
-    {q:"Which is the tallest animal in the world?",o:["Camel","Giraffe","Horse","Zebra"],a:1,e:"🦒"},
+    {img:"giraffe",q:"Which is the tallest animal in the world?",o:["Camel","Giraffe","Horse","Zebra"],a:1,e:"🦒"},
 
-    {q:"Which is the largest ocean?",o:["Pacific Ocean","Indian Ocean","Arctic Ocean","Atlantic Ocean"],a:0,e:"🌊"},
+    {img:"ocean",q:"Which is the largest ocean?",o:["Pacific Ocean","Indian Ocean","Arctic Ocean","Atlantic Ocean"],a:0,e:"🌊"},
 
-    {q:"Which animal is famous for having the longest neck?",o:["Deer","Giraffe","Horse","Goat"],a:1,e:"🦒"},
+    {img:"giraffe",q:"Which animal is famous for having the longest neck?",o:["Deer","Giraffe","Horse","Goat"],a:1,e:"🦒"},
 
-    {q:"Which is the smallest of these planets?",o:["Jupiter","Earth","Mercury","Saturn"],a:2,e:"🪐"},
+    {img:"mercury",q:"Which is the smallest of these planets?",o:["Jupiter","Earth","Mercury","Saturn"],a:2,e:"🪐"},
 
-    {q:"Which is the largest animal in the world?",o:["African elephant","Blue whale","Giraffe","Shark"],a:1,e:"🐋"}
+    {img:"bluewhale",q:"Which is the largest animal in the world?",o:["African elephant","Blue whale","Giraffe","Shark"],a:1,e:"🐋"}
 
   ],
 
   "2":[
 
-    {q:"Which is the highest mountain above sea level?",o:["Mount Everest","K2","Mount Fuji","Kilimanjaro"],a:0,e:"🏔️"},
+    {img:"everest",q:"Which is the highest mountain above sea level?",o:["Mount Everest","K2","Mount Fuji","Kilimanjaro"],a:0,e:"🏔️"},
 
     {q:"Which is the largest continent?",o:["Africa","Europe","Asia","Australia"],a:2,e:"🌏"},
 
-    {q:"Which is the biggest planet?",o:["Saturn","Jupiter","Earth","Neptune"],a:1,e:"🪐"},
+    {img:"jupiter",q:"Which is the biggest planet?",o:["Saturn","Jupiter","Earth","Neptune"],a:1,e:"🪐"},
 
-    {q:"Which is the fastest land animal?",o:["Lion","Cheetah","Leopard","Horse"],a:1,e:"🐆"},
+    {img:"cheetah",q:"Which is the fastest land animal?",o:["Lion","Cheetah","Leopard","Horse"],a:1,e:"🐆"},
 
-    {q:"Which is the largest ocean on Earth?",o:["Indian Ocean","Atlantic Ocean","Pacific Ocean","Arctic Ocean"],a:2,e:"🌊"},
+    {img:"ocean",q:"Which is the largest ocean on Earth?",o:["Indian Ocean","Atlantic Ocean","Pacific Ocean","Arctic Ocean"],a:2,e:"🌊"},
 
-    {q:"Which is the largest hot desert in the world?",o:["Sahara Desert","Thar Desert","Gobi Desert","Arabian Desert"],a:0,e:"🏜️"},
+    {img:"sahara",q:"Which is the largest hot desert in the world?",o:["Sahara Desert","Thar Desert","Gobi Desert","Arabian Desert"],a:0,e:"🏜️"},
 
-    {q:"Which is the tallest animal in the world?",o:["Elephant","Camel","Giraffe","Ostrich"],a:2,e:"🦒"},
+    {img:"giraffe",q:"Which is the tallest animal in the world?",o:["Elephant","Camel","Giraffe","Ostrich"],a:2,e:"🦒"},
 
-    {q:"Which is the largest country in the world by area?",o:["India","China","Canada","Russia"],a:3,e:"🗺️"}
+    {img:"russia",q:"Which is the largest country in the world by area?",o:["India","China","Canada","Russia"],a:3,e:"🗺️"}
 
   ],
 
   "3":[
 
-    {q:"Which is the largest mammal in the world?",o:["Elephant","Blue whale","Giraffe","Hippopotamus"],a:1,e:"🐋"},
+    {img:"bluewhale",q:"Which is the largest mammal in the world?",o:["Elephant","Blue whale","Giraffe","Hippopotamus"],a:1,e:"🐋"},
 
-    {q:"Which planet is closest to the Sun?",o:["Venus","Earth","Mercury","Mars"],a:2,e:"☀️"},
+    {img:"mercury",q:"Which planet is closest to the Sun?",o:["Venus","Earth","Mercury","Mars"],a:2,e:"☀️"},
 
-    {q:"Which is the highest mountain above sea level?",o:["Mount Everest","K2","Mount Fuji","Mont Blanc"],a:0,e:"🏔️"},
+    {img:"everest",q:"Which is the highest mountain above sea level?",o:["Mount Everest","K2","Mount Fuji","Mont Blanc"],a:0,e:"🏔️"},
 
     {q:"Which is the largest continent?",o:["North America","Asia","Africa","Europe"],a:1,e:"🌏"},
 
-    {q:"Which is the largest ocean?",o:["Atlantic Ocean","Indian Ocean","Pacific Ocean","Southern Ocean"],a:2,e:"🌊"},
+    {img:"ocean",q:"Which is the largest ocean?",o:["Atlantic Ocean","Indian Ocean","Pacific Ocean","Southern Ocean"],a:2,e:"🌊"},
 
-    {q:"Which is the fastest land animal?",o:["Cheetah","Lion","Wolf","Tiger"],a:0,e:"🐆"},
+    {img:"cheetah",q:"Which is the fastest land animal?",o:["Cheetah","Lion","Wolf","Tiger"],a:0,e:"🐆"},
 
-    {q:"Which planet is famous for its prominent ring system?",o:["Mars","Saturn","Mercury","Venus"],a:1,e:"🪐"},
+    {img:"saturn",q:"Which planet is famous for its prominent ring system?",o:["Mars","Saturn","Mercury","Venus"],a:1,e:"🪐"},
 
-    {q:"Which is the largest hot desert in the world?",o:["Gobi Desert","Thar Desert","Sahara Desert","Kalahari Desert"],a:2,e:"🏜️"}
+    {img:"sahara",q:"Which is the largest hot desert in the world?",o:["Gobi Desert","Thar Desert","Sahara Desert","Kalahari Desert"],a:2,e:"🏜️"}
 
   ],
 
   "4":[
 
-    {q:"Which is the largest country by area?",o:["Canada","China","Russia","India"],a:2,e:"🗺️"},
+    {img:"russia",q:"Which is the largest country by area?",o:["Canada","China","Russia","India"],a:2,e:"🗺️"},
 
-    {q:"Which is the smallest continent by land area?",o:["Europe","Australia","South America","Antarctica"],a:1,e:"🌏"},
+    {img:"australia",q:"Which is the smallest continent by land area?",o:["Europe","Australia","South America","Antarctica"],a:1,e:"🌏"},
 
-    {q:"Which is the largest island in the world, excluding continents?",o:["Madagascar","Greenland","Sri Lanka","Borneo"],a:1,e:"🏝️"},
+    {img:"greenland",q:"Which is the largest island in the world, excluding continents?",o:["Madagascar","Greenland","Sri Lanka","Borneo"],a:1,e:"🏝️"},
 
-    {q:"Which is the tallest land animal?",o:["Elephant","Giraffe","Camel","Ostrich"],a:1,e:"🦒"},
+    {img:"giraffe",q:"Which is the tallest land animal?",o:["Elephant","Giraffe","Camel","Ostrich"],a:1,e:"🦒"},
 
-    {q:"Which is the largest planet in our solar system?",o:["Saturn","Jupiter","Neptune","Earth"],a:1,e:"🪐"},
+    {img:"jupiter",q:"Which is the largest planet in our solar system?",o:["Saturn","Jupiter","Neptune","Earth"],a:1,e:"🪐"},
 
-    {q:"Which is the highest mountain above sea level?",o:["K2","Mount Everest","Kangchenjunga","Nanda Devi"],a:1,e:"🏔️"},
+    {img:"everest",q:"Which is the highest mountain above sea level?",o:["K2","Mount Everest","Kangchenjunga","Nanda Devi"],a:1,e:"🏔️"},
 
-    {q:"Which is the largest ocean on Earth?",o:["Atlantic Ocean","Indian Ocean","Pacific Ocean","Arctic Ocean"],a:2,e:"🌊"},
+    {img:"ocean",q:"Which is the largest ocean on Earth?",o:["Atlantic Ocean","Indian Ocean","Pacific Ocean","Arctic Ocean"],a:2,e:"🌊"},
 
-    {q:"Which animal is the fastest land runner?",o:["Cheetah","Horse","Lion","Greyhound"],a:0,e:"🐆"}
+    {img:"cheetah",q:"Which animal is the fastest land runner?",o:["Cheetah","Horse","Lion","Greyhound"],a:0,e:"🐆"}
 
   ],
 
   "5":[
 
-    {q:"Which is the largest desert in the world, including polar deserts?",o:["Sahara Desert","Antarctic Desert","Gobi Desert","Arabian Desert"],a:1,e:"🏜️"},
+    {img:"antarctica",q:"Which is the largest desert in the world, including polar deserts?",o:["Sahara Desert","Antarctic Desert","Gobi Desert","Arabian Desert"],a:1,e:"🏜️"},
 
-    {q:"Which is the deepest known ocean trench?",o:["Java Trench","Mariana Trench","Tonga Trench","Puerto Rico Trench"],a:1,e:"🌊"},
+    {img:"ocean",q:"Which is the deepest known ocean trench?",o:["Java Trench","Mariana Trench","Tonga Trench","Puerto Rico Trench"],a:1,e:"🌊"},
 
-    {q:"Which is the largest planet in our solar system?",o:["Saturn","Jupiter","Uranus","Neptune"],a:1,e:"🪐"},
+    {img:"jupiter",q:"Which is the largest planet in our solar system?",o:["Saturn","Jupiter","Uranus","Neptune"],a:1,e:"🪐"},
 
-    {q:"Which is the tallest building in the world?",o:["Shanghai Tower","Burj Khalifa","Eiffel Tower","Taipei 101"],a:1,e:"🏙️"},
+    {img:"burjkhalifa",q:"Which is the tallest building in the world?",o:["Shanghai Tower","Burj Khalifa","Eiffel Tower","Taipei 101"],a:1,e:"🏙️"},
 
     {q:"Which is the largest continent by area?",o:["Africa","Asia","Europe","North America"],a:1,e:"🌏"},
 
-    {q:"Which is the fastest land animal?",o:["Cheetah","Leopard","Tiger","Lion"],a:0,e:"🐆"},
+    {img:"cheetah",q:"Which is the fastest land animal?",o:["Cheetah","Leopard","Tiger","Lion"],a:0,e:"🐆"},
 
-    {q:"Which is the largest living bird by height and weight?",o:["Emu","Ostrich","Eagle","Albatross"],a:1,e:"🐦"},
+    {img:"ostrich",q:"Which is the largest living bird by height and weight?",o:["Emu","Ostrich","Eagle","Albatross"],a:1,e:"🐦"},
 
-    {q:"Which is the largest ocean?",o:["Indian Ocean","Pacific Ocean","Atlantic Ocean","Southern Ocean"],a:1,e:"🌊"}
+    {img:"ocean",q:"Which is the largest ocean?",o:["Indian Ocean","Pacific Ocean","Atlantic Ocean","Southern Ocean"],a:1,e:"🌊"}
 
   ],
 
   "6":[
 
-    {q:"Which is the largest moon in our solar system?",o:["Earth's Moon","Europa","Ganymede","Titan"],a:2,e:"🌕"},
+    {img:"ganymede",q:"Which is the largest moon in our solar system?",o:["Earth's Moon","Europa","Ganymede","Titan"],a:2,e:"🌕"},
 
-    {q:"Which is the tallest mountain above sea level?",o:["K2","Mount Everest","Denali","Kilimanjaro"],a:1,e:"🏔️"},
+    {img:"everest",q:"Which is the tallest mountain above sea level?",o:["K2","Mount Everest","Denali","Kilimanjaro"],a:1,e:"🏔️"},
 
-    {q:"Which planet is the hottest in our solar system?",o:["Mercury","Venus","Mars","Jupiter"],a:1,e:"☀️"},
+    {img:"venus",q:"Which planet is the hottest in our solar system?",o:["Mercury","Venus","Mars","Jupiter"],a:1,e:"☀️"},
 
-    {q:"Which is the largest hot desert in the world?",o:["Sahara Desert","Gobi Desert","Kalahari Desert","Thar Desert"],a:0,e:"🏜️"},
+    {img:"sahara",q:"Which is the largest hot desert in the world?",o:["Sahara Desert","Gobi Desert","Kalahari Desert","Thar Desert"],a:0,e:"🏜️"},
 
-    {q:"Which is the largest country in the world by area?",o:["Canada","Russia","China","United States"],a:1,e:"🗺️"},
+    {img:"russia",q:"Which is the largest country in the world by area?",o:["Canada","Russia","China","United States"],a:1,e:"🗺️"},
 
-    {q:"Which is the fastest land animal?",o:["Cheetah","Lion","Pronghorn","Horse"],a:0,e:"🐆"},
+    {img:"cheetah",q:"Which is the fastest land animal?",o:["Cheetah","Lion","Pronghorn","Horse"],a:0,e:"🐆"},
 
     {q:"Which is the largest organ of the human body?",o:["Liver","Brain","Skin","Heart"],a:2,e:"🧍"},
 
-    {q:"Which is the largest ocean on Earth?",o:["Pacific Ocean","Atlantic Ocean","Indian Ocean","Arctic Ocean"],a:0,e:"🌊"}
+    {img:"ocean",q:"Which is the largest ocean on Earth?",o:["Pacific Ocean","Atlantic Ocean","Indian Ocean","Arctic Ocean"],a:0,e:"🌊"}
 
   ],
 
   "7":[
 
-    {q:"Which is the largest planet in our solar system?",o:["Saturn","Jupiter","Neptune","Uranus"],a:1,e:"🪐"},
+    {img:"jupiter",q:"Which is the largest planet in our solar system?",o:["Saturn","Jupiter","Neptune","Uranus"],a:1,e:"🪐"},
 
-    {q:"Which is the tallest building in the world?",o:["Merdeka 118","Burj Khalifa","Shanghai Tower","One World Trade Center"],a:1,e:"🏙️"},
+    {img:"burjkhalifa",q:"Which is the tallest building in the world?",o:["Merdeka 118","Burj Khalifa","Shanghai Tower","One World Trade Center"],a:1,e:"🏙️"},
 
-    {q:"What is the deepest known point in Earth's oceans?",o:["Challenger Deep","Dead Sea","Lake Baikal","Java Trench"],a:0,e:"🌊"},
+    {img:"ocean",q:"What is the deepest known point in Earth's oceans?",o:["Challenger Deep","Dead Sea","Lake Baikal","Java Trench"],a:0,e:"🌊"},
 
-    {q:"Which is the largest moon in the solar system?",o:["Titan","Ganymede","Europa","Earth's Moon"],a:1,e:"🌕"},
+    {img:"ganymede",q:"Which is the largest moon in the solar system?",o:["Titan","Ganymede","Europa","Earth's Moon"],a:1,e:"🌕"},
 
-    {q:"Which is the largest living animal on Earth?",o:["Whale shark","African elephant","Blue whale","Giant squid"],a:2,e:"🐋"},
+    {img:"bluewhale",q:"Which is the largest living animal on Earth?",o:["Whale shark","African elephant","Blue whale","Giant squid"],a:2,e:"🐋"},
 
-    {q:"Which is the smallest country in the world by area?",o:["Monaco","San Marino","Vatican City","Liechtenstein"],a:2,e:"🗺️"},
+    {img:"vatican",q:"Which is the smallest country in the world by area?",o:["Monaco","San Marino","Vatican City","Liechtenstein"],a:2,e:"🗺️"},
 
     {q:"Which is the largest internal organ in the human body?",o:["Heart","Liver","Brain","Lungs"],a:1,e:"🫀"},
 
-    {q:"Which is the fastest land animal?",o:["Cheetah","Pronghorn","Lion","Greyhound"],a:0,e:"🐆"}
+    {img:"cheetah",q:"Which is the fastest land animal?",o:["Cheetah","Pronghorn","Lion","Greyhound"],a:0,e:"🐆"}
 
   ],
 
   "8":[
 
-    {q:"Which is the largest dwarf planet in our solar system by diameter?",o:["Pluto","Eris","Ceres","Haumea"],a:0,e:"🪐"},
+    {img:"pluto",q:"Which is the largest dwarf planet in our solar system by diameter?",o:["Pluto","Eris","Ceres","Haumea"],a:0,e:"🪐"},
 
-    {q:"Which is the largest ocean on Earth?",o:["Atlantic Ocean","Pacific Ocean","Indian Ocean","Southern Ocean"],a:1,e:"🌊"},
+    {img:"ocean",q:"Which is the largest ocean on Earth?",o:["Atlantic Ocean","Pacific Ocean","Indian Ocean","Southern Ocean"],a:1,e:"🌊"},
 
-    {q:"Which is the highest mountain above sea level?",o:["K2","Kangchenjunga","Mount Everest","Lhotse"],a:2,e:"🏔️"},
+    {img:"everest",q:"Which is the highest mountain above sea level?",o:["K2","Kangchenjunga","Mount Everest","Lhotse"],a:2,e:"🏔️"},
 
-    {q:"Which country has the world's largest population as of 2026?",o:["China","India","United States","Indonesia"],a:1,e:"🗺️"},
+    {img:"india",q:"Which country has the world's largest population as of 2026?",o:["China","India","United States","Indonesia"],a:1,e:"🗺️"},
 
-    {q:"Which is the largest species of shark?",o:["Great white shark","Hammerhead shark","Whale shark","Tiger shark"],a:2,e:"🦈"},
+    {img:"whaleshark",q:"Which is the largest species of shark?",o:["Great white shark","Hammerhead shark","Whale shark","Tiger shark"],a:2,e:"🦈"},
 
-    {q:"Which is the largest hot desert in the world?",o:["Sahara Desert","Arabian Desert","Gobi Desert","Kalahari Desert"],a:0,e:"🏜️"},
+    {img:"sahara",q:"Which is the largest hot desert in the world?",o:["Sahara Desert","Arabian Desert","Gobi Desert","Kalahari Desert"],a:0,e:"🏜️"},
 
-    {q:"Which is the largest moon of Saturn?",o:["Europa","Titan","Ganymede","Io"],a:1,e:"🌕"},
+    {img:"titan",q:"Which is the largest moon of Saturn?",o:["Europa","Titan","Ganymede","Io"],a:1,e:"🌕"},
 
-    {q:"Which is the tallest building in the world?",o:["Shanghai Tower","Burj Khalifa","Merdeka 118","Taipei 101"],a:1,e:"🏙️"}
+    {img:"burjkhalifa",q:"Which is the tallest building in the world?",o:["Shanghai Tower","Burj Khalifa","Merdeka 118","Taipei 101"],a:1,e:"🏙️"}
 
   ],
 
