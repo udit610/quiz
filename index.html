@@ -680,7 +680,7 @@
     <p id="headerSub"></p>
 
     <div class="theme-badge">
-      This Week: 🌍🏆 Records & Superlatives — 17 Oct
+      This Week: 🫀🔬 The Amazing Human Body — 24 Oct
     </div>
 
   </header>
@@ -906,55 +906,49 @@ const API_URL =
 
 const QUESTION_IMAGES = {
 
-  "elephant": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/African_elephant_standing.jpg/960px-African_elephant_standing.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "heart": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/Diagram_of_the_Human_Heart.jpg/960px-Diagram_of_the_Human_Heart.jpg",
 
-  "giraffe": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/006_Giraffe_portrait_in_the_Lake_Manyara_National_Park_Photo_by_Giles_Laurent.jpg/960px-006_Giraffe_portrait_in_the_Lake_Manyara_National_Park_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "brain": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Mid-sagittal_brain_diagram_showing_right_hemisphere.jpg",
 
-  "jupiter": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Portrait_of_Jupiter_from_Cassini.jpg/960px-Portrait_of_Jupiter_from_Cassini.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "nose": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dc/2303_Anatomy_of_Nose-Pharynx-Mouth-Larynx.jpg/960px-2303_Anatomy_of_Nose-Pharynx-Mouth-Larynx.jpg",
 
-  "mouse": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/House_mouse_%28Mus_musculus%29_2732.jpg/960px-House_mouse_%28Mus_musculus%29_2732.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "eye": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/03/Blausen_0388_EyeAnatomy_01.png/960px-Blausen_0388_EyeAnatomy_01.png",
 
-  "penguin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/Aptenodytes_forsteri_-_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9_%D0%9B%D0%BE%D0%B3%D0%B8%D0%BD%D0%BE%D0%B2_-_465113420.jpeg/960px-Aptenodytes_forsteri_-_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9_%D0%9B%D0%BE%D0%B3%D0%B8%D0%BD%D0%BE%D0%B2_-_465113420.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "tongue": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/1402_The_Tongue.jpg/960px-1402_The_Tongue.jpg",
 
-  "cheetah": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/037_Cheetah_close-up_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg/960px-037_Cheetah_close-up_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "hand": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Hand-bones.jpg/960px-Hand-bones.jpg",
 
-  "ocean": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Over_North_Pacific_Ocean_%28504704%29_%2823877519829%29.jpg/960px-Over_North_Pacific_Ocean_%28504704%29_%2823877519829%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "stomach": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Human_Stomach_schematic_external_anatomy.jpg/960px-Human_Stomach_schematic_external_anatomy.jpg",
 
-  "bluewhale": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Bluewhale877.jpg/960px-Bluewhale877.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "skull": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Human_Skull_Anatomy.jpg/960px-Human_Skull_Anatomy.jpg",
 
-  "everest": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Everest%2C_Himalayas.jpg/960px-Everest%2C_Himalayas.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "skin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/06_Hegasy_Skin_Layers_Receptors_Wiki_EN_CCBYSA.png/960px-06_Hegasy_Skin_Layers_Receptors_Wiki_EN_CCBYSA.png",
 
-  "sahara": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Sand_dune_in_the_desert%2C_Sahara_Desert%2C_Egypt.jpg/960px-Sand_dune_in_the_desert%2C_Sahara_Desert%2C_Egypt.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "skeleton": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e8/Diagram_of_a_skeleton_describing_the_major_bones_Wellcome_L0039197.jpg/960px-Diagram_of_a_skeleton_describing_the_major_bones_Wellcome_L0039197.jpg",
 
-  "antarctica": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Antarctica_Landscape.jpg/960px-Antarctica_Landscape.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "kidney": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/Blausen_0592_KidneyAnatomy_01-es.png/960px-Blausen_0592_KidneyAnatomy_01-es.png",
 
-  "russia": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/Catedral_de_San_Basilio%2C_Mosc%C3%BA%2C_Rusia%2C_2016-10-03%2C_DD_05-06_HDR.jpg/960px-Catedral_de_San_Basilio%2C_Mosc%C3%BA%2C_Rusia%2C_2016-10-03%2C_DD_05-06_HDR.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "liver": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Male_with_organs.png/960px-Male_with_organs.png",
 
-  "vatican": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/St_Peter%27s_Square%2C_Vatican_City_-_April_2007.jpg/960px-St_Peter%27s_Square%2C_Vatican_City_-_April_2007.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "teeth": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/Basic_anatomy_tooth.jpg/960px-Basic_anatomy_tooth.jpg",
 
-  "greenland": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Iceberg_in_North_Star_Bay%2C_Greenland.jpg/960px-Iceberg_in_North_Star_Bay%2C_Greenland.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "intestine": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/Blausen_0817_SmallIntestine_Anatomy.png/960px-Blausen_0817_SmallIntestine_Anatomy.png",
 
-  "burjkhalifa": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/Burj_Khalifa_Image.jpg/960px-Burj_Khalifa_Image.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "blood": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e7/Blood_cells_090304-F-5951M-108.jpg/960px-Blood_cells_090304-F-5951M-108.jpg",
 
-  "ostrich": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/104_Juvenile_South_African_ostrich_in_the_Kalahari_Desert_of_Namibia_Photo_by_Giles_Laurent.jpg/960px-104_Juvenile_South_African_ostrich_in_the_Kalahari_Desert_of_Namibia_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "cell": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/Animal_Cell_Diagram_Colorful.png/960px-Animal_Cell_Diagram_Colorful.png",
 
-  "ganymede": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f0/Ganymede_-_Perijove_34_Composite.jpg/960px-Ganymede_-_Perijove_34_Composite.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "neuron": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Neuron_-_Nerve_Cell_01.png/960px-Neuron_-_Nerve_Cell_01.png",
 
-  "titan": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Titan_in_front_of_the_ring_and_Saturn.jpg/960px-Titan_in_front_of_the_ring_and_Saturn.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "trachea": "https://upload.wikimedia.org/wikipedia/commons/7/72/Trachea_%28transparent%29.png",
 
-  "mercury": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Mercury_in_true_color.jpg/960px-Mercury_in_true_color.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "muscle": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Biceps_Muscle_CNX.jpg/960px-Biceps_Muscle_CNX.jpg",
 
-  "venus": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/85/Venus_globe.jpg/960px-Venus_globe.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "pancreas": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/1820_The_Pancreas.jpg/960px-1820_The_Pancreas.jpg",
 
-  "saturn": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Saturn_from_Cassini_Orbiter_%282004-10-06%29.jpg/960px-Saturn_from_Cassini_Orbiter_%282004-10-06%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "ear": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Outer%2C_middle_and_inner_ear.jpg",
 
-  "whaleshark": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Whale_Shark_%28Rhincodon_typus%29.jpg/960px-Whale_Shark_%28Rhincodon_typus%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-
-  "pluto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Pluto_in_True_Color_-_High-Res.jpg/960px-Pluto_in_True_Color_-_High-Res.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-
-  "india": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Taj_Mahal%2C_Agra%2C_India_edit2.jpg/960px-Taj_Mahal%2C_Agra%2C_India_edit2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-
-  "australia": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Sydney_Opera_House_and_Harbour_Bridge_Dusk_%282%29_2019-06-21.jpg/960px-Sydney_Opera_House_and_Harbour_Bridge_Dusk_%282%29_2019-06-21.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "lungs": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Interior_of_the_heart%2C_lungs%2Cliver%2C_and_stomach_from_The_Household_Physician%2C_1905_%2814147401167%29.jpg/960px-Interior_of_the_heart%2C_lungs%2Cliver%2C_and_stomach_from_The_Household_Physician%2C_1905_%2814147401167%29.jpg",
 
 };
 
@@ -963,182 +957,191 @@ const QUIZZES = {
 
   "UKG":[
 
-    {img:"elephant",q:"Which is the largest land animal?",o:["Horse","Elephant","Dog","Goat"],a:1,e:"🐘"},
+    {img:"heart",q:"Which organ pumps blood around our body?",o:["Brain","Heart","Stomach","Nose"],a:1,e:"❤️"},
 
-    {img:"giraffe",q:"Which animal is the tallest in the world?",o:["Giraffe","Camel","Horse","Zebra"],a:0,e:"🦒"},
+    {img:"nose",q:"Which body part helps us smell?",o:["Nose","Ear","Hand","Foot"],a:0,e:"👃"},
 
-    {img:"jupiter",q:"Which is the biggest planet in our solar system?",o:["Earth","Mars","Jupiter","Venus"],a:2,e:"🪐"},
+    {img:"eye",q:"How many eyes does a person usually have?",o:["One","Two","Three","Four"],a:1,e:"👀"},
 
-    {img:"mouse",q:"Which is the smallest of these animals?",o:["Elephant","Mouse","Horse","Cow"],a:1,e:"🐭"},
+    {img:"brain",q:"Which body part helps us think?",o:["Brain","Foot","Elbow","Teeth"],a:0,e:"🧠"},
 
-    {img:"penguin",q:"Which bird cannot fly and lives in Antarctica?",o:["Eagle","Parrot","Penguin","Crow"],a:2,e:"🐧"},
+    {img:"ear",q:"Which body part helps us hear?",o:["Eyes","Ears","Fingers","Knees"],a:1,e:"👂"},
 
-    {img:"cheetah",q:"Which is the fastest land animal?",o:["Lion","Cheetah","Tiger","Deer"],a:1,e:"🐆"},
+    {img:"lungs",q:"Which organs help us breathe?",o:["Lungs","Teeth","Stomach","Hands"],a:0,e:"🫁"},
 
-    {img:"ocean",q:"Which is the largest ocean in the world?",o:["Indian Ocean","Arctic Ocean","Pacific Ocean","Atlantic Ocean"],a:2,e:"🌊"},
+    {img:"hand",q:"How many fingers do we usually have on both hands, including thumbs?",o:["Eight","Ten","Twelve","Fifteen"],a:1,e:"✋"},
 
-    {img:"giraffe",q:"Which is the tallest animal among these?",o:["Giraffe","Lion","Panda","Monkey"],a:0,e:"🦒"}
-
+    {img:"tongue",q:"Which body part helps us taste food?",o:["Tongue","Ear","Elbow","Knee"],a:0,e:"👅"},
+    {img:"hand",q:"What do we use to wave hello?",o:["Hand","Foot","Nose","Ear"],a:0,e:"👋"},
+    {q:"Which body part do we use to blow out birthday candles?",o:["Mouth","Knee","Elbow","Toe"],a:0,e:"🎂"}
   ],
 
   "1":[
 
-    {img:"jupiter",q:"Which is the biggest planet in our solar system?",o:["Earth","Jupiter","Mars","Venus"],a:1,e:"🪐"},
+    {img:"brain",q:"Which organ controls most of our body's activities?",o:["Brain","Heart","Stomach","Lungs"],a:0,e:"🧠"},
 
-    {img:"cheetah",q:"Which is the fastest land animal?",o:["Cheetah","Elephant","Horse","Bear"],a:0,e:"🐆"},
+    {q:"How many main senses are commonly taught?",o:["Three","Four","Five","Seven"],a:2,e:"🖐️"},
 
-    {img:"elephant",q:"Which is the largest land animal?",o:["Tiger","Elephant","Giraffe","Lion"],a:1,e:"🐘"},
+    {img:"stomach",q:"Which organ helps digest food?",o:["Heart","Stomach","Brain","Ear"],a:1,e:"🍽️"},
 
-    {img:"giraffe",q:"Which is the tallest animal in the world?",o:["Camel","Giraffe","Horse","Zebra"],a:1,e:"🦒"},
+    {img:"skull",q:"Which part protects our brain?",o:["Rib cage","Skull","Knee","Shoulder"],a:1,e:"💀"},
 
-    {img:"ocean",q:"Which is the largest ocean?",o:["Pacific Ocean","Indian Ocean","Arctic Ocean","Atlantic Ocean"],a:0,e:"🌊"},
+    {img:"eye",q:"Which organs help us see?",o:["Eyes","Ears","Nose","Tongue"],a:0,e:"👀"},
 
-    {img:"giraffe",q:"Which animal is famous for having the longest neck?",o:["Deer","Giraffe","Horse","Goat"],a:1,e:"🦒"},
+    {img:"skin",q:"What covers and protects our body?",o:["Hair","Skin","Nails","Teeth"],a:1,e:"🧍"},
 
-    {img:"mercury",q:"Which is the smallest of these planets?",o:["Jupiter","Earth","Mercury","Saturn"],a:2,e:"🪐"},
+    {img:"skeleton",q:"Which body parts help us bend our arms and legs?",o:["Joints","Teeth","Ears","Eyelashes"],a:0,e:"🦴"},
 
-    {img:"bluewhale",q:"Which is the largest animal in the world?",o:["African elephant","Blue whale","Giraffe","Shark"],a:1,e:"🐋"}
-
+    {img:"lungs",q:"Which organs take oxygen from the air into our body?",o:["Kidneys","Lungs","Stomach","Liver"],a:1,e:"🫁"},
+    {img:"nose",q:"What do we do with our nose when something smells yucky?",o:["Pinch it shut","Eat it","Close our eyes","Jump"],a:0,e:"👃"},
+    {img:"tongue",q:"If you eat ice cream too fast, which body part feels cold first?",o:["Tongue","Knee","Elbow","Toe"],a:0,e:"🍦"}
   ],
 
   "2":[
 
-    {img:"everest",q:"Which is the highest mountain above sea level?",o:["Mount Everest","K2","Mount Fuji","Kilimanjaro"],a:0,e:"🏔️"},
+    {img:"skin",q:"Which is the largest organ of the human body?",o:["Heart","Skin","Brain","Liver"],a:1,e:"🧍"},
 
-    {q:"Which is the largest continent?",o:["Africa","Europe","Asia","Australia"],a:2,e:"🌏"},
+    {img:"skeleton",q:"How many bones does an average adult human have?",o:["106","206","306","406"],a:1,e:"🦴"},
 
-    {img:"jupiter",q:"Which is the biggest planet?",o:["Saturn","Jupiter","Earth","Neptune"],a:1,e:"🪐"},
+    {img:"heart",q:"Which organ pumps blood throughout the body?",o:["Lungs","Heart","Brain","Stomach"],a:1,e:"❤️"},
 
-    {img:"cheetah",q:"Which is the fastest land animal?",o:["Lion","Cheetah","Leopard","Horse"],a:1,e:"🐆"},
+    {img:"kidney",q:"Which organs help remove waste from the blood?",o:["Lungs","Kidneys","Ears","Eyes"],a:1,e:"🫘"},
 
-    {img:"ocean",q:"Which is the largest ocean on Earth?",o:["Indian Ocean","Atlantic Ocean","Pacific Ocean","Arctic Ocean"],a:2,e:"🌊"},
+    {img:"ear",q:"Where are the smallest bones in the human body found?",o:["Hand","Foot","Middle ear","Knee"],a:2,e:"👂"},
 
-    {img:"sahara",q:"Which is the largest hot desert in the world?",o:["Sahara Desert","Thar Desert","Gobi Desert","Arabian Desert"],a:0,e:"🏜️"},
+    {q:"Which vitamin can our body make when skin is exposed to sunlight?",o:["Vitamin A","Vitamin B12","Vitamin C","Vitamin D"],a:3,e:"☀️"},
 
-    {img:"giraffe",q:"Which is the tallest animal in the world?",o:["Elephant","Camel","Giraffe","Ostrich"],a:2,e:"🦒"},
+    {img:"lungs",q:"Which organs remove carbon dioxide when we breathe out?",o:["Lungs","Stomach","Kidneys","Liver"],a:0,e:"🫁"},
 
-    {img:"russia",q:"Which is the largest country in the world by area?",o:["India","China","Canada","Russia"],a:3,e:"🗺️"}
-
+    {img:"teeth",q:"Which teeth are mainly used for cutting food?",o:["Molars","Incisors","Wisdom teeth","Canines only"],a:1,e:"🦷"},
+    {img:"stomach",q:"What sound does your tummy sometimes make when you are hungry?",o:["Growling sound","Singing","Sneezing","Hiccuping"],a:0,e:"🍽️"},
+    {q:"Which body part do you use to make a funny face?",o:["Face","Knee","Toe","Elbow"],a:0,e:"😜"}
   ],
 
   "3":[
 
-    {img:"bluewhale",q:"Which is the largest mammal in the world?",o:["Elephant","Blue whale","Giraffe","Hippopotamus"],a:1,e:"🐋"},
+    {img:"liver",q:"Which is the largest internal organ in the human body?",o:["Heart","Liver","Brain","Stomach"],a:1,e:"🔬"},
 
-    {img:"mercury",q:"Which planet is closest to the Sun?",o:["Venus","Earth","Mercury","Mars"],a:2,e:"☀️"},
+    {img:"blood",q:"Which blood cells help fight infections?",o:["Red blood cells","White blood cells","Platelets","None of these"],a:1,e:"🩸"},
 
-    {img:"everest",q:"Which is the highest mountain above sea level?",o:["Mount Everest","K2","Mount Fuji","Mont Blanc"],a:0,e:"🏔️"},
+    {img:"skeleton",q:"Which part of the skeleton protects the heart and lungs?",o:["Rib cage","Skull","Pelvis","Finger bones"],a:0,e:"🦴"},
 
-    {q:"Which is the largest continent?",o:["North America","Asia","Africa","Europe"],a:1,e:"🌏"},
+    {img:"intestine",q:"Where does most of the absorption of nutrients from digested food occur?",o:["Stomach","Small intestine","Large intestine","Mouth"],a:1,e:"🍽️"},
 
-    {img:"ocean",q:"Which is the largest ocean?",o:["Atlantic Ocean","Indian Ocean","Pacific Ocean","Southern Ocean"],a:2,e:"🌊"},
+    {img:"eye",q:"Which part of the eye is the opening through which light enters?",o:["Retina","Pupil","Eyebrow","Eyelid"],a:1,e:"👁️"},
 
-    {img:"cheetah",q:"Which is the fastest land animal?",o:["Cheetah","Lion","Wolf","Tiger"],a:0,e:"🐆"},
+    {img:"lungs",q:"Which muscle helps the lungs expand and contract during breathing?",o:["Biceps","Diaphragm","Calf muscle","Triceps"],a:1,e:"🫁"},
 
-    {img:"saturn",q:"Which planet is famous for its prominent ring system?",o:["Mars","Saturn","Mercury","Venus"],a:1,e:"🪐"},
+    {img:"neuron",q:"Which body system carries messages between the brain and other body parts?",o:["Digestive system","Nervous system","Skeletal system","Respiratory system"],a:1,e:"🧠"},
 
-    {img:"sahara",q:"Which is the largest hot desert in the world?",o:["Gobi Desert","Thar Desert","Sahara Desert","Kalahari Desert"],a:2,e:"🏜️"}
-
+    {img:"skeleton",q:"What connects muscles to bones?",o:["Ligaments","Tendons","Nerves","Veins"],a:1,e:"🦴"},
+    {img:"nose",q:"Why do we sneeze?",o:["To push dust out of the nose","To grow taller","To fall asleep","To digest food"],a:0,e:"🤧"},
+    {img:"stomach",q:"What do we call the sound our stomach makes when we are hungry?",o:["Growling","Singing","Humming","Whistling"],a:0,e:"🍽️"}
   ],
 
   "4":[
 
-    {img:"russia",q:"Which is the largest country by area?",o:["Canada","China","Russia","India"],a:2,e:"🗺️"},
+    {img:"blood",q:"Which blood vessels carry blood away from the heart?",o:["Veins","Arteries","Capillaries","Nerves"],a:1,e:"🩸"},
 
-    {img:"australia",q:"Which is the smallest continent by land area?",o:["Europe","Australia","South America","Antarctica"],a:1,e:"🌏"},
+    {img:"blood",q:"Which blood cells carry most of the oxygen in our blood?",o:["White blood cells","Red blood cells","Platelets","Skin cells"],a:1,e:"🩸"},
 
-    {img:"greenland",q:"Which is the largest island in the world, excluding continents?",o:["Madagascar","Greenland","Sri Lanka","Borneo"],a:1,e:"🏝️"},
+    {img:"liver",q:"Which organ produces bile to help digest fats?",o:["Liver","Heart","Lungs","Brain"],a:0,e:"🔬"},
 
-    {img:"giraffe",q:"Which is the tallest land animal?",o:["Elephant","Giraffe","Camel","Ostrich"],a:1,e:"🦒"},
+    {img:"skull",q:"Which part of the skeleton protects the brain?",o:["Spinal column","Skull","Rib cage","Pelvis"],a:1,e:"💀"},
 
-    {img:"jupiter",q:"Which is the largest planet in our solar system?",o:["Saturn","Jupiter","Neptune","Earth"],a:1,e:"🪐"},
+    {img:"teeth",q:"What is the hard outer covering of a tooth called?",o:["Dentine","Enamel","Pulp","Gum"],a:1,e:"🦷"},
 
-    {img:"everest",q:"Which is the highest mountain above sea level?",o:["K2","Mount Everest","Kangchenjunga","Nanda Devi"],a:1,e:"🏔️"},
+    {img:"kidney",q:"Which organs filter the blood and help produce urine?",o:["Kidneys","Lungs","Pancreas","Heart"],a:0,e:"🫘"},
 
-    {img:"ocean",q:"Which is the largest ocean on Earth?",o:["Atlantic Ocean","Indian Ocean","Pacific Ocean","Arctic Ocean"],a:2,e:"🌊"},
+    {img:"eye",q:"Which part of the eye detects light?",o:["Iris","Retina","Eyelid","Eyebrow"],a:1,e:"👁️"},
 
-    {img:"cheetah",q:"Which animal is the fastest land runner?",o:["Cheetah","Horse","Lion","Greyhound"],a:0,e:"🐆"}
-
+    {img:"skeleton",q:"What is the body's framework of bones called?",o:["Muscular system","Digestive system","Skeleton","Nervous system"],a:2,e:"🦴"},
+    {img:"skeleton",q:"How many legs do humans usually walk on?",o:["Two","Four","Six","Eight"],a:0,e:"🚶"},
+    {img:"brain",q:"When you eat ice cream too fast, where do you feel a 'brain freeze'?",o:["Forehead","Knee","Toe","Elbow"],a:0,e:"🥶"}
   ],
 
   "5":[
 
-    {img:"antarctica",q:"Which is the largest desert in the world, including polar deserts?",o:["Sahara Desert","Antarctic Desert","Gobi Desert","Arabian Desert"],a:1,e:"🏜️"},
+    {img:"pancreas",q:"Which organ produces insulin?",o:["Pancreas","Liver","Kidney","Stomach"],a:0,e:"🔬"},
 
-    {img:"ocean",q:"Which is the deepest known ocean trench?",o:["Java Trench","Mariana Trench","Tonga Trench","Puerto Rico Trench"],a:1,e:"🌊"},
+    {img:"blood",q:"What is the main function of red blood cells?",o:["Fight infections","Carry oxygen","Digest food","Produce hormones"],a:1,e:"🩸"},
 
-    {img:"jupiter",q:"Which is the largest planet in our solar system?",o:["Saturn","Jupiter","Uranus","Neptune"],a:1,e:"🪐"},
+    {img:"brain",q:"Which part of the brain helps maintain balance and coordination?",o:["Cerebellum","Cerebrum","Brainstem","Spinal cord"],a:0,e:"🧠"},
 
-    {img:"burjkhalifa",q:"Which is the tallest building in the world?",o:["Shanghai Tower","Burj Khalifa","Eiffel Tower","Taipei 101"],a:1,e:"🏙️"},
+    {img:"intestine",q:"Which organ absorbs much of the remaining water from undigested food?",o:["Small intestine","Large intestine","Stomach","Oesophagus"],a:1,e:"🍽️"},
 
-    {q:"Which is the largest continent by area?",o:["Africa","Asia","Europe","North America"],a:1,e:"🌏"},
+    {img:"kidney",q:"What is the basic filtering unit of the kidney called?",o:["Neuron","Nephron","Alveolus","Villus"],a:1,e:"🫘"},
 
-    {img:"cheetah",q:"Which is the fastest land animal?",o:["Cheetah","Leopard","Tiger","Lion"],a:0,e:"🐆"},
+    {img:"skeleton",q:"Which type of joint is found at the elbow?",o:["Ball-and-socket joint","Hinge joint","Fixed joint","Gliding joint"],a:1,e:"🦴"},
 
-    {img:"ostrich",q:"Which is the largest living bird by height and weight?",o:["Emu","Ostrich","Eagle","Albatross"],a:1,e:"🐦"},
+    {img:"lungs",q:"Which gas is absorbed into the blood by the lungs?",o:["Carbon dioxide","Oxygen","Hydrogen","Helium"],a:1,e:"🫁"},
 
-    {img:"ocean",q:"Which is the largest ocean?",o:["Indian Ocean","Pacific Ocean","Atlantic Ocean","Southern Ocean"],a:1,e:"🌊"}
-
+    {img:"blood",q:"Which components of blood help stop bleeding by forming clots?",o:["Platelets","Red blood cells","Nerve cells","Muscle cells"],a:0,e:"🩸"},
+    {img:"neuron",q:"What do we call the funny feeling when your foot 'falls asleep'?",o:["Pins and needles","Tickles","Shivers","Hiccups"],a:0,e:"🦶"},
+    {img:"heart",q:"What happens to your heart when you run fast?",o:["It beats faster","It stops","It sleeps","It shrinks"],a:0,e:"❤️"}
   ],
 
   "6":[
 
-    {img:"ganymede",q:"Which is the largest moon in our solar system?",o:["Earth's Moon","Europa","Ganymede","Titan"],a:2,e:"🌕"},
+    {img:"cell",q:"What is the basic structural unit of living organisms?",o:["Organ","Tissue","Cell","Organ system"],a:2,e:"🔬"},
 
-    {img:"everest",q:"Which is the tallest mountain above sea level?",o:["K2","Mount Everest","Denali","Kilimanjaro"],a:1,e:"🏔️"},
+    {img:"cell",q:"Which cell structure controls most activities of the cell?",o:["Nucleus","Cell wall","Vacuole","Cytoplasm only"],a:0,e:"🔬"},
 
-    {img:"venus",q:"Which planet is the hottest in our solar system?",o:["Mercury","Venus","Mars","Jupiter"],a:1,e:"☀️"},
+    {img:"lungs",q:"Which organ system helps the body take in oxygen and remove carbon dioxide?",o:["Digestive system","Respiratory system","Skeletal system","Reproductive system"],a:1,e:"🫁"},
 
-    {img:"sahara",q:"Which is the largest hot desert in the world?",o:["Sahara Desert","Gobi Desert","Kalahari Desert","Thar Desert"],a:0,e:"🏜️"},
+    {img:"blood",q:"Which part of the blood carries oxygen using haemoglobin?",o:["Plasma","Red blood cells","Platelets","White blood cells"],a:1,e:"🩸"},
 
-    {img:"russia",q:"Which is the largest country in the world by area?",o:["Canada","Russia","China","United States"],a:1,e:"🗺️"},
+    {img:"liver",q:"Which organ produces bile?",o:["Pancreas","Liver","Gallbladder","Small intestine"],a:1,e:"🔬"},
 
-    {img:"cheetah",q:"Which is the fastest land animal?",o:["Cheetah","Lion","Pronghorn","Horse"],a:0,e:"🐆"},
+    {img:"neuron",q:"What is the name of the tissue that carries messages through the body?",o:["Nervous tissue","Muscle tissue","Bone tissue","Fat tissue"],a:0,e:"🧠"},
 
-    {q:"Which is the largest organ of the human body?",o:["Liver","Brain","Skin","Heart"],a:2,e:"🧍"},
+    {img:"lungs",q:"Which organs contain tiny air sacs where oxygen enters the blood?",o:["Kidneys","Lungs","Liver","Stomach"],a:1,e:"🫁"},
 
-    {img:"ocean",q:"Which is the largest ocean on Earth?",o:["Pacific Ocean","Atlantic Ocean","Indian Ocean","Arctic Ocean"],a:0,e:"🌊"}
-
+    {img:"pancreas",q:"Which hormone helps control blood sugar levels?",o:["Insulin","Adrenaline","Melatonin","Thyroxine"],a:0,e:"🔬"},
+    {img:"skin",q:"Why do your fingers get wrinkly after a long bath?",o:["Skin absorbs water","Bones get soft","Muscles shrink","Blood stops"],a:0,e:"🛁"},
+    {img:"muscle",q:"What do we call it when your leg suddenly feels stuck and tight?",o:["A cramp","A sneeze","A hiccup","A yawn"],a:0,e:"🦵"}
   ],
 
   "7":[
 
-    {img:"jupiter",q:"Which is the largest planet in our solar system?",o:["Saturn","Jupiter","Neptune","Uranus"],a:1,e:"🪐"},
+    {img:"muscle",q:"What is the process of breaking down food to release energy called?",o:["Digestion","Respiration","Circulation","Excretion"],a:1,e:"🔬"},
 
-    {img:"burjkhalifa",q:"Which is the tallest building in the world?",o:["Merdeka 118","Burj Khalifa","Shanghai Tower","One World Trade Center"],a:1,e:"🏙️"},
+    {img:"lungs",q:"Which gas is needed for aerobic respiration?",o:["Oxygen","Nitrogen","Hydrogen","Helium"],a:0,e:"🫁"},
 
-    {img:"ocean",q:"What is the deepest known point in Earth's oceans?",o:["Challenger Deep","Dead Sea","Lake Baikal","Java Trench"],a:0,e:"🌊"},
+    {img:"muscle",q:"Which substance is produced in our muscles during anaerobic respiration?",o:["Lactic acid","Starch","Bile","Saliva"],a:0,e:"💪"},
 
-    {img:"ganymede",q:"Which is the largest moon in the solar system?",o:["Titan","Ganymede","Europa","Earth's Moon"],a:1,e:"🌕"},
+    {img:"blood",q:"Which blood vessels carry blood from the heart to different parts of the body?",o:["Arteries","Veins","Capillaries only","Lymph vessels"],a:0,e:"🩸"},
 
-    {img:"bluewhale",q:"Which is the largest living animal on Earth?",o:["Whale shark","African elephant","Blue whale","Giant squid"],a:2,e:"🐋"},
+    {img:"blood",q:"What is the liquid part of blood called?",o:["Plasma","Platelets","Haemoglobin","Marrow"],a:0,e:"🩸"},
 
-    {img:"vatican",q:"Which is the smallest country in the world by area?",o:["Monaco","San Marino","Vatican City","Liechtenstein"],a:2,e:"🗺️"},
+    {img:"blood",q:"Which blood cells help fight disease-causing germs?",o:["Red blood cells","White blood cells","Platelets","None of these"],a:1,e:"🩸"},
 
-    {q:"Which is the largest internal organ in the human body?",o:["Heart","Liver","Brain","Lungs"],a:1,e:"🫀"},
+    {img:"kidney",q:"Which organ removes urea and excess water from the blood?",o:["Heart","Kidney","Stomach","Lungs"],a:1,e:"🫘"},
 
-    {img:"cheetah",q:"Which is the fastest land animal?",o:["Cheetah","Pronghorn","Lion","Greyhound"],a:0,e:"🐆"}
-
+    {img:"trachea",q:"What is the normal route of air into the lungs?",o:["Nose → windpipe → lungs","Nose → stomach → lungs","Mouth → heart → lungs","Nose → kidneys → lungs"],a:0,e:"🫁"},
+    {img:"skin",q:"Why do we get goosebumps?",o:["Tiny muscles pull body hair up","Skin gets wet","Bones shake","Blood freezes"],a:0,e:"🥶"},
+    {img:"brain",q:"What makes you yawn when you see someone else yawn?",o:["Yawning is contagious","Your brain gets tired","Your lungs shrink","Your eyes water"],a:0,e:"🥱"}
   ],
 
   "8":[
 
-    {img:"pluto",q:"Which is the largest dwarf planet in our solar system by diameter?",o:["Pluto","Eris","Ceres","Haumea"],a:0,e:"🪐"},
+    {img:"blood",q:"Which organ system transports oxygen and nutrients around the body?",o:["Digestive system","Circulatory system","Skeletal system","Nervous system"],a:1,e:"🩸"},
 
-    {img:"ocean",q:"Which is the largest ocean on Earth?",o:["Atlantic Ocean","Pacific Ocean","Indian Ocean","Southern Ocean"],a:1,e:"🌊"},
+    {img:"blood",q:"Which blood vessels connect arteries and veins and allow exchange with tissues?",o:["Capillaries","Tendons","Nerves","Ligaments"],a:0,e:"🩸"},
 
-    {img:"everest",q:"Which is the highest mountain above sea level?",o:["K2","Kangchenjunga","Mount Everest","Lhotse"],a:2,e:"🏔️"},
+    {img:"pancreas",q:"Which organ produces insulin to help regulate blood glucose?",o:["Pancreas","Liver","Kidney","Heart"],a:0,e:"🔬"},
 
-    {img:"india",q:"Which country has the world's largest population as of 2026?",o:["China","India","United States","Indonesia"],a:1,e:"🗺️"},
+    {q:"Which hormone is released during the body's fight-or-flight response?",o:["Insulin","Adrenaline","Melatonin","Oestrogen"],a:1,e:"⚡"},
 
-    {img:"whaleshark",q:"Which is the largest species of shark?",o:["Great white shark","Hammerhead shark","Whale shark","Tiger shark"],a:2,e:"🦈"},
+    {img:"intestine",q:"What is the main function of the small intestine?",o:["Pump blood","Absorb nutrients from digested food","Produce urine","Exchange gases"],a:1,e:"🍽️"},
 
-    {img:"sahara",q:"Which is the largest hot desert in the world?",o:["Sahara Desert","Arabian Desert","Gobi Desert","Kalahari Desert"],a:0,e:"🏜️"},
+    {img:"cell",q:"Which process releases energy from food inside cells?",o:["Photosynthesis","Cellular respiration","Transpiration","Filtration only"],a:1,e:"🔬"},
 
-    {img:"titan",q:"Which is the largest moon of Saturn?",o:["Europa","Titan","Ganymede","Io"],a:1,e:"🌕"},
+    {img:"neuron",q:"Which part of the nervous system includes the brain and spinal cord?",o:["Central nervous system","Digestive system","Circulatory system","Endocrine system"],a:0,e:"🧠"},
 
-    {img:"burjkhalifa",q:"Which is the tallest building in the world?",o:["Shanghai Tower","Burj Khalifa","Merdeka 118","Taipei 101"],a:1,e:"🏙️"}
-
+    {q:"Which hormone helps regulate the body's metabolic rate?",o:["Thyroxine","Insulin only","Adrenaline only","Melatonin"],a:0,e:"🔬"},
+    {img:"stomach",q:"Why does your stomach rumble when you are hungry?",o:["Gas and fluid moving in an empty stomach","Your ribs rubbing","Your heart beating loudly","Your lungs expanding"],a:0,e:"🍽️"},
+    {img:"neuron",q:"What is the funny bone, really?",o:["A nerve in the elbow","A small bone in the arm","A muscle","A joint"],a:0,e:"😆"}
   ],
 
 };
@@ -1950,7 +1953,7 @@ function renderQuestion(
     .getElementById('headerSub')
     .textContent =
       classLabel(cls) +
-      ' — Records & Superlatives';
+      ' — The Amazing Human Body';
 
 
   quizProg.textContent =
