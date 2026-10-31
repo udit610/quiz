@@ -1573,7 +1573,7 @@ function shuffle(arr){
 
 startBtn.addEventListener(
   'click',
-  async ()=>{
+  ()=>{
 
     const name =
       studentNameInput.value.trim();
@@ -1599,64 +1599,96 @@ startBtn.addEventListener(
       'none';
 
 
-    startBtn.disabled =
-      true;
+    /*
+      The duplicate-name check used to block the
+      start of the quiz: the student waited on
+      "Checking…" for the whole Apps Script round
+      trip (3-4 seconds). The check now runs in
+      the background while the quiz starts at once.
+      A duplicate is still caught: the check stops
+      the quiz and shows the same warning, and the
+      submit step checks duplicates again before
+      saving, so a result can never be saved twice.
+    */
+
+    if(
+      API_URL.indexOf(
+        'PASTE_YOUR'
+      ) !== 0
+    ){
+
+      fetch(
+        API_URL,
+        {
+          method:'POST',
+
+          headers:{
+            'Content-Type':
+              'text/plain;charset=utf-8'
+          },
+
+          body:JSON.stringify({
+
+            action:'start',
+
+            studentName:name,
+
+            className:cls,
+
+            total:
+              (
+                QUIZZES[cls] ||
+                []
+              ).length
+
+          })
+        }
+      )
+      .then(res => res.json())
+      .then(
+        data =>{
+
+          if(
+            data.error !==
+            'duplicate'
+          ){
+
+            return;
+
+          }
 
 
-    const originalBtnText =
-      startBtn.textContent;
+          /*
+            Only stop the quiz if it is still
+            running. If the student already
+            finished, the submit step handles
+            duplicates itself.
+          */
+
+          if(
+            quizCard.classList.contains(
+              'hidden'
+            )
+          ){
+
+            return;
+
+          }
 
 
-    startBtn.textContent =
-      'Checking…';
-
-
-    try{
-
-      if(
-        API_URL.indexOf(
-          'PASTE_YOUR'
-        ) !== 0
-      ){
-
-        const res =
-          await fetch(
-            API_URL,
-            {
-              method:'POST',
-
-              headers:{
-                'Content-Type':
-                  'text/plain;charset=utf-8'
-              },
-
-              body:JSON.stringify({
-
-                action:'start',
-
-                studentName:name,
-
-                className:cls,
-
-                total:
-                  (
-                    QUIZZES[cls] ||
-                    []
-                  ).length
-
-              })
-            }
+          clearInterval(
+            timerInterval
           );
 
 
-        const data =
-          await res.json();
+          quizCard.classList.add(
+            'hidden'
+          );
 
+          setupCard.classList.remove(
+            'hidden'
+          );
 
-        if(
-          data.error ===
-          'duplicate'
-        ){
 
           setupWarn.textContent =
             'A submission already exists for this name & class. Please check with your teacher if this is a mistake.';
@@ -1664,34 +1696,24 @@ startBtn.addEventListener(
           setupWarn.style.display =
             'block';
 
-          startBtn.disabled =
-            false;
 
-          startBtn.textContent =
-            originalBtnText;
-
-          return;
+          window.scrollTo({
+            top:0,
+            behavior:'smooth'
+          });
 
         }
-
-      }
-
-    }catch(err){
-
-      /*
-       If the start request fails because
-       of a temporary network problem,
-       allow the student to continue.
-      */
+      )
+      .catch(
+        /*
+          If the check fails because of a
+          temporary network problem, allow
+          the student to continue, as before.
+        */
+        () => {}
+      );
 
     }
-
-
-    startBtn.disabled =
-      false;
-
-    startBtn.textContent =
-      originalBtnText;
 
 
     currentClass =
