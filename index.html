@@ -1228,6 +1228,8 @@ CLASS_ORDER.forEach(cls=>{
       selectedClass =
         cls;
 
+      scheduleEarlyCheck();
+
       classTriggerText.textContent =
         classLabel(cls);
 
@@ -1571,6 +1573,284 @@ function shuffle(arr){
    START QUIZ
    ============================================================ */
 
+/* ============================================================
+   EARLY NAME CHECK
+   ============================================================ */
+
+/*
+  Instagram-style: the slow duplicate-name check
+  runs while the student is still typing their name
+  and picking a class, instead of only after Start
+  is tapped. By the time Start is tapped, the
+  verdict is usually ready, so the quiz opens at
+  once. The rule is unchanged: the quiz never
+  starts on a duplicate name. If the student closes
+  the tab, the in-flight check is aborted and
+  nothing further is sent.
+*/
+
+let earlyCheckKey =
+  '';
+
+let earlyCheckResult =
+  null;
+
+let earlyCheckPromise =
+  null;
+
+let earlyCheckAbort =
+  null;
+
+let earlyCheckTimer =
+  null;
+
+
+function scheduleEarlyCheck(){
+
+  const currentName =
+    studentNameInput.value.trim();
+
+  const currentCls =
+    selectedClass;
+
+
+  /*
+    A verdict already ready for this exact
+    name and class stays valid. This also stops
+    a blur event from wiping a verdict right
+    before the Start tap.
+  */
+
+  if(
+    earlyCheckKey ===
+    currentName + '|' + currentCls &&
+    earlyCheckResult !==
+    null
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    earlyCheckTimer
+  ){
+
+    clearTimeout(
+      earlyCheckTimer
+    );
+
+    earlyCheckTimer =
+      null;
+
+  }
+
+
+  /*
+    New input invalidates any previous verdict.
+  */
+
+  earlyCheckKey =
+    '';
+
+  earlyCheckResult =
+    null;
+
+  if(
+    earlyCheckAbort
+  ){
+
+    earlyCheckAbort.abort();
+
+    earlyCheckAbort =
+      null;
+
+  }
+
+  earlyCheckPromise =
+    null;
+
+  setupWarn.style.display =
+    'none';
+
+
+  if(
+    !currentName ||
+    !currentCls
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    API_URL.indexOf(
+      'PASTE_YOUR'
+    ) === 0
+  ){
+
+    return;
+
+  }
+
+
+  earlyCheckTimer =
+    setTimeout(
+      ()=>{
+
+        const key =
+          currentName + '|' + currentCls;
+
+        earlyCheckKey =
+          key;
+
+
+        const controller =
+          new AbortController();
+
+        earlyCheckAbort =
+          controller;
+
+
+        earlyCheckPromise =
+          fetch(
+            API_URL,
+            {
+              method:'POST',
+
+              headers:{
+                'Content-Type':
+                  'text/plain;charset=utf-8'
+              },
+
+              body:JSON.stringify({
+
+                action:'start',
+
+                studentName:currentName,
+
+                className:currentCls,
+
+                total:
+                  (
+                    QUIZZES[currentCls] ||
+                    []
+                  ).length
+
+              }),
+
+              signal:
+                controller.signal
+            }
+          )
+          .then(res => res.json())
+          .then(
+            data =>{
+
+              if(
+                earlyCheckKey !==
+                key
+              ){
+
+                return null;
+
+              }
+
+
+              earlyCheckResult =
+                data.error !==
+                'duplicate';
+
+
+              if(
+                !earlyCheckResult &&
+                quizCard.classList.contains(
+                  'hidden'
+                )
+              ){
+
+                setupWarn.textContent =
+                  'A submission already exists for this name & class. Please check with your teacher if this is a mistake.';
+
+                setupWarn.style.display =
+                  'block';
+
+              }
+
+
+              return earlyCheckResult;
+
+            }
+          )
+          .catch(
+            ()=>{
+
+              if(
+                earlyCheckKey ===
+                key
+              ){
+
+                earlyCheckResult =
+                  null;
+
+                earlyCheckPromise =
+                  null;
+
+              }
+
+
+              return null;
+
+            }
+          );
+
+      },
+      700
+    );
+
+}
+
+
+studentNameInput.addEventListener(
+  'input',
+  scheduleEarlyCheck
+);
+
+
+studentNameInput.addEventListener(
+  'blur',
+  scheduleEarlyCheck
+);
+
+
+window.addEventListener(
+  'pagehide',
+  ()=>{
+
+    if(
+      earlyCheckTimer
+    ){
+
+      clearTimeout(
+        earlyCheckTimer
+      );
+
+    }
+
+
+    if(
+      earlyCheckAbort
+    ){
+
+      earlyCheckAbort.abort();
+
+    }
+
+  }
+);
+
 startBtn.addEventListener(
   'click',
   async ()=>{
@@ -1599,99 +1879,174 @@ startBtn.addEventListener(
       'none';
 
 
-    startBtn.disabled =
-      true;
+    /*
+      Stop any check still scheduled from typing,
+      so it cannot fire a second start call while
+      the quiz is running.
+    */
 
+    if(
+      earlyCheckTimer
+    ){
 
-    const originalBtnText =
-      startBtn.textContent;
+      clearTimeout(
+        earlyCheckTimer
+      );
 
-
-    startBtn.textContent =
-      'Checking…';
-
-
-    try{
-
-      if(
-        API_URL.indexOf(
-          'PASTE_YOUR'
-        ) !== 0
-      ){
-
-        const res =
-          await fetch(
-            API_URL,
-            {
-              method:'POST',
-
-              headers:{
-                'Content-Type':
-                  'text/plain;charset=utf-8'
-              },
-
-              body:JSON.stringify({
-
-                action:'start',
-
-                studentName:name,
-
-                className:cls,
-
-                total:
-                  (
-                    QUIZZES[cls] ||
-                    []
-                  ).length
-
-              })
-            }
-          );
-
-
-        const data =
-          await res.json();
-
-
-        if(
-          data.error ===
-          'duplicate'
-        ){
-
-          setupWarn.textContent =
-            'A submission already exists for this name & class. Please check with your teacher if this is a mistake.';
-
-          setupWarn.style.display =
-            'block';
-
-          startBtn.disabled =
-            false;
-
-          startBtn.textContent =
-            originalBtnText;
-
-          return;
-
-        }
-
-      }
-
-    }catch(err){
-
-      /*
-       If the start request fails because
-       of a temporary network problem,
-       allow the student to continue.
-      */
+      earlyCheckTimer =
+        null;
 
     }
 
 
-    startBtn.disabled =
-      false;
+    /*
+      The name check usually already ran while
+      the student was typing (see scheduleEarlyCheck).
+      If its verdict is ready, Start is instant.
+      If it is still running, wait only for the
+      remainder. Otherwise run the blocking check
+      exactly as before. Either way the quiz never
+      starts on a duplicate name, and a verdict
+      from the typing-time check means no second
+      start call is sent.
+    */
 
-    startBtn.textContent =
-      originalBtnText;
+    const earlyKey =
+      name + '|' + cls;
+
+    let verdict =
+      null;
+
+    if(
+      earlyCheckKey ===
+      earlyKey
+    ){
+
+      if(
+        earlyCheckResult !==
+        null
+      ){
+
+        verdict =
+          earlyCheckResult;
+
+      }else if(
+        earlyCheckPromise
+      ){
+
+        verdict =
+          await earlyCheckPromise;
+
+      }
+
+    }
+
+
+    if(
+      verdict ===
+      null
+    ){
+
+      startBtn.disabled =
+        true;
+
+
+      const originalBtnText =
+        startBtn.textContent;
+
+
+      startBtn.textContent =
+        'Checking…';
+
+
+      try{
+
+        if(
+          API_URL.indexOf(
+            'PASTE_YOUR'
+          ) !== 0
+        ){
+
+          const res =
+            await fetch(
+              API_URL,
+              {
+                method:'POST',
+
+                headers:{
+                  'Content-Type':
+                    'text/plain;charset=utf-8'
+                },
+
+                body:JSON.stringify({
+
+                  action:'start',
+
+                  studentName:name,
+
+                  className:cls,
+
+                  total:
+                    (
+                      QUIZZES[cls] ||
+                      []
+                    ).length
+
+                })
+              }
+            );
+
+
+          const data =
+            await res.json();
+
+
+          if(
+            data.error ===
+            'duplicate'
+          ){
+
+            verdict =
+              false;
+
+          }
+
+        }
+
+      }catch(err){
+
+        /*
+         If the start request fails because
+         of a temporary network problem,
+         allow the student to continue.
+        */
+
+      }
+
+
+      startBtn.disabled =
+        false;
+
+      startBtn.textContent =
+        originalBtnText;
+
+    }
+
+
+    if(
+      verdict ===
+      false
+    ){
+
+      setupWarn.textContent =
+        'A submission already exists for this name & class. Please check with your teacher if this is a mistake.';
+
+      setupWarn.style.display =
+        'block';
+
+      return;
+
+    }
 
 
     currentClass =
