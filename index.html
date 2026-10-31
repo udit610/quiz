@@ -1573,7 +1573,7 @@ function shuffle(arr){
 
 startBtn.addEventListener(
   'click',
-  ()=>{
+  async ()=>{
 
     const name =
       studentNameInput.value.trim();
@@ -1599,96 +1599,64 @@ startBtn.addEventListener(
       'none';
 
 
-    /*
-      The duplicate-name check used to block the
-      start of the quiz: the student waited on
-      "Checking…" for the whole Apps Script round
-      trip (3-4 seconds). The check now runs in
-      the background while the quiz starts at once.
-      A duplicate is still caught: the check stops
-      the quiz and shows the same warning, and the
-      submit step checks duplicates again before
-      saving, so a result can never be saved twice.
-    */
-
-    if(
-      API_URL.indexOf(
-        'PASTE_YOUR'
-      ) !== 0
-    ){
-
-      fetch(
-        API_URL,
-        {
-          method:'POST',
-
-          headers:{
-            'Content-Type':
-              'text/plain;charset=utf-8'
-          },
-
-          body:JSON.stringify({
-
-            action:'start',
-
-            studentName:name,
-
-            className:cls,
-
-            total:
-              (
-                QUIZZES[cls] ||
-                []
-              ).length
-
-          })
-        }
-      )
-      .then(res => res.json())
-      .then(
-        data =>{
-
-          if(
-            data.error !==
-            'duplicate'
-          ){
-
-            return;
-
-          }
+    startBtn.disabled =
+      true;
 
 
-          /*
-            Only stop the quiz if it is still
-            running. If the student already
-            finished, the submit step handles
-            duplicates itself.
-          */
-
-          if(
-            quizCard.classList.contains(
-              'hidden'
-            )
-          ){
-
-            return;
-
-          }
+    const originalBtnText =
+      startBtn.textContent;
 
 
-          clearInterval(
-            timerInterval
+    startBtn.textContent =
+      'Checking…';
+
+
+    try{
+
+      if(
+        API_URL.indexOf(
+          'PASTE_YOUR'
+        ) !== 0
+      ){
+
+        const res =
+          await fetch(
+            API_URL,
+            {
+              method:'POST',
+
+              headers:{
+                'Content-Type':
+                  'text/plain;charset=utf-8'
+              },
+
+              body:JSON.stringify({
+
+                action:'start',
+
+                studentName:name,
+
+                className:cls,
+
+                total:
+                  (
+                    QUIZZES[cls] ||
+                    []
+                  ).length
+
+              })
+            }
           );
 
 
-          quizCard.classList.add(
-            'hidden'
-          );
+        const data =
+          await res.json();
 
-          setupCard.classList.remove(
-            'hidden'
-          );
 
+        if(
+          data.error ===
+          'duplicate'
+        ){
 
           setupWarn.textContent =
             'A submission already exists for this name & class. Please check with your teacher if this is a mistake.';
@@ -1696,24 +1664,34 @@ startBtn.addEventListener(
           setupWarn.style.display =
             'block';
 
+          startBtn.disabled =
+            false;
 
-          window.scrollTo({
-            top:0,
-            behavior:'smooth'
-          });
+          startBtn.textContent =
+            originalBtnText;
+
+          return;
 
         }
-      )
-      .catch(
-        /*
-          If the check fails because of a
-          temporary network problem, allow
-          the student to continue, as before.
-        */
-        () => {}
-      );
+
+      }
+
+    }catch(err){
+
+      /*
+       If the start request fails because
+       of a temporary network problem,
+       allow the student to continue.
+      */
 
     }
+
+
+    startBtn.disabled =
+      false;
+
+    startBtn.textContent =
+      originalBtnText;
 
 
     currentClass =
@@ -2747,6 +2725,43 @@ retryBtn.addEventListener(
 
   }
 );
+
+
+/* ============================================================
+   WARM-UP
+   ============================================================ */
+
+/*
+  Apps Script web apps are slow on their first
+  call after idle (cold start), which is a big
+  part of the 3-4 second name check. This silent
+  request fires while the student is still picking
+  a class and typing their name, so the script is
+  already warm when Start is tapped and the real
+  check returns faster. The response is ignored,
+  and this request writes nothing. The Start check
+  itself is unchanged and still blocks the quiz on
+  a duplicate name.
+*/
+
+if(
+  API_URL.indexOf(
+    'PASTE_YOUR'
+  ) !== 0
+){
+
+  fetch(
+    API_URL,
+    {
+      method:'GET',
+      mode:'no-cors',
+      cache:'no-store'
+    }
+  ).catch(
+    () => {}
+  );
+
+}
 
 </script>
 
