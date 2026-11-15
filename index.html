@@ -2,3137 +2,3556 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Great Saturday Quiz — Vardhman Convent School, Moonak</title>
+<meta name="description" content="The weekly Saturday quiz for UKG to Class 8 at Vardhman Convent School, Moonak. Ten quick questions for your class, one try each.">
+<meta name="theme-color" content="#4338E0">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Great Saturday Quiz">
+<meta property="og:description" content="Vardhman Convent School, Moonak. Ten quick questions for your class, one try each.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%86%3C/text%3E%3C/svg%3E">
 
+<!-- Open the connections the page is about to need, so the name check and the photos start sooner. -->
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://thumb.wikimedia.org">
+<link rel="dns-prefetch" href="https://upload.wikimedia.org">
+
+<!-- Fonts load without holding up the page; system fonts show until they arrive. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500..700&family=Nunito:wght@600..900&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500..700&family=Nunito:wght@600..900&display=swap"></noscript>
 
 <style>
   :root{
-    --board:#0B1F4D;
-    --board-2:#122a5e;
-    --chalk:#F5F1E6;
-    --paper:#FBF8F0;
-    --line:#D8CFB8;
-    --mustard:#E8A33D;
-    --red:#C1443C;
-    --blue:#0B1F4D;
-    --sage:#2E7D46;
-    --ink:#2B2620;
+    --bg:#FFF7E8;
+    --ink:#1D2150;
+    --muted:#5E638C;
+    --line:#E6E2F2;
+    --card:#FFFFFF;
+    --brand:#4338E0;
+    --brand-d:#2E25B0;
+    --brand-l:#EEECFF;
+    --sun:#FFC83D;
+    --sun-d:#E3A100;
+    --coral:#FF5F5F;
+    --coral-d:#C92A2A;
+    --coral-l:#FFEDED;
+    --mint:#14B887;
+    --mint-d:#087F5B;
+    --mint-l:#E2F8EF;
+    --display:'Fredoka',ui-rounded,'SF Pro Rounded','Nunito',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --body:'Nunito',ui-rounded,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --r:22px;
+    --shadow:0 10px 30px rgba(29,33,80,.10),0 2px 6px rgba(29,33,80,.06);
+    --shadow-s:0 4px 14px rgba(29,33,80,.08);
+    color-scheme:light;
   }
 
-  *{
-    box-sizing:border-box;
+  *,*::before,*::after{box-sizing:border-box}
+  [hidden]{display:none !important}
+
+  html{
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+    overscroll-behavior-y:contain;
   }
 
   body{
     margin:0;
-    font-family:'Nunito',sans-serif;
-    background:var(--board);
-    background-image:
-      radial-gradient(circle at 20% 20%,rgba(255,255,255,0.03) 0%,transparent 40%),
-      radial-gradient(circle at 80% 70%,rgba(255,255,255,0.025) 0%,transparent 40%);
-    color:var(--ink);
-    min-height:100vh;
-  }
-
-  .theme-badge{
-    display:inline-block;
-    background:var(--mustard);
-    color:var(--board);
-    font-family:'Kalam',cursive;
-    font-weight:700;
-    font-size:.8rem;
-    padding:4px 14px;
-    border-radius:20px;
-    letter-spacing:.03em;
-    margin-top:8px;
-  }
-
-  .wrap{
-    max-width:720px;
-    margin:0 auto;
-    padding:32px 18px 60px;
-  }
-
-  header{
-    text-align:center;
-    margin-bottom:26px;
-  }
-
-  header .chalk-line{
-    width:64px;
-    height:3px;
-    background:var(--mustard);
-    margin:0 auto 14px;
-    border-radius:2px;
-    opacity:.8;
-  }
-
-  h1{
-    font-family:'Kalam',cursive;
-    color:var(--chalk);
-    font-size:2.1rem;
-    margin:0 0 6px;
-    letter-spacing:.5px;
-  }
-
-  header .school-name{
-    color:var(--chalk);
-    margin:0 0 10px;
-    font-size:1.3rem;
-    font-weight:800;
-    letter-spacing:.02em;
-  }
-
-  header .school-phone{
-    color:var(--sage);
-    margin:-6px 0 10px;
-    font-size:.9rem;
-    font-weight:700;
-    letter-spacing:.02em;
-  }
-
-  header p{
-    color:var(--sage);
-    margin:0;
-    font-size:.95rem;
+    font-family:var(--body);
     font-weight:600;
-  }
-
-  .card{
-    background:var(--paper);
-    border-radius:14px;
-    padding:26px 24px;
-    box-shadow:0 14px 34px rgba(0,0,0,.28);
-    border-top:3px solid var(--mustard);
-  }
-
-  .field{
-    margin-bottom:18px;
-  }
-
-  label{
-    display:block;
-    font-weight:800;
-    font-size:.85rem;
-    text-transform:uppercase;
-    letter-spacing:.06em;
-    color:var(--board);
-    margin-bottom:8px;
-  }
-
-  input[type="text"]{
-    width:100%;
-    padding:12px 14px;
-    border-radius:9px;
-    border:2px solid var(--line);
-    font-family:'Nunito',sans-serif;
-    font-size:1rem;
-    background:#fff;
+    line-height:1.4;
     color:var(--ink);
+    background:var(--bg);
+    min-height:100vh;
+    min-height:100dvh;
+    overscroll-behavior-y:contain;
+    -webkit-tap-highlight-color:transparent;
   }
 
-  input[type="text"]:focus{
-    outline:none;
-    border-color:var(--blue);
+  button,input{font:inherit;color:inherit}
+  button{touch-action:manipulation}
+  h1,h2,h3,p{margin:0}
+
+  :focus-visible{
+    outline:3px solid var(--ink);
+    outline-offset:3px;
   }
 
-  .custom-select{
-    position:relative;
-  }
-
-  .custom-select-trigger{
-    width:100%;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:12px 14px;
-    border-radius:9px;
-    border:2px solid var(--board);
-    font-family:'Nunito',sans-serif;
-    font-weight:700;
-    font-size:1rem;
-    background:var(--paper);
-    color:var(--board);
-    cursor:pointer;
-    text-align:left;
-  }
-
-  .custom-select-trigger:focus{
-    outline:none;
-    border-color:var(--blue);
-  }
-
-  .custom-select-trigger .chevron{
-    flex-shrink:0;
-    margin-left:10px;
-    transition:transform .15s ease;
-  }
-
-  .custom-select.open .custom-select-trigger .chevron{
-    transform:rotate(180deg);
-  }
-
-  .custom-select-options{
-    list-style:none;
-    margin:6px 0 0;
-    padding:6px;
+  .sr{
     position:absolute;
-    top:100%;
-    left:0;
-    right:0;
-    z-index:20;
-    background:var(--paper);
-    border:2px solid var(--board);
-    border-radius:11px;
-    box-shadow:0 12px 26px rgba(0,0,0,.22);
-    max-height:260px;
-    overflow-y:auto;
+    width:1px;height:1px;
+    margin:-1px;padding:0;
+    overflow:hidden;
+    clip:rect(0 0 0 0);
+    white-space:nowrap;
+    border:0;
   }
 
-  .custom-select-options li{
-    padding:11px 12px;
-    border-radius:7px;
-    font-weight:700;
-    color:var(--ink);
-    cursor:pointer;
-  }
 
-  .custom-select-options li:hover,
-  .custom-select-options li.active{
-    background:var(--mustard);
-    color:var(--board);
-  }
+  /* ---------- hero (home screen only) ---------- */
 
-  .custom-select-options li.selected{
-    color:var(--blue);
-  }
-
-  .custom-select-options li.selected::after{
-    content:"✓";
-    float:right;
-    font-weight:800;
-  }
-
-  .btn{
-    display:inline-block;
-    background:var(--board);
-    color:var(--chalk);
-    font-family:'Kalam',cursive;
-    font-size:1.15rem;
-    border:none;
-    padding:13px 28px;
-    border-radius:9px;
-    cursor:pointer;
-    box-shadow:0 6px 0 #071433;
-    transition:transform .08s ease;
-  }
-
-  .btn:active{
-    transform:translateY(4px);
-    box-shadow:0 2px 0 #071433;
-  }
-
-  .btn:disabled{
-    opacity:.45;
-    cursor:not-allowed;
-    box-shadow:0 6px 0 #071433;
-  }
-
-  .btn-row{
+  .hero{
+    position:relative;
+    overflow:hidden;
     text-align:center;
-    margin-top:22px;
+    color:#fff;
+    background:linear-gradient(135deg,#3B2FD9 0%,#5B3BE6 52%,#8B45F2 100%);
+    border-radius:0 0 32px 32px;
+    padding:calc(22px + env(safe-area-inset-top)) 20px 44px;
   }
 
-  .btn.secondary{
-    background:var(--paper);
-    color:var(--board);
-    border:2px solid var(--board);
-    box-shadow:none;
-  }
-
-  .quiz-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    margin-bottom:18px;
-    padding-bottom:12px;
-    border-bottom:2px dashed var(--line);
-    flex-wrap:wrap;
-    gap:8px;
-  }
-
-  .quiz-header .who{
-    font-weight:800;
-    color:var(--board);
-  }
-
-  .quiz-header .prog{
-    font-size:.85rem;
-    color:#7a7362;
-    font-weight:700;
-  }
-
-  .timer-wrap{
-    height:8px;
-    width:100%;
-    background:var(--line);
-    border-radius:6px;
-    overflow:hidden;
-    margin:0 0 18px;
-  }
-
-  .timer-bar{
-    height:100%;
-    width:100%;
-    background:var(--sage);
-    transition:width 1s linear,background-color .3s;
-  }
-
-  .timer-bar.urgent{
-    background:var(--red);
-  }
-
-  #questionsContainer{
-    user-select:none;
-    -webkit-user-select:none;
-  }
-
-  .q-block{
-    padding:16px 0;
-    border-bottom:1px solid var(--line);
-  }
-
-  .q-block:last-of-type{
-    border-bottom:none;
-  }
-
-  .q-num{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    width:26px;
-    height:26px;
-    background:var(--mustard);
-    color:var(--board);
-    font-weight:800;
-    border-radius:50%;
-    font-size:.85rem;
-    margin-right:8px;
-  }
-
-  .q-text{
-    font-weight:700;
-    font-size:1.02rem;
-    display:inline;
-  }
-
-  .q-photo{
-    position:relative;
-    width:100%;
-    aspect-ratio:4/3;
-    max-height:260px;
-    margin:0 0 14px;
-    border-radius:12px;
-    overflow:hidden;
-    background:#E9E2D2;
-    border:2px solid var(--line);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-
-  .q-photo .photo-main{
-    position:relative;
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    display:block;
-  }
-
-  /*
-   A blurred copy of the same picture fills
-   the corners, so tall photos (towers and
-   statues) are shown whole instead of being
-   cropped.
-  */
-
-  .q-photo .photo-bg{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    filter:blur(16px) brightness(.92);
-    transform:scale(1.2);
-  }
-
-  .q-photo .photo-emoji{
-    font-size:3.4rem;
-    line-height:1;
-  }
-
-  .q-photo.is-loading::after{
+  .hero::before{
     content:'';
     position:absolute;
     inset:0;
-    background:linear-gradient(
-      100deg,
-      rgba(255,255,255,0) 20%,
-      rgba(255,255,255,.55) 50%,
-      rgba(255,255,255,0) 80%
-    );
-    background-size:220% 100%;
-    animation:photoShimmer 1.1s linear infinite;
-  }
-
-  @keyframes photoShimmer{
-    from{background-position:120% 0;}
-    to{background-position:-120% 0;}
-  }
-
-  .review .q-photo{
-    width:64px;
-    height:64px;
-    aspect-ratio:auto;
-    max-height:none;
-    float:left;
-    margin:2px 12px 6px 0;
-    border-radius:10px;
-  }
-
-  .review .q-photo .photo-emoji{
-    font-size:1.6rem;
-  }
-
-  .review .q-photo .photo-main{
-    object-fit:cover;
-  }
-
-  .review .q-photo .photo-bg{
-    display:none;
-  }
-
-  .review .q-block{
-    overflow:hidden;
-  }
-
-  /*
-   Puzzle card: shows the pattern, sequence or code
-   itself, for weeks where the question is the picture.
-  */
-
-  .q-pic{
-    margin:0 0 14px;
-    padding:22px 16px;
-    min-height:120px;
-    border-radius:12px;
-    border:2px solid var(--line);
+    pointer-events:none;
     background:
-      linear-gradient(
-        180deg,
-        #FFF7E6,
-        #FBEFD6
-      );
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    white-space:pre-wrap;
+      radial-gradient(circle at 10% 20%,rgba(255,255,255,.14) 0 38px,transparent 39px),
+      radial-gradient(circle at 93% 84%,rgba(255,255,255,.10) 0 64px,transparent 65px),
+      radial-gradient(circle at 95% 34%,var(--sun) 0 9px,transparent 10px),
+      radial-gradient(circle at 4% 60%,var(--coral) 0 7px,transparent 8px),
+      radial-gradient(circle at 5% 38%,var(--mint) 0 5px,transparent 6px),
+      radial-gradient(circle at 93% 54%,rgba(255,255,255,.55) 0 3px,transparent 4px);
+  }
+
+  .hero > *{position:relative}
+
+  .school{
     font-weight:800;
-    font-size:1.65rem;
-    line-height:1.5;
+    font-size:.95rem;
     letter-spacing:.02em;
-    color:var(--board);
-    overflow-wrap:anywhere;
-  }
-
-  .q-pic span{
-    display:inline-block;
-    max-width:100%;
-  }
-
-  .review .pic-line{
-    clear:none;
-    margin:6px 0 2px;
-    font-weight:700;
-    font-size:.9rem;
-    color:#7a7362;
-    white-space:pre-line;
-  }
-
-  .photo-credit{
-    text-align:center;
-    color:rgba(245,241,230,.45);
-    font-size:.72rem;
-    margin-top:18px;
-    line-height:1.5;
-  }
-
-  .options{
-    margin-top:12px;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-  }
-
-  .opt{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:10px 12px;
-    border-radius:8px;
-    border:2px solid var(--line);
-    cursor:pointer;
-    transition:border-color .12s,background .12s;
-  }
-
-  /*
-   Options are <label>s, so undo the uppercase heading
-   style that the general label rule gives them.
-  */
-
-  .opt{
-    text-transform:none;
-    letter-spacing:normal;
-  }
-
-  .opt:hover{
-    border-color:var(--blue);
-  }
-
-  .opt input{
-    accent-color:var(--board);
-    width:16px;
-    height:16px;
-  }
-
-  .opt.selected{
-    border-color:var(--blue);
-    background:#EEF3F8;
-  }
-
-  .opt-text{
-    font-weight:600;
-    font-size:.96rem;
-  }
-
-  .warn{
-    color:var(--red);
-    font-weight:700;
-    font-size:.85rem;
-    text-align:center;
-    margin-top:10px;
-    display:none;
-  }
-
-  .results{
-    text-align:center;
-  }
-
-  .stamp{
-    width:150px;
-    height:150px;
-    margin:6px auto 18px;
-    border-radius:50%;
-    border:5px solid var(--red);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    transform:rotate(-6deg);
-    color:var(--red);
-    font-family:'Kalam',cursive;
-  }
-
-  .stamp .score-num{
-    font-size:2.2rem;
-    font-weight:700;
-    line-height:1;
-  }
-
-  .stamp .score-label{
-    font-size:.75rem;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:.05em;
-    margin-top:2px;
-  }
-
-  .result-msg{
-    font-family:'Kalam',cursive;
-    font-size:1.3rem;
-    color:var(--board);
     margin-bottom:6px;
   }
 
-  .result-sub{
-    color:#7a7362;
-    font-weight:600;
-    margin-bottom:22px;
-    font-size:.92rem;
-  }
-
-  .save-status{
-    font-size:.82rem;
+  .hero h1{
+    font-family:var(--display);
     font-weight:700;
-    margin-bottom:22px;
+    font-size:clamp(2rem,9.4vw,3rem);
+    line-height:1.04;
+    letter-spacing:.005em;
+    margin-bottom:16px;
+    text-wrap:balance;
   }
 
-  .save-status.ok{
-    color:#2E7D46;
-  }
-
-  .save-status.fail{
-    color:var(--red);
-  }
-
-  .save-status.pending{
-    color:#7a7362;
-  }
-
-  .review{
+  .ticket{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    max-width:100%;
     text-align:left;
-    margin-top:10px;
+    color:var(--ink);
+    background:var(--sun);
+    border-radius:18px;
+    padding:9px 16px 9px 9px;
+    box-shadow:0 5px 0 rgba(20,14,90,.28);
   }
 
-  .review .q-block .your-ans,
-  .review .q-block .correct-ans{
-    font-size:.88rem;
-    font-weight:700;
-    margin-top:6px;
+  .ticket-emoji{
+    flex:none;
+    width:48px;height:48px;
+    display:grid;place-items:center;
+    font-size:1.8rem;line-height:1;
+    background:#fff;
+    border-radius:13px;
   }
 
-  .review .correct .your-ans{
-    color:#2E7D46;
-  }
-
-  .review .wrong .your-ans{
-    color:var(--red);
-  }
-
-  .review .wrong .correct-ans{
-    color:var(--blue);
-  }
-
-  .tag{
-    display:inline-block;
+  .ticket-label{
+    display:block;
     font-size:.7rem;
-    font-weight:800;
-    padding:2px 8px;
-    border-radius:20px;
-    margin-left:8px;
-    vertical-align:middle;
+    font-weight:900;
+    letter-spacing:.09em;
     text-transform:uppercase;
+    opacity:.72;
   }
 
-  .tag.correct{
-    background:#E1F3E5;
-    color:#2E7D46;
+  .ticket strong{
+    display:block;
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.08rem;
+    line-height:1.15;
   }
 
-  .tag.wrong{
-    background:#FBE4E2;
-    color:var(--red);
+  .ticket-date{
+    display:block;
+    font-size:.82rem;
+    font-weight:800;
+    opacity:.78;
   }
 
-  .hidden{
-    display:none;
+
+  /* ---------- layout ---------- */
+
+  .main{
+    max-width:600px;
+    margin:0 auto;
+    padding:0 16px 24px;
   }
 
-  footer{
+  .screen{animation:screen-in .28s ease both}
+
+  .card{
+    background:var(--card);
+    border-radius:var(--r);
+    box-shadow:var(--shadow);
+    padding:20px;
+  }
+
+  #home .card{
+    position:relative;
+    margin-top:-22px;
+  }
+
+  .field{margin:0 0 18px;padding:0;border:0;min-width:0}
+
+  .lbl{
+    display:block;
+    padding:0;
+    margin-bottom:8px;
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.08rem;
+  }
+
+  .input-wrap{position:relative}
+
+  input[type="text"]{
+    width:100%;
+    padding:14px 48px 14px 16px;
+    font-weight:700;
+    font-size:1.1rem;
+    background:#FBFAFF;
+    border:2px solid var(--line);
+    border-radius:16px;
+    outline:none;
+    transition:border-color .15s,box-shadow .15s,background .15s;
+  }
+
+  input[type="text"]::placeholder{color:#A3A6C3;font-weight:600}
+
+  input[type="text"]:focus{
+    background:#fff;
+    border-color:var(--brand);
+    box-shadow:0 0 0 4px rgba(67,56,224,.16);
+  }
+
+  .name-state{
+    position:absolute;
+    right:14px;top:50%;
+    width:22px;height:22px;
+    margin-top:-11px;
+    display:grid;place-items:center;
+    font-weight:900;font-size:1.15rem;line-height:1;
+  }
+
+  .name-state.spin{
+    border:3px solid var(--line);
+    border-top-color:var(--brand);
+    border-radius:50%;
+    animation:spin .7s linear infinite;
+  }
+
+  .name-state.ok{color:var(--mint-d)}
+  .name-state.ok::after{content:'✓'}
+  .name-state.bad{color:var(--coral-d)}
+  .name-state.bad::after{content:'!'}
+
+  .classes{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:8px;
+  }
+
+  .cls{
+    appearance:none;
+    min-height:54px;
+    padding:0 2px;
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.25rem;
+    color:var(--ink);
+    background:#fff;
+    border:2px solid var(--line);
+    border-radius:15px;
+    box-shadow:0 3px 0 var(--line);
+    cursor:pointer;
+    transition:transform .08s,background .12s,border-color .12s,box-shadow .12s,color .12s;
+  }
+
+  .cls[data-cls="UKG"]{grid-column:span 2;font-size:1.1rem}
+
+  .cls[aria-checked="true"]{
+    color:#fff;
+    background:var(--brand);
+    border-color:var(--brand);
+    box-shadow:0 3px 0 var(--brand-d);
+  }
+
+  .cls:active{transform:translateY(2px)}
+
+  .form-msg{
+    margin-bottom:14px;
+    padding:10px 12px;
+    font-weight:800;
+    font-size:.95rem;
+    color:var(--coral-d);
+    background:var(--coral-l);
+    border-radius:13px;
+  }
+
+  .hint{
+    margin-top:12px;
     text-align:center;
-    color:rgba(245,241,230,.5);
-    font-size:.78rem;
-    margin-top:26px;
+    font-weight:700;
+    font-size:.9rem;
+    color:var(--muted);
   }
+
+
+  /* ---------- buttons ---------- */
+
+  .btn{
+    appearance:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    width:100%;
+    min-height:56px;
+    padding:13px 22px;
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.15rem;
+    letter-spacing:.01em;
+    color:#fff;
+    background:var(--brand);
+    border:0;
+    border-radius:18px;
+    box-shadow:0 4px 0 var(--brand-d);
+    cursor:pointer;
+    user-select:none;
+    -webkit-user-select:none;
+    transition:transform .08s,box-shadow .08s,background .15s,color .15s;
+  }
+
+  .btn:active:not(:disabled){
+    transform:translateY(3px);
+    box-shadow:0 1px 0 var(--brand-d);
+  }
+
+  .btn:disabled{
+    color:#8A8DB0;
+    background:#E8E6F4;
+    box-shadow:0 4px 0 #D6D3E8;
+    cursor:not-allowed;
+  }
+
+  .btn-go{
+    color:var(--ink);
+    background:var(--sun);
+    box-shadow:0 4px 0 var(--sun-d);
+  }
+
+  .btn-go:active:not(:disabled){box-shadow:0 1px 0 var(--sun-d)}
+
+  .btn .spinner{
+    width:18px;height:18px;
+    border:3px solid rgba(138,141,176,.35);
+    border-top-color:#8A8DB0;
+    border-radius:50%;
+    animation:spin .7s linear infinite;
+  }
+
+  .link{
+    appearance:none;
+    display:block;
+    width:100%;
+    min-height:44px;
+    margin-top:6px;
+    padding:10px;
+    font-weight:800;
+    font-size:.98rem;
+    color:var(--muted);
+    text-decoration:underline;
+    text-underline-offset:3px;
+    background:none;
+    border:0;
+    cursor:pointer;
+  }
+
+
+  /* ---------- home extras ---------- */
+
+  .how{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:16px;
+  }
+
+  .how div{
+    padding:12px 6px;
+    text-align:center;
+    font-weight:700;
+    font-size:.82rem;
+    line-height:1.25;
+    color:var(--muted);
+    background:rgba(255,255,255,.72);
+    border:2px solid #fff;
+    border-radius:18px;
+  }
+
+  .how span{display:block;font-size:1.5rem;line-height:1.2}
+
+  .how b{
+    display:block;
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.02rem;
+    color:var(--ink);
+  }
+
+  .device{margin-top:18px}
+
+  .device h2{
+    margin:0 4px 8px;
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.05rem;
+  }
+
+  .device ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+
+  .drow{
+    appearance:none;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    width:100%;
+    padding:10px 14px 10px 10px;
+    text-align:left;
+    background:#fff;
+    border:0;
+    border-radius:16px;
+    box-shadow:var(--shadow-s);
+    cursor:pointer;
+  }
+
+  .dava{
+    flex:none;
+    width:40px;height:40px;
+    display:grid;place-items:center;
+    font-family:var(--display);
+    font-weight:600;
+    color:var(--brand);
+    background:var(--brand-l);
+    border-radius:50%;
+  }
+
+  .dname{flex:1;min-width:0}
+  .dname b{display:block;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dname small{display:block;font-weight:700;font-size:.82rem;color:var(--muted)}
+
+  .dscore{
+    flex:none;
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.15rem;
+  }
+
+  .dgo{flex:none;font-weight:900;color:var(--muted)}
+
+  .foot{
+    max-width:600px;
+    margin:0 auto;
+    padding:4px 20px calc(28px + env(safe-area-inset-bottom));
+    text-align:center;
+    font-weight:700;
+    font-size:.85rem;
+    color:var(--muted);
+  }
+
+  .foot a{color:var(--ink);font-weight:800;text-decoration:none}
+  .foot p + p{margin-top:6px;font-size:.75rem}
+
+
+  /* ---------- quiz ---------- */
+
+  #quiz{
+    user-select:none;
+    -webkit-user-select:none;
+    -webkit-touch-callout:none;
+  }
+
+  .qbar{
+    position:sticky;
+    top:0;
+    z-index:5;
+    margin:0 -16px;
+    padding:calc(10px + env(safe-area-inset-top)) 16px 12px;
+    background:rgba(255,247,232,.94);
+    -webkit-backdrop-filter:blur(8px);
+    backdrop-filter:blur(8px);
+  }
+
+  .qbar-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+
+  .qmeta{min-width:0}
+
+  .qcount{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.25rem;
+    line-height:1.15;
+  }
+
+  .qwho{
+    font-weight:700;
+    font-size:.86rem;
+    color:var(--muted);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .timer{
+    position:relative;
+    flex:none;
+    width:56px;height:56px;
+  }
+
+  .timer svg{display:block;width:100%;height:100%;transform:rotate(-90deg)}
+  .t-track{fill:#fff;stroke:var(--line);stroke-width:5}
+
+  .t-arc{
+    fill:none;
+    stroke:var(--mint);
+    stroke-width:5;
+    stroke-linecap:round;
+    stroke-dasharray:125.66;
+    stroke-dashoffset:0;
+    transition:stroke-dashoffset .22s linear,stroke .3s;
+  }
+
+  .timer span{
+    position:absolute;
+    inset:0;
+    display:grid;place-items:center;
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.18rem;
+    font-variant-numeric:tabular-nums;
+  }
+
+  .timer.mid .t-arc{stroke:var(--sun-d)}
+  .timer.low .t-arc{stroke:var(--coral)}
+  .timer.low span{color:var(--coral-d)}
+  .timer.low{animation:pulse .9s ease-in-out infinite}
+
+  .steps{display:flex;gap:5px;margin-top:10px}
+  .steps i{flex:1;height:8px;background:#EAE5F6;border-radius:6px;transition:background .25s}
+  .steps i.done{background:var(--brand)}
+  .steps i.now{background:var(--sun)}
+
+  .qcard{
+    margin-top:4px;
+    padding:16px;
+    transition:filter .15s;
+  }
+
+  .qcard.swap{animation:card-in .3s cubic-bezier(.2,.8,.2,1) both}
+
+  /* While the window is not in front, the question cannot be read. */
+  .away .qcard,.away .actbar{filter:blur(16px);pointer-events:none}
+
+  .media{
+    position:relative;
+    display:grid;place-items:center;
+    width:100%;
+    aspect-ratio:16/10;
+    max-height:min(280px,36vh);
+    max-height:clamp(150px,calc(100dvh - 570px),280px);
+    margin-bottom:14px;
+    overflow:hidden;
+    background:#EFEAFB;
+    border-radius:16px;
+  }
+
+  .media img{
+    position:absolute;
+    inset:0;
+    width:100%;height:100%;
+    pointer-events:none;
+    user-select:none;
+    -webkit-user-select:none;
+    -webkit-user-drag:none;
+    -webkit-touch-callout:none;
+  }
+
+  .media .m-bg{
+    object-fit:cover;
+    filter:blur(18px) brightness(.94);
+    transform:scale(1.25);
+  }
+
+  .media .m-main{
+    object-fit:contain;
+    opacity:0;
+    transition:opacity .25s;
+  }
+
+  .media.ready .m-main{opacity:1}
+
+  .media.loading::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(100deg,rgba(255,255,255,0) 20%,rgba(255,255,255,.6) 50%,rgba(255,255,255,0) 80%);
+    background-size:220% 100%;
+    animation:shimmer 1.1s linear infinite;
+  }
+
+  .media.emoji{
+    aspect-ratio:auto;
+    height:92px;
+    background:linear-gradient(135deg,#FFF1C9,#FFE2EC);
+  }
+
+  .media.emoji span{font-size:3rem;line-height:1}
+
+  .media.pic{
+    aspect-ratio:auto;
+    max-height:none;
+    min-height:120px;
+    padding:20px 14px;
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.65rem;
+    line-height:1.45;
+    letter-spacing:.02em;
+    text-align:center;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    background:linear-gradient(180deg,#FFF7E0,#FFEEC6);
+  }
+
+  .media.pic span{display:inline-block;max-width:100%}
+
+  .qtext{
+    margin-bottom:14px;
+    font-family:var(--body);
+    font-weight:800;
+    font-size:clamp(1.12rem,4.7vw,1.3rem);
+    line-height:1.3;
+    outline:none;
+  }
+
+  .opts{display:grid;gap:10px}
+
+  .opt{
+    appearance:none;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    width:100%;
+    min-height:58px;
+    padding:9px 14px 9px 10px;
+    text-align:left;
+    font-weight:700;
+    font-size:1.05rem;
+    line-height:1.25;
+    background:#fff;
+    border:2px solid var(--line);
+    border-radius:16px;
+    box-shadow:0 3px 0 var(--line);
+    cursor:pointer;
+    scroll-margin-bottom:104px;
+    transition:transform .08s,background .12s,border-color .12s,box-shadow .12s;
+  }
+
+  .opt .k{
+    flex:none;
+    width:36px;height:36px;
+    display:grid;place-items:center;
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.05rem;
+    background:#EDEAF8;
+    border-radius:12px;
+    transition:background .12s,color .12s;
+  }
+
+  .opt:nth-child(1) .k{background:#FFE0E0}
+  .opt:nth-child(2) .k{background:#DCEBFF}
+  .opt:nth-child(3) .k{background:#FFEFBF}
+  .opt:nth-child(4) .k{background:#D8F4E8}
+
+  .opt .t{flex:1;min-width:0;overflow-wrap:anywhere}
+
+  .opt[aria-checked="true"]{
+    background:var(--brand-l);
+    border-color:var(--brand);
+    box-shadow:0 3px 0 var(--brand);
+  }
+
+  .opt[aria-checked="true"] .k{color:#fff;background:var(--brand)}
+  .opt:active{transform:translateY(2px)}
+
+  @media (hover:hover){
+    .opt:hover{border-color:#C8C3EC}
+    .opt[aria-checked="true"]:hover{border-color:var(--brand)}
+    .cls:hover{border-color:#C8C3EC}
+    .cls[aria-checked="true"]:hover{border-color:var(--brand)}
+  }
+
+  /*
+    The Next bar stays hidden until an answer is chosen, so on a short
+    screen it never sits on top of the answers a child is still reading.
+  */
+  .actbar{
+    position:sticky;
+    bottom:0;
+    z-index:5;
+    margin:0 -16px;
+    padding:14px 16px calc(14px + env(safe-area-inset-bottom));
+    background:linear-gradient(rgba(255,247,232,0),var(--bg) 34%);
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(14px);
+    transition:opacity .18s,transform .18s,visibility 0s .18s,filter .15s;
+  }
+
+  .actbar.on{
+    opacity:1;
+    visibility:visible;
+    transform:none;
+    transition:opacity .18s,transform .18s,filter .15s;
+  }
+
+
+  /* ---------- results ---------- */
+
+  .rhead{
+    padding:calc(18px + env(safe-area-inset-top)) 4px 12px;
+    text-align:center;
+    font-weight:800;
+    font-size:.9rem;
+    color:var(--muted);
+  }
+
+  .rhead h1{
+    display:block;
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.2rem;
+    color:var(--ink);
+  }
+
+  .rcard{padding:24px 20px 20px;text-align:center}
+
+  .ring{
+    position:relative;
+    width:168px;height:168px;
+    margin:0 auto 10px;
+  }
+
+  .ring svg{display:block;width:100%;height:100%;transform:rotate(-90deg)}
+  .r-track{fill:none;stroke:#EEEAFB;stroke-width:12}
+
+  .r-arc{
+    fill:none;
+    stroke:var(--brand);
+    stroke-width:12;
+    stroke-linecap:round;
+    stroke-dasharray:326.73;
+    stroke-dashoffset:326.73;
+    transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1);
+  }
+
+  .ring-in{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:var(--display);
+  }
+
+  .ring-in > span{display:flex;align-items:baseline}
+  .ring-num{font-weight:700;font-size:4rem;line-height:1;font-variant-numeric:tabular-nums}
+  .ring-den{font-weight:600;font-size:1.5rem;color:var(--muted)}
+
+  .stars{font-size:1.7rem;line-height:1;letter-spacing:4px;margin-bottom:8px}
+  .stars .off{filter:grayscale(1);opacity:.28}
+
+  .rwho{font-weight:800;font-size:.95rem;color:var(--muted)}
+
+  .rmsg{
+    margin-top:2px;
+    font-family:var(--display);
+    font-weight:700;
+    font-size:1.75rem;
+    line-height:1.15;
+  }
+
+  .rsub{margin-top:4px;font-weight:700;color:var(--muted)}
+
+  .chips{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    margin-top:16px;
+  }
+
+  .chip{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:7px 12px;
+    font-weight:800;
+    font-size:.92rem;
+    border-radius:999px;
+  }
+
+  .chip.good{color:var(--mint-d);background:var(--mint-l)}
+  .chip.bad{color:var(--coral-d);background:var(--coral-l)}
+  .chip.none{color:var(--muted);background:#F1EFFA}
+
+  .rnote{
+    margin-top:12px;
+    font-weight:800;
+    font-size:.88rem;
+    color:var(--coral-d);
+  }
+
+  .save{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:6px 12px;
+    margin-top:16px;
+    padding:10px 12px;
+    font-weight:800;
+    font-size:.92rem;
+    border-radius:14px;
+  }
+
+  .save.pending{color:var(--muted);background:#F4F2FB}
+  .save.ok{color:var(--mint-d);background:var(--mint-l)}
+  .save.fail{color:var(--coral-d);background:var(--coral-l)}
+
+  .save button{
+    appearance:none;
+    min-height:36px;
+    padding:6px 14px;
+    font-weight:800;
+    color:#fff;
+    background:var(--coral-d);
+    border:0;
+    border-radius:10px;
+    cursor:pointer;
+  }
+
+  .answers{margin-top:14px;padding:18px 16px}
+
+  .answers h3{
+    margin:0 2px 12px;
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.15rem;
+  }
+
+  .lock{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px;
+    background:#FFF5D6;
+    border-radius:16px;
+  }
+
+  .lock span{flex:none;font-size:1.8rem;line-height:1}
+  .lock b{display:block;font-family:var(--display);font-weight:600;font-size:1.05rem}
+  .lock small{display:block;font-weight:700;font-size:.9rem;color:var(--muted)}
+
+  .rev{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+
+  .rev li{
+    display:grid;
+    grid-template-columns:52px 1fr;
+    gap:12px;
+    padding:12px;
+    background:#fff;
+    border:2px solid var(--line);
+    border-radius:16px;
+  }
+
+  .rev li.ok{background:#F5FCF9;border-color:#BDEAD8}
+  .rev li.no{background:#FFF9F9;border-color:#FFD3D3}
+
+  .thumb{
+    width:52px;height:52px;
+    display:grid;place-items:center;
+    overflow:hidden;
+    font-size:1.5rem;line-height:1;
+    background:#EFEAFB;
+    border-radius:12px;
+  }
+
+  .thumb img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+
+  .rq{font-weight:800;line-height:1.3}
+
+  .rpic{
+    margin-top:4px;
+    font-weight:700;
+    font-size:.9rem;
+    color:var(--muted);
+    white-space:pre-line;
+  }
+
+  .ra{margin-top:5px;font-weight:700;font-size:.95rem;line-height:1.3}
+  .ra.good{color:var(--mint-d)}
+  .ra.bad{color:var(--coral-d)}
+
+  #result .btn{margin-top:16px}
+
+
+  /* ---------- sheets and notices ---------- */
+
+  .modal{
+    position:fixed;
+    inset:0;
+    z-index:50;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    background:rgba(22,20,60,.58);
+    animation:fade .18s ease both;
+  }
+
+  .sheet{
+    width:100%;
+    max-width:560px;
+    max-height:94vh;
+    max-height:94dvh;
+    overflow:auto;
+    padding:22px 20px calc(16px + env(safe-area-inset-bottom));
+    background:#fff;
+    border-radius:28px 28px 0 0;
+    animation:rise .3s cubic-bezier(.2,.9,.2,1) both;
+  }
+
+  .sheet h2{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:1.6rem;
+    line-height:1.15;
+    overflow-wrap:anywhere;
+  }
+
+  .sheet-sub{margin-top:2px;font-weight:800;color:var(--muted)}
+
+  /* A sheet whose content scrolls while its buttons stay in view. */
+  .sheet.split{
+    display:flex;
+    flex-direction:column;
+    padding:0;
+    overflow:hidden;
+  }
+
+  .sheet-scroll{
+    flex:1 1 auto;
+    min-height:0;
+    overflow:auto;
+    overscroll-behavior:contain;
+    padding:22px 20px 2px;
+  }
+
+  .sheet-actions{
+    flex:none;
+    padding:12px 20px calc(8px + env(safe-area-inset-bottom));
+    box-shadow:0 -10px 18px -12px rgba(29,33,80,.22);
+  }
+
+  .rules{list-style:none;margin:14px 0 14px;padding:0;display:grid;gap:8px}
+
+  .rules li{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:11px 12px;
+    background:#F7F5FF;
+    border-radius:16px;
+  }
+
+  .rules li > span{flex:none;width:32px;text-align:center;font-size:1.45rem;line-height:1.15}
+  .rules div{font-weight:700;font-size:.93rem;line-height:1.35;color:var(--muted)}
+
+  .rules strong{
+    display:block;
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.04rem;
+    color:var(--ink);
+  }
+
+  .sheet-note{
+    margin:0 0 14px;
+    padding:10px 12px;
+    font-weight:800;
+    font-size:.92rem;
+    color:#7A5500;
+    background:#FFF3CC;
+    border-radius:13px;
+  }
+
+  .notice{text-align:center}
+  .notice-icon{font-size:3rem;line-height:1;margin-bottom:8px}
+  .notice p{margin-top:8px;font-weight:700;font-size:1.02rem;color:var(--muted)}
+
+  .strikes{display:flex;justify-content:center;gap:8px;margin:14px 0 2px}
+  .strikes i{width:14px;height:14px;background:#E6E2F2;border-radius:50%}
+  .strikes i.on{background:var(--coral)}
+
+  .notice .btn{margin-top:16px}
+
+  .count{
+    position:fixed;
+    inset:0;
+    z-index:60;
+    display:grid;place-items:center;
+    color:#fff;
+    background:linear-gradient(135deg,#3B2FD9,#8B45F2);
+  }
+
+  .count span{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(6rem,38vw,12rem);
+    line-height:1;
+    animation:pop .6s cubic-bezier(.2,.9,.2,1) both;
+  }
+
+  .toast{
+    position:fixed;
+    left:50%;
+    bottom:calc(92px + env(safe-area-inset-bottom));
+    z-index:70;
+    max-width:calc(100% - 32px);
+    padding:10px 16px;
+    font-weight:800;
+    font-size:.95rem;
+    color:#fff;
+    background:var(--ink);
+    border-radius:999px;
+    transform:translateX(-50%);
+    animation:rise .25s ease both;
+  }
+
+  #confetti{
+    position:fixed;
+    inset:0;
+    z-index:65;
+    width:100%;height:100%;
+    pointer-events:none;
+  }
+
+  .noscript{
+    margin:16px;
+    padding:14px;
+    font-weight:800;
+    text-align:center;
+    color:var(--coral-d);
+    background:var(--coral-l);
+    border-radius:14px;
+  }
+
+
+  /* ---------- wider screens ---------- */
+
+  @media (max-width:339px){
+    .classes{grid-template-columns:repeat(3,1fr)}
+    .cls[data-cls="UKG"]{grid-column:auto}
+    .how{grid-template-columns:1fr}
+  }
+
+  @media (min-width:600px){
+    .hero{padding-top:36px;padding-bottom:58px}
+    .classes{grid-template-columns:repeat(10,1fr)}
+    .card{padding:26px}
+    .qcard{padding:22px}
+    .modal{align-items:center;padding:20px}
+    .sheet{border-radius:28px;padding-bottom:20px}
+    .sheet.split{padding-bottom:0}
+    .sheet-actions{padding-bottom:12px}
+  }
+
+
+  /* ---------- motion ---------- */
+
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes pulse{50%{transform:scale(1.08)}}
+  @keyframes fade{from{opacity:0}}
+  @keyframes rise{from{opacity:0;transform:translateY(24px)}}
+  .toast{animation-name:toast-in}
+  @keyframes toast-in{from{opacity:0;transform:translate(-50%,16px)}}
+  @keyframes screen-in{from{opacity:0;transform:translateY(10px)}}
+  @keyframes card-in{from{opacity:0;transform:translateX(18px)}}
+  @keyframes pop{from{opacity:0;transform:scale(.4)}}
+  @keyframes shimmer{from{background-position:120% 0}to{background-position:-120% 0}}
 
   @media (prefers-reduced-motion:reduce){
-    .btn{
-      transition:none;
+    *,*::before,*::after{
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;
     }
+  }
+
+  /* The quiz is not for printing. */
+  @media print{
+    body > *{display:none !important}
+    body::after{content:'The Great Saturday Quiz cannot be printed.';display:block;padding:40px;font:16px sans-serif}
   }
 </style>
 </head>
 
 <body>
 
-<div class="wrap">
+<noscript><p class="noscript">The quiz needs JavaScript. Please turn it on in your browser and reload this page.</p></noscript>
 
-  <header>
+<div id="app">
 
-    <p class="school-name">
-      Vardhman Convent School, Moonak
-    </p>
-
-    <p class="school-phone">
-      +91 9855458530
-    </p>
-
-    <div class="chalk-line"></div>
-
-    <h1>
-      The Great Saturday Quiz
-    </h1>
-
-    <p id="headerSub"></p>
-
-    <div class="theme-badge">
-      This Week: 🎈 Children's Day — 14 Nov
+  <header class="hero" id="hero">
+    <p class="school">Vardhman Convent School, Moonak</p>
+    <h1>The Great Saturday Quiz</h1>
+    <div class="ticket">
+      <span class="ticket-emoji" id="themeEmoji" aria-hidden="true"></span>
+      <span>
+        <span class="ticket-label">This week</span>
+        <strong id="themeName"></strong>
+        <span class="ticket-date" id="themeDate"></span>
+      </span>
     </div>
-
   </header>
 
+  <main class="main">
 
-  <!-- SETUP -->
+    <!-- HOME -->
+    <section class="screen" id="home">
 
-  <div class="card" id="setupCard">
+      <form class="card" id="startForm" novalidate>
 
-    <div class="field">
+        <div class="field">
+          <label class="lbl" for="studentName">Your name</label>
+          <div class="input-wrap">
+            <input
+              type="text"
+              id="studentName"
+              placeholder="Type your full name"
+              maxlength="40"
+              autocomplete="off"
+              autocapitalize="words"
+              autocorrect="off"
+              spellcheck="false"
+              enterkeyhint="go"
+            >
+            <span class="name-state" id="nameState" aria-hidden="true"></span>
+          </div>
+        </div>
 
-      <label for="studentName">
-        Student name
-      </label>
+        <fieldset class="field">
+          <legend class="lbl" id="classLegend">Your class</legend>
+          <div class="classes" id="classGrid" role="radiogroup" aria-labelledby="classLegend"></div>
+        </fieldset>
 
-      <input
-        type="text"
-        id="studentName"
-        placeholder="Type your name"
-        autocomplete="off"
-      >
+        <p class="form-msg" id="formMsg" role="alert" hidden></p>
 
-    </div>
+        <button class="btn btn-go" id="startBtn" type="submit">Start the quiz</button>
+
+        <p class="hint" id="startHint"></p>
+
+      </form>
+
+      <section class="device" id="deviceBox" hidden aria-labelledby="deviceTitle">
+        <h2 id="deviceTitle">Finished on this device</h2>
+        <ul id="deviceList"></ul>
+      </section>
+
+      <div class="how" aria-label="How the quiz works">
+        <div><span aria-hidden="true">🎯</span><b id="howCount">10 questions</b>for your class</div>
+        <div><span aria-hidden="true">⏱️</span><b id="howTime">40 to 45 seconds</b>for each one</div>
+        <div><span aria-hidden="true">🏅</span><b>One try</b>so do your best</div>
+      </div>
+
+    </section>
 
 
-    <div class="field">
+    <!-- QUIZ -->
+    <section class="screen" id="quiz" hidden>
 
-      <label id="classLabelText">
-        Select your class
-      </label>
+      <div class="qbar">
+        <div class="qbar-top">
+          <div class="qmeta">
+            <h1 class="qcount" id="qCount"></h1>
+            <div class="qwho" id="qWho"></div>
+          </div>
+          <div class="timer" id="timer" role="timer" aria-label="Seconds left">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <circle class="t-track" cx="24" cy="24" r="20"></circle>
+              <circle class="t-arc" id="tArc" cx="24" cy="24" r="20"></circle>
+            </svg>
+            <span id="tNum"></span>
+          </div>
+        </div>
+        <div class="steps" id="steps" aria-hidden="true"></div>
+      </div>
 
-      <div class="custom-select" id="classDropdown">
+      <article class="card qcard" id="qCard">
+        <div id="qMedia"></div>
+        <h2 class="qtext" id="qText" tabindex="-1"></h2>
+        <div class="opts" id="opts" role="radiogroup" aria-labelledby="qText"></div>
+      </article>
 
-        <button
-          type="button"
-          class="custom-select-trigger"
-          id="classTrigger"
-          aria-haspopup="listbox"
-          aria-expanded="false"
-        >
+      <div class="actbar" id="actBar">
+        <button class="btn" id="nextBtn" type="button" disabled>Choose an answer</button>
+      </div>
 
-          <span id="classTriggerText">
-            Choose a class
-          </span>
+    </section>
 
-          <svg
-            class="chevron"
-            width="14"
-            height="9"
-            viewBox="0 0 14 9"
-          >
-            <path
-              d="M1 1L7 7L13 1"
-              stroke="#0B1F4D"
-              stroke-width="2"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
+
+    <!-- RESULT -->
+    <section class="screen" id="result" hidden>
+
+      <div class="rhead">
+        <h1>The Great Saturday Quiz</h1>
+        <span id="rTheme"></span>
+      </div>
+
+      <div class="card rcard">
+
+        <div class="ring">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="r-track" cx="60" cy="60" r="52"></circle>
+            <circle class="r-arc" id="rArc" cx="60" cy="60" r="52"></circle>
           </svg>
-
-        </button>
-
-
-        <ul
-          class="custom-select-options hidden"
-          id="classOptions"
-          role="listbox"
-        ></ul>
-
-      </div>
-
-    </div>
-
-
-    <div class="warn" id="setupWarn">
-      Please enter your name and pick a class.
-    </div>
-
-
-    <div class="btn-row">
-
-      <button class="btn" id="startBtn">
-        Start Quiz
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- QUIZ -->
-
-  <div class="card hidden" id="quizCard">
-
-    <div class="quiz-header">
-
-      <div class="who" id="quizWho"></div>
-
-      <div class="prog" id="quizProg"></div>
-
-    </div>
-
-
-    <div class="timer-wrap">
-
-      <div
-        class="timer-bar"
-        id="timerBar"
-      ></div>
-
-    </div>
-
-
-    <div id="questionsContainer"></div>
-
-
-    <div class="warn" id="quizWarn">
-      Please answer all questions before submitting.
-    </div>
-
-
-    <div class="btn-row">
-
-      <button class="btn" id="submitBtn">
-        Next Question
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- RESULTS -->
-
-  <div class="card hidden" id="resultsCard">
-
-    <div class="results">
-
-      <div class="stamp">
-
-        <div
-          class="score-num"
-          id="scoreNum"
-        >
-          0/10
+          <div class="ring-in">
+            <span><span class="ring-num" id="scoreNum">0</span><span class="ring-den" id="scoreDen"></span></span>
+          </div>
         </div>
 
-        <div class="score-label">
-          Marks
+        <div class="stars" id="stars" aria-hidden="true"></div>
+        <p class="rwho" id="rWho"></p>
+        <h2 class="rmsg" id="rMsg"></h2>
+        <p class="rsub" id="rSub"></p>
+        <div class="chips" id="rChips"></div>
+        <p class="rnote" id="rNote" hidden></p>
+
+        <div class="save" id="saveBox" role="status">
+          <span id="saveText"></span>
+          <button type="button" id="saveRetry" hidden>Try again</button>
         </div>
 
       </div>
 
+      <div class="card answers">
+        <h3>Your answers</h3>
+        <div class="lock" id="answersLock" hidden>
+          <span aria-hidden="true">🔒</span>
+          <div><b id="lockTitle"></b><small id="lockText"></small></div>
+        </div>
+        <ol class="rev" id="reviewList"></ol>
+      </div>
 
-      <div
-        class="result-msg"
-        id="resultMsg"
-      ></div>
+      <button class="btn" id="doneBtn" type="button">Done</button>
 
+    </section>
 
-      <div
-        class="result-sub"
-        id="resultSub"
-      ></div>
+  </main>
 
-
-      <div
-        class="save-status"
-        id="saveStatus"
-      ></div>
-
-    </div>
-
-
-    <div
-      class="review"
-      id="reviewContainer"
-    ></div>
-
-
-    <div class="btn-row">
-
-      <button
-        class="btn secondary"
-        id="retryBtn"
-      >
-        Try Another Class
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <p class="photo-credit" id="photoCredit">
-    Photographs from Wikimedia Commons,
-    used under their free licences.
-  </p>
+  <footer class="foot" id="foot">
+    <p>Questions about the quiz? Call the school: <a href="tel:+919855458530">+91 9855458530</a></p>
+    <p id="photoCredit">Photographs from Wikimedia Commons, used under their free licences.</p>
+  </footer>
 
 </div>
 
 
+<!-- "Get ready" sheet: the rules, shown before every quiz -->
+<div class="modal" id="readyModal" role="dialog" aria-modal="true" aria-labelledby="readyTitle" hidden>
+  <div class="sheet split">
+    <div class="sheet-scroll">
+    <h2 id="readyTitle"></h2>
+    <p class="sheet-sub" id="readySub"></p>
+    <ul class="rules">
+      <li><span aria-hidden="true">⏱️</span><div><strong id="ruleTime"></strong>When the time is up, the quiz moves to the next question.</div></li>
+      <li><span aria-hidden="true">➡️</span><div><strong>No going back</strong>Choose your answer, then tap Next.</div></li>
+      <li><span aria-hidden="true">📵</span><div><strong>Stay on this page</strong><span id="ruleLeave"></span></div></li>
+      <li><span aria-hidden="true">🤝</span><div><strong>Your own work</strong>No help and no searching. Your teacher can see if you leave the page.</div></li>
+    </ul>
+    <p class="sheet-note" id="readyNote" hidden></p>
+    </div>
+    <div class="sheet-actions">
+      <button class="btn btn-go" id="beginBtn" type="button" disabled></button>
+      <button class="link" id="readyBack" type="button">Go back</button>
+    </div>
+  </div>
+</div>
+
+<!-- Notices: leaving the quiz, coming back after a reload, quiz ended -->
+<div class="modal" id="noticeModal" role="alertdialog" aria-modal="true" aria-labelledby="noticeTitle" aria-describedby="noticeText" hidden>
+  <div class="sheet notice">
+    <div class="notice-icon" id="noticeIcon" aria-hidden="true"></div>
+    <h2 id="noticeTitle"></h2>
+    <p id="noticeText"></p>
+    <div class="strikes" id="strikes" role="img" hidden></div>
+    <button class="btn" id="noticeOk" type="button"></button>
+    <button class="link" id="noticeAlt" type="button" hidden></button>
+  </div>
+</div>
+
+<div class="count" id="countdown" aria-hidden="true" hidden></div>
+<div class="toast" id="toast" role="status" hidden></div>
+<div class="sr" id="live" aria-live="polite"></div>
+<canvas id="confetti" aria-hidden="true" hidden></canvas>
+
 <script>
+(function () {
+'use strict';
 
 /* ============================================================
-   GOOGLE APPS SCRIPT WEB APP
+   SETTINGS
    ============================================================ */
 
+/* The Google Apps Script web app that checks names and saves results. */
 const API_URL =
   "https://script.google.com/macros/s/AKfycbyvoMi2k-7vsl3ZJfUQqozwC_tBUtQOYJFIq_KjrWoxtNLNBJTJNhd8mCHQjHAnDfkJ/exec";
 
+/*
+  Fair-play rules. Change the values here; the wording on the page follows.
+
+  shuffleQuestions  every student gets the questions in a different order
+  freeLeaves        how many times a student may leave the page with only a warning
+  maxLeaves         the quiz is handed in when a student has left this many times
+  leaveGraceMs      leaving for less than this is ignored (a slip of the thumb)
+  answersAt         time on the quiz day (India time, 24-hour) when the correct
+                    answers open. Until then students see only their score, so
+                    answers cannot be passed to classmates who have not played.
+                    Set to "" to show the answers straight away.
+  imageWaitMs       the clock waits this long, at most, for a question's photo
+*/
+const RULES = {
+  shuffleQuestions: true,
+  freeLeaves: 1,
+  maxLeaves: 3,
+  leaveGraceMs: 2000,
+  answersAt: "20:00",
+  imageWaitMs: 5000
+};
+
+const CLASS_ORDER = ["UKG", "1", "2", "3", "4", "5", "6", "7", "8"];
+
+/* Seconds per question: UKG to Class 3 get 45, Classes 4 to 8 get 40. */
+const QUESTION_SECONDS = 40;
+const QUESTION_SECONDS_BY_CLASS = {
+  "UKG": 45, "1": 45, "2": 45, "3": 45,
+  "4": 40, "5": 40, "6": 40, "7": 40, "8": 40
+};
+
 
 /* ============================================================
-   QUIZ QUESTIONS
+   THIS WEEK'S QUESTIONS
    ============================================================ */
 
 /*
-   Each question shows either a photo (img, a key into
-   QUESTION_IMAGES) or a puzzle card (pic, text drawn on
-   the page). Weeks with no photos leave this map empty.
+  Do not edit this block by hand. Edit quiz-data.js and run
+  "node tools/build.mjs", which rewrites it. The questions are stored
+  scrambled so the answers cannot be read from the page source.
+
+  In an emergency BANK may be replaced with a plain object of the shape
+  { week: {...}, images: {...}, quizzes: {...} } and the page still works.
 */
-
-const QUESTION_IMAGES = {
-
-  "ball": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Children_play_joyfully_in_colorful_ball_pit_at_indoor_play_area_during_afternoon_fun.jpg/960px-Children_play_joyfully_in_colorful_ball_pit_at_indoor_play_area_during_afternoon_fun.jpg",
-
-  "teddy": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/Little_girl_hugs_teddy_bear_toy.jpg/960px-Little_girl_hugs_teddy_bear_toy.jpg",
-
-  "balloon": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/Balloon_on_a_children%27s_birthday_party.jpg/960px-Balloon_on_a_children%27s_birthday_party.jpg",
-
-  "cake": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/ff/Two_joyful_children_sit_on_a_mat_next_to_a_birthday_cake%2C_dressed_in_festive_hats.jpg/960px-Two_joyful_children_sit_on_a_mat_next_to_a_birthday_cake%2C_dressed_in_festive_hats.jpg",
-
-  "storybook": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Children_reading_beneath_a_tree_-_Story-Friends_%281927%29_-_Mabel_Betsy_Hill.jpg/960px-Children_reading_beneath_a_tree_-_Story-Friends_%281927%29_-_Mabel_Betsy_Hill.jpg",
-
-  "swing": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/48/Playground_swing_01.jpg/960px-Playground_swing_01.jpg",
-
-  "kite": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/Kite_flying_over_Pasing_04.jpg/960px-Kite_flying_over_Pasing_04.jpg",
-
-  "butterfly": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a6/Peacock_butterfly_%28Aglais_io%29_2.jpg/960px-Peacock_butterfly_%28Aglais_io%29_2.jpg",
-
-  "dog": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/Two_puppies_playing_together_one_standing_over_the_other_at_golden_hour_in_Don_Det_Laos.jpg/960px-Two_puppies_playing_together_one_standing_over_the_other_at_golden_hour_in_Don_Det_Laos.jpg",
-
-  "football": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Children_playing_football_after_school.jpg/960px-Children_playing_football_after_school.jpg",
-
-  "chess": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Chess_game_Staunton_No._6_perfil_view_8.jpg/960px-Chess_game_Staunton_No._6_perfil_view_8.jpg",
-
-  "badminton": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Badminton_Shuttlecock_159415.png/960px-Badminton_Shuttlecock_159415.png",
-
-  "rainbow": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Rainbow_sky.jpg/960px-Rainbow_sky.jpg",
-
-  "nehru": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Portrait_of_Jawaharlal_Nehru_in_1942.JPG/960px-Portrait_of_Jawaharlal_Nehru_in_1942.JPG",
-
-  "school": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Children_at_school%2C_India.jpg/960px-Children_at_school%2C_India.jpg",
-
-  "friends": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Friendship_Holding_hands..jpg/960px-Friendship_Holding_hands..jpg",
-
-  "cricket": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Cricket_bat_and_ball_at_Bishop%27s_Stortford_Cricket_Club%2C_Hertfordshire.jpg/960px-Cricket_bat_and_ball_at_Bishop%27s_Stortford_Cricket_Club%2C_Hertfordshire.jpg",
-
-  "moon": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/960px-FullMoon2010.jpg",
-
-  "owl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/Eurasian_eagle-owl_%2844088%29.jpg/960px-Eurasian_eagle-owl_%2844088%29.jpg",
-
-  "tree": "https://upload.wikimedia.org/wikipedia/commons/0/07/Children_planting_plants_in_Seychelles.jpg",
-
-  "bee": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/European_honey_bee_extracts_nectar.jpg/960px-European_honey_bee_extracts_nectar.jpg",
-
-  "lightning": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Lightning_in_the_Sky_%289357443%29.jpg/960px-Lightning_in_the_Sky_%289357443%29.jpg",
-
-};
-
-
-const QUIZZES = {
-
-  "UKG":[
-
-    {img:"ball",q:"What do we do with a ball?",o:["Kick and throw it","Eat it","Read it","Wear it"],a:0,e:"⚽"},
-
-    {img:"teddy",q:"Which toy is soft and cuddly?",o:["A stone","A spoon","A teddy bear","A shoe"],a:2,e:"🧸"},
-
-    {img:"balloon",q:"What floats up in the sky at a party?",o:["A book","A balloon","A chair","A shoe"],a:1,e:"🎈"},
-
-    {img:"friends",q:"Who do we play with at school?",o:["A lion","A cloud","A car","Our friends"],a:3,e:"👧"},
-
-    {img:"cake",q:"What do we eat on a birthday?",o:["A stone","A cake","A pencil","A sock"],a:1,e:"🎂"},
-
-    {img:"storybook",q:"What do we do when we are happy?",o:["Smile","Cry","Shout","Hide"],a:0,e:"😊"},
-
-    {img:"storybook",q:"What do we read in?",o:["A plate","A shoe","A storybook","A ball"],a:2,e:"📖"},
-
-    {img:"swing",q:"What do we sit on and swing in a park?",o:["A table","A bed","A bus","A swing"],a:3,e:"🛝"},
-
-    {img:"balloon",q:"What sound does a happy child make?",o:["Ha ha ha","Brr brr","Tick tock","Vroom"],a:0,e:"😄"},
-
-    {img:"friends",q:"Which is the best thing to share with a friend?",o:["A stone","A toy","A shoe","A cloud"],a:1,e:"🤗"}
-
-  ],
-
-  "1":[
-
-    {q:"Why do we celebrate Children's Day?",o:["To celebrate children and their happiness","To celebrate farmers","To celebrate teachers","To celebrate sports"],a:0,e:"🎈"},
-
-    {img:"nehru",q:"Who was called Chacha Nehru?",o:["A storybook hero","Jawaharlal Nehru","A football player","A teacher"],a:1,e:"👴"},
-
-    {img:"kite",q:"Which toy can fly in the sky?",o:["A car","A boat","A train","A kite"],a:3,e:"🪁"},
-
-    {img:"football",q:"What game do we play by hiding?",o:["Cricket","Chess","Hide and seek","Football"],a:2,e:"🙈"},
-
-    {img:"school",q:"What do we carry to school?",o:["A school bag","A pillow","A bucket","A television"],a:0,e:"🎒"},
-
-    {img:"friends",q:"What should we do if a friend falls down?",o:["Laugh at them","Walk away","Help them get up","Hide"],a:2,e:"🤝"},
-
-    {img:"butterfly",q:"What do butterflies do?",o:["Fly from flower to flower","Swim in the sea","Sleep in a cave","Climb a tree"],a:0,e:"🦋"},
-
-    {img:"storybook",q:"Who tells us stories at bedtime?",o:["A cloud","A stone","A car","Our grandparents"],a:3,e:"📖"},
-
-    {img:"cake",q:"What do children love to eat on Children's Day?",o:["Stones","Chocolates","Pencils","Shoes"],a:1,e:"🍫"},
-
-    {img:"friends",q:"What is the best gift for a friend?",o:["A kind smile and a toy","A broken shoe","A stone","A loud shout"],a:0,e:"🎁"}
-
-  ],
-
-  "2":[
-
-    {img:"nehru",q:"Children's Day is the birthday of which leader who loved children?",o:["Mahatma Gandhi","A film star","Jawaharlal Nehru","A cricketer"],a:2,e:"👴"},
-
-    {img:"nehru",q:"Why did Jawaharlal Nehru love children?",o:["He thought children are the future of India","He liked their shoes","He liked their bags","He liked their homework"],a:0,e:"❤️"},
-
-    {img:"friends",q:"What is sharing?",o:["Keeping everything for yourself","Hiding your toys","Breaking a friend's toy","Giving a part of what you have to others"],a:3,e:"🤗"},
-
-    {img:"cricket",q:"Which game is played with a bat and a ball?",o:["Cricket","Hide and seek","Hopscotch","Skipping"],a:0,e:"🏏"},
-
-    {img:"butterfly",q:"Where do birds live?",o:["In a house","In a car","In a nest","In a bag"],a:2,e:"🐦"},
-
-    {img:"storybook",q:"What do we call a book full of stories?",o:["A storybook","A notebook","A diary","A textbook"],a:0,e:"📖"},
-
-    {img:"friends",q:"What makes a good friend?",o:["One who teases others","One who shares and helps","One who breaks toys","One who never talks"],a:1,e:"🤝"},
-
-    {img:"ball",q:"Which toy goes round and round?",o:["A book","A shoe","A plate","A spinning top"],a:3,e:"🌀"},
-
-    {img:"balloon",q:"What do we blow up and pop at a party?",o:["Balloons","Bottles","Books","Bricks"],a:0,e:"🎈"},
-
-    {img:"dog",q:"Which animal is a child's favourite pet?",o:["A lion","A crocodile","A dog","A snake"],a:2,e:"🐶"}
-
-  ],
-
-  "3":[
-
-    {q:"Children's Day is celebrated on which day?",o:["25 December","14 November","15 August","26 January"],a:1,e:"🎈"},
-
-    {img:"school",q:"What is childhood?",o:["The time when we work in an office","The time when we are old","The time when we sleep all day","The time when we are young and growing up"],a:3,e:"👧"},
-
-    {img:"football",q:"Which game needs two teams and a ball?",o:["Football","Chess","Ludo","Carrom"],a:0,e:"⚽"},
-
-    {img:"tree",q:"What do plants need to grow?",o:["Chocolates","Shoes","Water and sunlight","Toys"],a:2,e:"🌱"},
-
-    {img:"storybook",q:"What is a fairy tale?",o:["A maths sum","A news report","A shopping list","A story with magic and kind heroes"],a:3,e:"🧚"},
-
-    {img:"friends",q:"If your friend is sad, what can you do?",o:["Tease them","Listen and cheer them up","Walk away","Take their toy"],a:1,e:"🤗"},
-
-    {img:"school",q:"Why do we go to school?",o:["To learn and make friends","To sleep","To eat only","To play alone"],a:0,e:"🏫"},
-
-    {img:"ball",q:"Which toy helps us learn numbers?",o:["A toy phone","A teddy bear","A board game with dice","A kite"],a:2,e:"🎲"},
-
-    {img:"balloon",q:"What do children shout on Children's Day?",o:["Good night","Happy Children's Day","Time to sleep","Be quiet"],a:1,e:"🎉"},
-
-    {img:"cake",q:"Which is the silliest thing to eat?",o:["A chocolate","An apple","A banana","A shoe"],a:3,e:"😄"}
-
-  ],
-
-  "4":[
-
-    {q:"What does every child have the right to do?",o:["Work all day","Learn and play","Stay hungry","Live alone"],a:1,e:"📚"},
-
-    {img:"nehru",q:"Why is 14 November special?",o:["It is New Year","It is a harvest festival","It is Jawaharlal Nehru's birthday","It is a sports day"],a:2,e:"🎈"},
-
-    {img:"storybook",q:"Which story has a boy who never grows up?",o:["Peter Pan","Cinderella","Snow White","Aladdin"],a:0,e:"🧚"},
-
-    {img:"chess",q:"Which game is played on a board with black and white squares?",o:["Cricket","Football","Badminton","Chess"],a:3,e:"♟️"},
-
-    {img:"tree",q:"Why do we plant trees?",o:["For clean air and shade","To make the ground dirty","To block the sun always","To hide toys"],a:0,e:"🌳"},
-
-    {img:"friends",q:"What does teamwork mean?",o:["Working alone always","Letting one person do everything","Fighting over a game","Working together to do something well"],a:3,e:"🤝"},
-
-    {img:"football",q:"What is hopscotch?",o:["A game with a bat","A game in water","A game where you hop on squares","A game with cards"],a:2,e:"🛝"},
-
-    {img:"storybook",q:"What do we learn from stories?",o:["Good values and new ideas","How to shout","How to break things","How to hide"],a:0,e:"📖"},
-
-    {img:"school",q:"What is a child's superpower?",o:["Sleeping all day","Curiosity","Eating stones","Breaking toys"],a:1,e:"🦸"},
-
-    {img:"rainbow",q:"If you could fly like a bird, where would you go first?",o:["To a cave","To a desert","To the park","To a dark room"],a:2,e:"🐦"}
-
-  ],
-
-  "5":[
-
-    {img:"nehru",q:"Why was Jawaharlal Nehru called Chacha Nehru?",o:["Because he was a teacher","Because he was a singer","Because he was a cook","Because children loved him like an uncle"],a:3,e:"👴"},
-
-    {img:"school",q:"What do schools do on Children's Day?",o:["Celebrate children with fun and games","Close for a month","Give extra homework","Ask children to stay silent"],a:0,e:"🎉"},
-
-    {img:"football",q:"Why is play important for children?",o:["It wastes time","It helps them learn, grow strong and make friends","It makes them tired only","It stops learning"],a:1,e:"⚽"},
-
-    {img:"storybook",q:"Which book tells the story of a boy wizard?",o:["The Jungle Book","Alice in Wonderland","Harry Potter","Pinocchio"],a:2,e:"🧙"},
-
-    {img:"bee",q:"What do bees do for flowers?",o:["Help them make seeds by carrying pollen","Eat their leaves","Break their stems","Hide in them"],a:0,e:"🐝"},
-
-    {img:"friends",q:"What should you do if two friends fight?",o:["Join the fight","Laugh at both","Tell everyone to fight","Help them talk and make up"],a:3,e:"🤝"},
-
-    {q:"What is a hobby?",o:["Something you hate","Something you love doing in your free time","A school rule","A type of food"],a:1,e:"🎨"},
-
-    {img:"badminton",q:"Which game is played with a shuttlecock?",o:["Cricket","Football","Badminton","Hockey"],a:2,e:"🏸"},
-
-    {img:"balloon",q:"What would a child call a rainy day?",o:["A day to stay inside","A day to sleep","A day to shout","A day for paper boats"],a:3,e:"🌧️"},
-
-    {img:"friends",q:"Which is the best way to make a new friend?",o:["Smile and say hello","Hide from them","Take their bag","Shout at them"],a:0,e:"😊"}
-
-  ],
-
-  "6":[
-
-    {img:"nehru",q:"Children's Day in India is celebrated on the birthday of which leader?",o:["Mahatma Gandhi","Sardar Patel","Jawaharlal Nehru","Bhagat Singh"],a:2,e:"👴"},
-
-    {img:"nehru",q:"Nehru believed children are what?",o:["The future of the nation","The best workers","The best cooks","The best singers"],a:0,e:"🌟"},
-
-    {img:"storybook",q:"Who wrote The Jungle Book?",o:["Roald Dahl","Rudyard Kipling","J.K. Rowling","Enid Blyton"],a:1,e:"📖"},
-
-    {img:"football",q:"Which outdoor game improves running and teamwork?",o:["Chess","Ludo","Football","Carrom"],a:2,e:"⚽"},
-
-    {img:"rainbow",q:"Why is a rainbow seen after rain?",o:["The sky is painted","Clouds change colour","Sunlight splits into colours in raindrops","Rain is colourful"],a:2,e:"🌈"},
-
-    {img:"friends",q:"What is empathy?",o:["Understanding how a friend feels","Winning every game","Talking loudly","Ignoring others"],a:0,e:"❤️"},
-
-    {img:"school",q:"Why do children ask so many questions?",o:["Because they are naughty","Because they like noise","Because they are bored","Because they are curious and want to learn"],a:3,e:"❓"},
-
-    {img:"storybook",q:"What is a moral in a story?",o:["A lesson about right and wrong","A funny joke","A long name","A magic trick"],a:0,e:"📖"},
-
-    {img:"cake",q:"What is the best Children's Day gift?",o:["Time to play and a good book","A broken toy","A pile of homework","A long lecture"],a:0,e:"🎁"},
-
-    {img:"school",q:"What do schools usually do for children on Children's Day?",o:["Give them a long exam","Make them sit quietly all day","Organise games, songs and fun activities","Close the school for a month"],a:2,e:"🎉"}
-
-  ],
-
-  "7":[
-
-    {q:"Which of these is a right of every child?",o:["The right to work in a factory","The right to go to school and learn","The right to be ignored","The right to live without food"],a:1,e:"📚"},
-
-    {img:"football",q:"How does playing games help children learn?",o:["It stops all learning","It makes children lazy","It teaches only shouting","It teaches rules, teamwork and thinking"],a:3,e:"⚽"},
-
-    {img:"storybook",q:"Which story is about a girl who falls into a magical world?",o:["Alice in Wonderland","Cinderella","The Jungle Book","Pinocchio"],a:0,e:"🐇"},
-
-    {img:"tree",q:"Why do leaves change colour in autumn?",o:["Because they are painted","Because they get wet","Because they stop making green colour as days get shorter","Because they are tired"],a:2,e:"🍂"},
-
-    {img:"friends",q:"What makes a friendship strong?",o:["Trust, kindness and sharing","Teasing and fighting","Keeping secrets from each other","Never talking"],a:0,e:"🤝"},
-
-    {img:"storybook",q:"Who is the boy who lives with wolves in The Jungle Book?",o:["Mowgli","Peter Pan","Aladdin","Tom Sawyer"],a:0,e:"🐺"},
-
-    {img:"cricket",q:"Which sport needs a bat, a ball and wickets?",o:["Football","Hockey","Kabaddi","Cricket"],a:3,e:"🏏"},
-
-    {img:"lightning",q:"Why do we see lightning before we hear thunder?",o:["Sound travels faster than light","Thunder comes first","Light travels faster than sound","Lightning is silent"],a:2,e:"⚡"},
-
-    {img:"school",q:"What is the most fun way to learn?",o:["By playing a game","By sitting still all day","By reading only rules","By never asking questions"],a:0,e:"🎲"},
-
-    {img:"friends",q:"If you were a superhero for a day, what would you do first?",o:["Help a friend in need","Hide your cape","Eat all the sweets","Sleep all day"],a:0,e:"🦸"}
-
-  ],
-
-  "8":[
-
-    {img:"nehru",q:"Why do we celebrate Children's Day in India on 14 November?",o:["It is Jawaharlal Nehru's birthday, and he loved children","It is the first day of school","It is the day of the first train","It is a harvest festival"],a:0,e:"🎈"},
-
-    {img:"school",q:"What does the right to education mean for a child?",o:["Only some children can learn","Children must pay to learn","Every child should get a chance to learn at school","Children must work instead of learning"],a:2,e:"📚"},
-
-    {img:"storybook",q:"Which author wrote Charlie and the Chocolate Factory?",o:["J.K. Rowling","Enid Blyton","Rudyard Kipling","Roald Dahl"],a:3,e:"📖"},
-
-    {img:"football",q:"Why are rules important in a game?",o:["They make the game fair and fun for everyone","They make the game boring","They stop everyone from playing","They help only one player win"],a:0,e:"⚽"},
-
-    {img:"moon",q:"What causes day and night?",o:["The Sun moving around the Earth","The Earth turning on its axis","The Moon shining","Clouds covering the Sun"],a:1,e:"🌍"},
-
-    {img:"friends",q:"How can you be a good friend online?",o:["By sharing others' photos without asking","By teasing friends in chats","By being kind and never sharing hurtful words","By ignoring everyone"],a:2,e:"💬"},
-
-    {img:"school",q:"What does curiosity help us do?",o:["Ask questions and learn new things","Stop learning","Forget everything","Avoid new ideas"],a:0,e:"❓"},
-
-    {img:"moon",q:"Why does the Moon shine at night?",o:["It makes its own light","It is on fire","It is a star","It reflects sunlight"],a:3,e:"🌙"},
-
-    {img:"friends",q:"What is the best way to spend Children's Day?",o:["Doing extra homework","Sitting alone","Playing, reading and laughing with friends","Watching paint dry"],a:2,e:"🎉"},
-
-    {img:"rainbow",q:"If childhood had a colour, what would it be?",o:["Grey and dull","Bright and cheerful, like a rainbow","Black and dark","White only"],a:1,e:"🌈"}
-
-  ]
-
-};
+/* QUIZ-DATA:BEGIN (written by tools/build.mjs from quiz-data.js) */
+const BANK = { k: "719a0ee86a57b0fc588ce5a21dacef43", d: [
+  "22206824241820172220a036247924201720e6367535534a24aa69bbb4730d0820fd202479800175201720c5c36f0520fd20530da024201720f4",
+  "92f4e7fb5656fb56c02031fd2075790da124bb20172220cb0d353520172036a0a04ebb17a3a3a036c479cb2a68751875792453750d2a804aa1a3",
+  "687518754e2453750da3ce80797980aabba3a036c479cba3f4a3f492a3e6367535534a24aad64e350d08d60180087ec4353508d675aad6ce8035",
+  "804a7ec435d6cb0d3535d64e75a0d60da0d675aa5380804ad64e350d08d60d4a240dd653c44a75aaa1d60d7ea0244aaa8080aad67ec4aa2a014e",
+  "a1a3f5e7924e1ffbe6367535534a24aad64e350d08d60180087ec4353508d675aad6ce8035804a7ec435d6cb0d3535d64e75a0d60da0d675aa53",
+  "80804ad64e350d08d60d4a240dd653c44a75aaa1d60d7ea0244aaa8080aad67ec4aa2a014ea120fd20a02453530820172036a0a04ebb17a3a3a0",
+  "36c479cb2a68751875792453750d2a804aa1a3687518754e2453750da3ce80797980aabba3a036c479cba356a35692a32575a0a03524d6a1754a",
+  "35d636c4a1bbd6a024535308d6cb240d4ad6a080082a014ea1a3f5e7924e1ffb2575a0a03524d6a1754a35d636c4a1bbd6a024535308d6cb240d",
+  "4ad6a080082a014ea120fd20cb0d35358080aa20172036a0a04ebb17a3a3a036c479cb2a68751875792453750d2a804aa1a3687518754e245375",
+  "0da3ce80797980aabba3a036c479cba3cea3ce24a3190d35358080aad680aad60dd6ce367535534a24aa85f403bbd6cb754aa036530d08d64e0d",
+  "4aa0082a014ea1a3f5e7924e1ffb190d35358080aad680aad60dd6ce367535534a24aa85f403bbd6cb754aa036530d08d64e0d4aa0082a014ea1",
+  "20fd20ce0d182420172036a0a04ebb17a3a3a036c479cb2a68751875792453750d2a804aa1a3687518754e2453750da3ce80797980aabba3a036",
+  "c479cba37ea37e7ea3236880d60180087ec435d6ce367535534a24aad6bb75a0d680aad60dd6790da0d6aa241fa0d6a080d60dd6cb754aa03653",
+  "0d08d6ce0d182485f4e6d6534a24bbbb2453d675aad67e24bba0751124d6360da0bb2a014ea1a3f5e7924e1ffb236880d60180087ec435d6ce36",
+  "7535534a24aad6bb75a0d680aad60dd6790da0d6aa241fa0d6a080d60dd6cb754aa036530d08d6ce0d182485f4e6d6534a24bbbb2453d675aad6",
+  "7e24bba0751124d6360da0bb2a014ea120fd20bba0804a08cb80801820172036a0a04ebb17a3a3a036c479cb2a68751875792453750d2a804aa1",
+  "a3687518754e2453750da3ce80797980aabba3a036c479cba3e0a3e003a3e6367535534a24aad64a240d5375aaa1d6cb24aa240da036d60dd6a0",
+  "4a2424d6fbd6aea0804a08fb604a7524aa53bbd685f47d56f5f40385f4f5d6fbd6bc0dcb2435d61924a0bb08d67b7535352a014ea1a3f5e7924e",
+  "1ffbe6367535534a24aad64a240d5375aaa1d6cb24aa240da036d60dd6a04a2424d6fbd6aea0804a08fb604a7524aa53bbd685f47d56f5f40385",
+  "f4f5d6fbd6bc0dcb2435d61924a0bb08d67b7535352a014ea120fd20bb6875aaa120172036a0a04ebb17a3a3a036c479cb2a6875187579245375",
+  "0d2a804aa1a3687518754e2453750da3ce80797980aabba3a036c479cba3c0a3c07da3d3350d08a14a80c4aa53d6bb6875aaa1d692562a014ea1",
+  "a3f5e7924e1ffbd3350d08a14a80c4aa53d6bb6875aaa1d692562a014ea120fd201875a02420172036a0a04ebb17a3a3a036c479cb2a68751875",
+  "792453750d2a804aa1a3687518754e2453750da3ce80797980aabba3a036c479cba3cba3cb7da33475a024d67e350875aaa1d68011244ad6d30d",
+  "bb75aaa1d692c02a014ea1a3f5e7924e1ffb3475a024d67e350875aaa1d68011244ad6d30dbb75aaa1d692c02a014ea120fd20cbc4a0a0244a7e",
+  "350820172036a0a04ebb17a3a3a036c479cb2a68751875792453750d2a804aa1a3687518754e2453750da3ce80797980aabba3a036c479cba30d",
+  "a30de7a3d3240dce80ce18d6cbc4a0a0244a7e3508d685f47ddea1350d75bbd6758085f4f5d6f42a014ea1a3f5e7924e1ffbd3240dce80ce18d6",
+  "cbc4a0a0244a7e3508d685f47ddea1350d75bbd6758085f4f5d6f42a014ea120fd205380a120172036a0a04ebb17a3a3a036c479cb2a68751875",
+  "792453750d2a804aa1a3687518754e2453750da3ce80797980aabba3a036c479cba37da37d53a3236880d64ec44e4e7524bbd64e350d0875aaa1",
+  "d6a080a124a036244ad680aa24d6bba00daa5375aaa1d68011244ad6a03624d680a036244ad60da0d6a180355324aad63680c44ad675aad67380",
+  "aad67324a0d6250d80bb2a014ea1a3f5e7924e1ffb236880d64ec44e4e7524bbd64e350d0875aaa1d6a080a124a036244ad680aa24d6bba00daa",
+  "5375aaa1d68011244ad6a03624d680a036244ad60da0d6a180355324aad63680c44ad675aad67380aad67324a0d6250d80bb2a014ea120fd207e",
+  "8080a0cb0d353520172036a0a04ebb17a3a3a036c479cb2a68751875792453750d2a804aa1a3687518754e2453750da3ce80797980aabba3a036",
+  "c479cba3f4a3f4c0a3e6367535534a24aad64e350d0875aaa1d67e8080a0cb0d3535d60d7ea0244ad6bbce368080352a014ea1a3f5e7924e1ffb",
+  "e6367535534a24aad64e350d0875aaa1d67e8080a0cb0d3535d60d7ea0244ad6bbce368080352a014ea120fd20ce3624bbbb20172036a0a04ebb",
+  "17a3a3a036c479cb2a68751875792453750d2a804aa1a3687518754e2453750da3ce80797980aabba3a036c479cba3c0a3c092a3e63624bbbbd6",
+  "a10d7924d6aea00dc4aaa080aad68e802ad6e7d64e244a7e7535d611752468d67d2a014ea1a3f5e7924e1ffbe63624bbbbd6a10d7924d6aea00d",
+  "c4aaa080aad68e802ad6e7d64e244a7e7535d611752468d67d2a014ea120fd20cb0d537975aaa080aa20172036a0a04ebb17a3a3a036c479cb2a",
+  "68751875792453750d2a804aa1a3687518754e2453750da3ce80797980aabba3a036c479cba324a324cba3190d537975aaa080aad6ae36c4a0a0",
+  "3524ce80ce18d656e0f5c056e02a4eaaa1a3f5e7924e1ffb190d537975aaa080aad6ae36c4a0a03524ce80ce18d656e0f5c056e02a4eaaa120fd",
+  "204a0d75aacb806820172036a0a04ebb17a3a3a036c479cb2a68751875792453750d2a804aa1a3687518754e2453750da3ce80797980aabba3a0",
+  "36c479cba3e0a3e0e0a3740d75aacb8068d6bb18082a014ea1a3f5e7924e1ffb740d75aacb8068d6bb18082a014ea120fd20aa24364ac4201720",
+  "36a0a04ebb17a3a3a036c479cb2a68751875792453750d2a804aa1a3687518754e2453750da3ce80797980aabba3a036c479cba30da30de0a3d3",
+  "804aa04a0d75a0d6807ed6520d680d360d4a350d35d68e24364ac4d675aad656f5c0f42a52d33da3f5e7924e1ffbd3804aa04a0d75a0d6807ed6",
+  "520d680d360d4a350d35d68e24364ac4d675aad656f5c0f42a52d33d20fd20bbce3680803520172036a0a04ebb17a3a3a036c479cb2a68751875",
+  "792453750d2a804aa1a3687518754e2453750da3ce80797980aabba3a036c479cba37ea37e7da3e6367535534a24aad60da0d6bbce3680803585",
+  "f4e6d6b8aa53750d2a014ea1a3f5e7924e1ffbe6367535534a24aad60da0d6bbce3680803585f4e6d6b8aa53750d2a014ea120fd207e4a7524aa",
+  "53bb20172036a0a04ebb17a3a3a036c479cb2a68751875792453750d2a804aa1a3687518754e2453750da3ce80797980aabba3a036c479cba3e7",
+  "a3e7e7a3604a7524aa53bb36754ed67b80355375aaa1d6360daa53bb2a2a014ea1a3f5e7924e1ffb604a7524aa53bb36754ed67b80355375aaa1",
+  "d6360daa53bb2a2a014ea120fd20ce4a75ce1824a020172036a0a04ebb17a3a3a036c479cb2a68751875792453750d2a804aa1a3687518754e24",
+  "53750da3ce80797980aabba3a036c479cba3e0a3e056a3e64a75ce1824a0d6cb0da0d60daa53d6cb0d3535d60da0d61975bb36804e85f403bbd6",
+  "aea0804aa07e804a53d6e64a75ce1824a0d6e635c4cb85f4e6d67b244aa07e804a53bb36754a242a014ea1a3f5e7924e1ffbe64a75ce1824a0d6",
+  "cb0da0d60daa53d6cb0d3535d60da0d61975bb36804e85f403bbd6aea0804aa07e804a53d6e64a75ce1824a0d6e635c4cb85f4e6d67b244aa07e",
+  "804a53bb36754a242a014ea120fd20798080aa20172036a0a04ebb17a3a3a036c479cb2a68751875792453750d2a804aa1a3687518754e245375",
+  "0da3ce80797980aabba3a036c479cba324a32456a360c43535bc8080aaf49256922a014ea1a3f5e7924e1ffb60c43535bc8080aaf49256922a01",
+  "4ea120fd20a04a242420172036a0a04ebb17a3a3a036c479cb2a68751875792453750d2a804aa1a3687518754e2453750da3ce80797980aabba3",
+  "a036c479cba392a39203a3e6367535534a24aad64e350daaa075aaa1d64e350daaa0bbd675aad6ae2408ce3624353524bb2a014ea1a3f5e7924e",
+  "1ffbe6367535534a24aad64e350daaa075aaa1d64e350daaa0bbd675aad6ae2408ce3624353524bb2a014ea120fd20cb242420172036a0a04ebb",
+  "17a3a3a036c479cb2a68751875792453750d2a804aa1a3687518754e2453750da3ce80797980aabba3a036c479cba356a35653a384c44a804e24",
+  "0daad63680aa2408d6cb2424d6241fa04a0dcea0bbd6aa24cea00d4a2a014ea1a3f5e7924e1ffb84c44a804e240daad63680aa2408d6cb2424d6",
+  "241fa04a0dcea0bbd6aa24cea00d4a2a014ea120fd203575a136a0aa75aaa120172036a0a04ebb17a3a3a036c479cb2a68751875792453750d2a",
+  "804aa1a3687518754e2453750da3ce80797980aabba3a036c479cba353a35324a32575a136a0aa75aaa1d675aad6a03624d6ae1808d685f47df5",
+  "f8e003c0c0f885f4f52a014ea1a3f5e7924e1ffb2575a136a0aa75aaa1d675aad6a03624d6ae1808d685f47df5f8e003c0c0f885f4f52a014ea1",
+  "2031fd2015c475020224bb2017222056201704222015201720133608b45380b46824b4ce243524cb4a0da024b4e6367535534a24aa69bbb4730d",
+  "08bd20fd2080201704202380b4ce243524cb4a0da024b4ce367535534a24aab40daa53b4a03624754ab4360d4e4e75aa24bbbb20fd202380b4ce",
+  "243524cb4a0da024b47e0d4a79244abb20fd202380b4ce243524cb4a0da024b4a0240dce36244abb20fd202380b4ce243524cb4a0da024b4bb4e",
+  "804aa0bb20a2fd200d201792fd2024201720c5c36f052031fd22207579a1201720aa24364ac420fd2015201720133680b4680dbbb4ce0d353524",
+  "53b4e6360dce360db48e24364ac4bd20fd208020170420deb4bba0804a08cb808018b436244a8020fd20520d680d360d4a350d35b48e24364ac4",
+  "20fd20deb47e8080a0cb0d3535b44e350d08244a20fd20deb4a0240dce36244a20a2fd200d201756fd2024201720c5c343512031fd22207579a1",
+  "2017201875a02420fd2015201720133675ce36b4a08008b4ce0daab47e3508b475aab4a03624b4bb1808bd20fd208020170420deb4ce0d4a20fd",
+  "20deb4cb800da020fd20deb4a04a0d75aa20fd20deb41875a02420a2fd200d2017f8fd2024201720c5c3d9ee2031fd22207579a12017207e8080",
+  "a0cb0d353520fd201520172013360da0b4a10d7924b45380b46824b44e350d08b4cb08b436755375aaa1bd20fd208020170420e64a75ce1824a0",
+  "20fd20e63624bbbb20fd207b755324b40daa53b4bb24241820fd20608080a0cb0d353520a2fd200d2017f4fd2024201720c5c3ba052031fd2220",
+  "7579a1201720bbce3680803520fd201520172013360da0b45380b46824b4ce0d4a4a08b4a080b4bbce36808035bd20fd208020170420deb4bbce",
+  "36808035b4cb0da120fd20deb44e753535806820fd20deb4cbc4ce1824a020fd20deb4a02435241175bb7580aa20a2fd200d201792fd20242017",
+  "20c5c36fd22031fd22207579a12017207e4a7524aa53bb20fd201520172013360da0b4bb3680c43553b46824b45380b4757eb40db47e4a7524aa",
+  "53b47e0d3535bbb4538068aabd20fd208020170420250dc4a136b40da0b4a036247920fd20130d3518b40d680d0820fd207b24354eb4a0362479",
+  "b4a124a0b4c44e20fd207b75532420a2fd200d2017f4fd2024201720c5c39a142031fd22207579a1201720cbc4a0a0244a7e350820fd20152017",
+  "2013360da0b45380b4cbc4a0a0244a7e357524bbb45380bd20fd208020170420603508b47e4a8079b47e358068244ab4a080b47e358068244a20",
+  "fd20ae687579b475aab4a03624b4bb240d20fd20ae3524244eb475aab40db4ce0d112420fd20e6357579cbb40db4a04a242420a2fd200d201792",
+  "fd2024201720c5c348f32031fd22207579a1201720bba0804a08cb80801820fd2015201720133680b4a0243535bbb4c4bbb4bba0804a7524bbb4",
+  "0da0b4cb2453a0757924bd20fd208020170420deb4ce3580c45320fd20deb4bba080aa2420fd20deb4ce0d4a20fd2090c44ab4a14a0daa534e0d",
+  "4a24aaa0bb20a2fd200d2017f8fd2024201720c5c3321a2031fd22207579a1201720ce0d182420fd201520172013360da0b45380b4ce36753553",
+  "4a24aab435801124b4a080b4240da0b480aab4e6367535534a24aa69bbb4730d08bd20fd208020170420aea080aa24bb20fd20e63680ce80350d",
+  "a024bb20fd20d324aace7535bb20fd20ae368024bb20a2fd200d201756fd2024201720c5c395592031fd22207579a12017207e4a7524aa53bb20",
+  "fd201520172013360da0b475bbb4a03624b4cb24bba0b4a1757ea0b47e804ab40db47e4a7524aa53bd20fd208020170420deb41875aa53b4bb79",
+  "753524b40daa53b40db4a0800820fd20deb4cb4a801824aab4bb36802420fd20deb4bba080aa2420fd20deb43580c453b4bb3680c4a020a2fd20",
+  "0d201792fd2024201720c5c36fee2031a2fd20f420170422207579a1201720aa24364ac420fd2015201720e6367535534a24aa69bbb4730d08b4",
+  "75bbb4a03624b4cb754aa036530d08b4807eb4683675ce36b435240d53244ab4683680b43580112453b4ce367535534a24aabd20fd2080201704",
+  "20bc0d360da0790db43d0daa53367520fd20deb47e753579b4bba00d4a20fd20520d680d360d4a350d35b48e24364ac420fd20deb4ce4a75ce18",
+  "24a0244a20a2fd200d2017f4fd2024201720c5c343512031fd22207579a1201720aa24364ac420fd2015201720133608b4537553b4520d680d36",
+  "0d4a350d35b48e24364ac4b435801124b4ce367535534a24aabd20fd2080201704207b24b4a03680c4a136a0b4ce367535534a24aab40d4a24b4",
+  "a03624b47ec4a0c44a24b4807eb4b8aa53750d20fd207b24b43575182453b4a03624754ab4bb368024bb20fd207b24b43575182453b4a0362475",
+  "4ab4cb0da1bb20fd207b24b43575182453b4a03624754ab43680792468804a1820a2fd200d201792fd20242017204c149adb457f2031fd222075",
+  "79a12017207e4a7524aa53bb20fd201520172013360da0b475bbb4bb360d4a75aaa1bd20fd2080201704203424244e75aaa1b42411244a08a036",
+  "75aaa1b47e804ab40880c44abb24357e20fd207b755375aaa1b40880c44ab4a08008bb20fd20194a240d1875aaa1b40db47e4a7524aa5369bbb4",
+  "a0800820fd203d751175aaa1b40db44e0d4aa0b4807eb468360da0b40880c4b4360d1124b4a080b480a036244abb20a2fd200d2017f8fd202420",
+  "1720c5c39ab62031fd22207579a1201720ce4a75ce1824a020fd2015201720133675ce36b4a10d7924b475bbb44e350d082453b46875a036b40d",
+  "b4cb0da0b40daa53b40db4cb0d3535bd20fd208020170420e64a75ce1824a020fd207b755324b40daa53b4bb24241820fd207b804ebbce80a0ce",
+  "3620fd20ae18754e4e75aaa120a2fd200d201792fd2024201720c5c37f7f2031fd22207579a1201720cbc4a0a0244a7e350820fd201520172013",
+  "36244a24b45380b4cb754a53bbb435751124bd20fd208020170420b8aab40db43680c4bb2420fd20b8aab40db4ce0d4a20fd20b8aab40db4aa24",
+  "bba020fd20b8aab40db4cb0da120a2fd200d2017f4fd2024201720c5c39f482031fd22207579a1201720bba0804a08cb80801820fd2015201720",
+  "13360da0b45380b46824b4ce0d3535b40db4cb808018b47ec43535b4807eb4bba0804a7524bbbd20fd208020170420deb4bba0804a08cb808018",
+  "20fd20deb4aa80a024cb80801820fd20deb453750d4a0820fd20deb4a0241fa0cb80801820a2fd200d201792fd2024201720c5c3321a2031fd22",
+  "207579a12017207e4a7524aa53bb20fd201520172013360da0b4790d1824bbb40db4a1808053b47e4a7524aa53bd20fd20802017042090aa24b4",
+  "683680b4a0240dbb24bbb480a036244abb20fd2090aa24b4683680b4bb360d4a24bbb40daa53b43624354ebb20fd2090aa24b4683680b4cb4a24",
+  "0d18bbb4a08008bb20fd2090aa24b4683680b4aa2411244ab4a00d3518bb20a2fd200d201756fd2024201720c5c39a142031fd22207579a12017",
+  "20cb0d353520fd2015201720133675ce36b4a08008b4a18024bbb44a80c4aa53b40daa53b44a80c4aa53bd20fd208020170420deb4cb80801820",
+  "fd20deb4bb36802420fd20deb44e350da02420fd20deb4bb4e75aaaa75aaa1b4a0804e20a2fd200d2017f8fd2024201720c5c33fd52031fd2220",
+  "7579a1201720cb0d35358080aa20fd201520172013360da0b45380b46824b4cb358068b4c44eb40daa53b44e804eb40da0b40db44e0d4aa008bd",
+  "20fd208020170420190d35358080aabb20fd201980a0a03524bb20fd2019808018bb20fd20194a75ce18bb20a2fd200d201792fd2024201720c5",
+  "c36f052031fd22207579a12017205380a120fd2015201720133675ce36b40daa75790d35b475bbb40db4ce3675355369bbb47e0d1180c44a75a0",
+  "24b44e24a0bd20fd208020170420deb4357580aa20fd20deb4ce4a80ce805375352420fd20deb45380a120fd20deb4bbaa0d182420a2fd200d20",
+  "17f4fd2024201720c5c39f612031a2fd20f8201704222015201720e6367535534a24aa69bbb4730d08b475bbb4ce243524cb4a0da02453b480aa",
+  "b4683675ce36b4530d08bd20fd208020170420f4e0b47324ce2479cb244a20fd2056c0b48e80112479cb244a20fd2056e0b4dec4a1c4bba020fd",
+  "20f4e7b4520daac40d4a0820a2fd200d201756fd2024201720c5c36f052031fd22207579a1201720bbce3680803520fd201520172013360da0b4",
+  "75bbb4ce3675355336808053bd20fd208020170420233624b4a0757924b4683624aab46824b468804a18b475aab40daab4807e7e75ce2420fd20",
+  "233624b4a0757924b4683624aab46824b40d4a24b480355320fd20233624b4a0757924b4683624aab46824b4bb3524244eb40d3535b4530d0820",
+  "fd20233624b4a0757924b4683624aab46824b40d4a24b40880c4aaa1b40daa53b4a14a806875aaa1b4c44e20a2fd200d2017f8fd2024201720c5",
+  "c343f62031fd22207579a12017207e8080a0cb0d353520fd2015201720133675ce36b4a10d7924b4aa242453bbb4a06880b4a0240d79bbb40daa",
+  "53b40db4cb0d3535bd20fd208020170420608080a0cb0d353520fd20e63624bbbb20fd2025c4538020fd20e60d4a4a807920a2fd200d201792fd",
+  "20242017204c2de82031fd22207579a1201720a04a242420fd201520172013360da0b45380b44e350daaa0bbb4aa242453b4a080b4a14a8068bd",
+  "20fd208020170420e63680ce80350da024bb20fd20ae368024bb20fd20130da0244ab40daa53b4bbc4aa3575a136a020fd20238008bb20a2fd20",
+  "0d2017f4fd2024201720c5c33f1c2031fd22207579a1201720bba0804a08cb80801820fd201520172013360da0b475bbb40db47e0d754a08b4a0",
+  "0d3524bd20fd208020170420deb4790da036bbb4bbc47920fd20deb4aa2468bbb44a244e804aa020fd20deb4bb36804e4e75aaa1b43575bba020",
+  "fd20deb4bba0804a08b46875a036b4790da175ceb40daa53b41875aa53b436244a8024bb20a2fd200d2017f8fd2024201720c5c3f62d2031fd22",
+  "207579a12017207e4a7524aa53bb20fd2015201720b87eb40880c44ab47e4a7524aa53b475bbb4bb0d53fdb468360da0b4ce0daab40880c4b453",
+  "80bd20fd20802017042023240dbb24b4a036247920fd202575bba024aab40daa53b4ce3624244ab4a0362479b4c44e20fd20130d3518b40d680d",
+  "0820fd20230d1824b4a03624754ab4a0800820a2fd200d201756fd2024201720c5c39ab62031fd22207579a1201720bbce3680803520fd201520",
+  "1720133608b45380b46824b4a180b4a080b4bbce36808035bd20fd2080201704202380b435240d4aaab40daa53b4790d1824b47e4a7524aa53bb",
+  "20fd202380b4bb3524244e20fd202380b4240da0b480aa350820fd202380b44e350d08b40d3580aa2420a2fd200d201792fd2024201720c5c37f",
+  "592031fd22207579a1201720cb0d353520fd2015201720133675ce36b4a08008b43624354ebbb4c4bbb435240d4aaab4aac479cb244abbbd20fd",
+  "208020170420deb4a08008b44e3680aa2420fd20deb4a024535308b4cb240d4a20fd20deb4cb800d4a53b4a10d7924b46875a036b45375ce2420",
+  "fd20deb41875a02420a2fd200d2017f4fd2024201720c5c36fe92031fd22207579a1201720cb0d35358080aa20fd201520172013360da0b45380",
+  "b4ce367535534a24aab4bb3680c4a0b480aab4e6367535534a24aa69bbb4730d08bd20fd2080201704203d808053b4aa75a136a020fd207b0d4e",
+  "4e08b4e6367535534a24aa69bbb4730d0820fd2023757924b4a080b4bb3524244e20fd201924b415c47524a020a2fd200d201756fd2024201720",
+  "c5c36f212031fd22207579a1201720ce0d182420fd2015201720133675ce36b475bbb4a03624b4bb7535357524bba0b4a03675aaa1b4a080b424",
+  "0da0bd20fd208020170420deb4ce3680ce80350da02420fd20deaab40d4e4e352420fd20deb4cb0daa0daa0d20fd20deb4bb36802420a2fd200d",
+  "2017f8fd2024201720c5c355ca2031a2fd20c020170422201520172013360da0b4538024bbb42411244a08b4ce36753553b4360d1124b4a03624",
+  "b44a75a136a0b4a080b45380bd20fd20802017042013804a18b40d3535b4530d0820fd2025240d4aaab40daa53b44e350d0820fd20aea00d08b4",
+  "36c4aaa14a0820fd2025751124b40d3580aa2420a2fd200d201756fd2024201720c5c3322d2031fd22207579a1201720aa24364ac420fd201520",
+  "1720133608b475bbb456c0b48e80112479cb244ab4bb4e24ce750d35bd20fd208020170420b8a0b475bbb48e2468b465240d4a20fd20b8a0b475",
+  "bbb40db4360d4a1124bba0b47e24bba075110d3520fd20b8a0b475bbb4520d680d360d4a350d35b48e24364ac469bbb4cb754aa036530d0820fd",
+  "20b8a0b475bbb40db4bb4e804aa0bbb4530d0820a2fd200d2017f4fd2024201720c5c36f052031fd22207579a1201720bba0804a08cb80801820",
+  "fd2015201720133675ce36b4bba0804a08b4360dbbb40db4cb8008b4683680b4aa2411244ab4a14a8068bbb4c44ebd20fd208020170420d324a0",
+  "244ab4d30daa20fd20e675aa53244a2435350d20fd20aeaa8068b4133675a02420fd20de350d535375aa20a2fd200d201792fd2024201720c5c3",
+  "f62d2031fd22207579a1201720ce3624bbbb20fd2015201720133675ce36b4a10d7924b475bbb44e350d082453b480aab40db4cb800d4a53b468",
+  "75a036b4cb350dce18b40daa53b4683675a024b4bb15c40d4a24bbbd20fd208020170420e64a75ce1824a020fd20608080a0cb0d353520fd2019",
+  "0d537975aaa080aa20fd20e63624bbbb20a2fd200d2017f8fd20242017204cbac3db457f2031fd22207579a1201720a04a242420fd2015201720",
+  "133608b45380b46824b44e350daaa0b4a04a2424bbbd20fd20802017042060804ab4ce35240daab40d754ab40daa53b4bb360d532420fd202380",
+  "b4790d1824b4a03624b4a14a80c4aa53b453754aa00820fd202380b4cb3580ce18b4a03624b4bbc4aab40d35680d08bb20fd202380b436755324",
+  "b4a08008bb20a2fd200d201792fd2024201720c5c33ff72031fd22207579a12017207e4a7524aa53bb20fd201520172013360da0b4538024bbb4",
+  "a0240d7968804a18b479240daabd20fd20802017042013804a1875aaa1b40d3580aa24b40d35680d08bb20fd202524a0a075aaa1b480aa24b44e",
+  "244abb80aab45380b42411244a08a03675aaa120fd206075a136a075aaa1b48011244ab40db4a10d792420fd2013804a1875aaa1b4a080a124a0",
+  "36244ab4a080b45380b4bb807924a03675aaa1b46824353520a2fd200d2017f8fd2024201720c5c39a142031fd22207579a12017207e8080a0cb",
+  "0d353520fd201520172013360da0b475bbb436804ebbce80a0ce36bd20fd208020170420deb4a10d7924b46875a036b40db4cb0da020fd20deb4",
+  "a10d7924b475aab4680da0244a20fd20deb4a10d7924b46836244a24b40880c4b436804eb480aab4bb15c40d4a24bb20fd20deb4a10d7924b468",
+  "75a036b4ce0d4a53bb20a2fd200d2017f4fd2024201720c5c329142031fd22207579a1201720bba0804a08cb80801820fd201520172013360da0",
+  "b45380b46824b435240d4aaab47e4a8079b4bba0804a7524bbbd20fd2080201704203d808053b4110d35c424bbb40daa53b4aa2468b47553240d",
+  "bb20fd207b8068b4a080b4bb3680c4a020fd207b8068b4a080b4cb4a240d18b4a03675aaa1bb20fd207b8068b4a080b43675532420a2fd200d20",
+  "1792fd2024201720c5c3321a2031fd22207579a1201720bbce3680803520fd201520172013360da0b475bbb40db4ce3675355369bbb4bbc44e24",
+  "4a4e8068244abd20fd208020170420ae3524244e75aaa1b40d3535b4530d0820fd20e6c44a7580bb75a00820fd20840da075aaa1b4bba080aa24",
+  "bb20fd20194a240d1875aaa1b4a08008bb20a2fd200d201756fd2024201720c5c348452031fd22207579a12017204a0d75aacb806820fd201520",
+  "1720b87eb40880c4b4ce80c43553b47e3508b435751824b40db4cb754a53fdb46836244a24b46880c43553b40880c4b4a180b47e754abba0bd20",
+  "fd2080201704202380b40db4ce0d112420fd202380b40db45324bb244aa020fd202380b4a03624b44e0d4a1820fd202380b40db4530d4a18b44a",
+  "80807920a2fd200d2017f4fd2024201720c5c39f482031a2fd20e020170422207579a1201720aa24364ac420fd2015201720133608b4680dbbb4",
+  "520d680d360d4a350d35b48e24364ac4b4ce0d35352453b4e6360dce360db48e24364ac4bd20fd2080201704201924ce0dc4bb24b43624b4680d",
+  "bbb40db4a0240dce36244a20fd201924ce0dc4bb24b43624b4680dbbb40db4bb75aaa1244a20fd201924ce0dc4bb24b43624b4680dbbb40db4ce",
+  "80801820fd201924ce0dc4bb24b4ce367535534a24aab43580112453b4367579b435751824b40daab4c4aace352420a2fd200d2017f8fd202420",
+  "1720c5c343512031fd22207579a1201720bbce3680803520fd201520172013360da0b45380b4bbce36808035bbb45380b480aab4e6367535534a",
+  "24aa69bbb4730d08bd20fd208020170420e6243524cb4a0da024b4ce367535534a24aab46875a036b47ec4aab40daa53b4a10d7924bb20fd20e6",
+  "3580bb24b47e804ab40db47980aaa03620fd203d751124b4241fa04a0db43680792468804a1820fd20debb18b4ce367535534a24aab4a080b4bb",
+  "a00d08b4bb753524aaa020a2fd200d201792fd2024201720c5c36f212031fd22207579a12017207e8080a0cb0d353520fd2015201720133608b4",
+  "75bbb44e350d08b475794e804aa00daaa0b47e804ab4ce367535534a24aabd20fd208020170420b8a0b4680dbba024bbb4a075792420fd20b8a0",
+  "b43624354ebbb4a0362479b435240d4aaafdb4a14a8068b4bba04a80aaa1b40daa53b4790d1824b47e4a7524aa53bb20fd20b8a0b4790d1824bb",
+  "b4a0362479b4a0754a2453b480aa350820fd20b8a0b4bba0804ebbb435240d4aaa75aaa120a2fd200d201756fd20242017204c2de82031fd2220",
+  "7579a1201720bba0804a08cb80801820fd2015201720133675ce36b4cb808018b4a0243535bbb4a03624b4bba0804a08b4807eb40db4cb8008b4",
+  "6875020d4a53bd20fd208020170420233624b452c4aaa13524b41980801820fd20de3575ce24b475aab41380aa53244a350daa5320fd207b0d4a",
+  "4a08b4d380a0a0244a20fd20d375aa80cece36758020a2fd200d2017f4fd2024201720c5c3f6ba2031fd22207579a1201720cb242420fd201520",
+  "172013360da0b45380b4cb2424bbb45380b47e804ab47e358068244abbbd20fd2080201704207b24354eb4a0362479b4790d1824b4bb242453bb",
+  "b4cb08b4ce0d4a4a0875aaa1b44e80353524aa20fd20840da0b4a03624754ab435240d1124bb20fd20194a240d18b4a03624754ab4bba02479bb",
+  "20fd207b755324b475aab4a036247920a2fd200d201792fd2024201720c5c39f142031fd22207579a12017207e4a7524aa53bb20fd2015201720",
+  "13360da0b4bb3680c43553b40880c4b45380b4757eb4a06880b47e4a7524aa53bbb47e75a136a0bd20fd208020170420528075aab4a03624b47e",
+  "75a136a020fd20250dc4a136b40da0b4cb80a03620fd2023243535b42411244a0880aa24b4a080b47e75a136a020fd207b24354eb4a0362479b4",
+  "a00d3518b40daa53b4790d1824b4c44e20a2fd200d2017f8fd2024201720c5c39a142031fd22201520172013360da0b475bbb40db43680cbcb08",
+  "bd20fd208020170420ae807924a03675aaa1b40880c4b4360da02420fd20ae807924a03675aaa1b40880c4b435801124b4538075aaa1b475aab4",
+  "0880c44ab47e4a2424b4a075792420fd20deb4bbce36808035b44ac4352420fd20deb4a0084e24b4807eb47e80805320a2fd200d201756fd2024",
+  "201720c5c36fa92031fd22207579a1201720cb0d537975aaa080aa20fd2015201720133675ce36b4a10d7924b475bbb44e350d082453b46875a0",
+  "36b40db4bb36c4a0a03524ce80ce18bd20fd208020170420e64a75ce1824a020fd20608080a0cb0d353520fd20190d537975aaa080aa20fd207b",
+  "80ce18240820a2fd200d2017f4fd2024201720c5c37f452031fd22207579a1201720cb0d35358080aa20fd201520172013360da0b46880c43553",
+  "b40db4ce36753553b4ce0d3535b40db44a0d75aa08b4530d08bd20fd208020170420deb4530d08b4a080b4bba00d08b475aabb75532420fd20de",
+  "b4530d08b4a080b4bb3524244e20fd20deb4530d08b4a080b4bb3680c4a020fd20deb4530d08b47e804ab44e0d4e244ab4cb800da0bb20a2fd20",
+  "0d2017f8fd2024201720c5c33ff6db457f2031fd22207579a12017207e4a7524aa53bb20fd2015201720133675ce36b475bbb4a03624b4cb24bb",
+  "a0b4680d08b4a080b4790d1824b40db4aa2468b47e4a7524aa53bd20fd208020170420ae79753524b40daa53b4bb0d08b4362435358020fd207b",
+  "755324b47e4a8079b4a036247920fd20230d1824b4a03624754ab4cb0da120fd20ae3680c4a0b40da0b4a036247920a2fd200d201792fd202420",
+  "1720c5c3555c2031a2fd20e720170422207579a1201720aa24364ac420fd2015201720e6367535534a24aa69bbb4730d08b475aab4b8aa53750d",
+  "b475bbb4ce243524cb4a0da02453b480aab4a03624b4cb754aa036530d08b4807eb4683675ce36b435240d53244abd20fd208020170420bc0d36",
+  "0da0790db43d0daa53367520fd20ae0d4a530d4ab4d30da0243520fd20520d680d360d4a350d35b48e24364ac420fd2019360da10da0b4ae75aa",
+  "a13620a2fd200d2017f4fd2024201720c5c343512031fd22207579a1201720aa24364ac420fd20152017208e24364ac4b4cb24357524112453b4",
+  "ce367535534a24aab40d4a24b468360da0bd20fd208020170420233624b47ec4a0c44a24b4807eb4a03624b4aa0da07580aa20fd20233624b4cb",
+  "24bba0b468804a18244abb20fd20233624b4cb24bba0b4ce808018bb20fd20233624b4cb24bba0b4bb75aaa1244abb20a2fd200d201792fd2024",
+  "201720c5c33fc32031fd22207579a1201720bba0804a08cb80801820fd2015201720133680b4684a80a024b4233624b452c4aaa13524b4198080",
+  "18bd20fd20802017042074800d3553b4730d363520fd2074c453080d4a53b434754e3575aaa120fd20522a342ab47480683575aaa120fd2084aa",
+  "7553b4193508a080aa20a2fd200d201756fd2024201720c5c3321a2031fd22207579a12017207e8080a0cb0d353520fd2015201720133675ce36",
+  "b480c4a05380804ab4a10d7924b475794e4a801124bbb44ac4aaaa75aaa1b40daa53b4a0240d7968804a18bd20fd208020170420e63624bbbb20",
+  "fd2025c4538020fd20608080a0cb0d353520fd20e60d4a4a807920a2fd200d2017f4fd20242017204c2de82031fd22207579a12017204a0d75aa",
+  "cb806820fd2015201720133608b475bbb40db44a0d75aacb8068b4bb2424aab40d7ea0244ab44a0d75aabd20fd208020170420233624b4bb1808",
+  "b475bbb44e0d75aaa0245320fd20e63580c453bbb4ce360daaa124b4ce803580c44a20fd20aec4aa3575a136a0b4bb4e3575a0bbb475aaa080b4",
+  "ce803580c44abbb475aab44a0d75aa534a804ebb20fd20740d75aab475bbb4ce803580c44a7ec43520a2fd200d2017f4fd2024201720c5c33f05",
+  "2031fd22207579a12017207e4a7524aa53bb20fd201520172013360da0b475bbb424794e0da03608bd20fd20802017042094aa53244abba00daa",
+  "5375aaa1b4368068b40db47e4a7524aa53b47e242435bb20fd201375aaaa75aaa1b42411244a08b4a10d792420fd20230d351875aaa1b43580c4",
+  "53350820fd20b8a1aa804a75aaa1b480a036244abb20a2fd200d201792fd20242017204c149adb457f2031fd22207579a1201720bbce36808035",
+  "20fd2015201720133608b45380b4ce367535534a24aab40dbb18b4bb80b4790daa08b415c424bba07580aabbbd20fd2080201704201924ce0dc4",
+  "bb24b4a0362408b40d4a24b4aa0dc4a136a00820fd201924ce0dc4bb24b4a0362408b435751824b4aa8075bb2420fd201924ce0dc4bb24b4a036",
+  "2408b40d4a24b4cb804a245320fd201924ce0dc4bb24b4a0362408b40d4a24b4cec44a7580c4bbb40daa53b4680daaa0b4a080b435240d4aaa20",
+  "a2fd200d2017f8fd20242017204c14322031fd22207579a1201720bba0804a08cb80801820fd201520172013360da0b475bbb40db479804a0d35",
+  "b475aab40db4bba0804a08bd20fd208020170420deb43524bbbb80aab40dcb80c4a0b44a75a136a0b40daa53b4684a80aaa120fd20deb47ec4aa",
+  "aa08b40180182420fd20deb43580aaa1b4aa0d792420fd20deb4790da175ceb4a04a75ce1820a2fd200d201792fd2024201720c5c3321a2031fd",
+  "22207579a1201720ce0d182420fd201520172013360da0b475bbb4a03624b4cb24bba0b4e6367535534a24aa69bbb4730d08b4a1757ea0bd20fd",
+  "20802017042023757924b4a080b44e350d08b40daa53b40db4a1808053b4cb80801820fd20deb4cb4a801824aab4a0800820fd20deb44e753524",
+  "b4807eb43680792468804a1820fd20deb43580aaa1b43524cea0c44a2420a2fd200d201792fd2024201720c5c36fee2031fd22207579a1201720",
+  "bbce3680803520fd201520172013360da0b45380b4bbce36808035bbb4c4bbc40d353508b45380b47e804ab4ce367535534a24aab480aab4e636",
+  "7535534a24aa69bbb4730d08bd20fd2080201704203d751124b4a0362479b40db43580aaa1b4241f0d7920fd20bc0d1824b4a0362479b4bb75a0",
+  "b415c47524a03508b40d3535b4530d0820fd20904aa10daa75bb24b4a10d7924bbfdb4bb80aaa1bbb40daa53b47ec4aab40dcea0751175a07524",
+  "bb20fd20e63580bb24b4a03624b4bbce36808035b47e804ab40db47980aaa03620a2fd200d2017f4fd2024201720c5c36f212031a2fd20032017",
+  "04222015201720133675ce36b4807eb4a03624bb24b475bbb40db44a75a136a0b4807eb42411244a08b4ce36753553bd20fd2080201704202336",
+  "24b44a75a136a0b4a080b468804a18b475aab40db47e0dcea0804a0820fd20233624b44a75a136a0b4a080b4a180b4a080b4bbce36808035b40d",
+  "aa53b435240d4aaa20fd20233624b44a75a136a0b4a080b4cb24b475a1aa804a245320fd20233624b44a75a136a0b4a080b435751124b46875a0",
+  "3680c4a0b47e80805320a2fd200d201756fd2024201720c5c3322d2031fd22207579a12017207e8080a0cb0d353520fd20152017207b8068b453",
+  "8024bbb44e350d0875aaa1b4a10d7924bbb43624354eb4ce367535534a24aab435240d4aaabd20fd208020170420b8a0b4bba0804ebbb40d3535",
+  "b435240d4aaa75aaa120fd20b8a0b4790d1824bbb4ce367535534a24aab4350d020820fd20b8a0b4a0240dce3624bbb480aa3508b4bb3680c4a0",
+  "75aaa120fd20b8a0b4a0240dce3624bbb44ac43524bbfdb4a0240d7968804a18b40daa53b4a03675aa1875aaa120a2fd200d2017f8fd20242017",
+  "204c2de82031fd22207579a1201720bba0804a08cb80801820fd2015201720133675ce36b4bba0804a08b475bbb40dcb80c4a0b40db4a1754a35",
+  "b4683680b47e0d3535bbb475aaa080b40db4790da175ce0d35b468804a3553bd20fd208020170420de3575ce24b475aab41380aa53244a350daa",
+  "5320fd20e675aa53244a2435350d20fd20233624b452c4aaa13524b41980801820fd20d375aa80cece36758020a2fd200d201792fd2024201720",
+  "c5c39fc72031fd22207579a1201720a04a242420fd2015201720133608b45380b435240d1124bbb4ce360daaa124b4ce803580c44ab475aab40d",
+  "c4a0c479aabd20fd2080201704201924ce0dc4bb24b4a0362408b40d4a24b44e0d75aaa0245320fd201924ce0dc4bb24b4a0362408b4a124a0b4",
+  "6824a020fd201924ce0dc4bb24b4a0362408b4bba0804eb4790d1875aaa1b4a14a2424aab4ce803580c44ab40dbbb4530d08bbb4a124a0b4bb36",
+  "804aa0244a20fd201924ce0dc4bb24b4a0362408b40d4a24b4a0754a245320a2fd200d2017f4fd2024201720c5c3957c2031fd22207579a12017",
+  "207e4a7524aa53bb20fd201520172013360da0b4790d1824bbb40db47e4a7524aa53bb36754eb4bba04a80aaa1bd20fd208020170420234ac4bb",
+  "a0fdb41875aa53aa24bbbbb40daa53b4bb360d4a75aaa120fd2023240dbb75aaa1b40daa53b47e75a136a075aaa120fd203424244e75aaa1b4bb",
+  "24ce4a24a0bbb47e4a8079b4240dce36b480a036244a20fd208e2411244ab4a00d351875aaa120a2fd200d201792fd2024201720c5c39a142031",
+  "fd22207579a1201720bba0804a08cb80801820fd2015201720133680b475bbb4a03624b4cb8008b4683680b435751124bbb46875a036b4688035",
+  "1124bbb475aab4233624b452c4aaa13524b419808018bd20fd208020170420bc8068a1357520fd20d324a0244ab4d30daa20fd20de350d535375",
+  "aa20fd20238079b4ae0d6808244a20a2fd200d201792fd2024201720c5c39f832031fd22207579a1201720ce4a75ce1824a020fd201520172013",
+  "3675ce36b4bb4e804aa0b4aa242453bbb40db4cb0da0fdb40db4cb0d3535b40daa53b46875ce1824a0bbbd20fd208020170420608080a0cb0d35",
+  "3520fd207b80ce18240820fd20340dcb0d53537520fd20e64a75ce1824a020a2fd200d2017f8fd2024201720c5c37f7f2031fd22207579a12017",
+  "203575a136a0aa75aaa120fd2015201720133608b45380b46824b4bb2424b43575a136a0aa75aaa1b4cb247e804a24b46824b436240d4ab4a036",
+  "c4aa53244abd20fd208020170420ae80c4aa53b4a04a0d112435bbb47e0dbba0244ab4a0360daab43575a136a020fd202336c4aa53244ab4ce80",
+  "7924bbb47e754abba020fd202575a136a0b4a04a0d112435bbb47e0dbba0244ab4a0360daab4bb80c4aa5320fd202575a136a0aa75aaa1b475bb",
+  "b4bb753524aaa020a2fd200d2017f4fd20242017204c2d6e2031fd22207579a1201720bbce3680803520fd201520172013360da0b475bbb4a036",
+  "24b47980bba0b47ec4aab4680d08b4a080b435240d4aaabd20fd2080201704201908b44e350d0875aaa1b40db4a10d792420fd201908b4bb75a0",
+  "a075aaa1b4bba0753535b40d3535b4530d0820fd201908b44a240d5375aaa1b480aa3508b44ac43524bb20fd201908b4aa2411244ab40dbb1875",
+  "aaa1b415c424bba07580aabb20a2fd200d201792fd2024201720c5c36fe92031fd22207579a12017207e4a7524aa53bb20fd2015201720b87eb4",
+  "0880c4b468244a24b40db4bbc44e244a36244a80b47e804ab40db4530d08fdb468360da0b46880c43553b40880c4b45380b47e754abba0bd20fd",
+  "2080201704207b24354eb40db47e4a7524aa53b475aab4aa24245320fd207b755324b40880c44ab4ce0d4e2420fd20840da0b40d3535b4a03624",
+  "b4bb682424a0bb20fd20ae3524244eb40d3535b4530d0820a2fd200d201792fd2024201720c5c348452031a2fd207d20170422207579a1201720",
+  "aa24364ac420fd2015201720133608b45380b46824b4ce243524cb4a0da024b4e6367535534a24aa69bbb4730d08b475aab4b8aa53750db480aa",
+  "b456c0b48e80112479cb244abd20fd208020170420b8a0b475bbb4520d680d360d4a350d35b48e24364ac469bbb4cb754aa036530d08fdb40daa",
+  "53b43624b43580112453b4ce367535534a24aa20fd20b8a0b475bbb4a03624b47e754abba0b4530d08b4807eb4bbce3680803520fd20b8a0b475",
+  "bbb4a03624b4530d08b4807eb4a03624b47e754abba0b4a04a0d75aa20fd20b8a0b475bbb40db4360d4a1124bba0b47e24bba075110d3520a2fd",
+  "200d201792fd2024201720c5c36f052031fd22207579a1201720bbce3680803520fd201520172013360da0b4538024bbb4a03624b44a75a136a0",
+  "b4a080b42453c4ce0da07580aab479240daab47e804ab40db4ce36753553bd20fd20802017042090aa3508b4bb807924b4ce367535534a24aab4",
+  "ce0daab435240d4aaa20fd20e6367535534a24aab479c4bba0b44e0d08b4a080b435240d4aaa20fd208411244a08b4ce36753553b4bb3680c435",
+  "53b4a124a0b40db4ce360daace24b4a080b435240d4aaab40da0b4bbce3680803520fd20e6367535534a24aab479c4bba0b468804a18b475aabb",
+  "a0240d53b4807eb435240d4aaa75aaa120a2fd200d2017f4fd2024201720c5c3322d2031fd22207579a1201720bba0804a08cb80801820fd2015",
+  "201720133675ce36b40dc4a036804ab4684a80a024b4e6360d4a357524b40daa53b4a03624b4e63680ce80350da024b4600dcea0804a08bd20fd",
+  "208020170420522a342ab47480683575aaa120fd2084aa7553b4193508a080aa20fd2074c453080d4a53b434754e3575aaa120fd2074800d3553",
+  "b4730d363520a2fd200d2017f8fd2024201720c5c3321a2031fd22207579a12017207e8080a0cb0d353520fd2015201720133608b40d4a24b44a",
+  "c43524bbb475794e804aa00daaa0b475aab40db4a10d7924bd20fd20802017042023362408b4790d1824b4a03624b4a10d7924b47e0d754ab40d",
+  "aa53b47ec4aab47e804ab42411244a0880aa2420fd2023362408b4790d1824b4a03624b4a10d7924b4cb804a75aaa120fd2023362408b4bba080",
+  "4eb42411244a0880aa24b47e4a8079b44e350d0875aaa120fd2023362408b43624354eb480aa3508b480aa24b44e350d08244ab46875aa20a2fd",
+  "200d201792fd20242017204c2de82031fd22207579a1201720798080aa20fd201520172013360da0b4ce0dc4bb24bbb4530d08b40daa53b4aa75",
+  "a136a0bd20fd208020170420233624b4aec4aab479801175aaa1b40d4a80c4aa53b4a03624b4840d4aa03620fd20233624b4840d4aa036b4a0c4",
+  "4aaa75aaa1b480aab475a0bbb40d1f75bb20fd20233624b4bc8080aab4bb3675aa75aaa120fd20e63580c453bbb4ce8011244a75aaa1b4a03624",
+  "b4aec4aa20a2fd200d201756fd2024201720c5c33f952031fd22207579a12017207e4a7524aa53bb20fd20152017207b8068b4ce0daab40880c4",
+  "b4cb24b40db4a1808053b47e4a7524aa53b480aa3575aa24bd20fd2080201704201908b4bb360d4a75aaa1b480a036244abb69b44e3680a080bb",
+  "b46875a03680c4a0b40dbb1875aaa120fd201908b4a0240dbb75aaa1b47e4a7524aa53bbb475aab4ce360da0bb20fd201908b4cb2475aaa1b418",
+  "75aa53b40daa53b4aa2411244ab4bb360d4a75aaa1b436c44aa07ec435b468804a53bb20fd201908b475a1aa804a75aaa1b42411244a0880aa24",
+  "20a2fd200d2017f4fd2024201720c5c3d2b92031fd22207579a1201720bbce3680803520fd201520172013360da0b4538024bbb4cec44a7580bb",
+  "75a008b43624354eb4c4bbb45380bd20fd208020170420debb18b415c424bba07580aabbb40daa53b435240d4aaab4aa2468b4a03675aaa1bb20",
+  "fd20aea0804eb435240d4aaa75aaa120fd2060804aa124a0b42411244a08a03675aaa120fd20de11807553b4aa2468b47553240dbb20a2fd200d",
+  "201792fd20242017204c14322031fd22207579a1201720798080aa20fd2015201720133608b4538024bbb4a03624b4bc8080aab4bb3675aa24b4",
+  "0da0b4aa75a136a0bd20fd208020170420b8a0b4790d1824bbb475a0bbb48068aab43575a136a020fd20b8a0b475bbb480aab47e754a2420fd20",
+  "b8a0b475bbb40db4bba00d4a20fd20b8a0b44a247e3524cea0bbb4bbc4aa3575a136a020a2fd200d2017f8fd2024201720c5c33fba2031fd2220",
+  "7579a12017207e4a7524aa53bb20fd201520172013360da0b475bbb4a03624b4cb24bba0b4680d08b4a080b4bb4e24aa53b4e6367535534a24aa",
+  "69bbb4730d08bd20fd208020170420738075aaa1b4241fa04a0db43680792468804a1820fd20ae75a0a075aaa1b40d3580aa2420fd20d3350d08",
+  "75aaa1fdb44a240d5375aaa1b40daa53b4350dc4a13675aaa1b46875a036b47e4a7524aa53bb20fd20130da0ce3675aaa1b44e0d75aaa0b4534a",
+  "0820a2fd200d2017f4fd2024201720c5c36f212031fd22207579a12017204a0d75aacb806820fd2015201720b87eb4ce3675355336808053b436",
+  "0d53b40db4ce803580c44afdb468360da0b46880c43553b475a0b4cb24bd20fd2080201704203d4a2408b40daa53b453c4353520fd20194a75a1",
+  "36a0b40daa53b4ce3624244a7ec435fdb435751824b40db44a0d75aacb806820fd2019350dce18b40daa53b4530d4a1820fd20133675a024b480",
+  "aa350820a2fd200d201756fd2024201720c5c33f052031a2fd2094343d20170422207579a1201720cb0d353520fd201520172013360da0b45380",
+  "b46824b45380b46875a036b40db4cb0d3535bd20fd2080201704203475ce18b40daa53b4a0364a8068b475a020fd20840da0b475a020fd207424",
+  "0d53b475a020fd2013240d4ab475a020a2fd200d201792fd20242017204c2de82031fd22207579a1201720a02453530820fd2015201720133675",
+  "ce36b4a08008b475bbb4bb807ea0b40daa53b4cec453533508bd20fd208020170420deb4bba080aa2420fd20deb4bb4e8080aa20fd20deb4a024",
+  "535308b4cb240d4a20fd20deb4bb36802420a2fd200d2017f4fd2024201720c5c3f6452031fd22207579a1201720cb0d35358080aa20fd201520",
+  "172013360da0b47e35800da0bbb4c44eb475aab4a03624b4bb1808b40da0b40db44e0d4aa008bd20fd208020170420deb4cb80801820fd20deb4",
+  "cb0d35358080aa20fd20deb4ce360d754a20fd20deb4bb36802420a2fd200d201756fd2024201720c5c36f052031fd22207579a12017207e4a75",
+  "24aa53bb20fd2015201720133680b45380b46824b44e350d08b46875a036b40da0b4bbce36808035bd20fd208020170420deb4357580aa20fd20",
+  "deb4ce3580c45320fd20deb4ce0d4a20fd2090c44ab47e4a7524aa53bb20a2fd200d2017f8fd2024201720c5c343f62031fd22207579a1201720",
+  "ce0d182420fd201520172013360da0b45380b46824b4240da0b480aab40db4cb754aa036530d08bd20fd208020170420deb4bba080aa2420fd20",
+  "deb4ce0d182420fd20deb44e24aace753520fd20deb4bb80ce1820a2fd200d201756fd2024201720c5c36f7c2031fd22207579a1201720bba080",
+  "4a08cb80801820fd201520172013360da0b45380b46824b45380b4683624aab46824b40d4a24b4360d4e4e08bd20fd208020170420ae79753524",
+  "20fd20e64a0820fd20ae3680c4a020fd207b75532420a2fd200d201792fd2024201720c5c3555c2031fd22207579a1201720bba0804a08cb8080",
+  "1820fd201520172013360da0b45380b46824b44a240d53b475aabd20fd208020170420deb44e350da02420fd20deb4bb36802420fd20deb4bba0",
+  "804a08cb80801820fd20deb4cb0d353520a2fd200d2017f4fd2024201720c5c3321a2031fd22207579a1201720bb6875aaa120fd201520172013",
+  "360da0b45380b46824b4bb75a0b480aab40daa53b4bb6875aaa1b475aab40db44e0d4a18bd20fd208020170420deb4a00dcb352420fd20deb4cb",
+  "245320fd20deb4cbc4bb20fd20deb4bb6875aaa120a2fd200d2017f8fd2024201720c5c329142031fd22207579a1201720cb0d35358080aa20fd",
+  "201520172013360da0b4bb80c4aa53b4538024bbb40db4360d4e4e08b4ce36753553b4790d1824bd20fd2080201704207b0db4360db4360d20fd",
+  "20194a4ab4cb4a4a20fd202375ce18b4a080ce1820fd205e4a80807920a2fd200d201792fd2024201720c5c355ca2031fd22207579a12017207e",
+  "4a7524aa53bb20fd2015201720133675ce36b475bbb4a03624b4cb24bba0b4a03675aaa1b4a080b4bb360d4a24b46875a036b40db47e4a7524aa",
+  "53bd20fd208020170420deb4bba080aa2420fd20deb4a0800820fd20deb4bb36802420fd20deb4ce3580c45320a2fd200d201756fd2024201720",
+  "c5c39ab62031a23131"
+].join("") };
+/* QUIZ-DATA:END */
+
+/* The same shuffled table tools/build.mjs used, rebuilt from the key. */
+function table(k) {
+  let seed = 0x811c9dc5;
+  for (let i = 0; i < k.length; i++) {
+    seed ^= k.charCodeAt(i);
+    seed = Math.imul(seed, 0x01000193);
+  }
+  const next = function () {
+    seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  const p = [];
+  for (let i = 0; i < 256; i++) p.push(i);
+  for (let i = 255; i > 0; i--) {
+    const j = Math.floor(next() * (i + 1));
+    const t = p[i]; p[i] = p[j]; p[j] = t;
+  }
+  return p;
+}
+
+function unpack(bank) {
+  if (!bank || typeof bank.d !== 'string') return bank;
+  const p = table(bank.k);
+  const back = new Uint8Array(256);
+  for (let i = 0; i < 256; i++) back[p[i]] = i;
+  const bytes = new Uint8Array(bank.d.length / 2);
+  for (let i = 0; i < bytes.length; i++) {
+    bytes[i] = back[parseInt(bank.d.substr(i * 2, 2), 16)];
+  }
+  return JSON.parse(new TextDecoder('utf-8').decode(bytes));
+}
+
+const DATA = unpack(BANK);
+const WEEK = DATA.week;
+const IMAGES = DATA.images || {};
+const QUIZZES = DATA.quizzes || {};
 
 
 /* ============================================================
-   CLASS DROPDOWN
+   SMALL HELPERS
    ============================================================ */
 
-const CLASS_ORDER=[
-  "UKG",
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8"
-];
+const $ = id => document.getElementById(id);
 
-const classDropdown =
-  document.getElementById('classDropdown');
+function el(tag, cls, text) {
+  const node = document.createElement(tag);
+  if (cls) node.className = cls;
+  if (text !== undefined && text !== null) node.textContent = text;
+  return node;
+}
 
-const classTrigger =
-  document.getElementById('classTrigger');
+/* A short, stable fingerprint of some text (FNV-1a). */
+function hash(text) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < text.length; i++) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return (h >>> 0).toString(36);
+}
 
-const classTriggerText =
-  document.getElementById('classTriggerText');
+/* The numbers 0..n-1 in a random order. */
+function shuffled(n) {
+  const a = [];
+  for (let i = 0; i < n; i++) a.push(i);
+  for (let i = n - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
 
-const classOptions =
-  document.getElementById('classOptions');
+function inOrder(n) {
+  const a = [];
+  for (let i = 0; i < n; i++) a.push(i);
+  return a;
+}
 
-let selectedClass='';
+function times(n) {
+  return n + (n === 1 ? ' time' : ' times');
+}
+
+function classLabel(cls) {
+  return cls === 'UKG' ? 'UKG' : 'Class ' + cls;
+}
+
+function secondsFor(cls) {
+  return QUESTION_SECONDS_BY_CLASS[cls] || QUESTION_SECONDS;
+}
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+/* "2026-10-31" -> "Sat 31 Oct" */
+function niceDate(iso) {
+  const p = iso.split('-').map(Number);
+  const d = new Date(Date.UTC(p[0], p[1] - 1, p[2]));
+  return DAYS[d.getUTCDay()] + ' ' + p[2] + ' ' + MONTHS[p[1] - 1];
+}
+
+/* "20:00" -> "8:00 PM" */
+function niceTime(hhmm) {
+  const p = hhmm.split(':').map(Number);
+  return (p[0] % 12 || 12) + ':' + (p[1] < 10 ? '0' : '') + p[1] + (p[0] < 12 ? ' AM' : ' PM');
+}
+
+/* Names are compared without regard to capitals or extra spaces. */
+function sameName(a, b) {
+  const tidy = s => s.replace(/\s+/g, ' ').trim().toLowerCase();
+  return tidy(a) === tidy(b);
+}
+
+const reducedMotion =
+  !!window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* On a slow or data-saving connection, ask Wikimedia for smaller photos. */
+const SLOW_NET = (function () {
+  try {
+    const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    return !!c && (c.saveData === true || /(^|-)(2g|3g)$/.test(c.effectiveType || ''));
+  } catch (e) {
+    return false;
+  }
+})();
 
 
-function classLabel(cls){
+/* ============================================================
+   WHAT THIS DEVICE REMEMBERS
+   ============================================================ */
 
-  return cls === 'UKG'
-    ? 'UKG'
-    : 'Class ' + cls;
+/*
+  The page keeps two things in the browser's storage, for this week only:
 
+    the quiz in progress   so a reload or a closed tab carries on from the
+                           same question with the same clock, and cannot be
+                           used to start again
+    finished results       so a result that failed to save is sent again
+                           later, and the answers can be opened after they
+                           unlock
+
+  If storage is unavailable the quiz still runs; only these extras are lost.
+*/
+
+const store = {
+  get: function (key) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  },
+  set: function (key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
+  del: function (key) {
+    try { localStorage.removeItem(key); } catch (e) {}
+  }
+};
+
+const QUIZ_ID = WEEK.date + '.' + hash(WEEK.theme);
+const K_ATT = 'gsq:' + QUIZ_ID + ':attempt';
+const K_DONE = 'gsq:' + QUIZ_ID + ':done';
+const TAB_ID = Math.random().toString(36).slice(2, 10);
+
+/* Forget anything kept for earlier weeks. */
+function tidyStorage() {
+  try {
+    const drop = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.indexOf('gsq:') === 0 && k.indexOf('gsq:' + QUIZ_ID + ':') !== 0) drop.push(k);
+    }
+    drop.forEach(function (k) { localStorage.removeItem(k); });
+  } catch (e) {}
+}
+
+/* Changes whenever a class's questions change, so old saved work is not mixed with new questions. */
+function sigOf(cls) {
+  return hash(JSON.stringify(QUIZZES[cls] || []));
 }
 
 
-CLASS_ORDER.forEach(cls=>{
+/* ============================================================
+   WHEN THE ANSWERS OPEN
+   ============================================================ */
 
-  const li =
-    document.createElement('li');
+const UNLOCK_AT = (function () {
+  if (!RULES.answersAt) return 0;
+  const t = Date.parse(WEEK.date + 'T' + RULES.answersAt + ':00+05:30');
+  return isNaN(t) ? 0 : t;
+})();
 
-  li.textContent =
-    classLabel(cls);
+function answersOpen() {
+  return Date.now() >= UNLOCK_AT;
+}
 
-  li.dataset.value =
-    cls;
-
-  li.setAttribute(
-    'role',
-    'option'
-  );
+function unlockLabel() {
+  const todayInIndia = new Date(Date.now() + 5.5 * 3600 * 1000).toISOString().slice(0, 10);
+  return (todayInIndia === WEEK.date ? 'today' : 'on ' + niceDate(WEEK.date)) +
+    ' at ' + niceTime(RULES.answersAt);
+}
 
 
-  li.addEventListener(
-    'click',
-    ()=>{
+/* ============================================================
+   PAGE ELEMENTS AND STATE
+   ============================================================ */
 
-      selectedClass =
-        cls;
+const app = $('app');
+const nameInput = $('studentName');
+const nameState = $('nameState');
+const classGrid = $('classGrid');
+const formMsg = $('formMsg');
+const startBtn = $('startBtn');
+const readyModal = $('readyModal');
+const beginBtn = $('beginBtn');
+const noticeModal = $('noticeModal');
+const noticeOk = $('noticeOk');
+const noticeAlt = $('noticeAlt');
+const qCard = $('qCard');
+const qMedia = $('qMedia');
+const qText = $('qText');
+const optsBox = $('opts');
+const nextBtn = $('nextBtn');
+const timerBox = $('timer');
+const tArc = $('tArc');
+const tNum = $('tNum');
 
-      scheduleEarlyCheck();
+const DUPLICATE_MSG =
+  'A submission already exists for this name & class. Please check with your teacher if this is a mistake.';
 
-      classTriggerText.textContent =
-        classLabel(cls);
+const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
+const TIMER_RING = 125.66;   /* circumference of the timer ring */
+const SCORE_RING = 326.73;   /* circumference of the score ring */
 
-      preloadClassImages(cls);
+/* home | ready | count | quiz | ending | result | displaced */
+let phase = 'home';
+let selectedClass = '';
+let att = null;          /* the quiz in progress */
+let doneList = [];       /* finished results kept on this device */
+let shown = null;        /* the result on screen */
 
-      classOptions
-        .querySelectorAll('li')
-        .forEach(
-          o =>
-            o.classList.remove(
-              'selected'
-            )
-        );
+function show(screen) {
+  ['home', 'quiz', 'result'].forEach(function (id) {
+    $(id).hidden = id !== screen;
+  });
+  $('hero').hidden = screen !== 'home';
+  $('foot').hidden = screen === 'quiz';
+  window.scrollTo(0, 0);
+}
 
-      li.classList.add(
-        'selected'
-      );
+function say(text) {
+  $('live').textContent = text;
+}
 
-      closeClassDropdown();
+let toastTimer = null;
 
+function toast(text) {
+  const box = $('toast');
+  box.textContent = text;
+  box.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { box.hidden = true; }, 2600);
+}
+
+/* While a sheet is open, the page behind it cannot be reached. */
+function lockPage(on) {
+  if ('inert' in app) app.inert = on;
+  if (on) app.setAttribute('aria-hidden', 'true');
+  else app.removeAttribute('aria-hidden');
+}
+
+function trapFocus(modal) {
+  modal.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab') return;
+    const items = Array.prototype.filter.call(
+      modal.querySelectorAll('button'),
+      function (b) { return !b.hidden && !b.disabled; }
+    );
+    if (!items.length) { e.preventDefault(); return; }
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+}
+
+/* Arrow keys move between the choices of a group, as they do for radio buttons. */
+function arrowKeys(group, selector) {
+  group.addEventListener('keydown', function (e) {
+    const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+    if (!step) return;
+    const items = Array.prototype.slice.call(group.querySelectorAll(selector));
+    const at = items.indexOf(document.activeElement);
+    if (at < 0) return;
+    e.preventDefault();
+    const next = items[(at + step + items.length) % items.length];
+    next.focus();
+    next.click();
+  });
+}
+
+
+/* ============================================================
+   TALKING TO THE APPS SCRIPT
+   ============================================================ */
+
+/*
+  The requests are exactly the ones the sheet already understands:
+
+    { action:'start',  studentName, className, total }
+    { action:'result', studentName, className, score, total, tabSwitches, unattempted }
+
+  A request that hangs is given up after a while, so a bad connection
+  never leaves a student stuck on "Checking".
+*/
+function post(body, options) {
+  const opts = options || {};
+  const ctl = new AbortController();
+  const giveUp = setTimeout(function () { ctl.abort(); }, opts.timeout || 20000);
+  if (opts.signal) {
+    if (opts.signal.aborted) ctl.abort();
+    else opts.signal.addEventListener('abort', function () { ctl.abort(); });
+  }
+  const done = function () { clearTimeout(giveUp); };
+
+  return fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(body),
+    signal: ctl.signal
+  })
+    .then(function (res) {
+      return res.json().then(function (data) {
+        done();
+        return { ok: res.ok, data: data || {} };
+      });
+    })
+    .catch(function (err) {
+      done();
+      throw err;
+    });
+}
+
+const API_READY = API_URL.indexOf('PASTE_YOUR') !== 0;
+
+function startBody(name, cls) {
+  return {
+    action: 'start',
+    studentName: name,
+    className: cls,
+    total: (QUIZZES[cls] || []).length
+  };
+}
+
+
+/* ============================================================
+   HOME: NAME, CLASS AND THE NAME CHECK
+   ============================================================ */
+
+function nameValue() {
+  return nameInput.value.replace(/\s+/g, ' ').trim();
+}
+
+/* A real name has at least two letters. */
+function nameLooksReal(name) {
+  return name.replace(/[\s\d!-\/:-@\[-`{-~]/g, '').length >= 2;
+}
+
+function setFormMsg(text) {
+  formMsg.textContent = text || '';
+  formMsg.hidden = !text;
+}
+
+function setNameState(state) {
+  nameState.className = 'name-state' + (state ? ' ' + state : '');
+}
+
+function paintWeek() {
+  $('themeEmoji').textContent = WEEK.emoji;
+  $('themeName').textContent = WEEK.theme;
+  $('themeDate').textContent = niceDate(WEEK.date);
+  $('rTheme').textContent = WEEK.emoji + ' ' + WEEK.theme + ' · ' + niceDate(WEEK.date);
+  $('photoCredit').hidden = Object.keys(IMAGES).length === 0;
+}
+
+function paintHints() {
+  const cls = selectedClass;
+  if (cls) {
+    const n = QUIZZES[cls].length;
+    $('startHint').textContent =
+      n + ' questions · ' + secondsFor(cls) + ' seconds each · one try';
+    $('howCount').textContent = n + ' questions';
+    $('howTime').textContent = secondsFor(cls) + ' seconds';
+  } else {
+    $('startHint').textContent = 'Type your name and choose your class to begin.';
+    $('howCount').textContent = '10 questions';
+    $('howTime').textContent = '40 to 45 seconds';
+  }
+}
+
+function buildClassGrid() {
+  CLASS_ORDER.forEach(function (cls) {
+    if (!QUIZZES[cls] || !QUIZZES[cls].length) return;
+    const b = el('button', 'cls', cls);
+    b.type = 'button';
+    b.dataset.cls = cls;
+    b.setAttribute('role', 'radio');
+    b.setAttribute('aria-checked', 'false');
+    b.setAttribute('aria-label', classLabel(cls));
+    b.addEventListener('click', function () { pickClass(cls); });
+    classGrid.appendChild(b);
+  });
+}
+
+function paintClassGrid() {
+  Array.prototype.forEach.call(classGrid.children, function (b) {
+    b.setAttribute('aria-checked', String(b.dataset.cls === selectedClass));
+  });
+}
+
+function pickClass(cls) {
+  selectedClass = cls;
+  paintClassGrid();
+  paintHints();
+  preloadClass(cls);
+  scheduleCheck();
+}
+
+/*
+  The duplicate-name check runs while the student is still typing their
+  name and picking a class, so the verdict is usually ready by the time
+  Start is tapped. The rule is unchanged: the quiz never starts on a
+  name that already has a submission for that class.
+*/
+const check = { key: '', result: null, promise: null, abort: null, timer: null };
+
+function scheduleCheck() {
+  const name = nameValue();
+  const cls = selectedClass;
+  const key = name + '|' + cls;
+
+  /* A verdict already in hand for this exact name and class stays valid. */
+  if (check.key === key && check.result !== null) return;
+
+  clearTimeout(check.timer);
+  check.timer = null;
+  check.key = '';
+  check.result = null;
+  if (check.abort) { check.abort.abort(); check.abort = null; }
+  check.promise = null;
+
+  setFormMsg('');
+  setNameState('');
+
+  if (!nameLooksReal(name) || !cls || !API_READY) return;
+
+  check.timer = setTimeout(function () { runCheck(name, cls); }, 700);
+}
+
+function runCheck(name, cls) {
+  const key = name + '|' + cls;
+  const ctl = new AbortController();
+  check.timer = null;
+  check.key = key;
+  check.abort = ctl;
+  setNameState('spin');
+
+  check.promise = post(startBody(name, cls), { signal: ctl.signal, timeout: 12000 })
+    .then(function (res) {
+      if (check.key !== key) return null;
+      check.result = res.data.error !== 'duplicate';
+      setNameState(check.result ? 'ok' : 'bad');
+      if (!check.result && phase === 'home') setFormMsg(DUPLICATE_MSG);
+      return check.result;
+    })
+    .catch(function () {
+      if (check.key === key) {
+        check.result = null;
+        check.promise = null;
+        setNameState('');
+      }
+      return null;
+    });
+}
+
+function resetCheck() {
+  clearTimeout(check.timer);
+  if (check.abort) check.abort.abort();
+  check.key = '';
+  check.result = null;
+  check.promise = null;
+  check.abort = null;
+  check.timer = null;
+  setNameState('');
+}
+
+
+/* ============================================================
+   START: THE "GET READY" SHEET
+   ============================================================ */
+
+/*
+  Tapping Start opens the rules at once. The name check finishes behind
+  it (usually it already has), and only then does the Start button on
+  the sheet come alive. So reading the rules and waiting for the check
+  happen at the same time, and the quiz still never starts on a
+  duplicate name.
+*/
+let ready = null;   /* { name, cls } while the sheet is open */
+
+function leaveRuleText() {
+  const free = RULES.freeLeaves;
+  const nth = { 1: 'first', 2: 'second', 3: 'third', 4: 'fourth', 5: 'fifth' }[RULES.maxLeaves] ||
+    RULES.maxLeaves + 'th';
+  return 'If you switch apps or tabs, ' +
+    (free > 0
+      ? 'you get ' + (free === 1 ? 'one warning' : free + ' warnings') +
+        '. After that, the question you are on is locked.'
+      : 'the question you are on is locked.') +
+    ' The ' + nth + ' time, the quiz ends.';
+}
+
+function paintBegin(state) {
+  beginBtn.textContent = '';
+  if (state === 'checking') {
+    beginBtn.disabled = true;
+    beginBtn.appendChild(el('span', 'spinner'));
+    beginBtn.appendChild(document.createTextNode('Checking your name…'));
+  } else {
+    beginBtn.disabled = false;
+    beginBtn.textContent = 'I will play fair. Start!';
+  }
+}
+
+function openReady(name, cls) {
+  const others = doneList.filter(function (r) {
+    return r.cls === cls && !sameName(r.name, name);
+  });
+
+  ready = { name: name, cls: cls };
+  phase = 'ready';
+
+  $('readyTitle').textContent = 'Ready, ' + name.split(' ')[0] + '?';
+  $('readySub').textContent =
+    classLabel(cls) + ' · ' + QUIZZES[cls].length + ' questions · ' + WEEK.theme;
+  $('ruleTime').textContent = secondsFor(cls) + ' seconds for each question';
+  $('ruleLeave').textContent = leaveRuleText();
+
+  const note = $('readyNote');
+  note.hidden = others.length === 0;
+  if (others.length) {
+    note.textContent =
+      'This device has already been used for the ' + classLabel(cls) + ' quiz by ' +
+      others[others.length - 1].name + '. Each student gets one try.';
+  }
+
+  paintBegin('checking');
+  readyModal.hidden = false;
+  lockPage(true);
+  $('readyBack').focus();
+}
+
+function closeReady() {
+  ready = null;
+  readyModal.hidden = true;
+  lockPage(false);
+}
+
+function backFromReady() {
+  if (phase !== 'ready') return;
+  closeReady();
+  phase = 'home';
+  startBtn.focus();
+}
+
+function onStart(e) {
+  if (e) e.preventDefault();
+  if (phase !== 'home') return;
+
+  const name = nameValue();
+  const cls = selectedClass;
+
+  if (!nameLooksReal(name) || !cls) {
+    setFormMsg('Please enter your name and choose a class.');
+    return;
+  }
+
+  const mine = doneList.filter(function (r) {
+    return r.cls === cls && sameName(r.name, name);
+  })[0];
+
+  if (mine) {
+    setFormMsg(
+      mine.name + ' has already finished the ' + classLabel(cls) +
+      ' quiz on this device. Each student gets one try.'
+    );
+    return;
+  }
+
+  const key = name + '|' + cls;
+
+  if (check.key === key && check.result === false) {
+    setFormMsg(DUPLICATE_MSG);
+    return;
+  }
+
+  setFormMsg('');
+
+  /* Stop a check still waiting from typing, so it cannot fire a second start call later. */
+  clearTimeout(check.timer);
+  check.timer = null;
+
+  openReady(name, cls);
+  const mySheet = ready;
+
+  let verdict = Promise.resolve(null);
+
+  if (check.key === key) {
+    if (check.result !== null) verdict = Promise.resolve(check.result);
+    else if (check.promise) verdict = check.promise;
+  }
+
+  verdict
+    .then(function (v) {
+      if (v !== null || !API_READY) return v;
+      /* No verdict from the typing-time check: ask now, as before. */
+      return post(startBody(name, cls), { timeout: 12000 })
+        .then(function (res) { return res.data.error === 'duplicate' ? false : null; })
+        .catch(function () {
+          /* A temporary network problem must not stop the student. */
+          return null;
+        });
+    })
+    .then(function (v) {
+      if (ready !== mySheet) return;   /* the sheet was closed meanwhile */
+      if (v === false) {
+        closeReady();
+        phase = 'home';
+        setNameState('bad');
+        setFormMsg(DUPLICATE_MSG);
+        return;
+      }
+      paintBegin('go');
+      beginBtn.focus();
+    });
+}
+
+function onBegin() {
+  if (!ready || beginBtn.disabled) return;
+  const who = ready;
+  closeReady();
+  startAttempt(who.name, who.cls);
+}
+
+function countdown() {
+  return new Promise(function (resolve) {
+    const box = $('countdown');
+    const words = ['3', '2', '1', 'Go!'];
+    const gap = reducedMotion ? 300 : 620;
+    let i = 0;
+    box.hidden = false;
+
+    (function next() {
+      if (i >= words.length) {
+        box.hidden = true;
+        box.textContent = '';
+        resolve();
+        return;
+      }
+      box.textContent = '';
+      box.appendChild(el('span', null, words[i]));
+      i++;
+      setTimeout(next, i === words.length ? gap * 0.7 : gap);
+    })();
+  });
+}
+
+function startAttempt(name, cls) {
+  const list = QUIZZES[cls];
+  const n = list.length;
+
+  phase = 'count';
+
+  const fresh = {
+    v: 1,
+    owner: TAB_ID,
+    name: name,
+    cls: cls,
+    sig: sigOf(cls),
+    /* order[k] is the question shown k-th; opts[q] is the order of question q's options. */
+    order: RULES.shuffleQuestions ? shuffled(n) : inOrder(n),
+    opts: list.map(function (item) { return shuffled(item.o.length); }),
+    /* answers[q] is the option chosen for question q (as numbered in the question bank), or null. */
+    answers: list.map(function () { return null; }),
+    qi: 0,
+    deadline: null,
+    left: null,
+    leaves: 0,
+    away: 0,
+    startedAt: Date.now()
+  };
+
+  const first = list[fresh.order[0]];
+  if (first.img && !first.pic) preloadOne(imageUrl(first.img));
+
+  countdown().then(function () {
+    att = fresh;
+    phase = 'quiz';
+    save();
+    enterQuiz();
+    drawQuestion();
+    armClock();
+  });
+}
+
+
+/* ============================================================
+   PHOTOS
+   ============================================================ */
+
+function imageUrl(key) {
+  const url = IMAGES[key] || '';
+  return SLOW_NET ? url.replace('/960px-', '/500px-') : url;
+}
+
+function emojiFor(item) {
+  return item.e || WEEK.emoji || '❓';
+}
+
+const preloaded = {};
+
+function preloadOne(url, then) {
+  if (!url || preloaded[url]) { if (then) then(); return; }
+  preloaded[url] = true;
+  const im = new Image();
+  im.referrerPolicy = 'no-referrer';
+  im.decoding = 'async';
+  im.onload = im.onerror = function () { if (then) then(); };
+  im.src = url;
+}
+
+/* Fetch a class's photos one after another, so they do not fight each other for a slow connection. */
+function preloadClass(cls) {
+  const urls = [];
+  (QUIZZES[cls] || []).forEach(function (item) {
+    if (!item.img || item.pic) return;
+    const url = imageUrl(item.img);
+    if (url && urls.indexOf(url) < 0) urls.push(url);
+  });
+  (function next() {
+    const url = urls.shift();
+    if (url) preloadOne(url, next);
+  })();
+}
+
+function showEmoji(box, item) {
+  box.className = 'media emoji';
+  box.textContent = '';
+  box.appendChild(el('span', null, emojiFor(item)));
+}
+
+/*
+  The picture for a question: a photo, a text card (pic), or an emoji.
+  "ready" settles when the picture is on screen, has failed, or has taken
+  too long. The clock for the question starts then.
+*/
+function buildMedia(item) {
+  const box = el('div', 'media');
+  let ready = Promise.resolve();
+
+  if (item.pic) {
+    box.classList.add('pic');
+    box.appendChild(el('span', null, item.pic));
+    return { node: box, ready: ready };
+  }
+
+  if (!item.img || !IMAGES[item.img]) {
+    showEmoji(box, item);
+    return { node: box, ready: ready };
+  }
+
+  const bg = new Image();
+  const main = new Image();
+
+  [bg, main].forEach(function (im) {
+    im.decoding = 'async';
+    im.referrerPolicy = 'no-referrer';
+    im.draggable = false;
+  });
+
+  /* The alt text is deliberately vague so that it never gives the answer away. */
+  bg.alt = '';
+  bg.className = 'm-bg';
+  bg.setAttribute('aria-hidden', 'true');
+  main.alt = 'Picture clue for this question';
+  main.className = 'm-main';
+  main.setAttribute('fetchpriority', 'high');
+
+  box.classList.add('loading');
+
+  ready = new Promise(function (resolve) {
+    const original = IMAGES[item.img];
+    let url = imageUrl(item.img);
+    const tooLong = setTimeout(resolve, RULES.imageWaitMs);
+
+    main.addEventListener('load', function () {
+      clearTimeout(tooLong);
+      box.classList.remove('loading');
+      box.classList.add('ready');
+      resolve();
+    });
+
+    main.addEventListener('error', function () {
+      if (url !== original) {
+        /* The smaller photo is missing: fall back to the usual one. */
+        url = original;
+        bg.src = url;
+        main.src = url;
+        return;
+      }
+      clearTimeout(tooLong);
+      showEmoji(box, item);
+      resolve();
+    });
+
+    bg.src = url;
+    main.src = url;
+  });
+
+  box.appendChild(bg);
+  box.appendChild(main);
+  return { node: box, ready: ready };
+}
+
+/* Shrink a text card until each of its lines fits on one line. */
+function fitPic(box) {
+  const span = box.querySelector('span');
+  if (!span) return;
+  const want = span.textContent.split('\n').length;
+  let size = 1.65;
+  while (size > 1.05) {
+    box.style.fontSize = size + 'rem';
+    const line = parseFloat(getComputedStyle(span).lineHeight);
+    if (Math.round(span.getBoundingClientRect().height / line) <= want) return;
+    size -= 0.05;
+  }
+}
+
+
+/* ============================================================
+   THE QUIZ
+   ============================================================ */
+
+let drawId = 0;            /* which drawing of a question is current */
+let mediaReady = false;
+let pendingAdvance = false;   /* move on as soon as the notice on screen is closed */
+
+function save() {
+  if (att) store.set(K_ATT, att);
+}
+
+function currentIndex() {
+  return att.order[att.qi];
+}
+
+function totalMs() {
+  return secondsFor(att.cls) * 1000;
+}
+
+function enterQuiz() {
+  show('quiz');
+  holdScreen();
+  /* A spare history entry, so the Back button does not leave the quiz by accident. */
+  try { history.pushState({ gsq: 1 }, ''); } catch (e) {}
+}
+
+function drawQuestion() {
+  const list = QUIZZES[att.cls];
+  const n = att.order.length;
+  const q = currentIndex();
+  const item = list[q];
+  const id = ++drawId;
+
+  stopClock();
+  mediaReady = false;
+  pendingAdvance = false;
+  lastSecond = -1;
+
+  $('qCount').textContent = 'Question ' + (att.qi + 1) + ' of ' + n;
+  $('qWho').textContent = att.name + ' · ' + classLabel(att.cls);
+
+  const steps = $('steps');
+  steps.textContent = '';
+  for (let i = 0; i < n; i++) {
+    steps.appendChild(el('i', i < att.qi ? 'done' : i === att.qi ? 'now' : ''));
+  }
+
+  const media = buildMedia(item);
+  qMedia.textContent = '';
+  qMedia.appendChild(media.node);
+  if (item.pic) fitPic(media.node);
+
+  qText.textContent = item.q;
+
+  optsBox.textContent = '';
+  att.opts[q].forEach(function (original, place) {
+    const b = el('button', 'opt');
+    b.type = 'button';
+    b.dataset.i = original;
+    b.setAttribute('role', 'radio');
+    b.setAttribute('aria-checked', String(att.answers[q] === original));
+    b.appendChild(el('span', 'k', LETTERS[place] || ''));
+    b.appendChild(el('span', 't', item.o[original]));
+    b.addEventListener('click', function () { choose(original); });
+    optsBox.appendChild(b);
+  });
+
+  paintNext();
+  paintClock(att.deadline ? timeLeft() : totalMs());
+
+  qCard.classList.remove('swap');
+  void qCard.offsetWidth;
+  qCard.classList.add('swap');
+  window.scrollTo(0, 0);
+  say('Question ' + (att.qi + 1) + ' of ' + n);
+
+  media.ready.then(function () {
+    if (id !== drawId) return;
+    mediaReady = true;
+    if (wantClock) armClock();
+  });
+}
+
+function choose(original) {
+  if (phase !== 'quiz' || !att || notice) return;
+  const q = currentIndex();
+  att.answers[q] = original;
+  save();
+  Array.prototype.forEach.call(optsBox.children, function (b) {
+    const mine = Number(b.dataset.i) === original;
+    b.setAttribute('aria-checked', String(mine));
+    /* Keep the chosen answer clear of the Next bar that now slides in. */
+    if (mine && b.scrollIntoView) b.scrollIntoView({ block: 'nearest', behavior: reducedMotion ? 'auto' : 'smooth' });
+  });
+  paintNext();
+}
+
+function paintNext() {
+  const chosen = att.answers[currentIndex()] !== null;
+  const last = att.qi >= att.order.length - 1;
+  nextBtn.disabled = !chosen;
+  nextBtn.textContent = !chosen ? 'Choose an answer' : last ? 'Finish' : 'Next question';
+  $('actBar').classList.toggle('on', chosen);
+}
+
+function onNext() {
+  if (phase !== 'quiz' || !att || notice) return;
+  if (att.answers[currentIndex()] === null) return;
+  advance();
+}
+
+function advance() {
+  stopClock();
+  att.qi++;
+  att.deadline = null;
+  att.left = null;
+  if (att.qi >= att.order.length) {
+    finish('');
+    return;
+  }
+  save();
+  drawQuestion();
+  armClock();
+}
+
+
+/* ---------- the clock ---------- */
+
+/*
+  Each question has a deadline on the real clock, not a count of ticks.
+  Time spent in another app or tab, with the screen off, or after a
+  reload still counts, which a tick counter would have paused.
+*/
+let clockOn = false;
+let wantClock = false;
+let clockTimer = null;
+let lastSecond = -1;
+
+function armClock() {
+  wantClock = true;
+  if (clockOn || phase !== 'quiz' || !att) return;
+  if (!att.deadline) {
+    if (!mediaReady) return;             /* wait for the photo; drawQuestion calls back */
+    att.deadline = Date.now() + totalMs();
+    att.left = totalMs();
+    save();
+  }
+  clockOn = true;
+  tick();
+  if (clockOn) clockTimer = setInterval(tick, 200);
+}
+
+function stopClock() {
+  clockOn = false;
+  wantClock = false;
+  if (clockTimer) {
+    clearInterval(clockTimer);
+    clockTimer = null;
+  }
+}
+
+function timeLeft() {
+  let ms = att.deadline - Date.now();
+  /* If the device clock is moved back, do not hand the time back. */
+  if (typeof att.left === 'number' && ms > att.left + 1500) {
+    att.deadline = Date.now() + att.left;
+    ms = att.left;
+  }
+  return Math.max(0, ms);
+}
+
+function paintClock(ms) {
+  const seconds = Math.ceil(ms / 1000);
+  tNum.textContent = seconds;
+  tArc.style.strokeDashoffset = (TIMER_RING * (1 - ms / totalMs())).toFixed(2);
+  timerBox.classList.toggle('low', seconds <= 5);
+  timerBox.classList.toggle('mid', seconds > 5 && seconds <= 15);
+}
+
+function tick() {
+  if (!att || !att.deadline || (phase !== 'quiz' && phase !== 'ending')) return;
+  const ms = timeLeft();
+  const seconds = Math.ceil(ms / 1000);
+
+  if (seconds !== lastSecond) {
+    lastSecond = seconds;
+    att.left = ms;
+    save();
+    if (seconds === 10) say('10 seconds left');
+  }
+
+  paintClock(ms);
+
+  if (ms <= 0) {
+    stopClock();
+    /* Time is up. Whatever is selected stays as the answer. */
+    if (notice) pendingAdvance = true;
+    else advance();
+  }
+}
+
+
+/* ============================================================
+   FAIR PLAY: LEAVING THE QUIZ
+   ============================================================ */
+
+/*
+  "Leaving" means the quiz is not in front of the student: another tab or
+  app, the window losing focus (split screen, another window), the screen
+  switching off, or the page being closed or reloaded.
+
+    up to freeLeaves   a warning. The clock kept running.
+    after that         the question they were on is locked as it stood.
+    at maxLeaves       the quiz is handed in with the answers so far.
+
+  The number of times a student left is sent to the sheet as tabSwitches.
+*/
+let awaySince = 0;
+
+function goneAway() {
+  if (phase !== 'quiz' || !att || awaySince) return;
+  awaySince = Date.now();
+  document.body.classList.add('away');
+
+  /* Leaving while the photo is still loading starts the clock, so loading time cannot be used as a pause. */
+  if (!att.deadline && wantClock && !clockOn) {
+    att.deadline = Date.now() + totalMs();
+    att.left = totalMs();
+    clockOn = true;
+    clockTimer = setInterval(tick, 200);
+  }
+
+  att.away = awaySince;
+  save();
+}
+
+function cameBack() {
+  if (!awaySince) return;
+  const gone = Date.now() - awaySince;
+  awaySince = 0;
+  document.body.classList.remove('away');
+  if (phase !== 'quiz' || !att) return;
+  att.away = 0;
+  if (gone < RULES.leaveGraceMs) {
+    save();
+    return;
+  }
+  registerLeave(false);
+}
+
+function registerLeave(afterReload) {
+  att.leaves++;
+
+  const n = att.leaves;
+  const how = afterReload ? 'closed or reloaded the page' : 'left the quiz';
+  const lastQuestion = att.qi >= att.order.length - 1;
+
+  if (n >= RULES.maxLeaves) {
+    stopClock();
+    phase = 'ending';
+    save();
+    showNotice({
+      icon: '🛑',
+      title: 'The quiz has ended',
+      text: 'You have ' + how + ' ' + times(n) + ', so your quiz has been handed in with the answers you gave.',
+      strikes: n,
+      ok: 'See my score',
+      then: function () { finish('ended'); }
+    });
+    return;
+  }
+
+  if (n > RULES.freeLeaves) {
+    const more = RULES.maxLeaves - n;
+    stopClock();
+    pendingAdvance = true;
+    save();
+    showNotice({
+      icon: '🔒',
+      title: 'Question locked',
+      text: 'You ' + how + (n > 1 ? ' again' : '') + ', so that question has been locked as it was. ' +
+        'If you leave ' + (more === 1 ? 'one more time' : more + ' more times') + ', the quiz will end.',
+      strikes: n,
+      ok: lastQuestion ? 'See my score' : 'Next question',
+      then: carryOn,
+      alt: afterReload ? 'Not ' + att.name + '? Hand in this quiz' : '',
+      altThen: askHandIn
+    });
+    return;
+  }
+
+  const left = RULES.freeLeaves - n;
+  save();
+  showNotice({
+    icon: '⚠️',
+    title: afterReload ? 'Welcome back, ' + att.name.split(' ')[0] : 'You left the quiz',
+    text: (afterReload ? 'You closed or reloaded the page. The clock kept running. '
+                       : 'The clock kept running while you were away. ') +
+      (left === 0
+        ? 'This is your only warning: if you leave again, the question you are on will be locked.'
+        : 'Please stay on this page until you finish.'),
+    strikes: n,
+    ok: 'Back to the quiz',
+    then: carryOn,
+    alt: afterReload ? 'Not ' + att.name + '? Hand in this quiz' : '',
+    altThen: askHandIn
+  });
+  if (!clockOn) armClock();
+}
+
+function carryOn() {
+  if (!att || phase !== 'quiz') return;
+  if (pendingAdvance) {
+    pendingAdvance = false;
+    advance();
+  }
+}
+
+/* For a brother or sister who finds someone else's unfinished quiz on the device. */
+function askHandIn(previous) {
+  showNotice({
+    icon: '📝',
+    title: 'Hand in this quiz?',
+    text: att.name + '’s quiz will be handed in with the answers given so far. This cannot be undone.',
+    ok: 'Yes, hand it in',
+    then: function () { finish('handed'); },
+    alt: 'No, go back',
+    altThen: function () { showNotice(previous); }
+  });
+}
+
+/* If the same quiz is opened in a second tab, this one stops. */
+function displaced() {
+  if (phase !== 'quiz' && phase !== 'ending') return;
+  stopClock();
+  letScreenSleep();
+  phase = 'displaced';
+  att = null;
+  document.body.classList.remove('away');
+  showNotice({
+    icon: '🗂️',
+    title: 'The quiz is open in another tab',
+    text: 'Carry on there, and close this tab.',
+    ok: 'Reload this page',
+    then: function () { location.reload(); }
+  });
+}
+
+
+/* ---------- notices ---------- */
+
+let notice = null;   /* the notice on screen, if any */
+
+function showNotice(cfg) {
+  const dots = $('strikes');
+  notice = cfg;
+  $('noticeIcon').textContent = cfg.icon;
+  $('noticeTitle').textContent = cfg.title;
+  $('noticeText').textContent = cfg.text;
+
+  dots.textContent = '';
+  dots.hidden = !cfg.strikes;
+  if (cfg.strikes) {
+    for (let i = 0; i < RULES.maxLeaves; i++) {
+      dots.appendChild(el('i', i < cfg.strikes ? 'on' : ''));
     }
-  );
+    dots.setAttribute('aria-label', 'Left the quiz ' + times(cfg.strikes) + ' out of ' + RULES.maxLeaves);
+  }
+
+  noticeOk.textContent = cfg.ok;
+  noticeAlt.textContent = cfg.alt || '';
+  noticeAlt.hidden = !cfg.alt;
+  noticeModal.hidden = false;
+  lockPage(true);
+  noticeOk.focus();
+}
+
+function hideNotice() {
+  notice = null;
+  noticeModal.hidden = true;
+  lockPage(false);
+}
 
 
-  classOptions.appendChild(
-    li
-  );
+/* ---------- keeping the screen on ---------- */
 
+/*
+  Without this a phone may dim and lock while a child is thinking,
+  which would look like leaving the quiz.
+*/
+let wakeLock = null;
+
+function holdScreen() {
+  try {
+    if (!navigator.wakeLock || document.visibilityState !== 'visible') return;
+    navigator.wakeLock.request('screen')
+      .then(function (lock) { wakeLock = lock; })
+      .catch(function () {});
+  } catch (e) {}
+}
+
+function letScreenSleep() {
+  try {
+    if (wakeLock) wakeLock.release();
+  } catch (e) {}
+  wakeLock = null;
+}
+
+
+/* ============================================================
+   FINISHING AND SAVING
+   ============================================================ */
+
+/* how: '' finished normally, 'ended' left too many times, 'handed' handed in from the welcome-back notice */
+function finish(how) {
+  const list = QUIZZES[att.cls];
+  let score = 0;
+  let blank = 0;
+
+  stopClock();
+  letScreenSleep();
+
+  list.forEach(function (item, q) {
+    const a = att.answers[q];
+    if (a === null || a === undefined) blank++;
+    else if (a === item.a) score++;
+  });
+
+  const rec = {
+    id: TAB_ID + '-' + Date.now().toString(36),
+    name: att.name,
+    cls: att.cls,
+    sig: att.sig,
+    order: att.order,
+    answers: att.answers,
+    score: score,
+    total: list.length,
+    unattempted: blank,
+    leaves: att.leaves,
+    how: how || '',
+    at: Date.now(),
+    saved: 'no'       /* no | yes | dup */
+  };
+
+  doneList.push(rec);
+  store.set(K_DONE, doneList);
+  store.del(K_ATT);
+
+  att = null;
+  awaySince = 0;
+  pendingAdvance = false;
+  phase = 'result';
+  document.body.classList.remove('away');
+
+  showResult(rec, true);
+  submit(rec, 0);
+}
+
+const saving = {};   /* results being sent right now, by id */
+
+/*
+  Send a result to the sheet. A failed attempt is tried twice more, and a
+  result still unsent is tried again the next time the page is opened, so
+  a weak connection does not lose a child's score.
+*/
+function submit(rec, attempt) {
+  if (!API_READY) {
+    paintSave(rec);
+    return;
+  }
+  if (attempt === 0) {
+    if (saving[rec.id]) return;
+    saving[rec.id] = true;
+  }
+  paintSave(rec);
+
+  post({
+    action: 'result',
+    studentName: rec.name,
+    className: rec.cls,
+    score: rec.score,
+    total: rec.total,
+    tabSwitches: rec.leaves,
+    unattempted: rec.unattempted
+  })
+    .then(function (res) {
+      if (res.data.error === 'duplicate') {
+        /* After a failed try, "duplicate" means the earlier try did reach the sheet. */
+        rec.saved = rec.retried ? 'yes' : 'dup';
+      } else if (!res.ok || !res.data.ok) {
+        throw new Error('Server rejected the submission');
+      } else {
+        rec.saved = 'yes';
+      }
+      delete saving[rec.id];
+      store.set(K_DONE, doneList);
+      paintSave(rec);
+      paintDevice();
+    })
+    .catch(function () {
+      rec.retried = true;
+      store.set(K_DONE, doneList);
+      if (attempt < 2) {
+        setTimeout(function () { submit(rec, attempt + 1); }, attempt === 0 ? 2000 : 6000);
+      } else {
+        delete saving[rec.id];
+        paintSave(rec);
+      }
+    });
+}
+
+function paintSave(rec) {
+  if (shown !== rec) return;
+  const box = $('saveBox');
+  const text = $('saveText');
+  const retry = $('saveRetry');
+  retry.hidden = true;
+
+  if (rec.saved === 'yes') {
+    box.className = 'save ok';
+    text.textContent = '✓ Result saved.';
+  } else if (rec.saved === 'dup') {
+    box.className = 'save fail';
+    text.textContent = 'This name already has a saved result for this class — not saved again.';
+  } else if (saving[rec.id]) {
+    box.className = 'save pending';
+    text.textContent = 'Saving your result…';
+  } else {
+    box.className = 'save fail';
+    text.textContent = 'Could not save your result. Please tell your teacher.';
+    retry.hidden = !API_READY;
+  }
+}
+
+function sendUnsaved() {
+  doneList.forEach(function (rec) {
+    if (rec.saved === 'no') submit(rec, 0);
+  });
+}
+
+
+/* ============================================================
+   RESULTS
+   ============================================================ */
+
+function verdictFor(rec) {
+  if (rec.how === 'ended') {
+    return ['Quiz ended early',
+      'You left the quiz ' + times(rec.leaves) + ', so it was handed in with the answers you had given.'];
+  }
+  if (rec.how === 'handed') {
+    return ['Quiz handed in', 'This quiz was ended before the last question.'];
+  }
+  const pct = Math.round(rec.score / rec.total * 100);
+  if (pct === 100) return ['Perfect Score!', 'Every answer correct — well done.'];
+  if (pct >= 70) return ['Great Job!', 'Solid work — a couple to review.'];
+  if (pct >= 40) return ['Good Try!', 'Keep practicing — you are getting there.'];
+  return ['Keep Practicing', 'Review the topics below and keep learning.'];
+}
+
+function countUp(node, to) {
+  if (reducedMotion || to === 0) {
+    node.textContent = to;
+    return;
+  }
+  const from = performance.now();
+  (function frame(now) {
+    const p = Math.min(1, (now - from) / 900);
+    node.textContent = Math.round(to * (1 - Math.pow(1 - p, 3)));
+    if (p < 1) requestAnimationFrame(frame);
+  })(from);
+}
+
+function showResult(rec, fresh) {
+  const pct = Math.round(rec.score / rec.total * 100);
+  const wrong = rec.total - rec.score - rec.unattempted;
+  const words = verdictFor(rec);
+  const arc = $('rArc');
+  const stars = $('stars');
+  const chips = $('rChips');
+  const note = $('rNote');
+
+  shown = rec;
+  phase = 'result';
+  show('result');
+
+  $('rWho').textContent = rec.name + ' · ' + classLabel(rec.cls);
+  $('rMsg').textContent = words[0];
+  $('rSub').textContent = words[1];
+  $('scoreDen').textContent = '/' + rec.total;
+
+  arc.style.transition = 'none';
+  arc.style.strokeDashoffset = SCORE_RING;
+  void arc.getBoundingClientRect();
+  arc.style.transition = '';
+  setTimeout(function () {
+    arc.style.strokeDashoffset = (SCORE_RING * (1 - rec.score / rec.total)).toFixed(2);
+  }, 60);
+
+  if (fresh) countUp($('scoreNum'), rec.score);
+  else $('scoreNum').textContent = rec.score;
+
+  const lit = pct >= 90 ? 3 : pct >= 60 ? 2 : pct >= 30 ? 1 : 0;
+  stars.textContent = '';
+  for (let i = 0; i < 3; i++) stars.appendChild(el('span', i < lit ? '' : 'off', '⭐'));
+
+  chips.textContent = '';
+  chips.appendChild(el('span', 'chip good', '✓ ' + rec.score + ' correct'));
+  if (wrong > 0) chips.appendChild(el('span', 'chip bad', '✗ ' + wrong + ' wrong'));
+  if (rec.unattempted > 0) chips.appendChild(el('span', 'chip none', '⏳ ' + rec.unattempted + ' not answered'));
+
+  note.hidden = !(rec.leaves > 0 && rec.how !== 'ended');
+  if (!note.hidden) {
+    note.textContent = 'You left the quiz ' + times(rec.leaves) + '. Your teacher can see this.';
+  }
+
+  paintSave(rec);
+  paintAnswers(rec);
+
+  if (fresh && !rec.how && pct >= 70) confetti();
+  say(words[0] + ' ' + rec.score + ' out of ' + rec.total + '.');
+}
+
+let unlockTimer = null;
+
+function paintAnswers(rec) {
+  const lock = $('answersLock');
+  const list = $('reviewList');
+  const quiz = QUIZZES[rec.cls];
+
+  clearTimeout(unlockTimer);
+  list.textContent = '';
+
+  if (!quiz || rec.sig !== sigOf(rec.cls)) {
+    lock.hidden = false;
+    $('lockTitle').textContent = 'Answers are not available';
+    $('lockText').textContent = 'The questions for this class have changed since this quiz was taken.';
+    return;
+  }
+
+  if (!answersOpen()) {
+    const wait = UNLOCK_AT - Date.now();
+    lock.hidden = false;
+    $('lockTitle').textContent = 'Answers open ' + unlockLabel();
+    $('lockText').textContent = 'Come back to this page on this device to see which ones you got right.';
+    if (wait < 0x7fffffff) {
+      unlockTimer = setTimeout(function () {
+        if (shown === rec && phase === 'result') paintAnswers(rec);
+      }, wait + 500);
+    }
+    return;
+  }
+
+  lock.hidden = true;
+
+  rec.order.forEach(function (q, place) {
+    const item = quiz[q];
+    const mine = rec.answers[q];
+    const answered = mine !== null && mine !== undefined;
+    const right = answered && mine === item.a;
+    const row = el('li', right ? 'ok' : 'no');
+    const thumb = el('div', 'thumb');
+    const body = el('div');
+
+    if (item.img && IMAGES[item.img] && !item.pic) {
+      const im = new Image();
+      im.alt = '';
+      im.loading = 'lazy';
+      im.decoding = 'async';
+      im.referrerPolicy = 'no-referrer';
+      im.draggable = false;
+      im.onerror = function () {
+        thumb.textContent = emojiFor(item);
+      };
+      im.src = imageUrl(item.img);
+      thumb.appendChild(im);
+    } else {
+      thumb.textContent = emojiFor(item);
+    }
+
+    body.appendChild(el('p', 'rq', (place + 1) + '. ' + item.q));
+    if (item.pic) body.appendChild(el('p', 'rpic', item.pic));
+
+    if (right) {
+      body.appendChild(el('p', 'ra good', '✓ Your answer: ' + item.o[mine]));
+    } else {
+      body.appendChild(el('p', 'ra bad',
+        answered ? '✗ Your answer: ' + item.o[mine] : '⏳ No answer'));
+      body.appendChild(el('p', 'ra', 'Correct answer: ' + item.o[item.a]));
+    }
+
+    row.appendChild(thumb);
+    row.appendChild(body);
+    list.appendChild(row);
+  });
+}
+
+/* The latest results finished on this device, listed on the home screen. */
+function paintDevice() {
+  const box = $('deviceBox');
+  const list = $('deviceList');
+  list.textContent = '';
+  box.hidden = doneList.length === 0;
+
+  doneList.slice(-6).reverse().forEach(function (rec) {
+    const li = el('li');
+    const row = el('button', 'drow');
+    const who = el('span', 'dname');
+    const initial = el('span', 'dava', rec.name.charAt(0).toUpperCase());
+    const arrow = el('span', 'dgo', '›');
+    row.type = 'button';
+    initial.setAttribute('aria-hidden', 'true');
+    arrow.setAttribute('aria-hidden', 'true');
+    row.appendChild(initial);
+    who.appendChild(el('b', null, rec.name));
+    who.appendChild(el('small', null,
+      classLabel(rec.cls) + (rec.saved === 'no' ? ' · not saved yet' : '')));
+    row.appendChild(who);
+    row.appendChild(el('span', 'dscore', rec.score + '/' + rec.total));
+    row.appendChild(el('span', 'sr', '. View result'));
+    row.appendChild(arrow);
+    row.addEventListener('click', function () {
+      if (phase === 'home') showResult(rec, false);
+    });
+    li.appendChild(row);
+    list.appendChild(li);
+  });
+}
+
+function goHome() {
+  shown = null;
+  clearTimeout(unlockTimer);
+  phase = 'home';
+  nameInput.value = '';
+  selectedClass = '';
+  resetCheck();
+  setFormMsg('');
+  paintClassGrid();
+  paintHints();
+  paintDevice();
+  show('home');
+}
+
+function confetti() {
+  const canvas = $('confetti');
+  const ctx = !reducedMotion && canvas.getContext && canvas.getContext('2d');
+  if (!ctx) return;
+
+  const scale = Math.min(window.devicePixelRatio || 1, 2);
+  const W = canvas.width = window.innerWidth * scale;
+  const H = canvas.height = window.innerHeight * scale;
+  const colours = ['#4338E0', '#FFC83D', '#FF5F5F', '#14B887', '#2F9BFF', '#8B45F2'];
+  const bits = [];
+
+  for (let i = 0; i < 90; i++) {
+    bits.push({
+      x: Math.random() * W,
+      y: -Math.random() * H * 0.6,
+      w: (6 + Math.random() * 6) * scale,
+      h: (8 + Math.random() * 8) * scale,
+      vx: (Math.random() - 0.5) * 2 * scale,
+      vy: (2 + Math.random() * 3) * scale,
+      turn: Math.random() * 6.28,
+      spin: (Math.random() - 0.5) * 0.3,
+      colour: colours[i % colours.length]
+    });
+  }
+
+  canvas.hidden = false;
+  const from = performance.now();
+
+  (function frame(now) {
+    const t = now - from;
+    ctx.clearRect(0, 0, W, H);
+    ctx.globalAlpha = t > 2200 ? Math.max(0, 1 - (t - 2200) / 600) : 1;
+    bits.forEach(function (b) {
+      b.x += b.vx;
+      b.y += b.vy;
+      b.vy += 0.03 * scale;
+      b.turn += b.spin;
+      ctx.save();
+      ctx.translate(b.x, b.y);
+      ctx.rotate(b.turn);
+      ctx.fillStyle = b.colour;
+      ctx.fillRect(-b.w / 2, -b.h / 2, b.w, b.h);
+      ctx.restore();
+    });
+    if (t < 2800) {
+      requestAnimationFrame(frame);
+    } else {
+      ctx.clearRect(0, 0, W, H);
+      canvas.hidden = true;
+    }
+  })(from);
+}
+
+
+/* ============================================================
+   COMING BACK AFTER A RELOAD OR A CLOSED TAB
+   ============================================================ */
+
+function usable(saved) {
+  return !!saved &&
+    saved.v === 1 &&
+    typeof saved.name === 'string' &&
+    !!QUIZZES[saved.cls] &&
+    saved.sig === sigOf(saved.cls) &&
+    Array.isArray(saved.order) &&
+    saved.order.length === QUIZZES[saved.cls].length &&
+    Array.isArray(saved.opts) &&
+    saved.opts.length === saved.order.length &&
+    Array.isArray(saved.answers) &&
+    saved.answers.length === saved.order.length &&
+    typeof saved.leaves === 'number' &&
+    saved.qi >= 0 &&
+    saved.qi < saved.order.length;
+}
+
+/* The quiz carries on from the same question with the same deadline, and the reload counts as leaving. */
+function resume(saved) {
+  att = saved;
+  att.owner = TAB_ID;
+  att.away = 0;
+  phase = 'quiz';
+  enterQuiz();
+  drawQuestion();
+  registerLeave(true);
+}
+
+
+/* ============================================================
+   WIRING
+   ============================================================ */
+
+$('startForm').addEventListener('submit', onStart);
+nameInput.addEventListener('input', scheduleCheck);
+nameInput.addEventListener('blur', scheduleCheck);
+beginBtn.addEventListener('click', onBegin);
+$('readyBack').addEventListener('click', backFromReady);
+nextBtn.addEventListener('click', onNext);
+$('doneBtn').addEventListener('click', goHome);
+
+$('saveRetry').addEventListener('click', function () {
+  if (shown && shown.saved === 'no') submit(shown, 0);
+});
+
+noticeOk.addEventListener('click', function () {
+  const cfg = notice;
+  if (!cfg) return;
+  hideNotice();
+  if (cfg.then) cfg.then();
+});
+
+noticeAlt.addEventListener('click', function () {
+  const cfg = notice;
+  if (cfg && cfg.altThen) cfg.altThen(cfg);
+});
+
+trapFocus(readyModal);
+trapFocus(noticeModal);
+arrowKeys(classGrid, '.cls');
+arrowKeys(optsBox, '.opt');
+
+/* Leaving and coming back. */
+document.addEventListener('visibilitychange', function () {
+  if (document.hidden) {
+    goneAway();
+  } else {
+    cameBack();
+    if (phase === 'quiz') holdScreen();
+  }
+});
+window.addEventListener('blur', goneAway);
+window.addEventListener('focus', cameBack);
+window.addEventListener('pageshow', function (e) {
+  if (e.persisted) cameBack();
+});
+
+window.addEventListener('pagehide', function () {
+  goneAway();
+  clearTimeout(check.timer);
+  if (check.abort) check.abort.abort();
+});
+
+/*
+  The same quiz opened in another tab takes over; this tab stops.
+  The event only says that something changed. What is in storage now is
+  what counts: after a reload, a late event from the page that was just
+  closed must not make this page think another tab has taken over.
+*/
+window.addEventListener('storage', function (e) {
+  if (e.key !== K_ATT || !att) return;
+  const now = store.get(K_ATT);
+  if (!now || now.owner !== TAB_ID) displaced();
+});
+
+/* Ask before closing or reloading in the middle of a quiz. */
+window.addEventListener('beforeunload', function (e) {
+  if (phase === 'quiz' || phase === 'ending') {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+/* The Back button does not leave the quiz. */
+window.addEventListener('popstate', function () {
+  if (phase === 'quiz' || phase === 'ending' || phase === 'count') {
+    try { history.pushState({ gsq: 1 }, ''); } catch (e) {}
+    toast('Finish the quiz first.');
+  } else if (phase === 'ready') {
+    backFromReady();
+  }
+});
+
+/* During the quiz: no copying, no menu on a long press, no printing or saving. */
+function quizIsOn() {
+  return phase === 'quiz' || phase === 'ending';
+}
+
+['copy', 'cut', 'contextmenu', 'selectstart', 'dragstart'].forEach(function (type) {
+  document.addEventListener(type, function (e) {
+    if (quizIsOn()) e.preventDefault();
+  });
+});
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && phase === 'ready') {
+    backFromReady();
+    return;
+  }
+  if (!quizIsOn()) return;
+
+  if ((e.ctrlKey || e.metaKey) && /^[acxspu]$/i.test(e.key)) {
+    e.preventDefault();
+    return;
+  }
+
+  if (notice || e.ctrlKey || e.metaKey || e.altKey) return;
+
+  /* 1 to 6, or A to F, choose an answer. Enter moves on. */
+  const key = e.key.toUpperCase();
+  const place = /^[1-6]$/.test(key) ? Number(key) - 1 : LETTERS.indexOf(key);
+  if (place >= 0 && optsBox.children[place]) {
+    e.preventDefault();
+    optsBox.children[place].click();
+  } else if (
+    e.key === 'Enter' &&
+    !nextBtn.disabled &&
+    (!document.activeElement || document.activeElement.tagName !== 'BUTTON')
+  ) {
+    e.preventDefault();
+    onNext();
+  }
 });
 
 
-function openClassDropdown(){
-
-  classOptions.classList.remove(
-    'hidden'
-  );
-
-  classDropdown.classList.add(
-    'open'
-  );
-
-  classTrigger.setAttribute(
-    'aria-expanded',
-    'true'
-  );
-
-}
-
-
-function closeClassDropdown(){
-
-  classOptions.classList.add(
-    'hidden'
-  );
-
-  classDropdown.classList.remove(
-    'open'
-  );
-
-  classTrigger.setAttribute(
-    'aria-expanded',
-    'false'
-  );
-
-}
-
-
-classTrigger.addEventListener(
-  'click',
-  ()=>{
-
-    classOptions.classList.contains(
-      'hidden'
-    )
-      ? openClassDropdown()
-      : closeClassDropdown();
-
-  }
-);
-
-
-document.addEventListener(
-  'click',
-  e=>{
-
-    if(
-      !classDropdown.contains(e.target)
-    ){
-
-      closeClassDropdown();
-
-    }
-
-  }
-);
-
-
 /* ============================================================
-   ELEMENTS
+   START UP
    ============================================================ */
 
-const setupCard =
-  document.getElementById('setupCard');
+tidyStorage();
+doneList = store.get(K_DONE);
+if (!Array.isArray(doneList)) doneList = [];
 
-const quizCard =
-  document.getElementById('quizCard');
+paintWeek();
+buildClassGrid();
+paintHints();
+paintDevice();
 
-const resultsCard =
-  document.getElementById('resultsCard');
+(function () {
+  const saved = store.get(K_ATT);
+  if (usable(saved)) {
+    resume(saved);
+  } else {
+    store.del(K_ATT);
+    show('home');
+  }
+})();
 
-const studentNameInput =
-  document.getElementById('studentName');
-
-const startBtn =
-  document.getElementById('startBtn');
-
-const setupWarn =
-  document.getElementById('setupWarn');
-
-const questionsContainer =
-  document.getElementById('questionsContainer');
-
-const quizWho =
-  document.getElementById('quizWho');
-
-const quizProg =
-  document.getElementById('quizProg');
-
-const submitBtn =
-  document.getElementById('submitBtn');
-
-const quizWarn =
-  document.getElementById('quizWarn');
-
-const retryBtn =
-  document.getElementById('retryBtn');
-
-
-/* ============================================================
-   QUIZ STATE
-   ============================================================ */
-
-let currentClass=null;
-
-let currentQuestions=[];
-
-let answers=[];
-
-let currentStudentName='';
-
-let currentQIndex=0;
-
-let tabSwitchCount=0;
-
-let timerInterval=null;
-
+/* Send any result that could not be saved last time. */
+sendUnsaved();
 
 /*
-   Time per question:
-
-   UKG to Class 3 = 45 seconds
-   Classes 4 to 8 = 40 seconds
+  Apps Script web apps are slow on their first call after being idle.
+  This silent request wakes the script while the student is still typing,
+  so the name check answers faster. The reply is ignored and it writes nothing.
 */
-
-const QUESTION_SECONDS=40;
-
-const QUESTION_SECONDS_BY_CLASS={
-
-  "UKG":45,
-
-  "1":45,
-
-  "2":45,
-
-  "3":45,
-
-  "4":40,
-
-  "5":40,
-
-  "6":40,
-
-  "7":40,
-
-  "8":40
-
-};
-
-
-function getQuestionSeconds(cls){
-
-  return (
-    QUESTION_SECONDS_BY_CLASS[cls]
-    ||
-    QUESTION_SECONDS
-  );
-
+if (API_READY) {
+  fetch(API_URL, { method: 'GET', mode: 'no-cors', cache: 'no-store' }).catch(function () {});
 }
 
-
-/* ============================================================
-   TAB SWITCH TRACKING
-   ============================================================ */
-
-document.addEventListener(
-  'visibilitychange',
-  ()=>{
-
-    if(document.hidden) return;
-
-    if(
-      quizCard &&
-      !quizCard.classList.contains(
-        'hidden'
-      )
-    ){
-
-      tabSwitchCount++;
-
-    }
-
-  }
-);
-
-
-/* ============================================================
-   COPY PROTECTION
-   ============================================================ */
-
-questionsContainer.addEventListener(
-  'contextmenu',
-  e=>{
-    e.preventDefault();
-  }
-);
-
-questionsContainer.addEventListener(
-  'copy',
-  e=>{
-    e.preventDefault();
-  }
-);
-
-
-/* ============================================================
-   NORMALIZATION
-   ============================================================ */
-
-function normalizeKey(
-  name,
-  cls
-){
-
-  return (
-    cls +
-    '_' +
-    name
-  )
-  .trim()
-  .toLowerCase()
-  .replace(/\s+/g,' ');
-
-}
-
-
-/* ============================================================
-   SHUFFLING
-   ============================================================ */
-
-function shuffleArray(arr){
-
-  const a =
-    arr.slice();
-
-
-  for(
-    let i=a.length-1;
-    i>0;
-    i--
-  ){
-
-    const j =
-      Math.floor(
-        Math.random() *
-        (i+1)
-      );
-
-
-    [
-      a[i],
-      a[j]
-    ]=[
-      a[j],
-      a[i]
-    ];
-
-  }
-
-
-  return a;
-
-}
-
-
-function shuffle(arr){
-
-  const a =
-    arr.slice();
-
-
-  for(
-    let i=a.length-1;
-    i>0;
-    i--
-  ){
-
-    const j =
-      Math.floor(
-        Math.random() *
-        (i+1)
-      );
-
-
-    [
-      a[i],
-      a[j]
-    ]=[
-      a[j],
-      a[i]
-    ];
-
-  }
-
-
-  return a;
-
-}
-
-
-/* ============================================================
-   START QUIZ
-   ============================================================ */
-
-/* ============================================================
-   EARLY NAME CHECK
-   ============================================================ */
-
-/*
-  Instagram-style: the slow duplicate-name check
-  runs while the student is still typing their name
-  and picking a class, instead of only after Start
-  is tapped. By the time Start is tapped, the
-  verdict is usually ready, so the quiz opens at
-  once. The rule is unchanged: the quiz never
-  starts on a duplicate name. If the student closes
-  the tab, the in-flight check is aborted and
-  nothing further is sent.
-*/
-
-let earlyCheckKey =
-  '';
-
-let earlyCheckResult =
-  null;
-
-let earlyCheckPromise =
-  null;
-
-let earlyCheckAbort =
-  null;
-
-let earlyCheckTimer =
-  null;
-
-
-function scheduleEarlyCheck(){
-
-  const currentName =
-    studentNameInput.value.trim();
-
-  const currentCls =
-    selectedClass;
-
-
-  /*
-    A verdict already ready for this exact
-    name and class stays valid. This also stops
-    a blur event from wiping a verdict right
-    before the Start tap.
-  */
-
-  if(
-    earlyCheckKey ===
-    currentName + '|' + currentCls &&
-    earlyCheckResult !==
-    null
-  ){
-
-    return;
-
-  }
-
-
-  if(
-    earlyCheckTimer
-  ){
-
-    clearTimeout(
-      earlyCheckTimer
-    );
-
-    earlyCheckTimer =
-      null;
-
-  }
-
-
-  /*
-    New input invalidates any previous verdict.
-  */
-
-  earlyCheckKey =
-    '';
-
-  earlyCheckResult =
-    null;
-
-  if(
-    earlyCheckAbort
-  ){
-
-    earlyCheckAbort.abort();
-
-    earlyCheckAbort =
-      null;
-
-  }
-
-  earlyCheckPromise =
-    null;
-
-  setupWarn.style.display =
-    'none';
-
-
-  if(
-    !currentName ||
-    !currentCls
-  ){
-
-    return;
-
-  }
-
-
-  if(
-    API_URL.indexOf(
-      'PASTE_YOUR'
-    ) === 0
-  ){
-
-    return;
-
-  }
-
-
-  earlyCheckTimer =
-    setTimeout(
-      ()=>{
-
-        const key =
-          currentName + '|' + currentCls;
-
-        earlyCheckKey =
-          key;
-
-
-        const controller =
-          new AbortController();
-
-        earlyCheckAbort =
-          controller;
-
-
-        earlyCheckPromise =
-          fetch(
-            API_URL,
-            {
-              method:'POST',
-
-              headers:{
-                'Content-Type':
-                  'text/plain;charset=utf-8'
-              },
-
-              body:JSON.stringify({
-
-                action:'start',
-
-                studentName:currentName,
-
-                className:currentCls,
-
-                total:
-                  (
-                    QUIZZES[currentCls] ||
-                    []
-                  ).length
-
-              }),
-
-              signal:
-                controller.signal
-            }
-          )
-          .then(res => res.json())
-          .then(
-            data =>{
-
-              if(
-                earlyCheckKey !==
-                key
-              ){
-
-                return null;
-
-              }
-
-
-              earlyCheckResult =
-                data.error !==
-                'duplicate';
-
-
-              if(
-                !earlyCheckResult &&
-                quizCard.classList.contains(
-                  'hidden'
-                )
-              ){
-
-                setupWarn.textContent =
-                  'A submission already exists for this name & class. Please check with your teacher if this is a mistake.';
-
-                setupWarn.style.display =
-                  'block';
-
-              }
-
-
-              return earlyCheckResult;
-
-            }
-          )
-          .catch(
-            ()=>{
-
-              if(
-                earlyCheckKey ===
-                key
-              ){
-
-                earlyCheckResult =
-                  null;
-
-                earlyCheckPromise =
-                  null;
-
-              }
-
-
-              return null;
-
-            }
-          );
-
-      },
-      700
-    );
-
-}
-
-
-studentNameInput.addEventListener(
-  'input',
-  scheduleEarlyCheck
-);
-
-
-studentNameInput.addEventListener(
-  'blur',
-  scheduleEarlyCheck
-);
-
-
-window.addEventListener(
-  'pagehide',
-  ()=>{
-
-    if(
-      earlyCheckTimer
-    ){
-
-      clearTimeout(
-        earlyCheckTimer
-      );
-
-    }
-
-
-    if(
-      earlyCheckAbort
-    ){
-
-      earlyCheckAbort.abort();
-
-    }
-
-  }
-);
-
-startBtn.addEventListener(
-  'click',
-  async ()=>{
-
-    const name =
-      studentNameInput.value.trim();
-
-    const cls =
-      selectedClass;
-
-
-    if(!name || !cls){
-
-      setupWarn.textContent =
-        'Please enter your name and choose a class.';
-
-      setupWarn.style.display =
-        'block';
-
-      return;
-
-    }
-
-
-    setupWarn.style.display =
-      'none';
-
-
-    /*
-      Stop any check still scheduled from typing,
-      so it cannot fire a second start call while
-      the quiz is running.
-    */
-
-    if(
-      earlyCheckTimer
-    ){
-
-      clearTimeout(
-        earlyCheckTimer
-      );
-
-      earlyCheckTimer =
-        null;
-
-    }
-
-
-    /*
-      The name check usually already ran while
-      the student was typing (see scheduleEarlyCheck).
-      If its verdict is ready, Start is instant.
-      If it is still running, wait only for the
-      remainder. Otherwise run the blocking check
-      exactly as before. Either way the quiz never
-      starts on a duplicate name, and a verdict
-      from the typing-time check means no second
-      start call is sent.
-    */
-
-    const earlyKey =
-      name + '|' + cls;
-
-    let verdict =
-      null;
-
-    if(
-      earlyCheckKey ===
-      earlyKey
-    ){
-
-      if(
-        earlyCheckResult !==
-        null
-      ){
-
-        verdict =
-          earlyCheckResult;
-
-      }else if(
-        earlyCheckPromise
-      ){
-
-        verdict =
-          await earlyCheckPromise;
-
-      }
-
-    }
-
-
-    if(
-      verdict ===
-      null
-    ){
-
-      startBtn.disabled =
-        true;
-
-
-      const originalBtnText =
-        startBtn.textContent;
-
-
-      startBtn.textContent =
-        'Checking…';
-
-
-      try{
-
-        if(
-          API_URL.indexOf(
-            'PASTE_YOUR'
-          ) !== 0
-        ){
-
-          const res =
-            await fetch(
-              API_URL,
-              {
-                method:'POST',
-
-                headers:{
-                  'Content-Type':
-                    'text/plain;charset=utf-8'
-                },
-
-                body:JSON.stringify({
-
-                  action:'start',
-
-                  studentName:name,
-
-                  className:cls,
-
-                  total:
-                    (
-                      QUIZZES[cls] ||
-                      []
-                    ).length
-
-                })
-              }
-            );
-
-
-          const data =
-            await res.json();
-
-
-          if(
-            data.error ===
-            'duplicate'
-          ){
-
-            verdict =
-              false;
-
-          }
-
-        }
-
-      }catch(err){
-
-        /*
-         If the start request fails because
-         of a temporary network problem,
-         allow the student to continue.
-        */
-
-      }
-
-
-      startBtn.disabled =
-        false;
-
-      startBtn.textContent =
-        originalBtnText;
-
-    }
-
-
-    if(
-      verdict ===
-      false
-    ){
-
-      setupWarn.textContent =
-        'A submission already exists for this name & class. Please check with your teacher if this is a mistake.';
-
-      setupWarn.style.display =
-        'block';
-
-      return;
-
-    }
-
-
-    currentClass =
-      cls;
-
-    currentStudentName =
-      name;
-
-    currentQuestions =
-      QUIZZES[cls];
-
-    preloadClassImages(cls);
-
-    answers =
-      new Array(
-        currentQuestions.length
-      ).fill(null);
-
-    currentQIndex =
-      0;
-
-    tabSwitchCount =
-      0;
-
-
-    setupCard.classList.add(
-      'hidden'
-    );
-
-    quizCard.classList.remove(
-      'hidden'
-    );
-
-
-    renderQuestion(
-      name,
-      cls,
-      0
-    );
-
-  }
-);
-
-
-/* ============================================================
-   QUESTION PHOTOS
-   ============================================================ */
-
-function buildPhoto(
-  item,
-  small
-){
-
-  if(
-    item.pic &&
-    !small
-  ){
-
-    const card =
-      document.createElement('div');
-
-    card.className =
-      'q-pic';
-
-    const text =
-      document.createElement('span');
-
-    text.textContent =
-      item.pic;
-
-    card.appendChild(text);
-
-    return card;
-
-  }
-
-
-  const fig =
-    document.createElement('div');
-
-  fig.className =
-    'q-photo is-loading';
-
-
-  const url =
-    QUESTION_IMAGES[item.img];
-
-
-  const showEmoji =
-    ()=>{
-
-      fig.classList.remove(
-        'is-loading'
-      );
-
-      fig.innerHTML =
-        '<span class="photo-emoji">' +
-        (item.e || '\uD83C\uDF0D') +
-        '</span>';
-
-    };
-
-
-  if(!url){
-
-    showEmoji();
-
-    return fig;
-
-  }
-
-
-  const img =
-    document.createElement('img');
-
-  /*
-   The alt text is deliberately vague so
-   that it never gives the answer away.
-  */
-
-  img.alt =
-    small
-      ? ''
-      : 'Picture clue for this question';
-
-  img.decoding =
-    'async';
-
-  img.referrerPolicy =
-    'no-referrer';
-
-
-  img.addEventListener(
-    'load',
-    ()=>{
-
-      fig.classList.remove(
-        'is-loading'
-      );
-
-    }
-  );
-
-
-  img.addEventListener(
-    'error',
-    showEmoji
-  );
-
-
-  img.className =
-    'photo-main';
-
-
-  const bg =
-    document.createElement('img');
-
-  bg.className =
-    'photo-bg';
-
-  bg.alt =
-    '';
-
-  bg.setAttribute(
-    'aria-hidden',
-    'true'
-  );
-
-  bg.decoding =
-    'async';
-
-  bg.referrerPolicy =
-    'no-referrer';
-
-  bg.src =
-    url;
-
-
-  img.src =
-    url;
-
-
-  fig.appendChild(bg);
-
-  fig.appendChild(img);
-
-  return fig;
-
-}
-
-
-function preloadClassImages(cls){
-
-  (QUIZZES[cls] || []).forEach(
-    item=>{
-
-      const url =
-        QUESTION_IMAGES[item.img];
-
-
-      if(url){
-
-        const pre =
-          new Image();
-
-        pre.src =
-          url;
-
-      }
-
-    }
-  );
-
-}
-
-
-function fitPuzzleCard(card){
-
-  const text =
-    card.querySelector('span');
-
-  const wantLines =
-    text.textContent.split('\n').length;
-
-  let rem = 1.65;
-
-
-  while(rem > 1.05){
-
-    card.style.fontSize =
-      rem + 'rem';
-
-    const linePx =
-      parseFloat(
-        getComputedStyle(text).lineHeight
-      );
-
-    const lines =
-      Math.round(
-        text.getBoundingClientRect().height /
-        linePx
-      );
-
-
-    if(lines <= wantLines){
-
-      return;
-
-    }
-
-
-    rem -= 0.05;
-
-  }
-
-}
-
-
-/* ============================================================
-   RENDER QUESTION
-   ============================================================ */
-
-function renderQuestion(
-  name,
-  cls,
-  qi
-){
-
-  quizWho.textContent =
-    name +
-    ' — ' +
-    classLabel(cls);
-
-
-  document
-    .getElementById('headerSub')
-    .textContent =
-      classLabel(cls) +
-      ' — Children\'s Day';
-
-
-  quizProg.textContent =
-    'Question ' +
-    (qi+1) +
-    ' of ' +
-    currentQuestions.length;
-
-
-  quizWarn.style.display =
-    'none';
-
-
-  const item =
-    currentQuestions[qi];
-
-
-  const displayOptions =
-    shuffleArray(
-      item.o.map(
-        (text,idx)=>({
-          text:text,
-          idx:idx
-        })
-      )
-    );
-
-
-  questionsContainer.innerHTML =
-    '';
-
-
-  const block =
-    document.createElement('div');
-
-  block.className =
-    'q-block';
-
-
-  block.appendChild(
-    buildPhoto(
-      item,
-      false
-    )
-  );
-
-
-  const qLine =
-    document.createElement('div');
-
-
-  qLine.innerHTML =
-    '<span class="q-num">' +
-    (qi+1) +
-    '</span>' +
-    '<span class="q-text">' +
-    item.q +
-    '</span>';
-
-
-  block.appendChild(
-    qLine
-  );
-
-
-  const optsWrap =
-    document.createElement('div');
-
-  optsWrap.className =
-    'options';
-
-
-  displayOptions.forEach(
-    opt=>{
-
-      const label =
-        document.createElement(
-          'label'
-        );
-
-      label.className =
-        'opt';
-
-
-      label.innerHTML =
-        '<input type="radio" name="q' +
-        qi +
-        '" value="' +
-        opt.idx +
-        '">' +
-        '<span class="opt-text">' +
-        opt.text +
-        '</span>';
-
-
-      if(
-        answers[qi] ===
-        opt.idx
-      ){
-
-        label.classList.add(
-          'selected'
-        );
-
-        label
-          .querySelector('input')
-          .checked=true;
-
-      }
-
-
-      const radio =
-        label.querySelector(
-          'input'
-        );
-
-
-      radio.addEventListener(
-        'change',
-        ()=>{
-
-          answers[qi] =
-            opt.idx;
-
-
-          optsWrap
-            .querySelectorAll(
-              '.opt'
-            )
-            .forEach(
-              o =>
-                o.classList.remove(
-                  'selected'
-                )
-            );
-
-
-          label.classList.add(
-            'selected'
-          );
-
-        }
-      );
-
-
-      optsWrap.appendChild(
-        label
-      );
-
-    }
-  );
-
-
-  block.appendChild(
-    optsWrap
-  );
-
-
-  questionsContainer.appendChild(
-    block
-  );
-
-
-  const puzzleCard =
-    block.querySelector('.q-pic');
-
-  if(puzzleCard){
-
-    fitPuzzleCard(puzzleCard);
-
-  }
-
-
-  submitBtn.textContent =
-    (
-      qi ===
-      currentQuestions.length-1
-    )
-      ? 'Turn In Paper'
-      : 'Next Question';
-
-
-  startTimer();
-
-}
-
-
-/* ============================================================
-   TIMER
-   ============================================================ */
-
-function startTimer(){
-
-  clearInterval(
-    timerInterval
-  );
-
-
-  const seconds =
-    getQuestionSeconds(
-      currentClass
-    );
-
-
-  let timeLeft =
-    seconds;
-
-
-  const bar =
-    document.getElementById(
-      'timerBar'
-    );
-
-
-  bar.classList.remove(
-    'urgent'
-  );
-
-
-  bar.style.width =
-    '100%';
-
-
-  timerInterval =
-    setInterval(
-      ()=>{
-
-        timeLeft--;
-
-
-        const pct =
-          Math.max(
-            0,
-            (
-              timeLeft /
-              seconds
-            ) * 100
-          );
-
-
-        bar.style.width =
-          pct + '%';
-
-
-        if(
-          timeLeft <= 5
-        ){
-
-          bar.classList.add(
-            'urgent'
-          );
-
-        }
-
-
-        if(
-          timeLeft <= 0
-        ){
-
-          clearInterval(
-            timerInterval
-          );
-
-          advanceQuestion();
-
-        }
-
-      },
-      1000
-    );
-
-}
-
-
-/* ============================================================
-   ADVANCE QUESTION
-   ============================================================ */
-
-function advanceQuestion(){
-
-  clearInterval(
-    timerInterval
-  );
-
-
-  if(
-    currentQIndex <
-    currentQuestions.length-1
-  ){
-
-    currentQIndex++;
-
-
-    renderQuestion(
-      currentStudentName,
-      currentClass,
-      currentQIndex
-    );
-
-  }else{
-
-    showResults();
-
-  }
-
-}
-
-
-/* ============================================================
-   NEXT / SUBMIT BUTTON
-   ============================================================ */
-
-submitBtn.addEventListener(
-  'click',
-  ()=>{
-    advanceQuestion();
-  }
-);
-
-
-/* ============================================================
-   SHOW RESULTS
-   ============================================================ */
-
-function showResults(){
-
-  let score=0;
-
-  let unattempted=0;
-
-
-  const reviewContainer =
-    document.getElementById(
-      'reviewContainer'
-    );
-
-
-  reviewContainer.innerHTML =
-    '';
-
-
-  currentQuestions.forEach(
-    (item,qi)=>{
-
-      const isCorrect =
-        answers[qi] === item.a;
-
-
-      if(isCorrect){
-
-        score++;
-
-      }
-
-
-      if(
-        answers[qi] === null
-      ){
-
-        unattempted++;
-
-      }
-
-
-      const yourAnswerText =
-        answers[qi] === null
-          ? 'No answer (time ran out)'
-          : item.o[answers[qi]];
-
-
-      const block =
-        document.createElement(
-          'div'
-        );
-
-
-      block.className =
-        'q-block ' +
-        (
-          isCorrect
-            ? 'correct'
-            : 'wrong'
-        );
-
-
-      block.innerHTML =
-
-        '<span class="q-num">' +
-        (qi+1) +
-        '</span>' +
-
-        '<span class="q-text">' +
-        item.q +
-        '</span>' +
-
-        '<span class="tag ' +
-        (
-          isCorrect
-            ? 'correct'
-            : 'wrong'
-        ) +
-        '">' +
-        (
-          isCorrect
-            ? 'Correct'
-            : 'Incorrect'
-        ) +
-        '</span>' +
-
-        '<div class="your-ans">' +
-        'Your answer: ' +
-        yourAnswerText +
-        '</div>' +
-
-        (
-          isCorrect
-            ? ''
-            :
-            '<div class="correct-ans">' +
-            'Correct answer: ' +
-            item.o[item.a] +
-            '</div>'
-        );
-
-
-      block.insertBefore(
-        buildPhoto(
-          item,
-          true
-        ),
-        block.firstChild
-      );
-
-
-      if(item.pic){
-
-        const picLine =
-          document.createElement('div');
-
-        picLine.className =
-          'pic-line';
-
-        picLine.textContent =
-          item.pic;
-
-        block
-          .querySelector('.your-ans')
-          .before(picLine);
-
-      }
-
-
-      reviewContainer.appendChild(
-        block
-      );
-
-    }
-  );
-
-
-  document
-    .getElementById('scoreNum')
-    .textContent =
-      score +
-      '/' +
-      currentQuestions.length;
-
-
-  const pct =
-    Math.round(
-      (
-        score /
-        currentQuestions.length
-      ) * 100
-    );
-
-
-  let msg;
-
-  let sub;
-
-
-  if(pct === 100){
-
-    msg =
-      'Perfect Score!';
-
-    sub =
-      'Every answer correct — well done.';
-
-  }
-
-  else if(pct >= 70){
-
-    msg =
-      'Great Job!';
-
-    sub =
-      'Solid work — a couple to review.';
-
-  }
-
-  else if(pct >= 40){
-
-    msg =
-      'Good Try!';
-
-    sub =
-      'Keep practicing — you are getting there.';
-
-  }
-
-  else{
-
-    msg =
-      'Keep Practicing';
-
-    sub =
-      'Review the topics below and keep learning.';
-
-  }
-
-
-  document
-    .getElementById('resultMsg')
-    .textContent =
-      msg;
-
-
-  document
-    .getElementById('resultSub')
-    .textContent =
-      sub;
-
-
-  quizCard.classList.add(
-    'hidden'
-  );
-
-
-  resultsCard.classList.remove(
-    'hidden'
-  );
-
-
-  window.scrollTo({
-    top:0,
-    behavior:'smooth'
-  });
-
-
-  saveScore(
-    score,
-    currentQuestions.length,
-    unattempted
-  );
-
-}
-
-
-/* ============================================================
-   SAVE RESULT TO GOOGLE SHEETS
-   ============================================================ */
-
-async function saveScore(
-  score,
-  total,
-  unattempted
-){
-
-  const statusEl =
-    document.getElementById(
-      'saveStatus'
-    );
-
-
-  statusEl.textContent =
-    'Saving your result…';
-
-
-  statusEl.className =
-    'save-status pending';
-
-
-  try{
-
-    if(
-      API_URL.indexOf(
-        'PASTE_YOUR'
-      ) === 0
-    ){
-
-      throw new Error(
-        'API_URL not configured yet'
-      );
-
-    }
-
-
-    const res =
-      await fetch(
-        API_URL,
-        {
-          method:'POST',
-
-          headers:{
-            'Content-Type':
-              'text/plain;charset=utf-8'
-          },
-
-          body:JSON.stringify({
-
-            action:'result',
-
-            studentName:
-              currentStudentName,
-
-            className:
-              currentClass,
-
-            score:
-              score,
-
-            total:
-              total,
-
-            tabSwitches:
-              tabSwitchCount,
-
-            unattempted:
-              unattempted
-
-          })
-        }
-      );
-
-
-    const data =
-      await res.json();
-
-
-    if(
-      data.error ===
-      'duplicate'
-    ){
-
-      statusEl.textContent =
-        'This name already has a saved result for this class — not saved again.';
-
-      statusEl.className =
-        'save-status fail';
-
-      return;
-
-    }
-
-
-    if(
-      !res.ok ||
-      !data.ok
-    ){
-
-      throw new Error(
-        'Server rejected the submission'
-      );
-
-    }
-
-
-    statusEl.textContent =
-      'Result saved.';
-
-    statusEl.className =
-      'save-status ok';
-
-
-  }catch(err){
-
-    statusEl.textContent =
-      'Could not save your result — please tell your teacher.';
-
-    statusEl.className =
-      'save-status fail';
-
-  }
-
-}
-
-
-/* ============================================================
-   RETRY
-   ============================================================ */
-
-retryBtn.addEventListener(
-  'click',
-  ()=>{
-
-    clearInterval(
-      timerInterval
-    );
-
-
-    currentQIndex =
-      0;
-
-    tabSwitchCount =
-      0;
-
-
-    resultsCard.classList.add(
-      'hidden'
-    );
-
-
-    setupCard.classList.remove(
-      'hidden'
-    );
-
-
-    studentNameInput.value =
-      '';
-
-
-    selectedClass =
-      '';
-
-
-    classTriggerText.textContent =
-      'Choose a class';
-
-
-    classOptions
-      .querySelectorAll('li')
-      .forEach(
-        o =>
-          o.classList.remove(
-            'selected'
-          )
-      );
-
-
-    document
-      .getElementById('headerSub')
-      .textContent =
-      '';
-
-
-    window.scrollTo({
-      top:0,
-      behavior:'smooth'
-    });
-
-  }
-);
-
-
-/* ============================================================
-   WARM-UP
-   ============================================================ */
-
-/*
-  Apps Script web apps are slow on their first
-  call after idle (cold start), which is a big
-  part of the 3-4 second name check. This silent
-  request fires while the student is still picking
-  a class and typing their name, so the script is
-  already warm when Start is tapped and the real
-  check returns faster. The response is ignored,
-  and this request writes nothing. The Start check
-  itself is unchanged and still blocks the quiz on
-  a duplicate name.
-*/
-
-if(
-  API_URL.indexOf(
-    'PASTE_YOUR'
-  ) !== 0
-){
-
-  fetch(
-    API_URL,
-    {
-      method:'GET',
-      mode:'no-cors',
-      cache:'no-store'
-    }
-  ).catch(
-    () => {}
-  );
-
-}
-
+})();
 </script>
 
-
 <!-- Vercel Web Analytics (page views) -->
-
 <script>
   window.va =
     window.va ||

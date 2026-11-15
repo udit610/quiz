@@ -1,0 +1,6 @@
+# Only index.html is the website.
+# The readable question bank and the tools stay off the public site,
+# so the answers cannot be fetched by guessing a file name.
+/quiz-data.js
+/tools
+/CLAUDE.md
