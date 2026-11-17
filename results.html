@@ -41,6 +41,16 @@
   h1{font-family:'Fredoka',sans-serif;font-size:1.9rem;margin:0 0 6px;color:var(--brand)}
   .week{margin:0;font-weight:800;font-size:1.05rem}
   .week small{display:block;font-weight:700;color:var(--muted);font-size:.9rem;margin-top:2px}
+  .week-note{
+    max-width:560px;
+    margin:10px auto 0;
+    padding:10px 12px;
+    font-weight:800;
+    font-size:.95rem;
+    color:#7A4A00;
+    background:#FFF1CC;
+    border-radius:13px;
+  }
 
   .card{
     background:var(--card);
@@ -130,6 +140,7 @@
     <p class="school">Vardhman Convent School, Moonak</p>
     <h1>Quiz Results</h1>
     <p class="week" id="weekLabel">Loading results…</p>
+    <p class="week-note" id="weekNote" hidden></p>
   </header>
 
   <div class="card">
@@ -186,7 +197,8 @@ var SHEETS = [
   { name: '10 October',    gid: 1169238443 },
   { name: '17 October',    gid: 1050817329, theme: 'Records and Superlatives' },
   { name: '24 October',    gid: 597796612,  theme: 'The Amazing Human Body' },
-  { name: '31 October',    gid: 1788775249, theme: 'Festivals & Diwali Celebrations' }
+  { name: '31 October',    gid: 1788775249, theme: 'Festivals & Diwali Celebrations' },
+  { name: '14 November',   gid: 2120496609, theme: "Children's Day" }
 ];
 
 var CLASS_ORDER = ['UKG', '1', '2', '3', '4', '5', '6', '7', '8'];
@@ -212,6 +224,14 @@ function tabISO(name) {
     iso = (y - 1) + '-' + ('0' + (month + 1)).slice(-2) + '-' + ('0' + day).slice(-2);
   }
   return iso;
+}
+
+/* The most recent Saturday on or before today, India time, as "YYYY-MM-DD". */
+function lastSaturdayISO() {
+  var today = new Date(Date.now() + 5.5 * 3600 * 1000);
+  var back = (today.getUTCDay() + 1) % 7;   /* days since Saturday */
+  var d = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - back));
+  return d.toISOString().slice(0, 10);
 }
 
 /* "2026-10-31" -> "Sat 31 Oct 2026" */
@@ -416,6 +436,21 @@ function loadWeek(sheet) {
 
   var iso = tabISO(latest.name);
   var opens = Date.parse(iso + 'T00:00:00+05:30') + 3 * DAY;
+
+  /*
+    If the latest tab is older than the most recent Saturday, say so
+    plainly: nobody should mistake these for that Saturday's results.
+    The latest quiz Saturday has no results tab in the sheet yet (it is
+    added when the results are merged, see CLAUDE.md).
+  */
+  var lastSat = lastSaturdayISO();
+  if (iso < lastSat) {
+    var note = $('weekNote');
+    note.textContent = 'These are the latest results in the sheet. ' +
+      'The quiz of ' + niceDate(lastSat) + ' has no results tab yet.';
+    note.hidden = false;
+  }
+
   if (now < opens) {
     var label = latest.theme
       ? latest.theme + ' · ' + niceDate(iso)

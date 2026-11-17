@@ -414,6 +414,11 @@ await test('after Monday 23:59:59 the quiz is closed and the results date is nam
   assert.equal(await page.isDisabled('#startBtn'), true);
   assert.match(await text(page, '#formMsg'), /Submissions closed on Mon 16 Nov/);
   assert.match(await text(page, '#formMsg'), /Results open on Tue 17 Nov/);
+  /* Once results are open, the way to them is on the home screen itself,
+     right under the closed message, not only in the footer. */
+  assert.equal(await visible(page, '#resultsBtn'), true, 'results button is visible once results open');
+  assert.match(await text(page, '#resultsBtn'), /See the latest results/);
+  assert.equal(await page.getAttribute('#resultsBtn', 'href'), 'results.html');
   await fillForm(page, 'Aanya Sharma', C);
   await s.skip(1500);
   assert.equal(posts(s, 'start').length, 0);
@@ -421,6 +426,18 @@ await test('after Monday 23:59:59 the quiz is closed and the results date is nam
   await s.skip(500);
   assert.equal(await visible(page, '#readyModal'), false);
   await s.context.close();
+});
+
+await test('the results button stays hidden until results open: not before Saturday, not on Monday night', async () => {
+  const s = await session(browser, { clock: DAY_BEFORE });
+  const page = await s.open(site.url);
+  assert.equal(await visible(page, '#resultsBtn'), false, 'no results button before the quiz opens');
+  await s.context.close();
+
+  const s2 = await session(browser, { clock: MONDAY_LATE });
+  const p2 = await s2.open(site.url);
+  assert.equal(await visible(p2, '#resultsBtn'), false, 'no results button while the window is still open');
+  await s2.context.close();
 });
 
 await test('an attempt started on Monday evening may finish after midnight', async () => {
@@ -911,7 +928,9 @@ await test('after the quiz day the answers show straight away', async () => {
 
 console.log('\nResults page');
 
-/* A slice of the 31 October tab, as the published sheet returns it. */
+/* Fixture rows in the published sheet's format, served as the latest
+   week's tab in the tests. (The rows are from the 31 October tab; the
+   page shows name, class and marks, never the timestamps.) */
 const RESULTS_CSV =
   'Timestamp,Student Name,Class,Score,Total,Percentage,Tab Switches,Unattempted,Status\n' +
   '10/31/2026 14:15:14,Hargun singh,UKG,9,10,90%,0,0,COMPLETED\n' +
@@ -921,11 +940,18 @@ const RESULTS_CSV =
   '10/31/2026 16:05:00,Arjun,1,10,10,100%,0,0,COMPLETED\n' +
   '10/31/2026 17:00:00,Started Kid,2,,,,0,,STARTED\n';
 
+/* results.html as it stood before the 14 November tab was added to its
+   SHEETS list: the latest week is 31 October. Used by the tests for the
+   gap note and for the week before the 14 November results existed. */
+const resultsWithout14Nov = () => fs.readFileSync(RESULTS_PAGE, 'utf8').replace(/.*'14 November'.*\n/, '');
+
 await test('results: from Tuesday the latest week shows name, class and marks, started rows left out', async () => {
-  const s = await session(browser, { clock: TUESDAY, csv: { '1788775249': RESULTS_CSV } });
+  const s = await session(browser, { clock: TUESDAY, csv: { '2120496609': RESULTS_CSV } });
   const page = await s.open(site.url + 'results.html');
   await page.waitForSelector('#resultsTable:not([hidden])');
-  assert.match(await text(page, '#weekLabel'), /Festivals & Diwali Celebrations · Sat 31 Oct 2026/);
+  assert.match(await text(page, '#weekLabel'), /Children's Day · Sat 14 Nov 2026/);
+  /* The latest tab is the most recent Saturday, so there is no gap note. */
+  assert.equal(await visible(page, '#weekNote'), false, 'no gap note when the latest tab is the last Saturday');
   const rows = await page.$$eval('#resultsBody tr', ns => ns.map(n => n.innerText));
   assert.equal(rows.length, 5, 'the started row is left out');
   assert.ok(rows[0].includes('Anukaran') && rows[0].includes('10/10'), 'best in UKG first');
@@ -936,16 +962,31 @@ await test('results: from Tuesday the latest week shows name, class and marks, s
 });
 
 await test('results: before the latest week\'s Tuesday, no rows are shown', async () => {
+  const old = await serve(undefined, resultsWithout14Nov);
   const s = await session(browser, { clock: BEFORE_TUESDAY, csv: { '1788775249': RESULTS_CSV } });
-  const page = await s.open(site.url + 'results.html');
+  const page = await s.open(old.url + 'results.html');
   await page.waitForFunction(() => document.getElementById('status').textContent.includes('Results open on'));
   assert.match(await text(page, '#status'), /Results open on Tue 3 Nov 2026/);
   assert.equal(await visible(page, '#resultsTable'), false);
   await s.context.close();
 });
 
-await test('results: the class filter and the name search narrow the rows', async () => {
+await test('results: when the latest tab is older than the last Saturday, the page says those results are not in the sheet yet', async () => {
+  const old = await serve(undefined, resultsWithout14Nov);
   const s = await session(browser, { clock: TUESDAY, csv: { '1788775249': RESULTS_CSV } });
+  const page = await s.open(old.url + 'results.html');
+  await page.waitForSelector('#resultsTable:not([hidden])');
+  assert.match(await text(page, '#weekLabel'), /Festivals & Diwali Celebrations · Sat 31 Oct 2026/);
+  assert.equal(await visible(page, '#weekNote'), true, 'the gap note shows when the latest tab is older than the last Saturday');
+  assert.match(await text(page, '#weekNote'), /These are the latest results in the sheet/);
+  assert.match(await text(page, '#weekNote'), /The quiz of Sat 14 Nov 2026 has no results tab yet/);
+  assert.match(await text(page, '#count'), /5 results/);
+  noErrors(s);
+  await s.context.close();
+});
+
+await test('results: the class filter and the name search narrow the rows', async () => {
+  const s = await session(browser, { clock: TUESDAY, csv: { '2120496609': RESULTS_CSV } });
   const page = await s.open(site.url + 'results.html');
   await page.waitForSelector('#resultsTable:not([hidden])');
   await page.selectOption('#classFilter', '1');

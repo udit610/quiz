@@ -357,6 +357,8 @@
 
   .btn-go:active:not(:disabled){box-shadow:0 1px 0 var(--sun-d)}
 
+  .results-btn{margin-top:12px;text-decoration:none}
+
   .btn .spinner{
     width:18px;height:18px;
     border:3px solid rgba(138,141,176,.35);
@@ -1180,6 +1182,8 @@
 
         <button class="btn btn-go" id="startBtn" type="submit">Start the quiz</button>
 
+        <a class="btn results-btn" id="resultsBtn" href="results.html" hidden>See the latest results</a>
+
         <p class="hint" id="startHint"></p>
 
       </form>
@@ -1282,7 +1286,7 @@
 
   <footer class="foot" id="foot">
     <p>Questions about the quiz? Call the school: <a href="tel:+919855458530">+91 9855458530</a></p>
-    <p><a href="results.html">See this week's results</a></p>
+    <p><a href="results.html">See the latest results</a></p>
     <p id="photoCredit">Photographs from Wikimedia Commons, used under their free licences.</p>
   </footer>
 
@@ -1958,6 +1962,14 @@ function paintWindow() {
   const state = windowState();
   startBtn.disabled = state !== 'open';
   if (state !== 'open') setFormMsg(windowMessage());
+  /*
+    Once results are open, the way to them must be visible on the home
+    screen, right under the closed message, not only in the footer below
+    the fold. "Latest" is the honest word: results.html shows the latest
+    week in the sheet, which is the previous week until this week's
+    results are merged into a date tab.
+  */
+  resultsBtn.hidden = !(state === 'closed' && Date.now() >= RESULTS_AT);
 }
 
 
@@ -1971,6 +1983,7 @@ const nameState = $('nameState');
 const classGrid = $('classGrid');
 const formMsg = $('formMsg');
 const startBtn = $('startBtn');
+const resultsBtn = $('resultsBtn');
 const readyModal = $('readyModal');
 const beginBtn = $('beginBtn');
 const noticeModal = $('noticeModal');
