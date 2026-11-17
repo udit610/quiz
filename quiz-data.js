@@ -24,58 +24,63 @@
 */
 
 export const WEEK = {
-  theme: "Children's Day",
-  emoji: "🎈",
-  date: "2026-11-14"   // the quiz Saturday, YYYY-MM-DD
+  theme: "Science All Around Us",
+  emoji: "🔬",
+  date: "2026-11-21"   // the quiz Saturday, YYYY-MM-DD
 };
 
 
 export const QUESTION_IMAGES = {
 
-  "ball": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Children_play_joyfully_in_colorful_ball_pit_at_indoor_play_area_during_afternoon_fun.jpg/960px-Children_play_joyfully_in_colorful_ball_pit_at_indoor_play_area_during_afternoon_fun.jpg",
-
-  "teddy": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/Little_girl_hugs_teddy_bear_toy.jpg/960px-Little_girl_hugs_teddy_bear_toy.jpg",
-
+  "apple": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Red_Apple.jpg/960px-Red_Apple.jpg",
+  "backpack": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Back_to_school_lunch_kid_with_backpack_%2829529379805%29.jpg/960px-Back_to_school_lunch_kid_with_backpack_%2829529379805%29.jpg",
+  "bacteria": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/Bacteria_growth_under_the_microscope_01.jpg/960px-Bacteria_growth_under_the_microscope_01.jpg",
   "balloon": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/Balloon_on_a_children%27s_birthday_party.jpg/960px-Balloon_on_a_children%27s_birthday_party.jpg",
-
-  "cake": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/ff/Two_joyful_children_sit_on_a_mat_next_to_a_birthday_cake%2C_dressed_in_festive_hats.jpg/960px-Two_joyful_children_sit_on_a_mat_next_to_a_birthday_cake%2C_dressed_in_festive_hats.jpg",
-
-  "storybook": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Children_reading_beneath_a_tree_-_Story-Friends_%281927%29_-_Mabel_Betsy_Hill.jpg/960px-Children_reading_beneath_a_tree_-_Story-Friends_%281927%29_-_Mabel_Betsy_Hill.jpg",
-
-  "swing": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/48/Playground_swing_01.jpg/960px-Playground_swing_01.jpg",
-
-  "kite": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/Kite_flying_over_Pasing_04.jpg/960px-Kite_flying_over_Pasing_04.jpg",
-
-  "butterfly": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a6/Peacock_butterfly_%28Aglais_io%29_2.jpg/960px-Peacock_butterfly_%28Aglais_io%29_2.jpg",
-
+  "bulb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Low-key_photograph_of_light_bulb%2C_Straume%2C_Norway_julesvernex2.jpg/960px-Low-key_photograph_of_light_bulb%2C_Straume%2C_Norway_julesvernex2.jpg",
+  "car": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/Red_car_with_Ro_Miah_driving_school_sign_entering_Gillingham_Level_Crossing_on_Ingram_Road%2C_Gillingham.jpg/960px-Red_car_with_Ro_Miah_driving_school_sign_entering_Gillingham_Level_Crossing_on_Ingram_Road%2C_Gillingham.jpg",
+  "cat": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Six_weeks_old_cat_%28aka%29.jpg/960px-Six_weeks_old_cat_%28aka%29.jpg",
+  "cell": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/Animal_Cell_Diagram_Colorful.png/960px-Animal_Cell_Diagram_Colorful.png",
+  "cow": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fb/CH_cow_2.jpg/960px-CH_cow_2.jpg",
   "dog": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/Two_puppies_playing_together_one_standing_over_the_other_at_golden_hour_in_Don_Det_Laos.jpg/960px-Two_puppies_playing_together_one_standing_over_the_other_at_golden_hour_in_Don_Det_Laos.jpg",
-
-  "football": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Children_playing_football_after_school.jpg/960px-Children_playing_football_after_school.jpg",
-
-  "chess": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Chess_game_Staunton_No._6_perfil_view_8.jpg/960px-Chess_game_Staunton_No._6_perfil_view_8.jpg",
-
-  "badminton": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Badminton_Shuttlecock_159415.png/960px-Badminton_Shuttlecock_159415.png",
-
-  "rainbow": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Rainbow_sky.jpg/960px-Rainbow_sky.jpg",
-
-  "nehru": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Portrait_of_Jawaharlal_Nehru_in_1942.JPG/960px-Portrait_of_Jawaharlal_Nehru_in_1942.JPG",
-
-  "school": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Children_at_school%2C_India.jpg/960px-Children_at_school%2C_India.jpg",
-
-  "friends": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Friendship_Holding_hands..jpg/960px-Friendship_Holding_hands..jpg",
-
-  "cricket": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Cricket_bat_and_ball_at_Bishop%27s_Stortford_Cricket_Club%2C_Hertfordshire.jpg/960px-Cricket_bat_and_ball_at_Bishop%27s_Stortford_Cricket_Club%2C_Hertfordshire.jpg",
-
+  "drum": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Gaurav_Phadte_with_an_untraditional_musical_instrument_--_the_tongue_drum_2.jpg/960px-Gaurav_Phadte_with_an_untraditional_musical_instrument_--_the_tongue_drum_2.jpg",
+  "earth": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/960px-The_Earth_seen_from_Apollo_17.jpg",
+  "eggs": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Eggs_in_basket_2020_G1.jpg/960px-Eggs_in_basket_2020_G1.jpg",
+  "eye": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/Eye_iris.jpg/960px-Eye_iris.jpg",
+  "fallingapple": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Falling_apple_crop.jpg/960px-Falling_apple_crop.jpg",
+  "fish": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f1/Fountain_with_goldfish_in_Jard%C3%AD_del_Bisbe_02.jpg/960px-Fountain_with_goldfish_in_Jard%C3%AD_del_Bisbe_02.jpg",
+  "fountain": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/Fresh_water_fountain.jpg/960px-Fresh_water_fountain.jpg",
+  "heart": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Human_heart_model.jpg/960px-Human_heart_model.jpg",
+  "jupiter": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Portrait_of_Jupiter_from_Cassini.jpg/960px-Portrait_of_Jupiter_from_Cassini.jpg",
+  "knife": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Kitchen_knife_made_of_stainless_steel_with_sliced_white_cabbage.jpg/960px-Kitchen_knife_made_of_stainless_steel_with_sliced_white_cabbage.jpg",
+  "leaf": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Yellow_leaf_floating_next_to_water_volcano%2C_Alameda_dos_Oceanos%2C_Parque_das_Na%C3%A7%C3%B5es%2C_Lisbon%2C_Portugal_julesvernex2-2.jpg/960px-Yellow_leaf_floating_next_to_water_volcano%2C_Alameda_dos_Oceanos%2C_Parque_das_Na%C3%A7%C3%B5es%2C_Lisbon%2C_Portugal_julesvernex2-2.jpg",
+  "lemon": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/Lemon.jpg/960px-Lemon.jpg",
+  "lightning": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Lightning_in_the_Sky_%289357443%29.jpg/960px-Lightning_in_the_Sky_%289357443%29.jpg",
+  "lungs": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/Human_Lungs_%28NIH_BioArt_231_-_630887%29.png/960px-Human_Lungs_%28NIH_BioArt_231_-_630887%29.png",
+  "magnet": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Horseshoe_magnet_metal_shavings.jpg/960px-Horseshoe_magnet_metal_shavings.jpg",
+  "mars": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/960px-OSIRIS_Mars_true_color.jpg",
+  "microscope": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Binocular_compound_microscope%2C_Carl_Zeiss_Jena%2C_1914_%286779276516%29.jpg/960px-Binocular_compound_microscope%2C_Carl_Zeiss_Jena%2C_1914_%286779276516%29.jpg",
+  "mirror": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Mount_Hood_reflected_in_Mirror_Lake%2C_Oregon.jpg/960px-Mount_Hood_reflected_in_Mirror_Lake%2C_Oregon.jpg",
   "moon": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/960px-FullMoon2010.jpg",
-
-  "owl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/Eurasian_eagle-owl_%2844088%29.jpg/960px-Eurasian_eagle-owl_%2844088%29.jpg",
-
+  "plug": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Electricity_socket_at_Pavillon_Le_Corbusier.jpg/960px-Electricity_socket_at_Pavillon_Le_Corbusier.jpg",
+  "rain": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Dark_rain_clouds_departing_over_Brofjorden.jpg/960px-Dark_rain_clouds_departing_over_Brofjorden.jpg",
+  "rainbow": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Rainbow_sky.jpg/960px-Rainbow_sky.jpg",
+  "recycle": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/99/Recycling_bins_Drammen.jpg/960px-Recycling_bins_Drammen.jpg",
+  "saturn": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Saturn_from_Cassini_Orbiter_%282004-10-06%29.jpg/960px-Saturn_from_Cassini_Orbiter_%282004-10-06%29.jpg",
+  "seedling": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Maize_seedling_within_the_coleoptile.jpg/960px-Maize_seedling_within_the_coleoptile.jpg",
+  "seesaw": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Playground_seesaw.jpg/960px-Playground_seesaw.jpg",
+  "shadow": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/Clouds_and_a_shadow.jpg/960px-Clouds_and_a_shadow.jpg",
+  "skeleton": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Human_Skeleton_2.jpg/960px-Human_Skeleton_2.jpg",
+  "snow": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/Crater_Lake_winter_pano2.jpg/960px-Crater_Lake_winter_pano2.jpg",
+  "soap": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Aleppo_soap_01.jpg/960px-Aleppo_soap_01.jpg",
+  "spring": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Sakura_flowers_blossom.jpg/960px-Sakura_flowers_blossom.jpg",
+  "steam": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Steaming_Kettle_-_Boston%2C_MA.jpg/960px-Steaming_Kettle_-_Boston%2C_MA.jpg",
+  "stone": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Stone_Pebble_Beach_-_Tenerife.jpg/960px-Stone_Pebble_Beach_-_Tenerife.jpg",
+  "sun": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Sky_Sun_Down.jpg/960px-Sky_Sun_Down.jpg",
+  "sunflower": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Sunflower_head_2026_G1.jpg/960px-Sunflower_head_2026_G1.jpg",
+  "toothbrush": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Toothbrush_x3_20050716_002.jpg/960px-Toothbrush_x3_20050716_002.jpg",
   "tree": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Children_planting_plants_in_Seychelles.jpg/960px-Children_planting_plants_in_Seychelles.jpg",
-
-  "bee": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/European_honey_bee_extracts_nectar.jpg/960px-European_honey_bee_extracts_nectar.jpg",
-
-  "lightning": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Lightning_in_the_Sky_%289357443%29.jpg/960px-Lightning_in_the_Sky_%289357443%29.jpg"
-
+  "tug": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Tug_of_War_-_Kids_Playing.jpg/960px-Tug_of_War_-_Kids_Playing.jpg",
+  "wheel": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Clustered_Spires_High-wheel_bicycle_race_2023_MD12.jpg/960px-Clustered_Spires_High-wheel_bicycle_race_2023_MD12.jpg",
 };
 
 
@@ -83,218 +88,119 @@ export const QUIZZES = {
 
   "UKG": [
 
-    {img:"ball",q:"What do we do with a ball?",o:["Kick and throw it","Eat it","Read it","Wear it"],a:0,e:"⚽"},
-
-    {img:"teddy",q:"Which toy is soft and cuddly?",o:["A stone","A spoon","A teddy bear","A shoe"],a:2,e:"🧸"},
-
-    {img:"balloon",q:"What floats up in the sky at a party?",o:["A book","A balloon","A chair","A shoe"],a:1,e:"🎈"},
-
-    {img:"friends",q:"Who do we play with at school?",o:["A lion","A cloud","A car","Our friends"],a:3,e:"👧"},
-
-    {img:"cake",q:"What do we eat on a birthday?",o:["A stone","A cake","A pencil","A sock"],a:1,e:"🎂"},
-
-    {img:"storybook",q:"What do we do when we are happy?",o:["Smile","Cry","Shout","Hide"],a:0,e:"😊"},
-
-    {img:"storybook",q:"What do we read in?",o:["A plate","A shoe","A storybook","A ball"],a:2,e:"📖"},
-
-    {img:"swing",q:"What do we sit on and swing in a park?",o:["A table","A bed","A bus","A swing"],a:3,e:"🛝"},
-
-    {img:"balloon",q:"What sound does a happy child make?",o:["Ha ha ha","Brr brr","Tick tock","Vroom"],a:0,e:"😄"},
-
-    {img:"friends",q:"Which is the best thing to share with a friend?",o:["A stone","A toy","A shoe","A cloud"],a:1,e:"🤗"}
-
+    {img:"sun",q:"What gives us light and heat in the daytime?",o:["The Moon","The Sun","A cloud","A star"],a:1,e:"☀️"},
+    {img:"moon",q:"What do we see shining in the night sky?",o:["The Sun","A ball","The Moon","A kite"],a:2,e:"🌙"},
+    {img:"seedling",q:"What does a plant need to grow?",o:["Water and sunlight","Chocolates","Shoes","Toys"],a:0,e:"🌱"},
+    {img:"cow",q:"Which animal says moo?",o:["A dog","A cat","A cow","A duck"],a:2,e:"🐄"},
+    {img:"eye",q:"Which part of our body helps us see?",o:["Our ears","Our eyes","Our nose","Our hands"],a:1,e:"👀"},
+    {q:"Which part of our body helps us hear sounds?",o:["Our nose","Our tongue","Our ears","Our feet"],a:2,e:"👂"},
+    {q:"What do we smell with?",o:["Our eyes","Our nose","Our hands","Our ears"],a:1,e:"👃"},
+    {q:"What helps us taste our food?",o:["Our tongue","Our toes","Our hair","Our knees"],a:0,e:"😋"},
+    {img:"seedling",q:"Which part of a plant is under the ground?",o:["The flower","The leaf","The root","The fruit"],a:2,e:"🌱"},
+    {img:"seedling",q:"What does a baby plant grow from?",o:["A stone","A shoe","A cloud","A seed"],a:3,e:"🌱"},
   ],
-
   "1": [
 
-    {q:"Why do we celebrate Children's Day?",o:["To celebrate children and their happiness","To celebrate farmers","To celebrate teachers","To celebrate sports"],a:0,e:"🎈"},
-
-    {img:"nehru",q:"Who was called Chacha Nehru?",o:["A storybook hero","Jawaharlal Nehru","A football player","A teacher"],a:1,e:"👴"},
-
-    {img:"kite",q:"Which toy can fly in the sky?",o:["A car","A boat","A train","A kite"],a:3,e:"🪁"},
-
-    {img:"football",q:"What game do we play by hiding?",o:["Cricket","Chess","Hide and seek","Football"],a:2,e:"🙈"},
-
-    {img:"school",q:"What do we carry to school?",o:["A school bag","A pillow","A bucket","A television"],a:0,e:"🎒"},
-
-    {img:"friends",q:"What should we do if a friend falls down?",o:["Laugh at them","Walk away","Help them get up","Hide"],a:2,e:"🤝"},
-
-    {img:"butterfly",q:"What do butterflies do?",o:["Fly from flower to flower","Swim in the sea","Sleep in a cave","Climb a tree"],a:0,e:"🦋"},
-
-    {img:"storybook",q:"Who tells us stories at bedtime?",o:["A cloud","A stone","A car","Our grandparents"],a:3,e:"📖"},
-
-    {img:"cake",q:"What do children love to eat on Children's Day?",o:["Stones","Chocolates","Pencils","Shoes"],a:1,e:"🍫"},
-
-    {img:"friends",q:"What is the best gift for a friend?",o:["A kind smile and a toy","A broken shoe","A stone","A loud shout"],a:0,e:"🎁"}
-
+    {img:"rain",q:"Where does rain come from?",o:["From clouds","From the ground","From a tap","From a tree"],a:0,e:"🌧️"},
+    {img:"fountain",q:"What should we drink when we are thirsty?",o:["Sand","Water","Stones","Leaves"],a:1,e:"💧"},
+    {img:"bulb",q:"What do we switch on to see in a dark room?",o:["A fan","A tap","A light bulb","A bed"],a:2,e:"💡"},
+    {img:"drum",q:"Which of these makes a loud sound?",o:["A feather","A cotton ball","A leaf","A drum"],a:3,e:"🥁"},
+    {q:"What do we use water for?",o:["To wear","To read","To drink and wash","To fly"],a:2,e:"💧"},
+    {img:"sun",q:"What is the weather like when the Sun shines brightly?",o:["Rainy","Sunny","Snowy","Stormy"],a:1,e:"☀️"},
+    {img:"cat",q:"Which animal makes a meow sound?",o:["A cat","A cow","A hen","A dog"],a:0,e:"🐱"},
+    {q:"What melts in the warm Sun?",o:["A book","A shoe","A stone","An ice cube"],a:3,e:"🧊"},
+    {q:"Where do we get water to drink?",o:["From a cloud","From a mountain","From a well","From a tree"],a:2,e:"💧"},
+    {img:"lightning",q:"What sound does thunder make?",o:["A soft song","A loud rumble","A whisper","A bell"],a:1,e:"🌩️"},
   ],
-
   "2": [
 
-    {img:"nehru",q:"Children's Day is the birthday of which leader who loved children?",o:["Mahatma Gandhi","A film star","Jawaharlal Nehru","A cricketer"],a:2,e:"👴"},
-
-    {img:"nehru",q:"Why did Jawaharlal Nehru love children?",o:["He thought children are the future of India","He liked their shoes","He liked their bags","He liked their homework"],a:0,e:"❤️"},
-
-    {img:"friends",q:"What is sharing?",o:["Keeping everything for yourself","Hiding your toys","Breaking a friend's toy","Giving a part of what you have to others"],a:3,e:"🤗"},
-
-    {img:"cricket",q:"Which game is played with a bat and a ball?",o:["Cricket","Hide and seek","Hopscotch","Skipping"],a:0,e:"🏏"},
-
-    {img:"butterfly",q:"Where do birds live?",o:["In a house","In a car","In a nest","In a bag"],a:2,e:"🐦"},
-
-    {img:"storybook",q:"What do we call a book full of stories?",o:["A storybook","A notebook","A diary","A textbook"],a:0,e:"📖"},
-
-    {img:"friends",q:"What makes a good friend?",o:["One who teases others","One who shares and helps","One who breaks toys","One who never talks"],a:1,e:"🤝"},
-
-    {img:"ball",q:"Which toy goes round and round?",o:["A book","A shoe","A plate","A spinning top"],a:3,e:"🌀"},
-
-    {img:"balloon",q:"What do we blow up and pop at a party?",o:["Balloons","Bottles","Books","Bricks"],a:0,e:"🎈"},
-
-    {img:"dog",q:"Which animal is a child's favourite pet?",o:["A lion","A crocodile","A dog","A snake"],a:2,e:"🐶"}
-
+    {img:"seedling",q:"What do plants use to make their own food?",o:["Moonlight","Rain only","Sunlight","Darkness"],a:2,e:"🌱"},
+    {img:"dog",q:"What is a baby dog called?",o:["A kitten","A calf","A puppy","A chick"],a:2,e:"🐶"},
+    {img:"snow",q:"In which season do we wear warm clothes?",o:["Summer","Winter","Spring","Rainy season"],a:1,e:"❄️"},
+    {img:"wheel",q:"Which simple machine helps a car roll along?",o:["A rope","A wheel","A nail","A spoon"],a:1,e:"🛞"},
+    {img:"sunflower",q:"Which part of a plant makes seeds?",o:["The root","The stem","The leaf","The flower"],a:3,e:"🌻"},
+    {img:"fish",q:"Which animal lives in water and swims?",o:["A fish","A cow","A dog","A hen"],a:0,e:"🐟"},
+    {img:"spring",q:"In which season do flowers bloom and trees get new leaves?",o:["Winter","Summer","Spring","Rainy season"],a:2,e:"🌸"},
+    {img:"seesaw",q:"A seesaw works like which simple machine?",o:["A wheel","A screw","A lever","A pulley"],a:2,e:"🛝"},
+    {img:"seedling",q:"What do roots do for a plant?",o:["Hold it in the soil and take in water","Make flowers","Catch sunlight","Make seeds"],a:0,e:"🌱"},
+    {img:"sun",q:"Which season is the hottest in India?",o:["Winter","Summer","Spring","Rainy season"],a:1,e:"☀️"},
   ],
-
   "3": [
 
-    {q:"Children's Day is celebrated on which day?",o:["25 December","14 November","15 August","26 January"],a:1,e:"🎈"},
-
-    {img:"school",q:"What is childhood?",o:["The time when we work in an office","The time when we are old","The time when we sleep all day","The time when we are young and growing up"],a:3,e:"👧"},
-
-    {img:"football",q:"Which game needs two teams and a ball?",o:["Football","Chess","Ludo","Carrom"],a:0,e:"⚽"},
-
-    {img:"tree",q:"What do plants need to grow?",o:["Chocolates","Shoes","Water and sunlight","Toys"],a:2,e:"🌱"},
-
-    {img:"storybook",q:"What is a fairy tale?",o:["A maths sum","A news report","A shopping list","A story with magic and kind heroes"],a:3,e:"🧚"},
-
-    {img:"friends",q:"If your friend is sad, what can you do?",o:["Tease them","Listen and cheer them up","Walk away","Take their toy"],a:1,e:"🤗"},
-
-    {img:"school",q:"Why do we go to school?",o:["To learn and make friends","To sleep","To eat only","To play alone"],a:0,e:"🏫"},
-
-    {img:"ball",q:"Which toy helps us learn numbers?",o:["A toy phone","A teddy bear","A board game with dice","A kite"],a:2,e:"🎲"},
-
-    {img:"balloon",q:"What do children shout on Children's Day?",o:["Good night","Happy Children's Day","Time to sleep","Be quiet"],a:1,e:"🎉"},
-
-    {img:"cake",q:"Which is the silliest thing to eat?",o:["A chocolate","An apple","A banana","A shoe"],a:3,e:"😄"}
-
+    {img:"magnet",q:"What does a magnet attract?",o:["Wood","Plastic","Iron nails","Rubber"],a:2,e:"🧲"},
+    {img:"magnet",q:"What happens when two same poles of magnets come together?",o:["They stick together","They push each other away","They melt","They disappear"],a:1,e:"🧲"},
+    {img:"shadow",q:"What do we need to make a shadow?",o:["Light and an object","Water and sand","Wind and rain","A magnet"],a:0,e:"👤"},
+    {img:"shadow",q:"When is your shadow the shortest?",o:["In the morning","In the evening","At midday, when the Sun is overhead","At night"],a:2,e:"👤"},
+    {img:"leaf",q:"Which of these floats on water?",o:["A coin","A stone","An iron nail","A leaf"],a:3,e:"🍂"},
+    {img:"stone",q:"Which of these sinks in water?",o:["A paper boat","A stone","A cork","A leaf"],a:1,e:"🪨"},
+    {img:"magnet",q:"Which of these is NOT attracted by a magnet?",o:["A wooden block","A paper clip","An iron nail","A steel spoon"],a:0,e:"🧲"},
+    {img:"leaf",q:"Which of these floats: an iron nail or a plastic bottle?",o:["Both sink","Both float","The iron nail","The plastic bottle"],a:3,e:"🍂"},
+    {img:"shadow",q:"What happens to a shadow when the Sun moves?",o:["It disappears for ever","It stays in the same place","It moves and changes","It becomes a rainbow"],a:2,e:"👤"},
+    {img:"shadow",q:"On a sunny day, what follows you everywhere?",o:["Your bag","Your shadow","Your shoes","Your lunch box"],a:1,e:"👤"},
   ],
-
   "4": [
 
-    {q:"What does every child have the right to do?",o:["Work all day","Learn and play","Stay hungry","Live alone"],a:1,e:"📚"},
-
-    {img:"nehru",q:"Why is 14 November special?",o:["It is New Year","It is a harvest festival","It is Jawaharlal Nehru's birthday","It is a sports day"],a:2,e:"🎈"},
-
-    {img:"storybook",q:"Which story has a boy who never grows up?",o:["Peter Pan","Cinderella","Snow White","Aladdin"],a:0,e:"🧚"},
-
-    {img:"chess",q:"Which game is played on a board with black and white squares?",o:["Cricket","Football","Badminton","Chess"],a:3,e:"♟️"},
-
-    {img:"tree",q:"Why do we plant trees?",o:["For clean air and shade","To make the ground dirty","To block the sun always","To hide toys"],a:0,e:"🌳"},
-
-    {img:"friends",q:"What does teamwork mean?",o:["Working alone always","Letting one person do everything","Fighting over a game","Working together to do something well"],a:3,e:"🤝"},
-
-    {img:"football",q:"What is hopscotch?",o:["A game with a bat","A game in water","A game where you hop on squares","A game with cards"],a:2,e:"🛝"},
-
-    {img:"storybook",q:"What do we learn from stories?",o:["Good values and new ideas","How to shout","How to break things","How to hide"],a:0,e:"📖"},
-
-    {img:"school",q:"What is a child's superpower?",o:["Sleeping all day","Curiosity","Eating stones","Breaking toys"],a:1,e:"🦸"},
-
-    {img:"rainbow",q:"If you could fly like a bird, where would you go first?",o:["To a cave","To a desert","To the park","To a dark room"],a:2,e:"🐦"}
-
+    {img:"skeleton",q:"What do our bones do?",o:["Make us sleepy","Support our body and give it shape","Help us see","Make our hair grow"],a:1,e:"🦴"},
+    {img:"heart",q:"What does the heart do?",o:["It pumps blood around the body","It helps us think","It helps us taste food","It helps us breathe"],a:0,e:"❤️"},
+    {img:"plug",q:"What do we use to switch on a fan?",o:["Sunlight","Wind","Water","Electricity"],a:3,e:"🔌"},
+    {img:"plug",q:"What should you never touch with wet hands?",o:["A pencil","A book","An electric switch","A towel"],a:2,e:"🔌"},
+    {img:"rainbow",q:"When do we see a rainbow?",o:["At night in the dark","After rain, when the Sun shines","On a cloudy day with no Sun","In winter only"],a:1,e:"🌈"},
+    {img:"lightning",q:"Why do we see lightning before we hear thunder?",o:["Sound travels faster than light","Thunder comes first","Light travels faster than sound","Lightning is silent"],a:2,e:"⚡"},
+    {img:"toothbrush",q:"What do we use to chew our food?",o:["Our teeth","Our lips","Our nose","Our tongue"],a:0,e:"😁"},
+    {img:"lungs",q:"What do we breathe in?",o:["Water","Sand","Smoke","Air"],a:3,e:"🫁"},
+    {img:"bulb",q:"Which of these runs on electricity?",o:["A kite","A candle","A bulb","A paper fan"],a:2,e:"💡"},
+    {img:"balloon",q:"When you rub a balloon on your hair, what happens?",o:["Your hair falls off","Your hair stands up and sticks to the balloon","Nothing happens","Your hair turns blue"],a:1,e:"🎈"},
   ],
-
   "5": [
 
-    {img:"nehru",q:"Why was Jawaharlal Nehru called Chacha Nehru?",o:["Because he was a teacher","Because he was a singer","Because he was a cook","Because children loved him like an uncle"],a:3,e:"👴"},
-
-    {img:"school",q:"What do schools do on Children's Day?",o:["Celebrate children with fun and games","Close for a month","Give extra homework","Ask children to stay silent"],a:0,e:"🎉"},
-
-    {img:"football",q:"Why is play important for children?",o:["It wastes time","It helps them learn, grow strong and make friends","It makes them tired only","It stops learning"],a:1,e:"⚽"},
-
-    {img:"storybook",q:"Which book tells the story of a boy wizard?",o:["The Jungle Book","Alice in Wonderland","Harry Potter","Pinocchio"],a:2,e:"🧙"},
-
-    {img:"bee",q:"What do bees do for flowers?",o:["Help them make seeds by carrying pollen","Eat their leaves","Break their stems","Hide in them"],a:0,e:"🐝"},
-
-    {img:"friends",q:"What should you do if two friends fight?",o:["Join the fight","Laugh at both","Tell everyone to fight","Help them talk and make up"],a:3,e:"🤝"},
-
-    {q:"What is a hobby?",o:["Something you hate","Something you love doing in your free time","A school rule","A type of food"],a:1,e:"🎨"},
-
-    {img:"badminton",q:"Which game is played with a shuttlecock?",o:["Cricket","Football","Badminton","Hockey"],a:2,e:"🏸"},
-
-    {img:"balloon",q:"What would a child call a rainy day?",o:["A day to stay inside","A day to sleep","A day to shout","A day for paper boats"],a:3,e:"🌧️"},
-
-    {img:"friends",q:"Which is the best way to make a new friend?",o:["Smile and say hello","Hide from them","Take their bag","Shout at them"],a:0,e:"😊"}
-
+    {img:"earth",q:"Which planet do we live on?",o:["Mars","Venus","Earth","Jupiter"],a:2,e:"🌍"},
+    {img:"jupiter",q:"Which is the biggest planet in our solar system?",o:["Mars","Jupiter","Earth","Venus"],a:1,e:"🪐"},
+    {img:"sun",q:"What is the Sun?",o:["A star","A moon","A cloud","A planet"],a:0,e:"☀️"},
+    {img:"stone",q:"Which of these is a solid?",o:["Steam","Water","Air","Ice"],a:3,e:"🧊"},
+    {img:"steam",q:"What happens to water when it is heated?",o:["It turns into sand","It disappears for ever","It turns into steam","It turns into ice"],a:2,e:"♨️"},
+    {img:"steam",q:"Which of these is a gas?",o:["A stone","Air","Water","Ice"],a:1,e:"💨"},
+    {img:"apple",q:"Which scientist explained gravity after watching an apple fall?",o:["Isaac Newton","Albert Einstein","Thomas Edison","Galileo Galilei"],a:0,e:"🍎"},
+    {img:"earth",q:"Which invention helps us see far-away things in the sky?",o:["A thermometer","A compass","A microscope","A telescope"],a:3,e:"🔭"},
+    {img:"mars",q:"Which planet is called the Red Planet?",o:["Jupiter","Saturn","Mars","Venus"],a:2,e:"🔴"},
+    {img:"saturn",q:"Which planet has beautiful rings around it?",o:["Earth","Saturn","Mercury","Mars"],a:1,e:"🪐"},
   ],
-
   "6": [
 
-    {img:"nehru",q:"Children's Day in India is celebrated on the birthday of which leader?",o:["Mahatma Gandhi","Sardar Patel","Jawaharlal Nehru","Bhagat Singh"],a:2,e:"👴"},
-
-    {img:"nehru",q:"Nehru believed children are what?",o:["The future of the nation","The best workers","The best cooks","The best singers"],a:0,e:"🌟"},
-
-    {img:"storybook",q:"Who wrote The Jungle Book?",o:["Roald Dahl","Rudyard Kipling","J.K. Rowling","Enid Blyton"],a:1,e:"📖"},
-
-    {img:"football",q:"Which outdoor game improves running and teamwork?",o:["Chess","Ludo","Football","Carrom"],a:2,e:"⚽"},
-
-    {img:"rainbow",q:"Why is a rainbow seen after rain?",o:["The sky is painted","Clouds change colour","Sunlight splits into colours in raindrops","Rain is colourful"],a:2,e:"🌈"},
-
-    {img:"friends",q:"What is empathy?",o:["Understanding how a friend feels","Winning every game","Talking loudly","Ignoring others"],a:0,e:"❤️"},
-
-    {img:"school",q:"Why do children ask so many questions?",o:["Because they are naughty","Because they like noise","Because they are bored","Because they are curious and want to learn"],a:3,e:"❓"},
-
-    {img:"storybook",q:"What is a moral in a story?",o:["A lesson about right and wrong","A funny joke","A long name","A magic trick"],a:0,e:"📖"},
-
-    {img:"cake",q:"What is the best Children's Day gift?",o:["Time to play and a good book","A broken toy","A pile of homework","A long lecture"],a:0,e:"🎁"},
-
-    {img:"school",q:"What do schools usually do for children on Children's Day?",o:["Give them a long exam","Make them sit quietly all day","Organise games, songs and fun activities","Close the school for a month"],a:2,e:"🎉"}
-
+    {img:"tug",q:"What is a force?",o:["A push or a pull","A kind of food","A colour","A sound"],a:0,e:"💪"},
+    {img:"car",q:"What makes a moving ball slow down and stop?",o:["Gravity","Friction","Sunlight","Rain"],a:1,e:"🚗"},
+    {img:"mirror",q:"Which material lets light pass through it?",o:["Cloth","Wood","Glass","Iron"],a:2,e:"🪟"},
+    {img:"magnet",q:"Which material is attracted by a magnet?",o:["Glass","Wood","Plastic","Iron"],a:3,e:"🧲"},
+    {img:"tree",q:"Why should we plant more trees?",o:["They make the air dirty","They give us clean air and shade","They block all the rain","They eat our food"],a:1,e:"🌳"},
+    {img:"recycle",q:"What is the best thing to do with plastic waste?",o:["Throw it in a river","Burn it","Put it in a recycling bin","Bury it in the garden"],a:2,e:"♻️"},
+    {img:"fallingapple",q:"What pulls things down to the Earth?",o:["Gravity","The Moon","Magnetism","The wind"],a:0,e:"🍎"},
+    {img:"wheel",q:"Which moves faster: a bicycle or a car?",o:["Both are the same","A bicycle is faster uphill","A bicycle","A car"],a:3,e:"🚗"},
+    {img:"recycle",q:"Which material is best for making a raincoat?",o:["Cotton","Wool","Plastic","Paper"],a:2,e:"🧥"},
+    {img:"seesaw",q:"What do we use to lift a heavy thing easily?",o:["A magnet","A lever","A rope only","A mirror"],a:1,e:"🏋️"},
   ],
-
   "7": [
 
-    {q:"Which of these is a right of every child?",o:["The right to work in a factory","The right to go to school and learn","The right to be ignored","The right to live without food"],a:1,e:"📚"},
-
-    {img:"football",q:"How does playing games help children learn?",o:["It stops all learning","It makes children lazy","It teaches only shouting","It teaches rules, teamwork and thinking"],a:3,e:"⚽"},
-
-    {img:"storybook",q:"Which story is about a girl who falls into a magical world?",o:["Alice in Wonderland","Cinderella","The Jungle Book","Pinocchio"],a:0,e:"🐇"},
-
-    {img:"tree",q:"Why do leaves change colour in autumn?",o:["Because they are painted","Because they get wet","Because they stop making green colour as days get shorter","Because they are tired"],a:2,e:"🍂"},
-
-    {img:"friends",q:"What makes a friendship strong?",o:["Trust, kindness and sharing","Teasing and fighting","Keeping secrets from each other","Never talking"],a:0,e:"🤝"},
-
-    {img:"storybook",q:"Who is the boy who lives with wolves in The Jungle Book?",o:["Mowgli","Peter Pan","Aladdin","Tom Sawyer"],a:0,e:"🐺"},
-
-    {img:"cricket",q:"Which sport needs a bat, a ball and wickets?",o:["Football","Hockey","Kabaddi","Cricket"],a:3,e:"🏏"},
-
-    {img:"lightning",q:"Why do we see lightning before we hear thunder?",o:["Sound travels faster than light","Thunder comes first","Light travels faster than sound","Lightning is silent"],a:2,e:"⚡"},
-
-    {img:"school",q:"What is the most fun way to learn?",o:["By playing a game","By sitting still all day","By reading only rules","By never asking questions"],a:0,e:"🎲"},
-
-    {img:"friends",q:"If you were a superhero for a day, what would you do first?",o:["Help a friend in need","Hide your cape","Eat all the sweets","Sleep all day"],a:0,e:"🦸"}
-
+    {img:"steam",q:"What happens to most things when they are heated?",o:["They shrink","They expand","They turn blue","They disappear"],a:1,e:"🔥"},
+    {q:"Which of these is a good conductor of heat?",o:["A steel spoon","A plastic cup","A cotton cloth","A wooden spoon"],a:0,e:"🥄"},
+    {img:"mirror",q:"What happens when light hits a mirror?",o:["It passes through","It turns into sound","It is absorbed","It reflects back"],a:3,e:"🪞"},
+    {img:"moon",q:"Why do we see the Moon shining at night?",o:["It is a star","It makes its own light","It reflects sunlight","It is on fire"],a:2,e:"🌙"},
+    {img:"lemon",q:"Which of these tastes sour?",o:["A banana","A lemon","Sugar","Salt"],a:1,e:"🍋"},
+    {img:"soap",q:"Soap is an example of what?",o:["A base","A metal","A gas","An acid"],a:0,e:"🧼"},
+    {img:"eggs",q:"Which nutrient helps us grow and build strong muscles?",o:["Sugar","Water","Fibre","Protein"],a:3,e:"🥚"},
+    {img:"sun",q:"Which vitamin do we get from sunlight?",o:["Vitamin B","Vitamin C","Vitamin D","Vitamin A"],a:2,e:"☀️"},
+    {img:"sun",q:"Why do we wear light-coloured clothes in summer?",o:["They absorb more heat","They reflect heat and keep us cool","They are heavier","They make us taller"],a:1,e:"☀️"},
+    {q:"Why does a steel spoon feel colder than a wooden spoon at the same temperature?",o:["Steel carries heat away from your hand faster","Wood is warmer than steel","Steel makes ice","Steel is always cold"],a:0,e:"🥄"},
   ],
-
   "8": [
 
-    {img:"nehru",q:"Why do we celebrate Children's Day in India on 14 November?",o:["It is Jawaharlal Nehru's birthday, and he loved children","It is the first day of school","It is the day of the first train","It is a harvest festival"],a:0,e:"🎈"},
-
-    {img:"school",q:"What does the right to education mean for a child?",o:["Only some children can learn","Children must pay to learn","Every child should get a chance to learn at school","Children must work instead of learning"],a:2,e:"📚"},
-
-    {img:"storybook",q:"Which author wrote Charlie and the Chocolate Factory?",o:["J.K. Rowling","Enid Blyton","Rudyard Kipling","Roald Dahl"],a:3,e:"📖"},
-
-    {img:"football",q:"Why are rules important in a game?",o:["They make the game fair and fun for everyone","They make the game boring","They stop everyone from playing","They help only one player win"],a:0,e:"⚽"},
-
-    {img:"moon",q:"What causes day and night?",o:["The Sun moving around the Earth","The Earth turning on its axis","The Moon shining","Clouds covering the Sun"],a:1,e:"🌍"},
-
-    {img:"friends",q:"How can you be a good friend online?",o:["By sharing others' photos without asking","By teasing friends in chats","By being kind and never sharing hurtful words","By ignoring everyone"],a:2,e:"💬"},
-
-    {img:"school",q:"What does curiosity help us do?",o:["Ask questions and learn new things","Stop learning","Forget everything","Avoid new ideas"],a:0,e:"❓"},
-
-    {img:"moon",q:"Why does the Moon shine at night?",o:["It makes its own light","It is on fire","It is a star","It reflects sunlight"],a:3,e:"🌙"},
-
-    {img:"friends",q:"What is the best way to spend Children's Day?",o:["Doing extra homework","Sitting alone","Playing, reading and laughing with friends","Watching paint dry"],a:2,e:"🎉"},
-
-    {img:"rainbow",q:"If childhood had a colour, what would it be?",o:["Grey and dull","Bright and cheerful, like a rainbow","Black and dark","White only"],a:1,e:"🌈"}
-
-  ]
-
+    {img:"knife",q:"Why does a sharp knife cut better than a blunt one?",o:["It is heavier","It puts more pressure on a small area","It is colder","It is shinier"],a:1,e:"🔪"},
+    {img:"backpack",q:"Why do school bags have broad straps?",o:["To spread the weight and put less pressure on your shoulders","To make the bag heavier","To keep the bag dry","To look nice"],a:0,e:"🎒"},
+    {q:"Why do we put oil on a door hinge?",o:["To make it heavier","To change its colour","To make it rust","To reduce friction so it moves smoothly"],a:3,e:"🚪"},
+    {img:"car",q:"Why are car tyres rough and grooved?",o:["To save fuel","To look nice","To grip the road better with more friction","To make the car slower"],a:2,e:"🚗"},
+    {img:"drum",q:"How does sound travel to our ears?",o:["As light rays","Through vibrations in air","Through shadows","It does not travel"],a:1,e:"🔊"},
+    {img:"moon",q:"Why can we not hear sound in space?",o:["There is no air to carry the sound","Space is too cold","Astronauts cover their ears","Sound is too slow in space"],a:0,e:"🚀"},
+    {img:"cell",q:"What is the smallest unit of life?",o:["A tissue","An organ","An atom","A cell"],a:3,e:"🦠"},
+    {img:"cell",q:"Which part of a cell is called its powerhouse?",o:["The cytoplasm","The nucleus","The mitochondria","The cell wall"],a:2,e:"🦠"},
+    {img:"bacteria",q:"What helps milk turn into curd?",o:["Fungi","Bacteria","Viruses","Algae"],a:1,e:"🥛"},
+    {img:"microscope",q:"Why do we wash our hands before eating?",o:["To remove germs and dirt","To make them warm","To change their colour","To make them soft"],a:0,e:"🧼"},
+  ],
 };
