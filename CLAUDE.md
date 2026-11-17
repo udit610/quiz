@@ -9,11 +9,12 @@ checked and results saved by a Google Apps Script web app (`API_URL` in
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The whole site: styles, markup, script, and this week's questions in scrambled form. |
+| `index.html` | The quiz: styles, markup, script, and this week's questions in scrambled form. |
+| `results.html` | The results page: name, class and marks for the latest week, from the published results sheet. |
 | `quiz-data.js` | This week's questions, readable. **The only file to edit for a new week.** |
 | `tools/build.mjs` | Checks `quiz-data.js` and writes the questions into `index.html`. |
-| `tools/test.mjs` | Browser tests of every flow. Needs Playwright with Chromium; uses no network. |
-| `.vercelignore` | Keeps everything except `index.html` off the public site. |
+| `tools/test.mjs` | Browser tests of every flow, including the submission window and the results page. Needs Playwright with Chromium; uses no network. |
+| `.vercelignore` | Keeps `quiz-data.js`, `tools` and `CLAUDE.md` off the public site; `index.html` and `results.html` are deployed. |
 
 ## Weekly update
 
@@ -42,13 +43,56 @@ encryption. (This repository is public, so `quiz-data.js` can be read on
 GitHub by anyone who finds it; `.vercelignore` only keeps it off the site.)
 
 `WEEK.date` matters: it names the week on the page, resets what each device
-remembers, and sets when the answers unlock (see `answersAt` below).
+remembers, sets when the answers unlock (see `answersAt` below), and sets
+the submission window (see below).
+
+## Submission window
+
+The quiz takes submissions only from Saturday 00:00 to Monday 23:59:59,
+India time, in the quiz week. The window is derived from `WEEK.date`, so
+a new week needs no new setting. Outside it, Start is disabled with a
+message, the typing-time name check does not run (it would write a
+STARTED row), and an in-progress quiz left over from after the close is
+dropped instead of resumed. An attempt that started inside the window
+may finish and be saved after it closes.
+
+The page alone cannot truly enforce this: a device clock can be changed,
+and the Apps Script can be called directly. The Apps Script must enforce
+the same window itself, using its own clock in Asia/Kolkata: reject
+`action:'start'` and `action:'result'` outside Saturday 00:00 to Monday
+23:59:59 with `{ error: 'closed' }`, except that a `result` with a
+matching `start` row from inside the window should still be accepted.
+The page already handles that reply: at Start it shows the closed
+message, and at save time it says "Submissions have closed" and does not
+retry. Until the script is changed, the window is a gate on the page
+only, not a guarantee.
+
+## Results page
+
+`results.html` shows the latest week's results from Tuesday onwards, for
+the screenshots shared on Tuesday. It reads the published results sheet
+(the same source as the Quiz Results Dashboard) and shows Name, Class and
+Marks (`Score/Total` plus Percentage) for completed rows only, sorted by
+class, then marks, then name, with a class filter and a name search.
+
+Each week, after the results are merged into the master sheet as a date
+tab (the Tuesday merge), add the new tab to the `SHEETS` list at the top
+of `results.html`: the tab name exactly as it appears in the sheet, and
+its gid from the sheet's tab list. Do not guess a gid. Until that entry
+is added and deployed, the page keeps showing the previous week, and the
+week label on the page says which week it is, so a stale week is obvious.
+Before the latest week's Tuesday the page says when the results open and
+shows no rows.
 
 ## Settings (top of the script in `index.html`)
 
 - `RULES.answersAt` — time on the quiz day, India time, when the correct
   answers open (`"20:00"`). Until then a student sees only their score.
   `""` shows the answers straight away.
+- `RULES.windowDays` — days after the quiz Saturday that submissions stay
+  open (`2`: Sunday and Monday, closing Monday 23:59:59, India time).
+  Changing it changes the submission window and the Tuesday the results
+  open; the tests check the current value.
 - `RULES.freeLeaves`, `RULES.maxLeaves`, `RULES.leaveGraceMs` — how leaving
   the page is treated: warnings, then the question is locked, then the quiz
   is handed in.
@@ -64,8 +108,9 @@ them:
     { action: "result", studentName, className, score, total, tabSwitches, unattempted }
 
 A reply of `{ error: "duplicate" }` means the name already has a result for
-that class. `tabSwitches` is the number of times the student left the quiz.
-`tools/test.mjs` checks these.
+that class. A reply of `{ error: "closed" }` means the submission window
+has shut (see above). `tabSwitches` is the number of times the student
+left the quiz. `tools/test.mjs` checks these.
 
 ## Checking a change
 

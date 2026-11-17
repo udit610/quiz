@@ -1282,6 +1282,7 @@
 
   <footer class="foot" id="foot">
     <p>Questions about the quiz? Call the school: <a href="tel:+919855458530">+91 9855458530</a></p>
+    <p><a href="results.html">See this week's results</a></p>
     <p id="photoCredit">Photographs from Wikimedia Commons, used under their free licences.</p>
   </footer>
 
@@ -1349,6 +1350,9 @@ const API_URL =
                     answers open. Until then students see only their score, so
                     answers cannot be passed to classmates who have not played.
                     Set to "" to show the answers straight away.
+  windowDays        days after the quiz Saturday that submissions stay open
+                    (2: Sunday and Monday, so submissions close on Monday at
+                    23:59:59, India time). See "WHEN SUBMISSIONS ARE OPEN".
   imageWaitMs       the clock waits this long, at most, for a question's photo
 */
 const RULES = {
@@ -1357,6 +1361,7 @@ const RULES = {
   maxLeaves: 3,
   leaveGraceMs: 2000,
   answersAt: "20:00",
+  windowDays: 2,
   imageWaitMs: 5000
 };
 
@@ -1911,6 +1916,52 @@ function unlockLabel() {
 
 
 /* ============================================================
+   WHEN SUBMISSIONS ARE OPEN
+   ============================================================ */
+
+/*
+  The quiz takes submissions only from Saturday 00:00 to Monday 23:59:59,
+  India time, in the quiz week. The window is derived from WEEK.date, so
+  a new week needs no new setting. windowDays counts the days after the
+  quiz Saturday that submissions stay open (2: Sunday and Monday).
+
+  This is a gate on the page only: a device clock can be changed, and the
+  Apps Script can be called directly, so the script must enforce the same
+  window itself (see CLAUDE.md). An attempt that started inside the
+  window may finish and be saved after it closes.
+*/
+const OPEN_AT = Date.parse(WEEK.date + 'T00:00:00+05:30');
+const CLOSE_AT = OPEN_AT + RULES.windowDays * 86400000 + (24 * 3600 - 1) * 1000;
+const RESULTS_AT = CLOSE_AT + 1000;   /* Tuesday 00:00, when results open */
+
+function windowState() {
+  const now = Date.now();
+  if (now < OPEN_AT) return 'before';
+  if (now <= CLOSE_AT) return 'open';
+  return 'closed';
+}
+
+/* A moment as "YYYY-MM-DD" in India time. */
+function isoOf(ms) {
+  return new Date(ms + 5.5 * 3600 * 1000).toISOString().slice(0, 10);
+}
+
+function windowMessage() {
+  if (windowState() === 'before') {
+    return 'The quiz opens on ' + niceDate(WEEK.date) + '. Please come back then.';
+  }
+  return 'Submissions closed on ' + niceDate(isoOf(CLOSE_AT)) +
+    '. Results open on ' + niceDate(isoOf(RESULTS_AT)) + '.';
+}
+
+function paintWindow() {
+  const state = windowState();
+  startBtn.disabled = state !== 'open';
+  if (state !== 'open') setFormMsg(windowMessage());
+}
+
+
+/* ============================================================
    PAGE ELEMENTS AND STATE
    ============================================================ */
 
@@ -2090,6 +2141,7 @@ function paintWeek() {
   $('themeDate').textContent = niceDate(WEEK.date);
   $('rTheme').textContent = WEEK.emoji + ' ' + WEEK.theme + ' · ' + niceDate(WEEK.date);
   $('photoCredit').hidden = Object.keys(IMAGES).length === 0;
+  paintWindow();
 }
 
 function paintHints() {
@@ -2144,6 +2196,20 @@ function pickClass(cls) {
 const check = { key: '', result: null, promise: null, abort: null, timer: null };
 
 function scheduleCheck() {
+  /* Outside the window the name check must not run: it writes a STARTED
+     row in the sheet, which would be a submission outside the window. */
+  if (windowState() !== 'open') {
+    clearTimeout(check.timer);
+    check.timer = null;
+    check.key = '';
+    check.result = null;
+    if (check.abort) { check.abort.abort(); check.abort = null; }
+    check.promise = null;
+    setNameState('');
+    setFormMsg(windowMessage());
+    return;
+  }
+
   const name = nameValue();
   const cls = selectedClass;
   const key = name + '|' + cls;
@@ -2177,6 +2243,13 @@ function runCheck(name, cls) {
   check.promise = post(startBody(name, cls), { signal: ctl.signal, timeout: 12000 })
     .then(function (res) {
       if (check.key !== key) return null;
+      if (res.data.error === 'closed') {
+        /* The sheet says the window is shut (its clock is the authority). */
+        check.result = 'closed';
+        setNameState('');
+        if (phase === 'home') setFormMsg(windowMessage());
+        return 'closed';
+      }
       check.result = res.data.error !== 'duplicate';
       setNameState(check.result ? 'ok' : 'bad');
       if (!check.result && phase === 'home') setFormMsg(DUPLICATE_MSG);
@@ -2294,6 +2367,11 @@ function onStart(e) {
     return;
   }
 
+  if (windowState() !== 'open') {
+    setFormMsg(windowMessage());
+    return;
+  }
+
   const mine = doneList.filter(function (r) {
     return r.cls === cls && sameName(r.name, name);
   })[0];
@@ -2310,6 +2388,11 @@ function onStart(e) {
 
   if (check.key === key && check.result === false) {
     setFormMsg(DUPLICATE_MSG);
+    return;
+  }
+
+  if (check.key === key && check.result === 'closed') {
+    setFormMsg(windowMessage());
     return;
   }
 
@@ -2334,7 +2417,11 @@ function onStart(e) {
       if (v !== null || !API_READY) return v;
       /* No verdict from the typing-time check: ask now, as before. */
       return post(startBody(name, cls), { timeout: 12000 })
-        .then(function (res) { return res.data.error === 'duplicate' ? false : null; })
+        .then(function (res) {
+          if (res.data.error === 'duplicate') return false;
+          if (res.data.error === 'closed') return 'closed';
+          return null;
+        })
         .catch(function () {
           /* A temporary network problem must not stop the student. */
           return null;
@@ -2342,6 +2429,12 @@ function onStart(e) {
     })
     .then(function (v) {
       if (ready !== mySheet) return;   /* the sheet was closed meanwhile */
+      if (v === 'closed') {
+        closeReady();
+        phase = 'home';
+        setFormMsg(windowMessage());
+        return;
+      }
       if (v === false) {
         closeReady();
         phase = 'home';
@@ -2356,6 +2449,13 @@ function onStart(e) {
 
 function onBegin() {
   if (!ready || beginBtn.disabled) return;
+  /* The sheet may have stayed open while the window closed. */
+  if (windowState() !== 'open') {
+    closeReady();
+    phase = 'home';
+    setFormMsg(windowMessage());
+    return;
+  }
   const who = ready;
   closeReady();
   startAttempt(who.name, who.cls);
@@ -3043,7 +3143,14 @@ function submit(rec, attempt) {
     unattempted: rec.unattempted
   })
     .then(function (res) {
-      if (res.data.error === 'duplicate') {
+      if (res.data.error === 'closed') {
+        /* The sheet says the window has shut. Trying again would not
+           help, so this result is marked closed, not unsaved: it is not
+           sent again when the page is next opened. An attempt that
+           started inside the window is still sent; the sheet is expected
+           to accept it (see CLAUDE.md). */
+        rec.saved = 'closed';
+      } else if (res.data.error === 'duplicate') {
         /* After a failed try, "duplicate" means the earlier try did reach the sheet. */
         rec.saved = rec.retried ? 'yes' : 'dup';
       } else if (!res.ok || !res.data.ok) {
@@ -3078,6 +3185,9 @@ function paintSave(rec) {
   if (rec.saved === 'yes') {
     box.className = 'save ok';
     text.textContent = '✓ Result saved.';
+  } else if (rec.saved === 'closed') {
+    box.className = 'save fail';
+    text.textContent = 'Submissions have closed — this result was not saved. Please tell your teacher.';
   } else if (rec.saved === 'dup') {
     box.className = 'save fail';
     text.textContent = 'This name already has a saved result for this class — not saved again.';
@@ -3297,6 +3407,7 @@ function goHome() {
   paintClassGrid();
   paintHints();
   paintDevice();
+  paintWindow();
   show('home');
 }
 
@@ -3528,9 +3639,11 @@ paintDevice();
 
 (function () {
   const saved = store.get(K_ATT);
-  if (usable(saved)) {
+  if (usable(saved) && windowState() !== 'closed') {
     resume(saved);
   } else {
+    /* A quiz left over from after the window closed is dropped, not
+       resumed; the home screen shows the closed message instead. */
     store.del(K_ATT);
     show('home');
   }

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Results — Vardhman Convent School, Moonak</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --cream:#FFF7E8;
+    --card:#FFFDF6;
+    --ink:#2B2620;
+    --muted:#6B6455;
+    --brand:#4338E0;
+    --brand-d:#3730A3;
+    --sun:#FFC83D;
+    --line:#E8DFC8;
+    --good:#2E7D46;
+    --coral-d:#B3382E;
+    --coral-l:#FDECEA;
+  }
+
+  *{box-sizing:border-box}
+
+  body{
+    margin:0;
+    font-family:'Nunito',system-ui,sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    min-height:100vh;
+  }
+
+  .wrap{max-width:720px;margin:0 auto;padding:28px 18px 60px}
+
+  header{text-align:center;margin-bottom:20px}
+  .school{margin:0 0 4px;font-weight:800;letter-spacing:.04em;color:var(--muted);font-size:.9rem}
+  h1{font-family:'Fredoka',sans-serif;font-size:1.9rem;margin:0 0 6px;color:var(--brand)}
+  .week{margin:0;font-weight:800;font-size:1.05rem}
+  .week small{display:block;font-weight:700;color:var(--muted);font-size:.9rem;margin-top:2px}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 2px 0 var(--line);
+  }
+
+  .tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  .tools select,.tools input{
+    flex:1 1 160px;
+    min-height:48px;
+    padding:10px 12px;
+    font:inherit;
+    font-weight:700;
+    color:var(--ink);
+    background:#fff;
+    border:2px solid var(--line);
+    border-radius:13px;
+  }
+  .tools input{flex:2 1 200px}
+
+  .count{margin:0 0 12px;font-weight:800;color:var(--muted)}
+
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:10px 8px;text-align:left;font-size:.98rem}
+  th{
+    position:sticky;
+    top:0;
+    background:var(--brand);
+    color:#fff;
+    font-family:'Fredoka',sans-serif;
+    font-weight:600;
+  }
+  th:first-child{border-radius:10px 0 0 0}
+  th:last-child{border-radius:0 10px 0 0;text-align:right}
+  td:last-child{text-align:right;font-weight:800}
+  tbody tr:nth-child(even){background:#FBF3DF}
+  .cls-tag{
+    display:inline-block;
+    min-width:34px;
+    padding:2px 8px;
+    text-align:center;
+    font-weight:800;
+    background:#E8E6F4;
+    color:var(--brand-d);
+    border-radius:9px;
+  }
+  .marks{white-space:nowrap}
+
+  .msg{
+    padding:22px 16px;
+    text-align:center;
+    font-weight:800;
+    font-size:1.05rem;
+  }
+  .msg small{display:block;margin-top:6px;font-weight:700;color:var(--muted)}
+  .msg.err{color:var(--coral-d);background:var(--coral-l);border-radius:13px}
+
+  .back{display:block;margin:18px 0 0;text-align:center;font-weight:800;color:var(--brand)}
+  .foot{
+    max-width:600px;
+    margin:0 auto;
+    padding:4px 20px 28px;
+    text-align:center;
+    font-weight:700;
+    font-size:.85rem;
+    color:var(--muted);
+  }
+  .foot a{color:var(--ink);font-weight:800;text-decoration:none}
+
+  @media print{
+    body{background:#fff}
+    .tools,.back,.foot{display:none !important}
+    .card{border:0;box-shadow:none;padding:0}
+    th{position:static}
+  }
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <header>
+    <p class="school">Vardhman Convent School, Moonak</p>
+    <h1>Quiz Results</h1>
+    <p class="week" id="weekLabel">Loading results…</p>
+  </header>
+
+  <div class="card">
+    <div class="tools" id="tools" hidden>
+      <select id="classFilter" aria-label="Filter by class">
+        <option value="">All classes</option>
+      </select>
+      <input type="search" id="nameSearch" placeholder="Search a name" aria-label="Search by name" autocomplete="off">
+    </div>
+
+    <p class="count" id="count" hidden></p>
+
+    <div class="msg" id="status">Loading results…</div>
+
+    <table id="resultsTable" hidden>
+      <thead>
+        <tr><th>Name</th><th>Class</th><th>Marks</th></tr>
+      </thead>
+      <tbody id="resultsBody"></tbody>
+    </table>
+  </div>
+
+  <a class="back" href="index.html">← Back to the quiz</a>
+
+</div>
+
+<footer class="foot">
+  <p>Questions about the results? Call the school: <a href="tel:+919855458530">+91 9855458530</a></p>
+</footer>
+
+<script>
+(function () {
+'use strict';
+
+/* The published results sheet (same source as the Quiz Results Dashboard). */
+var PUB = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSCrLE9UuFMnNZPLPklC0lQJvQm5fa4hCcEwLOV61wJfVsubnPfD6dd78qnB6-znGAz7VWHThL7t_mK';
+
+/*
+  The date tabs of the master sheet, oldest first. Add a new entry here
+  each week after the results are merged into the master sheet (see
+  CLAUDE.md): the tab's name exactly as it appears in the sheet, and its
+  gid, found in the sheet's tab list. Do not guess a gid. "theme" is the
+  quiz theme that week, when it is known; it is only a label.
+*/
+var SHEETS = [
+  { name: '15 August',     gid: 1284082173 },
+  { name: '22 August',     gid: 15359540 },
+  { name: '29 August',     gid: 523812175 },
+  { name: '05 September',  gid: 431243224 },
+  { name: '12 September',  gid: 811727919 },
+  { name: '19 September',  gid: 1287568757 },
+  { name: '26 September',  gid: 511683113 },
+  { name: '03 October',    gid: 1209954448 },
+  { name: '10 October',    gid: 1169238443 },
+  { name: '17 October',    gid: 1050817329, theme: 'Records and Superlatives' },
+  { name: '24 October',    gid: 597796612,  theme: 'The Amazing Human Body' },
+  { name: '31 October',    gid: 1788775249, theme: 'Festivals & Diwali Celebrations' }
+];
+
+var CLASS_ORDER = ['UKG', '1', '2', '3', '4', '5', '6', '7', '8'];
+var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+  'August', 'September', 'October', 'November', 'December'];
+var MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+var DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+var DAY = 24 * 3600 * 1000;
+
+var $ = function (id) { return document.getElementById(id); };
+
+/* "31 October" -> "2026-10-31". The tab names carry no year, so the year
+   is the one in which that date most recently fell on or before today. */
+function tabISO(name) {
+  var p = name.split(' ');
+  var day = parseInt(p[0], 10);
+  var month = MONTHS.indexOf(p[1]);
+  if (month < 0) return null;
+  var today = new Date(Date.now() + 5.5 * 3600 * 1000).toISOString().slice(0, 10);
+  var y = parseInt(today.slice(0, 4), 10);
+  var iso = y + '-' + ('0' + (month + 1)).slice(-2) + '-' + ('0' + day).slice(-2);
+  if (iso > today) {
+    iso = (y - 1) + '-' + ('0' + (month + 1)).slice(-2) + '-' + ('0' + day).slice(-2);
+  }
+  return iso;
+}
+
+/* "2026-10-31" -> "Sat 31 Oct 2026" */
+function niceDate(iso) {
+  var p = iso.split('-').map(Number);
+  var d = new Date(Date.UTC(p[0], p[1] - 1, p[2]));
+  return DAYS[d.getUTCDay()] + ' ' + p[2] + ' ' + MONTHS_SHORT[p[1] - 1] + ' ' + p[0];
+}
+
+function classLabel(cls) {
+  return cls === 'UKG' ? 'UKG' : 'Class ' + cls;
+}
+
+function showStatus(text, sub, isError) {
+  var box = $('status');
+  box.className = 'msg' + (isError ? ' err' : '');
+  box.innerHTML = '';
+  box.appendChild(document.createTextNode(text));
+  if (sub) {
+    var s = document.createElement('small');
+    s.textContent = sub;
+    box.appendChild(s);
+  }
+  box.hidden = false;
+  $('resultsTable').hidden = true;
+  $('count').hidden = true;
+  $('tools').hidden = true;
+}
+
+/* A small CSV reader: quoted fields may hold commas. */
+function parseCSV(text) {
+  var rows = [];
+  var row = [];
+  var field = '';
+  var quoted = false;
+  for (var i = 0; i < text.length; i++) {
+    var c = text[i];
+    if (quoted) {
+      if (c === '"') {
+        if (text[i + 1] === '"') { field += '"'; i++; }
+        else quoted = false;
+      } else field += c;
+    } else if (c === '"') {
+      quoted = true;
+    } else if (c === ',') {
+      row.push(field); field = '';
+    } else if (c === '\n' || c === '\r') {
+      if (c === '\r' && text[i + 1] === '\n') i++;
+      row.push(field); field = '';
+      if (row.length > 1 || row[0] !== '') rows.push(row);
+      row = [];
+    } else field += c;
+  }
+  if (field !== '' || row.length) { row.push(field); rows.push(row); }
+  return rows;
+}
+
+var allRows = [];
+
+function render() {
+  var cls = $('classFilter').value;
+  var q = $('nameSearch').value.replace(/\s+/g, ' ').trim().toLowerCase();
+  var shown = allRows.filter(function (r) {
+    if (cls && r.cls !== cls) return false;
+    if (q && r.name.toLowerCase().indexOf(q) < 0) return false;
+    return true;
+  });
+
+  var body = $('resultsBody');
+  body.innerHTML = '';
+  shown.forEach(function (r) {
+    var tr = document.createElement('tr');
+    var name = document.createElement('td');
+    name.textContent = r.name;
+    var c = document.createElement('td');
+    var tag = document.createElement('span');
+    tag.className = 'cls-tag';
+    tag.textContent = r.cls;
+    c.appendChild(tag);
+    var marks = document.createElement('td');
+    marks.className = 'marks';
+    marks.textContent = r.score + '/' + r.total + ' · ' + r.pct;
+    tr.appendChild(name);
+    tr.appendChild(c);
+    tr.appendChild(marks);
+    body.appendChild(tr);
+  });
+
+  $('count').textContent = shown.length === allRows.length
+    ? allRows.length + ' results'
+    : shown.length + ' of ' + allRows.length + ' results';
+  $('count').hidden = false;
+  $('resultsTable').hidden = false;
+  $('status').hidden = true;
+  $('tools').hidden = false;
+}
+
+function loadWeek(sheet) {
+  var iso = tabISO(sheet.name);
+  var label = sheet.theme
+    ? sheet.theme + ' · ' + niceDate(iso)
+    : 'Quiz of ' + niceDate(iso);
+  $('weekLabel').textContent = label;
+
+  showStatus('Loading results…');
+  fetch(PUB + '/pub?gid=' + sheet.gid + '&single=true&output=csv')
+    .then(function (res) {
+      if (!res.ok) throw new Error('sheet returned ' + res.status);
+      return res.text();
+    })
+    .then(function (text) {
+      var rows = parseCSV(text);
+      if (!rows.length) throw new Error('empty sheet');
+      var head = rows[0].map(function (h) { return h.trim().toLowerCase(); });
+      var col = function (names) {
+        for (var i = 0; i < names.length; i++) {
+          var at = head.indexOf(names[i]);
+          if (at >= 0) return at;
+        }
+        return -1;
+      };
+      var iName = col(['student name']);
+      var iCls = col(['class']);
+      var iScore = col(['score']);
+      var iTotal = col(['total']);
+      var iPct = col(['percentage', 'percent']);
+      var iStatus = col(['status']);
+      if (iName < 0 || iCls < 0 || iScore < 0 || iTotal < 0) {
+        throw new Error('the sheet columns are not the usual ones');
+      }
+
+      allRows = [];
+      rows.slice(1).forEach(function (r) {
+        var score = parseFloat((r[iScore] || '').trim());
+        if (isNaN(score)) return;   /* a started row has no score */
+        if (iStatus >= 0 && (r[iStatus] || '').trim().toUpperCase() !== 'COMPLETED') return;
+        var total = parseFloat((r[iTotal] || '').trim());
+        if (isNaN(total) || total <= 0) return;
+        var pct = iPct >= 0 ? (r[iPct] || '').trim() : '';
+        if (!pct) pct = Math.round(score / total * 100) + '%';
+        if (pct.slice(-1) !== '%') pct += '%';
+        allRows.push({
+          name: (r[iName] || '').trim(),
+          cls: (r[iCls] || '').trim(),
+          score: score,
+          total: total,
+          pct: pct
+        });
+      });
+
+      if (!allRows.length) {
+        showStatus('No results yet for this week.');
+        return;
+      }
+
+      allRows.sort(function (a, b) {
+        var ca = CLASS_ORDER.indexOf(a.cls);
+        var cb = CLASS_ORDER.indexOf(b.cls);
+        if (ca !== cb) return (ca < 0 ? 99 : ca) - (cb < 0 ? 99 : cb);
+        if (a.score !== b.score) return b.score - a.score;
+        return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+      });
+
+      var filter = $('classFilter');
+      CLASS_ORDER.forEach(function (c) {
+        var opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = classLabel(c);
+        filter.appendChild(opt);
+      });
+      filter.addEventListener('change', render);
+      $('nameSearch').addEventListener('input', render);
+      render();
+    })
+    .catch(function () {
+      showStatus('Could not load the results.',
+        'Please check your connection and try again.', true);
+      var retry = document.createElement('button');
+      retry.textContent = 'Try again';
+      retry.style.cssText = 'margin-top:12px;padding:10px 18px;font:inherit;font-weight:800;color:#fff;background:#4338E0;border:0;border-radius:12px;cursor:pointer';
+      retry.addEventListener('click', function () { loadWeek(sheet); });
+      $('status').appendChild(retry);
+    });
+}
+
+/* The week shown is the latest tab. Its results open on its Tuesday
+   (quiz Saturday + 3 days, 00:00 India time). Before that Tuesday the
+   page says when the results open, and shows no rows, so nobody mistakes
+   last week's results for this week's. */
+(function () {
+  var now = Date.now();
+  var latest = null;
+  SHEETS.forEach(function (sheet) {
+    if (tabISO(sheet.name)) latest = sheet;
+  });
+
+  if (!latest) {
+    $('weekLabel').textContent = 'Quiz Results';
+    showStatus('Results are not ready yet.');
+    return;
+  }
+
+  var iso = tabISO(latest.name);
+  var opens = Date.parse(iso + 'T00:00:00+05:30') + 3 * DAY;
+  if (now < opens) {
+    var label = latest.theme
+      ? latest.theme + ' · ' + niceDate(iso)
+      : 'Quiz of ' + niceDate(iso);
+    $('weekLabel').textContent = label;
+    showStatus('Results open on ' + niceDate(new Date(opens + 5.5 * 3600 * 1000).toISOString().slice(0, 10)) + '.',
+      'The results for this week will appear here on Tuesday.');
+    return;
+  }
+
+  loadWeek(latest);
+})();
+
+})();
+</script>
+
+</body>
+</html>
