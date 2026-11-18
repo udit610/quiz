@@ -64,9 +64,18 @@ const MONDAY_NIGHT = new Date(quizDay + (2 * 24 + 18) * 3600 * 1000 + 25 * 60 * 
 const MONDAY_LATE = new Date(quizDay + (2 * 24 + 18) * 3600 * 1000 + 29 * 60 * 1000 + 30000);  // Monday 11:59:30 PM in India
 const TUESDAY_EARLY = new Date(MONDAY_LATE.getTime() + 35 * 1000); // Tuesday 00:00:05 in India, just after the window closed
 const TUESDAY = new Date(quizDay + (2 * 24 + 18.5) * 3600 * 1000);  // Tuesday 00:00 in India: the window has closed
-const BEFORE_TUESDAY = new Date(quizDay - 11 * day - 6 * 3600 * 1000);    // Monday 11:30 PM in India the week before: the latest results are not open yet
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+/* Window-message labels derived from this week's Saturday (India time),
+   so the tests follow the quiz date instead of one particular week. */
+const fmtShort = ms => { const d = new Date(ms + 5.5 * 3600 * 1000); return `${DAYS[d.getUTCDay()]} ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}`; };
+const SAT_LABEL = fmtShort(quizDay);            // Sat 21 Nov
+const MON_LABEL = fmtShort(quizDay + 2 * day);  // Mon 23 Nov
+const TUE_LABEL = fmtShort(quizDay + 3 * day);  // Tue 24 Nov
+/* Monday night before the 31 October tab's Tuesday (3 Nov): the week
+   before that tab's results opened. */
+const BEFORE_31OCT_TUESDAY = new Date(Date.parse('2026-11-02T18:00:00Z'));
 
 /* The class the tests mostly use: the one with the most questions. */
 const C = Object.keys(QUIZZES).sort((a, b) => QUIZZES[b].length - QUIZZES[a].length)[0];
@@ -387,7 +396,7 @@ await test('before Saturday the quiz is closed: Start is disabled and no name ch
   const s = await session(browser, { clock: DAY_BEFORE });
   const page = await s.open(site.url);
   assert.equal(await page.isDisabled('#startBtn'), true);
-  assert.match(await text(page, '#formMsg'), /The quiz opens on Sat 14 Nov/);
+  assert.match(await text(page, '#formMsg'), new RegExp('The quiz opens on ' + SAT_LABEL));
   await fillForm(page, 'Aanya Sharma', C);
   await s.skip(1500);
   assert.equal(posts(s, 'start').length, 0, 'no start call outside the window');
@@ -412,8 +421,8 @@ await test('after Monday 23:59:59 the quiz is closed and the results date is nam
   const s = await session(browser, { clock: TUESDAY });
   const page = await s.open(site.url);
   assert.equal(await page.isDisabled('#startBtn'), true);
-  assert.match(await text(page, '#formMsg'), /Submissions closed on Mon 16 Nov/);
-  assert.match(await text(page, '#formMsg'), /Results open on Tue 17 Nov/);
+  assert.match(await text(page, '#formMsg'), new RegExp('Submissions closed on ' + MON_LABEL));
+  assert.match(await text(page, '#formMsg'), new RegExp('Results open on ' + TUE_LABEL));
   /* Once results are open, the way to them is on the home screen itself,
      right under the closed message, not only in the footer. */
   assert.equal(await visible(page, '#resultsBtn'), true, 'results button is visible once results open');
@@ -472,7 +481,7 @@ await test('a reload after the window has closed drops the quiz instead of resum
   await page.reload();
   await page.waitForSelector('#home:not([hidden])');
   assert.equal(await visible(page, '#noticeModal'), false, 'no welcome-back notice');
-  assert.match(await text(page, '#formMsg'), /Submissions closed on Mon 16 Nov/);
+  assert.match(await text(page, '#formMsg'), new RegExp('Submissions closed on ' + MON_LABEL));
   assert.equal(await page.evaluate(() => Object.keys(localStorage).some(k => k.endsWith(':attempt'))), false);
   noErrors(s);
   await s.context.close();
@@ -794,14 +803,19 @@ await test('copying, the long-press menu, print and save are off during the quiz
 });
 
 await test('the questions, answers and photo addresses are not readable in the page source', async () => {
+  /* A plain substring check false-positives when an option is part of
+     another word in the page (e.g. "The wind" inside "The window"), so
+     match only text bounded by non-letters on both sides. */
+  const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const inSource = s => new RegExp('(?<![A-Za-z])' + esc(s) + '(?![A-Za-z])').test(html);
   let checked = 0;
   for (const list of Object.values(QUIZZES)) {
     for (const item of list) {
-      if (item.q.length >= 12) assert.equal(html.includes(item.q), false, 'question found in source: ' + item.q);
-      for (const o of item.o) if (o.length >= 7) { assert.equal(html.includes(o), false, 'option found in source: ' + o); checked++; }
+      if (item.q.length >= 12) assert.equal(inSource(item.q), false, 'question found in source: ' + item.q);
+      for (const o of item.o) if (o.length >= 7) { assert.equal(inSource(o), false, 'option found in source: ' + o); checked++; }
     }
   }
-  for (const url of Object.values(QUESTION_IMAGES)) assert.equal(html.includes(url), false, 'photo address found in source');
+  for (const url of Object.values(QUESTION_IMAGES)) assert.equal(inSource(url), false, 'photo address found in source');
   assert.ok(checked > 20);
   const s = await session(browser);
   const page = await s.open(site.url);
@@ -945,11 +959,19 @@ const RESULTS_CSV =
    gap note and for the week before the 14 November results existed. */
 const resultsWithout14Nov = () => fs.readFileSync(RESULTS_PAGE, 'utf8').replace(/.*'14 November'.*\n/, '');
 
+/* results.html as it will stand once this week's tab is added to its
+   SHEETS list: the latest week is this week's Saturday, so there is no
+   gap note. The added entry is served the fixture CSV under a fake gid. */
+const resultsWithThisWeek = () => fs.readFileSync(RESULTS_PAGE, 'utf8').replace(
+  "  { name: '14 November',   gid: 2120496609, theme: \"Children's Day\" }",
+  "  { name: '14 November',   gid: 2120496609, theme: \"Children's Day\" },\n  { name: '21 November',   gid: 999999999, theme: 'Science All Around Us' }");
+
 await test('results: from Tuesday the latest week shows name, class and marks, started rows left out', async () => {
-  const s = await session(browser, { clock: TUESDAY, csv: { '2120496609': RESULTS_CSV } });
-  const page = await s.open(site.url + 'results.html');
+  const week = await serve(undefined, resultsWithThisWeek);
+  const s = await session(browser, { clock: TUESDAY, csv: { '999999999': RESULTS_CSV } });
+  const page = await s.open(week.url + 'results.html');
   await page.waitForSelector('#resultsTable:not([hidden])');
-  assert.match(await text(page, '#weekLabel'), /Children's Day · Sat 14 Nov 2026/);
+  assert.match(await text(page, '#weekLabel'), new RegExp(WEEK.theme + ' · ' + SAT_LABEL + ' 2026'));
   /* The latest tab is the most recent Saturday, so there is no gap note. */
   assert.equal(await visible(page, '#weekNote'), false, 'no gap note when the latest tab is the last Saturday');
   const rows = await page.$$eval('#resultsBody tr', ns => ns.map(n => n.innerText));
@@ -963,7 +985,7 @@ await test('results: from Tuesday the latest week shows name, class and marks, s
 
 await test('results: before the latest week\'s Tuesday, no rows are shown', async () => {
   const old = await serve(undefined, resultsWithout14Nov);
-  const s = await session(browser, { clock: BEFORE_TUESDAY, csv: { '1788775249': RESULTS_CSV } });
+  const s = await session(browser, { clock: BEFORE_31OCT_TUESDAY, csv: { '1788775249': RESULTS_CSV } });
   const page = await s.open(old.url + 'results.html');
   await page.waitForFunction(() => document.getElementById('status').textContent.includes('Results open on'));
   assert.match(await text(page, '#status'), /Results open on Tue 3 Nov 2026/);
@@ -979,7 +1001,7 @@ await test('results: when the latest tab is older than the last Saturday, the pa
   assert.match(await text(page, '#weekLabel'), /Festivals & Diwali Celebrations · Sat 31 Oct 2026/);
   assert.equal(await visible(page, '#weekNote'), true, 'the gap note shows when the latest tab is older than the last Saturday');
   assert.match(await text(page, '#weekNote'), /These are the latest results in the sheet/);
-  assert.match(await text(page, '#weekNote'), /The quiz of Sat 14 Nov 2026 has no results tab yet/);
+  assert.match(await text(page, '#weekNote'), new RegExp('The quiz of ' + SAT_LABEL + ' 2026 has no results tab yet'));
   assert.match(await text(page, '#count'), /5 results/);
   noErrors(s);
   await s.context.close();
