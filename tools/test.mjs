@@ -19,6 +19,7 @@ import { dirname, join } from 'node:path';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PAGE = join(root, 'index.html');
+const RESULTS_PAGE = join(root, 'results.html');
 const { WEEK, QUESTION_IMAGES, QUIZZES } = await import(pathToFileURL(join(root, 'quiz-data.js')).href);
 
 async function loadPlaywright() {
@@ -54,12 +55,27 @@ const usualLock = RULES.answersAt === '20:00';
 
 const day = 24 * 3600 * 1000;
 const quizDay = Date.parse(WEEK.date + 'T00:00:00Z');
-const AFTER = new Date(quizDay + 9 * day + 5 * 3600 * 1000);        // well after the quiz day: answers open
 const QUIZ_MORNING = new Date(quizDay + 4 * 3600 * 1000);           // 9:30 AM in India on the quiz day
 const DAY_BEFORE = new Date(quizDay - day + 10 * 3600 * 1000);
+/* The submission window runs Saturday 00:00 to Monday 23:59:59, India time. */
+const IN_WINDOW = new Date(quizDay + 15 * 3600 * 1000);             // Saturday 8:30 PM in India: inside the window, and the answers are already open
+const SUNDAY = new Date(quizDay + day + 15 * 3600 * 1000);          // Sunday 8:30 PM in India: after the quiz day, inside the window, answers open
+const MONDAY_NIGHT = new Date(quizDay + (2 * 24 + 18) * 3600 * 1000 + 25 * 60 * 1000);  // Monday 11:55 PM in India: a quiz started now runs past midnight
+const MONDAY_LATE = new Date(quizDay + (2 * 24 + 18) * 3600 * 1000 + 29 * 60 * 1000 + 30000);  // Monday 11:59:30 PM in India
+const TUESDAY_EARLY = new Date(MONDAY_LATE.getTime() + 35 * 1000); // Tuesday 00:00:05 in India, just after the window closed
+const TUESDAY = new Date(quizDay + (2 * 24 + 18.5) * 3600 * 1000);  // Tuesday 00:00 in India: the window has closed
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-const niceDate = DAYS[new Date(quizDay).getUTCDay()] + ' ' + Number(WEEK.date.slice(8)) + ' ' + MONTHS[Number(WEEK.date.slice(5, 7)) - 1];
+
+/* Window-message labels derived from this week's Saturday (India time),
+   so the tests follow the quiz date instead of one particular week. */
+const fmtShort = ms => { const d = new Date(ms + 5.5 * 3600 * 1000); return `${DAYS[d.getUTCDay()]} ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}`; };
+const SAT_LABEL = fmtShort(quizDay);            // Sat 21 Nov
+const MON_LABEL = fmtShort(quizDay + 2 * day);  // Mon 23 Nov
+const TUE_LABEL = fmtShort(quizDay + 3 * day);  // Tue 24 Nov
+/* Monday night before the 31 October tab's Tuesday (3 Nov): the week
+   before that tab's results opened. */
+const BEFORE_31OCT_TUESDAY = new Date(Date.parse('2026-11-02T18:00:00Z'));
 
 /* The class the tests mostly use: the one with the most questions. */
 const C = Object.keys(QUIZZES).sort((a, b) => QUIZZES[b].length - QUIZZES[a].length)[0];
@@ -73,12 +89,16 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAYAAAD+Bd/7AAAAFUlEQVR
 
 /* ---------- harness ---------- */
 
-function serve(page = () => fs.readFileSync(PAGE)) {
+function serve(page = () => fs.readFileSync(PAGE), resultsPage = () => fs.readFileSync(RESULTS_PAGE)) {
   return new Promise(resolve => {
     const server = http.createServer((req, res) => {
-      if (req.url.split('?')[0] === '/') {
+      const path = req.url.split('?')[0];
+      if (path === '/') {
         res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
         res.end(page());
+      } else if (path === '/results.html') {
+        res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
+        res.end(resultsPage());
       } else {
         res.writeHead(404);
         res.end();
@@ -92,8 +112,10 @@ function serve(page = () => fs.readFileSync(PAGE)) {
   api.start / api.result: (body, nthCall) => reply
   A reply is an object (sent as JSON), 'fail' (network error) or 'hang' (never answers).
   photos: true serves a picture for every photo; false makes every photo fail.
+  csv: { gid: text } serves that CSV for the published results sheet.
+  The default clock is inside the submission window, with the answers open.
 */
-async function session(browser, { width = 390, height = 844, api = {}, clock = AFTER, photos = false, reducedMotion = false } = {}) {
+async function session(browser, { width = 390, height = 844, api = {}, clock = IN_WINDOW, photos = false, reducedMotion = false, csv = {} } = {}) {
   const context = await browser.newContext({
     viewport: { width, height },
     deviceScaleFactor: 1,
@@ -117,7 +139,13 @@ async function session(browser, { width = 390, height = 844, api = {}, clock = A
     if (reply === 'hang') return;
     return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(reply) });
   });
-  await context.route(/^https:\/\/(?!script\.google\.com)/, route => {
+  await context.route('**/docs.google.com/**', async route => {
+    const gid = new URL(route.request().url()).searchParams.get('gid');
+    const body = csv[gid];
+    if (body === undefined) return route.fulfill({ status: 404, body: '' });
+    return route.fulfill({ status: 200, contentType: 'text/csv; charset=utf-8', body });
+  });
+  await context.route(/^https:\/\/(?!script\.google\.com)(?!docs\.google\.com)/, route => {
     const url = route.request().url();
     if (photos && Object.values(QUESTION_IMAGES).some(u => url === u || url === u.replace('/960px-', '/500px-'))) {
       return route.fulfill({ status: 200, contentType: 'image/png', body: PNG });
@@ -130,6 +158,7 @@ async function session(browser, { width = 390, height = 844, api = {}, clock = A
   return {
     context, calls, errors,
     skip: ms => context.clock.fastForward(ms),
+    setTime: ms => context.clock.setSystemTime(ms),
     open: async url => {
       const page = await context.newPage();
       page.on('pageerror', e => errors.push('pageerror: ' + e.message));
@@ -358,6 +387,132 @@ await test('name and class are both required; Go back and Escape close the rules
   assert.equal(await visible(page, '#readyModal'), false);
   assert.equal(await visible(page, '#home'), true);
   await s.context.close();
+});
+
+
+console.log('\nThe submission window');
+
+await test('before Saturday the quiz is closed: Start is disabled and no name check is sent', async () => {
+  const s = await session(browser, { clock: DAY_BEFORE });
+  const page = await s.open(site.url);
+  assert.equal(await page.isDisabled('#startBtn'), true);
+  assert.match(await text(page, '#formMsg'), new RegExp('The quiz opens on ' + SAT_LABEL));
+  await fillForm(page, 'Aanya Sharma', C);
+  await s.skip(1500);
+  assert.equal(posts(s, 'start').length, 0, 'no start call outside the window');
+  await page.evaluate(() => document.getElementById('startForm').requestSubmit());
+  await s.skip(500);
+  assert.equal(await visible(page, '#readyModal'), false);
+  assert.match(await text(page, '#formMsg'), /The quiz opens on/);
+  noErrors(s);
+  await s.context.close();
+});
+
+await test('inside the window the quiz starts as before', async () => {
+  const s = await session(browser, { clock: QUIZ_MORNING });
+  const page = await s.open(site.url);
+  assert.equal(await page.isDisabled('#startBtn'), false);
+  await start(s, page);
+  assert.equal(await qNumber(page), 1);
+  await s.context.close();
+});
+
+await test('after Monday 23:59:59 the quiz is closed and the results date is named', async () => {
+  const s = await session(browser, { clock: TUESDAY });
+  const page = await s.open(site.url);
+  assert.equal(await page.isDisabled('#startBtn'), true);
+  assert.match(await text(page, '#formMsg'), new RegExp('Submissions closed on ' + MON_LABEL));
+  assert.match(await text(page, '#formMsg'), new RegExp('Results open on ' + TUE_LABEL));
+  /* Once results are open, the way to them is on the home screen itself,
+     right under the closed message, not only in the footer. */
+  assert.equal(await visible(page, '#resultsBtn'), true, 'results button is visible once results open');
+  assert.match(await text(page, '#resultsBtn'), /See the latest results/);
+  assert.equal(await page.getAttribute('#resultsBtn', 'href'), 'results.html');
+  await fillForm(page, 'Aanya Sharma', C);
+  await s.skip(1500);
+  assert.equal(posts(s, 'start').length, 0);
+  await page.evaluate(() => document.getElementById('startForm').requestSubmit());
+  await s.skip(500);
+  assert.equal(await visible(page, '#readyModal'), false);
+  await s.context.close();
+});
+
+await test('the results button stays hidden until results open: not before Saturday, not on Monday night', async () => {
+  const s = await session(browser, { clock: DAY_BEFORE });
+  const page = await s.open(site.url);
+  assert.equal(await visible(page, '#resultsBtn'), false, 'no results button before the quiz opens');
+  await s.context.close();
+
+  const s2 = await session(browser, { clock: MONDAY_LATE });
+  const p2 = await s2.open(site.url);
+  assert.equal(await visible(p2, '#resultsBtn'), false, 'no results button while the window is still open');
+  await s2.context.close();
+});
+
+await test('an attempt started on Monday evening may finish after midnight', async () => {
+  const s = await session(browser, { clock: MONDAY_NIGHT });
+  const page = await s.open(site.url);
+  await start(s, page);
+  /* A quiz lasts at most ten questions, so step the clock a minute at a
+     time: each step runs one question out, and the next question's clock
+     is set only once its photo has answered. One long jump cannot do
+     that, because the photos answer in real time. */
+  for (let i = 0; i < 20; i++) {
+    if (await visible(page, '#result')) break;
+    await page.waitForFunction(() => {
+      const k = Object.keys(localStorage).find(x => x.endsWith(':attempt'));
+      return k && JSON.parse(localStorage.getItem(k)).deadline;
+    });
+    await s.skip(60 * 1000);
+  }
+  await page.waitForSelector('#result:not([hidden])');
+  await page.waitForSelector('.save.ok');
+  assert.equal(posts(s, 'result').length, 1);
+  assert.deepEqual(posts(s, 'result')[0].body, resultBody('Aanya Sharma', C, 0, N, 0, N));
+  await s.context.close();
+});
+
+await test('a reload after the window has closed drops the quiz instead of resuming it', async () => {
+  const s = await session(browser, { clock: MONDAY_LATE });
+  const page = await s.open(site.url);
+  await start(s, page);
+  assert.equal(await qNumber(page), 1);
+  await s.setTime(TUESDAY_EARLY);                        // just past midnight, before the question runs out
+  await page.reload();
+  await page.waitForSelector('#home:not([hidden])');
+  assert.equal(await visible(page, '#noticeModal'), false, 'no welcome-back notice');
+  assert.match(await text(page, '#formMsg'), new RegExp('Submissions closed on ' + MON_LABEL));
+  assert.equal(await page.evaluate(() => Object.keys(localStorage).some(k => k.endsWith(':attempt'))), false);
+  noErrors(s);
+  await s.context.close();
+});
+
+await test('the sheet saying closed is shown plainly, at Start and at save time', async () => {
+  let release;
+  const gate = new Promise(r => { release = r; });
+  const s = await session(browser, { api: { start: async () => { await gate; return { error: 'closed' }; } } });
+  const page = await s.open(site.url);
+  await fillForm(page, 'Aanya Sharma', C);
+  await page.click('#startBtn');                         // before the typing-time check has run
+  await page.waitForSelector('#readyModal:not([hidden])');
+  release();
+  await page.waitForSelector('#readyModal', { state: 'hidden' });
+  assert.match(await text(page, '#formMsg'), /Submissions closed on/);
+  assert.equal(await visible(page, '#quiz'), false);
+  await s.context.close();
+
+  const s2 = await session(browser, { api: { result: () => ({ error: 'closed' }) } });
+  const p2 = await s2.open(site.url);
+  await start(s2, p2);
+  await playAll(p2, C, true);
+  await p2.waitForSelector('.save.fail');
+  assert.equal(await text(p2, '#saveText'), 'Submissions have closed — this result was not saved. Please tell your teacher.');
+  assert.equal(posts(s2, 'result').length, 1, 'a closed result is not retried');
+  await p2.reload();
+  await p2.waitForSelector('#home:not([hidden])');
+  await s2.skip(500);
+  assert.equal(posts(s2, 'result').length, 1, 'a closed result is not sent again on the next open');
+  await s2.context.close();
 });
 
 
@@ -648,14 +803,19 @@ await test('copying, the long-press menu, print and save are off during the quiz
 });
 
 await test('the questions, answers and photo addresses are not readable in the page source', async () => {
+  /* A plain substring check false-positives when an option is part of
+     another word in the page (e.g. "The wind" inside "The window"), so
+     match only text bounded by non-letters on both sides. */
+  const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const inSource = s => new RegExp('(?<![A-Za-z])' + esc(s) + '(?![A-Za-z])').test(html);
   let checked = 0;
   for (const list of Object.values(QUIZZES)) {
     for (const item of list) {
-      if (item.q.length >= 12) assert.equal(html.includes(item.q), false, 'question found in source: ' + item.q);
-      for (const o of item.o) if (o.length >= 7) { assert.equal(html.includes(o), false, 'option found in source: ' + o); checked++; }
+      if (item.q.length >= 12) assert.equal(inSource(item.q), false, 'question found in source: ' + item.q);
+      for (const o of item.o) if (o.length >= 7) { assert.equal(inSource(o), false, 'option found in source: ' + o); checked++; }
     }
   }
-  for (const url of Object.values(QUESTION_IMAGES)) assert.equal(html.includes(url), false, 'photo address found in source');
+  for (const url of Object.values(QUESTION_IMAGES)) assert.equal(inSource(url), false, 'photo address found in source');
   assert.ok(checked > 20);
   const s = await session(browser);
   const page = await s.open(site.url);
@@ -765,21 +925,107 @@ await test('on the quiz day the answers stay locked until 8 PM, then open by the
   assert.equal(await visible(page, '#answersLock'), false);
   await s.context.close();
 
-  const s2 = await session(browser, { clock: DAY_BEFORE });
-  const p2 = await s2.open(site.url);
-  await start(s2, p2);
-  await playAll(p2, C, true);
-  assert.equal(await text(p2, '#lockTitle'), 'Answers open on ' + niceDate + ' at 8:00 PM');
-  await s2.context.close();
+  /* A student can no longer start before the quiz day (the submission
+     window), so the "Answers open on <date>" wording has no way to be
+     reached now; it is covered by the window tests instead. */
 }, usualLock);
 
 await test('after the quiz day the answers show straight away', async () => {
-  const s = await session(browser, { clock: AFTER });
+  const s = await session(browser, { clock: SUNDAY });
   const page = await s.open(site.url);
   await start(s, page);
   await playAll(page, C, true);
   assert.equal(await visible(page, '#answersLock'), false);
   assert.equal(await page.locator('#reviewList li').count(), N);
+  await s.context.close();
+});
+
+console.log('\nResults page');
+
+/* Fixture rows in the published sheet's format, served as the latest
+   week's tab in the tests. (The rows are from the 31 October tab; the
+   page shows name, class and marks, never the timestamps.) */
+const RESULTS_CSV =
+  'Timestamp,Student Name,Class,Score,Total,Percentage,Tab Switches,Unattempted,Status\n' +
+  '10/31/2026 14:15:14,Hargun singh,UKG,9,10,90%,0,0,COMPLETED\n' +
+  '10/31/2026 15:01:25,Anukaran,UKG,10,10,100%,0,0,COMPLETED\n' +
+  '10/31/2026 14:20:12,Taanvi,UKG,9,10,90%,0,0,COMPLETED\n' +
+  '10/31/2026 16:00:00,Meera,1,8,10,80%,0,0,COMPLETED\n' +
+  '10/31/2026 16:05:00,Arjun,1,10,10,100%,0,0,COMPLETED\n' +
+  '10/31/2026 17:00:00,Started Kid,2,,,,0,,STARTED\n';
+
+/* results.html as it stood before the 14 November tab was added to its
+   SHEETS list: the latest week is 31 October. Used by the tests for the
+   gap note and for the week before the 14 November results existed. */
+const resultsWithout14Nov = () => fs.readFileSync(RESULTS_PAGE, 'utf8').replace(/.*'14 November'.*\n/, '');
+
+/* results.html as it will stand once this week's tab is added to its
+   SHEETS list: the latest week is this week's Saturday, so there is no
+   gap note. The added entry is served the fixture CSV under a fake gid. */
+const resultsWithThisWeek = () => fs.readFileSync(RESULTS_PAGE, 'utf8').replace(
+  "  { name: '14 November',   gid: 2120496609, theme: \"Children's Day\" }",
+  "  { name: '14 November',   gid: 2120496609, theme: \"Children's Day\" },\n  { name: '21 November',   gid: 999999999, theme: 'Science All Around Us' }");
+
+await test('results: from Tuesday the latest week shows name, class and marks, started rows left out', async () => {
+  const week = await serve(undefined, resultsWithThisWeek);
+  const s = await session(browser, { clock: TUESDAY, csv: { '999999999': RESULTS_CSV } });
+  const page = await s.open(week.url + 'results.html');
+  await page.waitForSelector('#resultsTable:not([hidden])');
+  assert.match(await text(page, '#weekLabel'), new RegExp(WEEK.theme + ' · ' + SAT_LABEL + ' 2026'));
+  /* The latest tab is the most recent Saturday, so there is no gap note. */
+  assert.equal(await visible(page, '#weekNote'), false, 'no gap note when the latest tab is the last Saturday');
+  const rows = await page.$$eval('#resultsBody tr', ns => ns.map(n => n.innerText));
+  assert.equal(rows.length, 5, 'the started row is left out');
+  assert.ok(rows[0].includes('Anukaran') && rows[0].includes('10/10'), 'best in UKG first');
+  assert.ok(rows.some(r => r.includes('Meera') && r.includes('8/10 · 80%')));
+  assert.match(await text(page, '#count'), /5 results/);
+  noErrors(s);
+  await s.context.close();
+});
+
+await test('results: before the latest week\'s Tuesday, no rows are shown', async () => {
+  const old = await serve(undefined, resultsWithout14Nov);
+  const s = await session(browser, { clock: BEFORE_31OCT_TUESDAY, csv: { '1788775249': RESULTS_CSV } });
+  const page = await s.open(old.url + 'results.html');
+  await page.waitForFunction(() => document.getElementById('status').textContent.includes('Results open on'));
+  assert.match(await text(page, '#status'), /Results open on Tue 3 Nov 2026/);
+  assert.equal(await visible(page, '#resultsTable'), false);
+  await s.context.close();
+});
+
+await test('results: when the latest tab is older than the last Saturday, the page says those results are not in the sheet yet', async () => {
+  const old = await serve(undefined, resultsWithout14Nov);
+  const s = await session(browser, { clock: TUESDAY, csv: { '1788775249': RESULTS_CSV } });
+  const page = await s.open(old.url + 'results.html');
+  await page.waitForSelector('#resultsTable:not([hidden])');
+  assert.match(await text(page, '#weekLabel'), /Festivals & Diwali Celebrations · Sat 31 Oct 2026/);
+  assert.equal(await visible(page, '#weekNote'), true, 'the gap note shows when the latest tab is older than the last Saturday');
+  assert.match(await text(page, '#weekNote'), /These are the latest results in the sheet/);
+  assert.match(await text(page, '#weekNote'), new RegExp('The quiz of ' + SAT_LABEL + ' 2026 has no results tab yet'));
+  assert.match(await text(page, '#count'), /5 results/);
+  noErrors(s);
+  await s.context.close();
+});
+
+await test('results: the class filter and the name search narrow the rows', async () => {
+  const s = await session(browser, { clock: TUESDAY, csv: { '2120496609': RESULTS_CSV } });
+  const page = await s.open(site.url + 'results.html');
+  await page.waitForSelector('#resultsTable:not([hidden])');
+  await page.selectOption('#classFilter', '1');
+  assert.equal(await page.locator('#resultsBody tr').count(), 2);
+  assert.match(await text(page, '#count'), /2 of 5 results/);
+  await page.selectOption('#classFilter', '');
+  await page.fill('#nameSearch', 'aan');
+  assert.equal(await page.locator('#resultsBody tr').count(), 1);
+  assert.match(await text(page, '#resultsBody tr'), /Taanvi/);
+  await s.context.close();
+});
+
+await test('results: if the sheet cannot be reached, the page says so and offers a retry', async () => {
+  const s = await session(browser, { clock: TUESDAY });
+  const page = await s.open(site.url + 'results.html');
+  await page.waitForSelector('#status.err');
+  assert.match(await text(page, '#status'), /Could not load the results/);
   await s.context.close();
 });
 
