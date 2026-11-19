@@ -1353,7 +1353,10 @@ const API_URL =
   answersAt         time on the quiz day (India time, 24-hour) when the correct
                     answers open. Until then students see only their score, so
                     answers cannot be passed to classmates who have not played.
-                    Set to "" to show the answers straight away.
+                    The answers never open while submissions are still open:
+                    if this time falls inside the window, they open when the
+                    window closes (Tuesday 00:00). Set to "" to show the
+                    answers straight away.
   windowDays        days after the quiz Saturday that submissions stay open
                     (2: Sunday and Monday, so submissions close on Monday at
                     23:59:59, India time). See "WHEN SUBMISSIONS ARE OPEN".
@@ -1942,20 +1945,18 @@ function sigOf(cls) {
    WHEN THE ANSWERS OPEN
    ============================================================ */
 
-const UNLOCK_AT = (function () {
-  if (!RULES.answersAt) return 0;
-  const t = Date.parse(WEEK.date + 'T' + RULES.answersAt + ':00+05:30');
-  return isNaN(t) ? 0 : t;
-})();
+/* UNLOCK_AT, the moment the answers open, is set below with the submission window. */
 
 function answersOpen() {
   return Date.now() >= UNLOCK_AT;
 }
 
+/* "today at 8:00 PM", "on Tue 24 Nov" (midnight needs no time). */
 function unlockLabel() {
-  const todayInIndia = new Date(Date.now() + 5.5 * 3600 * 1000).toISOString().slice(0, 10);
-  return (todayInIndia === WEEK.date ? 'today' : 'on ' + niceDate(WEEK.date)) +
-    ' at ' + niceTime(RULES.answersAt);
+  const day = isoOf(UNLOCK_AT);
+  const hhmm = new Date(UNLOCK_AT + 5.5 * 3600 * 1000).toISOString().slice(11, 16);
+  const when = day === isoOf(Date.now()) ? 'today' : 'on ' + niceDate(day);
+  return hhmm === '00:00' ? when : when + ' at ' + niceTime(hhmm);
 }
 
 
@@ -1977,6 +1978,18 @@ function unlockLabel() {
 const OPEN_AT = Date.parse(WEEK.date + 'T00:00:00+05:30');
 const CLOSE_AT = OPEN_AT + RULES.windowDays * 86400000 + (24 * 3600 - 1) * 1000;
 const RESULTS_AT = CLOSE_AT + 1000;   /* Tuesday 00:00, when results open */
+
+/*
+  The answers open at answersAt on the quiz day, but never while
+  submissions are still open: a child who played on Saturday could
+  otherwise pass the answer key to classmates who play on Sunday or
+  Monday. So they open at whichever is later.
+*/
+const UNLOCK_AT = (function () {
+  if (!RULES.answersAt) return 0;
+  const t = Date.parse(WEEK.date + 'T' + RULES.answersAt + ':00+05:30');
+  return Math.max(isNaN(t) ? 0 : t, RESULTS_AT);
+})();
 
 function windowState() {
   const now = Date.now();
@@ -2001,7 +2014,8 @@ function windowMessage() {
 function paintWindow() {
   const state = windowState();
   startBtn.disabled = state !== 'open';
-  if (state !== 'open') setFormMsg(windowMessage());
+  if (state !== 'open') setFormMsg(windowMessage(), true);
+  else if (formMsg.dataset.window) setFormMsg('');
   /*
     Once results are open, the way to them must be visible on the home
     screen, right under the closed message, not only in the footer below
@@ -2179,9 +2193,11 @@ function nameLooksReal(name) {
   return name.replace(/[\s\d!-\/:-@\[-`{-~]/g, '').length >= 2;
 }
 
-function setFormMsg(text) {
+/* isWindow marks the "opens on" / "closed on" message, so it can be cleared when the window opens. */
+function setFormMsg(text, isWindow) {
   formMsg.textContent = text || '';
   formMsg.hidden = !text;
+  formMsg.dataset.window = isWindow ? '1' : '';
 }
 
 function setNameState(state) {
@@ -2259,7 +2275,7 @@ function scheduleCheck() {
     if (check.abort) { check.abort.abort(); check.abort = null; }
     check.promise = null;
     setNameState('');
-    setFormMsg(windowMessage());
+    setFormMsg(windowMessage(), true);
     return;
   }
 
@@ -2300,7 +2316,7 @@ function runCheck(name, cls) {
         /* The sheet says the window is shut (its clock is the authority). */
         check.result = 'closed';
         setNameState('');
-        if (phase === 'home') setFormMsg(windowMessage());
+        if (phase === 'home') setFormMsg(windowMessage(), true);
         return 'closed';
       }
       check.result = res.data.error !== 'duplicate';
@@ -2421,7 +2437,7 @@ function onStart(e) {
   }
 
   if (windowState() !== 'open') {
-    setFormMsg(windowMessage());
+    setFormMsg(windowMessage(), true);
     return;
   }
 
@@ -2445,7 +2461,7 @@ function onStart(e) {
   }
 
   if (check.key === key && check.result === 'closed') {
-    setFormMsg(windowMessage());
+    setFormMsg(windowMessage(), true);
     return;
   }
 
@@ -2485,7 +2501,7 @@ function onStart(e) {
       if (v === 'closed') {
         closeReady();
         phase = 'home';
-        setFormMsg(windowMessage());
+        setFormMsg(windowMessage(), true);
         return;
       }
       if (v === false) {
@@ -2506,7 +2522,7 @@ function onBegin() {
   if (windowState() !== 'open') {
     closeReady();
     phase = 'home';
-    setFormMsg(windowMessage());
+    setFormMsg(windowMessage(), true);
     return;
   }
   const who = ready;
@@ -3599,6 +3615,36 @@ window.addEventListener('pageshow', function (e) {
   if (e.persisted) cameBack();
 });
 
+/*
+  The window opens and closes on the clock, not when the page loads. A
+  tab opened on Friday evening and looked at again on Saturday must
+  offer Start without a reload, so the window is checked again when the
+  student comes back to the page, and at each boundary while it stays open.
+*/
+function refreshWindow() {
+  if (phase === 'home') paintWindow();
+}
+
+let windowTimer = null;
+
+function watchWindow() {
+  clearTimeout(windowTimer);
+  const now = Date.now();
+  const next = [OPEN_AT, CLOSE_AT + 1, RESULTS_AT].filter(function (t) { return t > now; })[0];
+  if (next && next - now < 0x7fffffff) {
+    windowTimer = setTimeout(function () {
+      refreshWindow();
+      watchWindow();
+    }, next - now + 50);
+  }
+}
+
+document.addEventListener('visibilitychange', function () {
+  if (!document.hidden) refreshWindow();
+});
+window.addEventListener('focus', refreshWindow);
+window.addEventListener('pageshow', refreshWindow);
+
 window.addEventListener('pagehide', function () {
   goneAway();
   clearTimeout(check.timer);
@@ -3686,6 +3732,7 @@ doneList = store.get(K_DONE);
 if (!Array.isArray(doneList)) doneList = [];
 
 paintWeek();
+watchWindow();
 buildClassGrid();
 paintHints();
 paintDevice();
