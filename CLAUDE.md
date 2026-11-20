@@ -88,7 +88,10 @@ shows no rows.
 
 - `RULES.answersAt` — time on the quiz day, India time, when the correct
   answers open (`"20:00"`). Until then a student sees only their score.
-  `""` shows the answers straight away.
+  The answers never open while submissions are still open: if this time
+  falls inside the window, they open when it closes (Tuesday 00:00), so a
+  child who played on Saturday cannot pass the answers to classmates who
+  play on Sunday or Monday. `""` shows the answers straight away.
 - `RULES.windowDays` — days after the quiz Saturday that submissions stay
   open (`2`: Sunday and Monday, closing Monday 23:59:59, India time).
   Changing it changes the submission window and the Tuesday the results

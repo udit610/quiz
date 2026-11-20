@@ -236,6 +236,16 @@ async function playAll(page, cls, correct = true) {
   await page.waitForSelector('#result:not([hidden])');
 }
 
+/*
+  The answers open only once submissions have closed (Tuesday 00:00 in
+  India). Move the clock just past that and wait for the review to appear.
+*/
+async function seeAnswers(s, page, n) {
+  const now = await page.evaluate(() => Date.now());
+  await s.skip(TUESDAY.getTime() + 60000 - now);
+  await page.waitForFunction(k => document.querySelectorAll('#reviewList li').length === k, n);
+}
+
 /* Let the question on screen run out of time (waits for its clock to have started). */
 async function runOut(s, page) {
   const before = await text(page, '#qCount');
@@ -565,6 +575,7 @@ await test('every class: right answers score full marks, whatever the shuffle', 
     assert.deepEqual(posts(s, 'result')[0].body, resultBody('Test ' + cls, cls, n, n, 0, 0), 'class ' + cls);
     assert.equal(await text(page, '#scoreDen'), '/' + n);
     assert.equal(await text(page, '#rMsg'), 'Perfect Score!');
+    await seeAnswers(s, page, n);
     assert.equal(await page.locator('#reviewList li.ok').count(), n);
     noErrors(s);
     await s.context.close();
@@ -577,6 +588,7 @@ await test('wrong answers score zero, and the review shows the correct ones', as
   await start(s, page);
   await playAll(page, C, false);
   assert.equal(posts(s, 'result')[0].body.score, 0);
+  await seeAnswers(s, page, N);
   const rows = await page.$$eval('#reviewList li', ns => ns.map(n => n.innerText));
   assert.equal(rows.length, N);
   for (const row of rows) {
@@ -905,40 +917,72 @@ await test('"duplicate" from the sheet: told plainly on a first try, treated as 
 
 console.log('\nAnswers, and what the device remembers');
 
-await test('on the quiz day the answers stay locked until 8 PM, then open by themselves', async () => {
+await test('the answers stay locked while submissions are open, and open by themselves when they close', async () => {
   const s = await session(browser, { clock: QUIZ_MORNING });
   const page = await s.open(site.url);
   await start(s, page);
   await playAll(page, C, false);
-  assert.equal(await text(page, '#lockTitle'), 'Answers open today at 8:00 PM');
+  assert.equal(await text(page, '#lockTitle'), 'Answers open on ' + TUE_LABEL);
   assert.equal(await page.locator('#reviewList li').count(), 0);
-  const shownText = await page.evaluate(() => document.body.innerText);
-  for (const item of QUIZZES[C]) {
-    if (item.o[item.a].length >= 5) assert.equal(shownText.includes(item.o[item.a]), false, 'a correct answer is on the locked page: ' + item.o[item.a]);
-  }
+  const locked = async () => {
+    const shown = await page.evaluate(() => document.body.innerText);
+    for (const item of QUIZZES[C]) {
+      if (item.o[item.a].length >= 5) assert.equal(shown.includes(item.o[item.a]), false, 'a correct answer is on the locked page: ' + item.o[item.a]);
+    }
+  };
+  await locked();
   assert.equal(await text(page, '#scoreNum'), '0', 'the score itself is shown');
+
+  /* Saturday 8 PM used to open the answers while classmates could still play until Monday night. */
+  await s.skip(10.6 * 3600 * 1000);                      // Saturday, just after 8 PM in India
+  await page.waitForTimeout(200);
+  assert.equal(await page.locator('#reviewList li').count(), 0, 'still locked on Saturday night');
+  await s.skip(24 * 3600 * 1000);                        // Sunday night, window still open
   await page.click('#doneBtn');
   await page.click('.drow');
-  assert.equal(await visible(page, '#answersLock'), true, 'still locked when reopened from the home screen');
-  await s.skip(10.6 * 3600 * 1000);                      // to just after 8 PM in India
-  await page.waitForFunction(n => document.querySelectorAll('#reviewList li').length === n, N);
+  assert.equal(await visible(page, '#answersLock'), true, 'still locked on Sunday, reopened from the home screen');
+  await locked();
+
+  await seeAnswers(s, page, N);                          // Tuesday, just after midnight in India
   assert.equal(await visible(page, '#answersLock'), false);
   await s.context.close();
 
-  /* A student can no longer start before the quiz day (the submission
-     window), so the "Answers open on <date>" wording has no way to be
-     reached now; it is covered by the window tests instead. */
+  /* Once the window has closed, a result reopened from the home screen shows its answers at once. */
+  const s2 = await session(browser, { clock: MONDAY_NIGHT });
+  const p2 = await s2.open(site.url);
+  await start(s2, p2);
+  await playAll(p2, C, true);
+  assert.equal(await text(p2, '#lockTitle'), 'Answers open on ' + TUE_LABEL);
+  await s2.skip(24 * 3600 * 1000);
+  await p2.reload();
+  await p2.click('.drow');
+  assert.equal(await visible(p2, '#answersLock'), false);
+  assert.equal(await p2.locator('#reviewList li').count(), N);
+  await s2.context.close();
 }, usualLock);
 
-await test('after the quiz day the answers show straight away', async () => {
-  const s = await session(browser, { clock: SUNDAY });
+await test('a page opened before Saturday offers Start on Saturday without a reload', async () => {
+  const s = await session(browser, { clock: DAY_BEFORE });
   const page = await s.open(site.url);
+  assert.equal(await page.isDisabled('#startBtn'), true);
+  assert.match(await text(page, '#formMsg'), /The quiz opens on/);
+  await s.skip(20 * 3600 * 1000);                        // Saturday morning, same tab
+  await page.waitForFunction(() => !document.getElementById('startBtn').disabled);
+  assert.equal(await visible(page, '#formMsg'), false, 'the "opens on" message is gone');
   await start(s, page);
-  await playAll(page, C, true);
-  assert.equal(await visible(page, '#answersLock'), false);
-  assert.equal(await page.locator('#reviewList li').count(), N);
+  assert.equal(await qNumber(page), 1);
   await s.context.close();
+
+  /* Also when the timer was held back (a sleeping phone): coming back to the page re-checks. */
+  const s2 = await session(browser, { clock: DAY_BEFORE });
+  const p2 = await s2.open(site.url);
+  await s2.context.clock.setSystemTime(new Date(quizDay + 4 * 3600 * 1000));   // the clock jumps; no timer fires
+  await p2.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
+  await p2.waitForFunction(() => !document.getElementById('startBtn').disabled);
+  assert.equal(await visible(p2, '#formMsg'), false);
+  await s2.context.close();
 });
+
 
 console.log('\nResults page');
 
@@ -1251,6 +1295,7 @@ await test('text cards (pic), 2 to 6 options, and a plain unscrambled question b
   assert.deepEqual(counts, { 'What comes next?': 3, 'Which is biggest?': 2, 'Which is a colour?': 6 });
   await page.waitForSelector('#result:not([hidden])');
   assert.deepEqual(posts(s, 'result')[0].body, resultBody('Aanya', '3', 3, 3, 0, 0));
+  await seeAnswers(s, page, 3);
   assert.match(await text(page, '#reviewList'), /2, 4, 6, 8, ❓/);
   noErrors(s);
   await s.context.close();
