@@ -2139,10 +2139,14 @@ function arrowKeys(group, selector) {
    ============================================================ */
 
 /*
-  The requests are exactly the ones the sheet already understands:
+  The requests are the ones the sheet already understands:
 
     { action:'start',  studentName, className, total }
     { action:'result', studentName, className, score, total, tabSwitches, unattempted }
+
+  plus fields the sheet's own columns do not use: the device details
+  (see THE DEVICE) with both, and timeTaken and questionTimes with the
+  result. The script ignores them unless tools/device-log.gs is added.
 
   A request that hangs is given up after a while, so a bad connection
   never leaves a student stuck on "Checking".
@@ -2178,12 +2182,181 @@ function post(body, options) {
 const API_READY = API_URL.indexOf('PASTE_YOUR') !== 0;
 
 function startBody(name, cls) {
-  return {
+  return Object.assign({
     action: 'start',
     studentName: name,
     className: cls,
     total: (QUIZZES[cls] || []).length
+  }, deviceInfo());
+}
+
+
+/* ============================================================
+   THE DEVICE
+   ============================================================ */
+
+/*
+  What kind of phone or computer the quiz is played on, sent with every
+  start and result call so a teacher can see when two names came from
+  the same device. Nothing here asks the student for permission, and
+  nothing identifies a person: no location, no IP address, no stored ID.
+  Every value is best effort; a browser that does not tell gives "".
+
+  Chrome on Android hides the phone model and Android version in its
+  user-agent string ("Android 10; K"), so they are asked for through
+  User-Agent Client Hints, which answer a moment after the page loads.
+  iPhones never tell the model, only "iPhone" and the iOS version.
+*/
+const hints = { model: '', platformVersion: '', brands: null };
+let gpuCache = null;
+
+function readDeviceHints() {
+  try {
+    const uad = navigator.userAgentData;
+    if (uad && uad.getHighEntropyValues) {
+      uad.getHighEntropyValues(['model', 'platformVersion', 'fullVersionList'])
+        .then(function (v) {
+          hints.model = v.model || '';
+          hints.platformVersion = v.platformVersion || '';
+          hints.brands = v.fullVersionList || null;
+        })
+        .catch(function () {});
+    }
+  } catch (e) {}
+  /* The graphics chip needs a WebGL context; find it once, while the home screen is idle. */
+  setTimeout(gpuName, 1500);
+}
+
+function safely(fn) {
+  try { return fn(); } catch (e) { return ''; }
+}
+
+function deviceInfo() {
+  const ua = navigator.userAgent || '';
+  return {
+    phoneModel: safely(function () { return phoneModel(ua); }),
+    os: safely(function () { return osName(ua); }),
+    browser: safely(function () { return browserName(ua); }),
+    screen: safely(screenText),
+    memory: safely(function () { return navigator.deviceMemory ? navigator.deviceMemory + ' GB' : ''; }),
+    cpuCores: safely(function () { return navigator.hardwareConcurrency || ''; }),
+    gpu: safely(gpuName),
+    language: safely(function () { return navigator.language || ''; }),
+    timeZone: safely(function () { return Intl.DateTimeFormat().resolvedOptions().timeZone || ''; }),
+    network: safely(networkText)
   };
+}
+
+const isIPadDesktop = function (ua) {
+  return /Macintosh/.test(ua) && navigator.maxTouchPoints > 1;
+};
+
+/* "SM-A146B" (a Samsung Galaxy A14), "iPhone", or "" when the browser does not say. */
+function phoneModel(ua) {
+  if (hints.model) return hints.model;
+  if (/iPhone/.test(ua)) return 'iPhone';
+  if (/iPad/.test(ua) || isIPadDesktop(ua)) return 'iPad';
+  const m = ua.match(/Android[^;)]*;\s*([^;)]+?)(?:\s+Build\/[^;)]*)?\)/);
+  /* "K" is Chrome's stand-in for a hidden model. */
+  return m && m[1] !== 'K' ? m[1].trim() : '';
+}
+
+/* "Android 14", "iOS 17.5", "Windows 11" */
+function osName(ua) {
+  const uad = navigator.userAgentData;
+  const platform = uad && uad.platform;
+  const major = hints.platformVersion.split('.')[0];
+
+  let m = ua.match(/(?:iPhone|iPad|iPod).*? OS (\d+)[_.](\d+)/);
+  if (m) return 'iOS ' + m[1] + '.' + m[2];
+  if (isIPadDesktop(ua)) return 'iPadOS';
+
+  if (/Android/.test(ua)) {
+    if (platform === 'Android' && major) return 'Android ' + major;
+    /* "Android 10; K" is Chrome's frozen stand-in, not the real version. */
+    if (/Android 10; K\)/.test(ua)) return 'Android';
+    m = ua.match(/Android ([\d.]+)/);
+    return m ? 'Android ' + m[1] : 'Android';
+  }
+  if (/Windows/.test(ua)) {
+    if (platform === 'Windows' && major) return Number(major) >= 13 ? 'Windows 11' : 'Windows 10';
+    return 'Windows';
+  }
+  if (/CrOS/.test(ua)) return 'ChromeOS';
+  if (/Macintosh/.test(ua)) return 'macOS';
+  if (/Linux/.test(ua)) return 'Linux';
+  return '';
+}
+
+/* "Chrome 131", "Samsung Internet 27", "Safari 17", with " (in-app)" inside another app. */
+function browserName(ua) {
+  const known = [
+    ['Samsung Internet', 'Samsung Internet'], ['Microsoft Edge', 'Edge'], ['Opera', 'Opera'],
+    ['Brave', 'Brave'], ['YaBrowser', 'Yandex'], ['Google Chrome', 'Chrome'], ['Chromium', 'Chromium']
+  ];
+  const uad = navigator.userAgentData;
+  const lists = [hints.brands, uad && uad.brands];
+  let name = '';
+
+  for (let i = 0; i < lists.length && !name; i++) {
+    const list = lists[i];
+    if (!Array.isArray(list)) continue;
+    for (let k = 0; k < known.length && !name; k++) {
+      const hit = list.filter(function (b) { return b.brand === known[k][0]; })[0];
+      if (hit) name = known[k][1] + ' ' + String(hit.version).split('.')[0];
+    }
+  }
+
+  if (!name) {
+    const rules = [
+      [/SamsungBrowser\/(\d+)/, 'Samsung Internet'], [/EdgA?\/(\d+)|EdgiOS\/(\d+)/, 'Edge'],
+      [/OPR\/(\d+)|OPiOS\/(\d+)/, 'Opera'], [/FxiOS\/(\d+)|Firefox\/(\d+)/, 'Firefox'],
+      [/CriOS\/(\d+)/, 'Chrome'], [/Chrome\/(\d+)/, 'Chrome'], [/Version\/(\d+)[\d.]* (?:Mobile\/\S+ )?Safari/, 'Safari']
+    ];
+    for (let i = 0; i < rules.length && !name; i++) {
+      const m = ua.match(rules[i][0]);
+      if (m) name = rules[i][1] + ' ' + (m[1] || m[2]);
+    }
+  }
+
+  if (/FBAN|FBAV|Instagram/.test(ua)) name += ' (in Facebook/Instagram)';
+  else if (/; wv\)/.test(ua)) name += ' (in-app)';
+  return name.trim();
+}
+
+/* "412×915 @2.63x, window 412×780": the window is smaller in split screen or a pop-up view. */
+function screenText() {
+  const dpr = Math.round((window.devicePixelRatio || 1) * 100) / 100;
+  return screen.width + '×' + screen.height + ' @' + dpr + 'x, window ' +
+    window.innerWidth + '×' + window.innerHeight;
+}
+
+/* "Mali-G57 MC2", "Adreno (TM) 610", "Apple GPU" */
+function gpuName() {
+  if (gpuCache !== null) return gpuCache;
+  gpuCache = '';
+  try {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (gl) {
+      const ext = gl.getExtension('WEBGL_debug_renderer_info');
+      gpuCache = String(gl.getParameter(ext ? ext.UNMASKED_RENDERER_WEBGL : gl.RENDERER) || '').slice(0, 100);
+      const lose = gl.getExtension('WEBGL_lose_context');
+      if (lose) lose.loseContext();
+    }
+  } catch (e) {}
+  return gpuCache;
+}
+
+/* "Wi-Fi · 4G speed", "Mobile data · 3G speed". Only Chrome on Android tells Wi-Fi from mobile data;
+   the speed is how fast the connection behaves, so Wi-Fi can also say "4G speed". */
+function networkText() {
+  const c = navigator.connection;
+  if (!c) return '';
+  const kind = { wifi: 'Wi-Fi', cellular: 'Mobile data', ethernet: 'Wired', none: 'Offline' }[c.type] || '';
+  const speed = !c.effectiveType ? ''
+    : (c.effectiveType === 'slow-2g' ? 'slow 2G' : c.effectiveType.toUpperCase()) + ' speed';
+  return [kind, speed, c.saveData ? 'data saver' : ''].filter(Boolean).join(' · ');
 }
 
 
@@ -2534,18 +2707,22 @@ function startAttempt(name, cls) {
     opts: list.map(function (item) { return shuffled(item.o.length); }),
     /* answers[q] is the option chosen for question q (as numbered in the question bank), or null. */
     answers: list.map(function () { return null; }),
+    /* times[q] is the time on question q's clock when it ended, in ms, or null if not reached. */
+    times: list.map(function () { return null; }),
     qi: 0,
     deadline: null,
     left: null,
     leaves: 0,
     away: 0,
-    startedAt: Date.now()
+    startedAt: Date.now(),
+    beganAt: null
   };
 
   const first = list[fresh.order[0]];
   if (first.img && !first.pic) preloadOne(imageUrl(first.img));
 
   countdown().then(function () {
+    fresh.beganAt = Date.now();   /* the first question appears now */
     att = fresh;
     phase = 'quiz';
     save();
@@ -2803,6 +2980,7 @@ function onNext() {
 
 function advance() {
   stopClock();
+  markTime();
   att.qi++;
   att.deadline = null;
   att.left = null;
@@ -2859,6 +3037,33 @@ function timeLeft() {
     ms = att.left;
   }
   return Math.max(0, ms);
+}
+
+/*
+  How long the current question took, kept once when it ends: answered,
+  timed out, locked for leaving, or handed in. It is read from the
+  question's own clock, so it matches the timer the student saw and does
+  not count the wait for a photo. 0 means it was answered before the
+  photo arrived and the clock started.
+*/
+function markTime() {
+  if (!att || att.qi >= att.order.length) return;
+  if (!Array.isArray(att.times)) att.times = att.order.map(function () { return null; });
+  const q = currentIndex();
+  if (att.times[q] !== null && att.times[q] !== undefined) return;
+  att.times[q] = att.deadline ? Math.max(0, totalMs() - timeLeft()) : 0;
+}
+
+/* "Q4 12s · Q1 8s · Q9 40s (no answer)": in the order the student saw them, numbered as in the question bank. */
+function timesText(order, times, answers) {
+  if (!Array.isArray(times)) return '';
+  return order
+    .filter(function (q) { return times[q] !== null && times[q] !== undefined; })
+    .map(function (q) {
+      return 'Q' + (q + 1) + ' ' + Math.round(times[q] / 1000) + 's' +
+        (answers[q] === null || answers[q] === undefined ? ' (no answer)' : '');
+    })
+    .join(' · ');
 }
 
 function paintClock(ms) {
@@ -2949,6 +3154,7 @@ function registerLeave(afterReload) {
 
   if (n >= RULES.maxLeaves) {
     stopClock();
+    markTime();
     phase = 'ending';
     save();
     showNotice({
@@ -2965,6 +3171,7 @@ function registerLeave(afterReload) {
   if (n > RULES.freeLeaves) {
     const more = RULES.maxLeaves - n;
     stopClock();
+    markTime();
     pendingAdvance = true;
     save();
     showNotice({
@@ -3111,6 +3318,7 @@ function finish(how) {
 
   stopClock();
   letScreenSleep();
+  markTime();   /* the question on screen, if the quiz was ended or handed in part-way */
 
   list.forEach(function (item, q) {
     const a = att.answers[q];
@@ -3129,6 +3337,9 @@ function finish(how) {
     total: list.length,
     unattempted: blank,
     leaves: att.leaves,
+    /* Seconds from the first question appearing to the quiz ending, reloads and time away included. */
+    timeTaken: Math.max(0, Math.round((Date.now() - (att.beganAt || att.startedAt)) / 1000)),
+    questionTimes: timesText(att.order, att.times, att.answers),
     how: how || '',
     at: Date.now(),
     saved: 'no'       /* no | yes | dup */
@@ -3166,15 +3377,18 @@ function submit(rec, attempt) {
   }
   paintSave(rec);
 
-  post({
+  post(Object.assign({
     action: 'result',
     studentName: rec.name,
     className: rec.cls,
     score: rec.score,
     total: rec.total,
     tabSwitches: rec.leaves,
-    unattempted: rec.unattempted
-  })
+    unattempted: rec.unattempted,
+    /* A result saved before these were recorded sends them empty. */
+    timeTaken: typeof rec.timeTaken === 'number' ? rec.timeTaken : '',
+    questionTimes: rec.questionTimes || ''
+  }, deviceInfo()))
     .then(function (res) {
       if (res.data.error === 'closed') {
         /* The sheet says the window has shut. Trying again would not
@@ -3522,6 +3736,10 @@ function usable(saved) {
 /* The quiz carries on from the same question with the same deadline, and the reload counts as leaving. */
 function resume(saved) {
   att = saved;
+  /* An attempt saved by the page before timings were recorded. */
+  if (!Array.isArray(att.times) || att.times.length !== att.order.length) {
+    att.times = att.order.map(function () { return null; });
+  }
   att.owner = TAB_ID;
   att.away = 0;
   phase = 'quiz';
@@ -3688,6 +3906,7 @@ document.addEventListener('keydown', function (e) {
    START UP
    ============================================================ */
 
+readDeviceHints();
 tidyStorage();
 doneList = store.get(K_DONE);
 if (!Array.isArray(doneList)) doneList = [];
