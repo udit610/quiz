@@ -51,10 +51,9 @@ the submission window (see below).
 The quiz takes submissions only from Saturday 00:00 to Monday 23:59:59,
 India time, in the quiz week. The window is derived from `WEEK.date`, so
 a new week needs no new setting. Outside it, Start is disabled with a
-message, the typing-time name check does not run (it would write a
-STARTED row), and an in-progress quiz left over from after the close is
-dropped instead of resumed. An attempt that started inside the window
-may finish and be saved after it closes.
+message, no `start` call is sent, and an in-progress quiz left over from
+after the close is dropped instead of resumed. An attempt that started
+inside the window may finish and be saved after it closes.
 
 The page alone cannot truly enforce this: a device clock can be changed,
 and the Apps Script can be called directly. The Apps Script must enforce
@@ -110,6 +109,9 @@ them:
     { action: "start",  studentName, className, total }
     { action: "result", studentName, className, score, total, tabSwitches, unattempted }
 
+The Apps Script writes a STARTED row for every `start` call, so the page
+sends it only when Start is tapped, once per name and class, never while
+a name is being typed (that once filled the sheet with half-typed names).
 A reply of `{ error: "duplicate" }` means the name already has a result for
 that class. A reply of `{ error: "closed" }` means the submission window
 has shut (see above). `tabSwitches` is the number of times the student

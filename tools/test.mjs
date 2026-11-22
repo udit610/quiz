@@ -282,8 +282,7 @@ await test('start and result requests are exactly what the sheet expects', async
   const s = await session(browser);
   const page = await s.open(site.url);
   await fillForm(page, 'Aanya Sharma', C);
-  await s.skip(800);
-  await page.waitForSelector('.name-state.ok');
+  await s.skip(1500);
   await page.click('#startBtn');
   await page.waitForSelector('#beginBtn:not([disabled])');
   await page.click('#beginBtn');
@@ -291,7 +290,7 @@ await test('start and result requests are exactly what the sheet expects', async
   await playAll(page, C, true);
   await page.waitForSelector('.save.ok');
 
-  assert.deepEqual(s.calls.map(c => c.method), ['GET', 'POST', 'POST'], 'one warm-up, one name check, one result');
+  assert.deepEqual(s.calls.map(c => c.method), ['GET', 'POST', 'POST'], 'one warm-up, one start (at Start), one result');
   assert.equal(s.calls[1].contentType, 'text/plain;charset=utf-8');
   assert.equal(s.calls[2].contentType, 'text/plain;charset=utf-8');
   assert.deepEqual(Object.keys(s.calls[1].body), ['action', 'studentName', 'className', 'total']);
@@ -302,45 +301,60 @@ await test('start and result requests are exactly what the sheet expects', async
   await s.context.close();
 });
 
-await test('name check: only after typing stops, asked again when the name or class changes, reused by Start', async () => {
+/* Every start call writes a row in the sheet, so a slow typist pausing
+   between letters must not send one per half-typed name. */
+await test('typing sends nothing: one start call, at Start, with the name as finally typed', async () => {
   const other = Object.keys(QUIZZES).find(c => c !== C);
   const s = await session(browser);
   const page = await s.open(site.url);
-  await page.fill('#studentName', 'A');
   await page.click(`.cls[data-cls="${C}"]`);
-  await s.skip(1500);
-  assert.equal(posts(s, 'start').length, 0, 'a one-letter name is not checked');
-  await page.fill('#studentName', 'Aan');
-  await s.skip(300);
-  await page.fill('#studentName', '  Aanya    Sharma ');
-  await s.skip(300);
-  assert.equal(posts(s, 'start').length, 0, 'nothing is sent while still typing');
-  await s.skip(500);
-  await page.waitForSelector('.name-state.ok');
-  assert.equal(posts(s, 'start').length, 1);
-  assert.equal(posts(s, 'start')[0].body.studentName, 'Aanya Sharma', 'extra spaces are tidied');
+  await page.focus('#studentName');
+  for (const ch of '  Avneet    Kaur ') {                // a child typing slowly, pausing after every letter
+    await page.keyboard.type(ch);
+    await s.skip(2000);
+  }
   await page.click(`.cls[data-cls="${other}"]`);
-  await s.skip(800);
-  await page.waitForFunction(() => document.querySelector('.name-state.ok'));
-  assert.equal(posts(s, 'start').length, 2);
-  assert.equal(posts(s, 'start')[1].body.className, other);
+  await s.skip(2000);
+  await page.click(`.cls[data-cls="${C}"]`);
+  await page.locator('#studentName').blur();
+  await s.skip(2000);
+  assert.equal(posts(s, 'start').length, 0, 'nothing is sent while typing, pausing, changing class or leaving the box');
+
   await page.click('#startBtn');
   await page.waitForSelector('#beginBtn:not([disabled])');
-  assert.equal(posts(s, 'start').length, 2, 'Start reuses the verdict');
+  assert.equal(posts(s, 'start').length, 1);
+  assert.deepEqual(posts(s, 'start')[0].body, { action: 'start', studentName: 'Avneet Kaur', className: C, total: N }, 'extra spaces are tidied');
+
+  await page.click('#readyBack');
+  await page.click('#startBtn');
+  await page.waitForSelector('#beginBtn:not([disabled])');
+  assert.equal(posts(s, 'start').length, 1, 'going back and tapping Start again reuses the verdict');
+
+  await page.click('#readyBack');
+  await page.click(`.cls[data-cls="${other}"]`);
+  await page.click('#startBtn');
+  await page.waitForSelector('#beginBtn:not([disabled])');
+  assert.equal(posts(s, 'start').length, 2, 'a different class is asked about');
+  assert.equal(posts(s, 'start')[1].body.className, other);
   await s.context.close();
 });
 
-await test('duplicate name: the quiz never starts, whether found while typing or at Start', async () => {
+await test('duplicate name: the quiz never starts, and Start again does not ask twice', async () => {
   const s = await session(browser, { api: { start: () => ({ error: 'duplicate' }) } });
   const page = await s.open(site.url);
   await fillForm(page, 'Aanya Sharma', C);
-  await s.skip(800);
+  await s.skip(1500);
+  assert.equal(posts(s, 'start').length, 0);
+  await page.click('#startBtn');
+  await page.waitForSelector('#readyModal', { state: 'hidden' });
   await page.waitForSelector('.name-state.bad');
   assert.match(await text(page, '#formMsg'), /A submission already exists for this name & class/);
   await page.click('#startBtn');
   await s.skip(4000);
   assert.equal(await visible(page, '#readyModal'), false);
   assert.equal(await visible(page, '#quiz'), false);
+  assert.match(await text(page, '#formMsg'), /A submission already exists/);
+  assert.equal(posts(s, 'start').length, 1, 'the duplicate verdict is reused');
   await s.context.close();
 
   let release;
@@ -348,7 +362,7 @@ await test('duplicate name: the quiz never starts, whether found while typing or
   const s2 = await session(browser, { api: { start: async () => { await gate; return { error: 'duplicate' }; } } });
   const p2 = await s2.open(site.url);
   await fillForm(p2, 'Aanya Sharma', C);
-  await p2.click('#startBtn');                           // tapped before the typing-time check has run
+  await p2.click('#startBtn');
   await p2.waitForSelector('#readyModal:not([hidden])');
   assert.equal(await p2.isDisabled('#beginBtn'), true, 'Start on the rules sheet waits for the name check');
   release();
@@ -503,7 +517,7 @@ await test('the sheet saying closed is shown plainly, at Start and at save time'
   const s = await session(browser, { api: { start: async () => { await gate; return { error: 'closed' }; } } });
   const page = await s.open(site.url);
   await fillForm(page, 'Aanya Sharma', C);
-  await page.click('#startBtn');                         // before the typing-time check has run
+  await page.click('#startBtn');                         // the sheet's answer is held back until released
   await page.waitForSelector('#readyModal:not([hidden])');
   release();
   await page.waitForSelector('#readyModal', { state: 'hidden' });
