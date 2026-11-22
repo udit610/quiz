@@ -2260,95 +2260,77 @@ function pickClass(cls) {
   paintClassGrid();
   paintHints();
   preloadClass(cls);
-  scheduleCheck();
+  onFormChange();
 }
 
 /*
-  The duplicate-name check runs while the student is still typing their
-  name and picking a class, so the verdict is usually ready by the time
-  Start is tapped. The rule is unchanged: the quiz never starts on a
-  name that already has a submission for that class.
-*/
-const check = { key: '', result: null, promise: null, abort: null, timer: null };
+  The duplicate-name check is the `start` call itself, and the Apps Script
+  writes a STARTED row in the sheet for every start call it receives. So
+  it is sent only when Start is tapped, with the name as finally typed.
+  It must never be sent while the student is still typing: on a phone a
+  child pauses between letters, and each pause wrote a row for a
+  half-typed name ("Av", "Avn", "Avne", "Avneet K", ...). An aborted
+  request does not help, because the sheet has usually written it by then.
 
-function scheduleCheck() {
-  /* Outside the window the name check must not run: it writes a STARTED
-     row in the sheet, which would be a submission outside the window. */
+  The verdict is kept for that name and class, so closing the rules sheet
+  and tapping Start again does not send a second start call. A failed
+  call keeps nothing, so the next tap asks again. The rule is unchanged:
+  the quiz never starts on a name that already has a submission for that
+  class.
+*/
+const check = { key: '', result: null, promise: null };
+
+/* Typing or choosing a class sends nothing; it only clears an old message. */
+function onFormChange() {
   if (windowState() !== 'open') {
-    clearTimeout(check.timer);
-    check.timer = null;
-    check.key = '';
-    check.result = null;
-    if (check.abort) { check.abort.abort(); check.abort = null; }
-    check.promise = null;
     setNameState('');
     setFormMsg(windowMessage(), true);
     return;
   }
-
-  const name = nameValue();
-  const cls = selectedClass;
-  const key = name + '|' + cls;
-
-  /* A verdict already in hand for this exact name and class stays valid. */
-  if (check.key === key && check.result !== null) return;
-
-  clearTimeout(check.timer);
-  check.timer = null;
-  check.key = '';
-  check.result = null;
-  if (check.abort) { check.abort.abort(); check.abort = null; }
-  check.promise = null;
-
+  /* A verdict for exactly this name and class stays on screen. */
+  if (check.key === nameValue() + '|' + selectedClass && check.result !== null) return;
   setFormMsg('');
   setNameState('');
-
-  if (!nameLooksReal(name) || !cls || !API_READY) return;
-
-  check.timer = setTimeout(function () { runCheck(name, cls); }, 700);
 }
 
-function runCheck(name, cls) {
+/* One start call per name and class: true (may start), false (duplicate), 'closed', or null (no answer). */
+function askStart(name, cls) {
   const key = name + '|' + cls;
-  const ctl = new AbortController();
-  check.timer = null;
+  if (check.key === key && check.result !== null) return Promise.resolve(check.result);
+  if (check.key === key && check.promise) return check.promise;
+
   check.key = key;
-  check.abort = ctl;
+  check.result = null;
   setNameState('spin');
 
-  check.promise = post(startBody(name, cls), { signal: ctl.signal, timeout: 12000 })
+  const p = post(startBody(name, cls), { timeout: 12000 })
     .then(function (res) {
-      if (check.key !== key) return null;
-      if (res.data.error === 'closed') {
-        /* The sheet says the window is shut (its clock is the authority). */
-        check.result = 'closed';
-        setNameState('');
-        if (phase === 'home') setFormMsg(windowMessage(), true);
-        return 'closed';
-      }
-      check.result = res.data.error !== 'duplicate';
-      setNameState(check.result ? 'ok' : 'bad');
-      if (!check.result && phase === 'home') setFormMsg(DUPLICATE_MSG);
-      return check.result;
+      /* 'closed': the sheet says the window is shut (its clock is the authority). */
+      if (res.data.error === 'closed') return 'closed';
+      return res.data.error !== 'duplicate';
     })
     .catch(function () {
-      if (check.key === key) {
-        check.result = null;
-        check.promise = null;
-        setNameState('');
-      }
+      /* A temporary network problem must not stop the student. */
       return null;
+    })
+    .then(function (v) {
+      if (check.promise === p) {
+        check.promise = null;
+        check.result = v;
+        /* Only mark the name box if it still holds the name that was asked about. */
+        if (nameValue() + '|' + selectedClass === key) setNameState(v === true ? 'ok' : v === false ? 'bad' : '');
+      }
+      return v;
     });
+
+  check.promise = p;
+  return p;
 }
 
 function resetCheck() {
-  clearTimeout(check.timer);
-  if (check.abort) check.abort.abort();
   check.key = '';
   check.result = null;
   check.promise = null;
-  check.abort = null;
-  check.timer = null;
   setNameState('');
 }
 
@@ -2358,8 +2340,8 @@ function resetCheck() {
    ============================================================ */
 
 /*
-  Tapping Start opens the rules at once. The name check finishes behind
-  it (usually it already has), and only then does the Start button on
+  Tapping Start opens the rules at once. The name check runs behind
+  it (it is sent at this tap), and only then does the Start button on
   the sheet come alive. So reading the rules and waiting for the check
   happen at the same time, and the quiz still never starts on a
   duplicate name.
@@ -2474,35 +2456,10 @@ function onStart(e) {
 
   setFormMsg('');
 
-  /* Stop a check still waiting from typing, so it cannot fire a second start call later. */
-  clearTimeout(check.timer);
-  check.timer = null;
-
   openReady(name, cls);
   const mySheet = ready;
 
-  let verdict = Promise.resolve(null);
-
-  if (check.key === key) {
-    if (check.result !== null) verdict = Promise.resolve(check.result);
-    else if (check.promise) verdict = check.promise;
-  }
-
-  verdict
-    .then(function (v) {
-      if (v !== null || !API_READY) return v;
-      /* No verdict from the typing-time check: ask now, as before. */
-      return post(startBody(name, cls), { timeout: 12000 })
-        .then(function (res) {
-          if (res.data.error === 'duplicate') return false;
-          if (res.data.error === 'closed') return 'closed';
-          return null;
-        })
-        .catch(function () {
-          /* A temporary network problem must not stop the student. */
-          return null;
-        });
-    })
+  (API_READY ? askStart(name, cls) : Promise.resolve(null))
     .then(function (v) {
       if (ready !== mySheet) return;   /* the sheet was closed meanwhile */
       if (v === 'closed') {
@@ -3579,8 +3536,7 @@ function resume(saved) {
    ============================================================ */
 
 $('startForm').addEventListener('submit', onStart);
-nameInput.addEventListener('input', scheduleCheck);
-nameInput.addEventListener('blur', scheduleCheck);
+nameInput.addEventListener('input', onFormChange);
 beginBtn.addEventListener('click', onBegin);
 $('readyBack').addEventListener('click', backFromReady);
 nextBtn.addEventListener('click', onNext);
@@ -3654,8 +3610,6 @@ window.addEventListener('pageshow', refreshWindow);
 
 window.addEventListener('pagehide', function () {
   goneAway();
-  clearTimeout(check.timer);
-  if (check.abort) check.abort.abort();
 });
 
 /*
