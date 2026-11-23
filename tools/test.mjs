@@ -83,6 +83,13 @@ const N = QUIZZES[C].length;
 const CLASS_NAME = C === 'UKG' ? 'UKG' : 'Class ' + C;
 const photoClass = Object.keys(QUIZZES).find(c => QUIZZES[c].some(q => q.img && !q.pic));
 
+/* What the page sends to the Apps Script. The device details go with both calls, the timings with the result. */
+const START_KEYS = ['action', 'studentName', 'className', 'total'];
+const RESULT_KEYS = ['action', 'studentName', 'className', 'score', 'total', 'tabSwitches', 'unattempted'];
+const TIME_KEYS = ['timeTaken', 'questionTimes'];
+const DEVICE_KEYS = ['phoneModel', 'os', 'browser', 'screen', 'memory', 'cpuCores', 'gpu', 'language', 'timeZone', 'network'];
+const core = body => Object.fromEntries((body.action === 'result' ? RESULT_KEYS : START_KEYS).filter(k => k in body).map(k => [k, body[k]]));
+
 /* A tiny real PNG, served in place of every Wikimedia photo. */
 const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAYAAAD+Bd/7AAAAFUlEQVR42mP8z8Dwn4EIwDiqkL4KAV6SCfgRDXYyAAAAAElFTkSuQmCC', 'base64');
 
@@ -131,7 +138,8 @@ async function session(browser, { width = 390, height = 844, api = {}, clock = I
     if (req.method() === 'GET') { calls.push({ method: 'GET' }); return route.fulfill({ status: 200, body: '' }); }
     let body = {};
     try { body = JSON.parse(req.postData() || '{}'); } catch (e) {}
-    calls.push({ method: 'POST', contentType: req.headers()['content-type'], body });
+    /* body: the fields the sheet has always had; full: everything sent, device details and timings included. */
+    calls.push({ method: 'POST', contentType: req.headers()['content-type'], body: core(body), full: body });
     const handler = api[body.action];
     const nth = calls.filter(c => c.body && c.body.action === body.action).length;
     const reply = handler ? await handler(body, nth) : { ok: true };
@@ -293,13 +301,157 @@ await test('start and result requests are exactly what the sheet expects', async
   assert.deepEqual(s.calls.map(c => c.method), ['GET', 'POST', 'POST'], 'one warm-up, one start (at Start), one result');
   assert.equal(s.calls[1].contentType, 'text/plain;charset=utf-8');
   assert.equal(s.calls[2].contentType, 'text/plain;charset=utf-8');
-  assert.deepEqual(Object.keys(s.calls[1].body), ['action', 'studentName', 'className', 'total']);
-  assert.deepEqual(Object.keys(s.calls[2].body), ['action', 'studentName', 'className', 'score', 'total', 'tabSwitches', 'unattempted']);
+  assert.deepEqual(Object.keys(s.calls[1].full), [...START_KEYS, ...DEVICE_KEYS]);
+  assert.deepEqual(Object.keys(s.calls[2].full), [...RESULT_KEYS, ...TIME_KEYS, ...DEVICE_KEYS]);
   assert.deepEqual(s.calls[1].body, { action: 'start', studentName: 'Aanya Sharma', className: C, total: N });
   assert.deepEqual(s.calls[2].body, resultBody('Aanya Sharma', C, N, N, 0, 0));
+  for (const call of [s.calls[1], s.calls[2]]) {
+    for (const k of DEVICE_KEYS) assert.ok(['string', 'number'].includes(typeof call.full[k]), k + ' is a plain value');
+    assert.match(call.full.screen, /^\d+×\d+ @[\d.]+x, window 390×844$/);
+    assert.ok(call.full.os && call.full.browser && call.full.language && call.full.timeZone, 'the basics are known');
+    assert.ok(call.full.cpuCores > 0);
+  }
+  assert.equal(typeof s.calls[2].full.timeTaken, 'number');
+  assert.equal(s.calls[2].full.questionTimes.split(' · ').length, N, 'a time for every question');
   noErrors(s);
   await s.context.close();
 });
+
+/* Pretend to be a particular phone: its user-agent string, client hints, memory and network. */
+async function asPhone(s, phone) {
+  await s.context.addInitScript(p => {
+    const P = Navigator.prototype;
+    const def = (k, v) => Object.defineProperty(P, k, { configurable: true, get: () => v });
+    def('userAgent', p.ua);
+    def('userAgentData', p.hints ? {
+      platform: p.hints.platform, mobile: true, brands: p.hints.brands,
+      getHighEntropyValues: () => Promise.resolve({
+        platform: p.hints.platform, model: p.hints.model,
+        platformVersion: p.hints.platformVersion, fullVersionList: p.hints.brands
+      })
+    } : undefined);
+    def('deviceMemory', p.memory);
+    def('connection', p.connection);
+  }, phone);
+}
+
+async function startCall(s, phone) {
+  await asPhone(s, phone);
+  const page = await s.open(site.url);
+  await fillForm(page, 'Aanya Sharma', C);
+  await page.click('#startBtn');
+  await page.waitForSelector('#beginBtn:not([disabled])');
+  return posts(s, 'start')[0].full;
+}
+
+await test('device details: an Android phone that hides its model in the user agent, and an iPhone', async () => {
+  const s = await session(browser);
+  const android = await startCall(s, {
+    ua: 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/27.0 Chrome/125.0.0.0 Mobile Safari/537.36',
+    hints: {
+      platform: 'Android', model: 'SM-A146B', platformVersion: '14.0.0',
+      brands: [{ brand: 'Not/A)Brand', version: '8.0.0.0' }, { brand: 'Chromium', version: '125.0.6422.165' }, { brand: 'Samsung Internet', version: '27.0.1.1' }]
+    },
+    memory: 4,
+    connection: { type: 'wifi', effectiveType: '4g', saveData: false }
+  });
+  assert.equal(android.phoneModel, 'SM-A146B', 'the model comes from the client hints');
+  assert.equal(android.os, 'Android 14', 'not the frozen "Android 10" of the user agent');
+  assert.equal(android.browser, 'Samsung Internet 27');
+  assert.equal(android.memory, '4 GB');
+  assert.equal(android.network, 'Wi-Fi · 4G speed');
+  await s.context.close();
+
+  const s2 = await session(browser);
+  const iphone = await startCall(s2, {
+    ua: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1'
+  });
+  assert.equal(iphone.phoneModel, 'iPhone');
+  assert.equal(iphone.os, 'iOS 17.5');
+  assert.equal(iphone.browser, 'Safari 17');
+  assert.equal(iphone.memory, '', 'Safari does not tell the memory');
+  assert.equal(iphone.network, '', 'or the network');
+  noErrors(s2);
+  await s2.context.close();
+
+  const s3 = await session(browser);
+  const old = await startCall(s3, {
+    ua: 'Mozilla/5.0 (Linux; Android 11; RMX2185 Build/RP1A.200720.011) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.88 Mobile Safari/537.36',
+    connection: { type: 'cellular', effectiveType: '3g', saveData: true }
+  });
+  assert.equal(old.phoneModel, 'RMX2185', 'an older browser still names the model in its user agent');
+  assert.equal(old.os, 'Android 11');
+  assert.equal(old.browser, 'Chrome 99');
+  assert.equal(old.network, 'Mobile data · 3G speed · data saver');
+  await s3.context.close();
+});
+
+/* Wait until the question on screen has its clock running. */
+async function clockRunning(page) {
+  await page.waitForFunction(() => {
+    const k = Object.keys(localStorage).find(x => x.endsWith(':attempt'));
+    return k && JSON.parse(localStorage.getItem(k)).deadline;
+  });
+}
+
+const shownNumber = async page => {
+  const q = await text(page, '#qText');
+  return QUIZZES[C].findIndex(x => x.q === q) + 1;
+};
+
+await test('timings: each question\'s time in the order seen, kept across a reload, and the total', async () => {
+  const s = await session(browser);
+  const page = await s.open(site.url);
+  await start(s, page);
+  const full = await secondsLeft(page);
+  const seen = [];
+
+  seen.push(await shownNumber(page));
+  await clockRunning(page);
+  await s.skip(7000);
+  await pick(page, C, true);
+  await page.click('#nextBtn');
+
+  seen.push(await shownNumber(page));
+  await clockRunning(page);
+  await s.skip(12000);
+  await pick(page, C, false);
+  await page.click('#nextBtn');
+
+  seen.push(await shownNumber(page));
+  await clockRunning(page);
+  await page.reload();                                    // the times so far must survive this
+  await page.waitForSelector('#noticeModal:not([hidden])');
+  await page.click('#noticeOk');
+  await runOut(s, page);                                  // nothing chosen
+
+  for (let i = 3; i < N; i++) {
+    seen.push(await shownNumber(page));
+    await clockRunning(page);
+    await s.skip(1000);
+    await pick(page, C, true);
+    await page.click('#nextBtn');
+  }
+  await page.waitForSelector('#result:not([hidden])');
+
+  const sent = posts(s, 'result')[0].full;
+  /* The test's own clicks take a moment of real time on top of the skipped seconds, so allow one second over. */
+  const want = [[7, ''], [12, ''], [full, ' (no answer)']].concat(seen.slice(3).map(() => [1, '']));
+  const got = sent.questionTimes.split(' · ');
+  assert.equal(got.length, N, sent.questionTimes);
+  got.forEach((part, i) => {
+    const m = part.match(/^Q(\d+) (\d+)s( \(no answer\))?$/);
+    assert.ok(m, 'format: ' + part);
+    assert.equal(Number(m[1]), seen[i], 'in the order seen, numbered as in the question bank');
+    assert.ok(Number(m[2]) >= want[i][0] && Number(m[2]) <= want[i][0] + 1, `${part}: about ${want[i][0]}s`);
+    assert.equal(m[3] || '', want[i][1]);
+  });
+  assert.equal(Number(got[2].match(/ (\d+)s/)[1]), full, 'a question that runs out shows exactly its full time');
+  const sum = 7 + 12 + full + (N - 3);
+  assert.ok(sent.timeTaken >= sum && sent.timeTaken <= sum + 15, `total ${sent.timeTaken}s, questions alone ${sum}s`);
+  assert.deepEqual(posts(s, 'result')[0].body, resultBody('Aanya Sharma', C, N - 2, N, 1, 1));
+  await s.context.close();
+}, N >= 4);
 
 /* Every start call writes a row in the sheet, so a slow typist pausing
    between letters must not send one per half-typed name. */
@@ -685,6 +837,10 @@ await test('leaving: a warning, then the question is locked, then the quiz ends;
   await page.waitForSelector('#result:not([hidden])');
   assert.equal(await text(page, '#rMsg'), 'Quiz ended early');
   assert.deepEqual(posts(s, 'result')[0].body, resultBody('Aanya Sharma', C, 2, N, 3, N - 2));
+  const times = posts(s, 'result')[0].full.questionTimes.split(' · ');
+  assert.equal(times.length, 3, 'times for the questions reached: answered, locked, and the one it ended on');
+  assert.match(times[1], /^Q\d+ [56]s$/, 'the locked question stops at the moment of leaving: ' + times[1]);
+  assert.match(times[2], /^Q\d+ [56]s \(no answer\)$/, times[2]);
   noErrors(s);
   await s.context.close();
 }, usualRules && N >= 4);

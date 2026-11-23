@@ -14,6 +14,7 @@ checked and results saved by a Google Apps Script web app (`API_URL` in
 | `quiz-data.js` | This week's questions, readable. **The only file to edit for a new week.** |
 | `tools/build.mjs` | Checks `quiz-data.js` and writes the questions into `index.html`. |
 | `tools/test.mjs` | Browser tests of every flow, including the submission window and the results page. Needs Playwright with Chromium; uses no network. |
+| `tools/device-log.gs` | Apps Script code to paste into the quiz's script, so the device details and timings are saved (see below). |
 | `.vercelignore` | Keeps `quiz-data.js`, `tools` and `CLAUDE.md` off the public site; `index.html` and `results.html` are deployed. |
 
 ## Weekly update
@@ -108,6 +109,19 @@ them:
 
     { action: "start",  studentName, className, total }
     { action: "result", studentName, className, score, total, tabSwitches, unattempted }
+
+Both calls also carry fields the sheet's columns do not use, after the
+ones above: the device details `phoneModel, os, browser, screen, memory,
+cpuCores, gpu, language, timeZone, network` with both, and `timeTaken`
+(seconds, first question to the end) and `questionTimes` ("Q4 12s · Q1 8s
+· …", in the order seen) with the result, between `unattempted` and the
+device details. The existing script ignores them.
+`tools/device-log.gs` saves them, one row per call, in a separate
+spreadsheet. It must stay separate and unpublished: the results
+spreadsheet is published to the web as a whole, class tabs included, so
+anything added to it is public. The details are about children: collect
+nothing more identifying (no location, no IP, no fingerprint ID) without
+the school deciding so and telling parents.
 
 The Apps Script writes a STARTED row for every `start` call, so the page
 sends it only when Start is tapped, once per name and class, never while
