@@ -116,8 +116,10 @@ cpuCores, gpu, language, timeZone, network` with both, and `timeTaken`
 (seconds, first question to the end) and `questionTimes` ("Q4 12s · Q1 8s
 · …", in the order seen) with the result, between `unattempted` and the
 device details. The existing script ignores them.
-`tools/device-log.gs` saves them, one row per call, in a separate
-spreadsheet. It must stay separate and unpublished: the results
+`tools/device-log.gs` saves them in a separate spreadsheet, one row per
+attempt: Start adds a "Started" row and the result fills in the same row
+("Finished"). It must stay separate, unpublished and restricted to the
+teachers (not "anyone with the link"): the results
 spreadsheet is published to the web as a whole, class tabs included, so
 anything added to it is public. The details are about children: collect
 nothing more identifying (no location, no IP, no fingerprint ID) without

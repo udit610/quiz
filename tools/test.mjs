@@ -358,8 +358,8 @@ await test('device details: an Android phone that hides its model in the user ag
   assert.equal(android.phoneModel, 'SM-A146B', 'the model comes from the client hints');
   assert.equal(android.os, 'Android 14', 'not the frozen "Android 10" of the user agent');
   assert.equal(android.browser, 'Samsung Internet 27');
-  assert.equal(android.memory, '4 GB');
-  assert.equal(android.network, 'Wi-Fi · 4G speed');
+  assert.equal(android.memory, '4–8 GB', 'browsers round memory down, so it is a range');
+  assert.equal(android.network, 'Wi-Fi · fast', 'browsers cannot tell 4G from 5G, so the top grade is just "fast"');
   await s.context.close();
 
   const s2 = await session(browser);
@@ -382,7 +382,7 @@ await test('device details: an Android phone that hides its model in the user ag
   assert.equal(old.phoneModel, 'RMX2185', 'an older browser still names the model in its user agent');
   assert.equal(old.os, 'Android 11');
   assert.equal(old.browser, 'Chrome 99');
-  assert.equal(old.network, 'Mobile data · 3G speed · data saver');
+  assert.equal(old.network, 'Mobile data · medium (3G speed) · data saver');
   await s3.context.close();
 });
 

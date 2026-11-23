@@ -2238,7 +2238,7 @@ function deviceInfo() {
     os: safely(function () { return osName(ua); }),
     browser: safely(function () { return browserName(ua); }),
     screen: safely(screenText),
-    memory: safely(function () { return navigator.deviceMemory ? navigator.deviceMemory + ' GB' : ''; }),
+    memory: safely(memoryText),
     cpuCores: safely(function () { return navigator.hardwareConcurrency || ''; }),
     gpu: safely(gpuName),
     language: safely(function () { return navigator.language || ''; }),
@@ -2348,15 +2348,27 @@ function gpuName() {
   return gpuCache;
 }
 
-/* "Wi-Fi · 4G speed", "Mobile data · 3G speed". Only Chrome on Android tells Wi-Fi from mobile data;
-   the speed is how fast the connection behaves, so Wi-Fi can also say "4G speed". */
+/*
+  "Mobile data · fast", "Wi-Fi · medium (3G speed)". Only Chrome on Android
+  tells Wi-Fi from mobile data. Browsers do not say 4G or 5G: they report
+  how fast the connection behaves, and their top grade ("4g") covers 4G,
+  5G and good Wi-Fi alike, so it is written as "fast", not "4G".
+*/
 function networkText() {
   const c = navigator.connection;
   if (!c) return '';
   const kind = { wifi: 'Wi-Fi', cellular: 'Mobile data', ethernet: 'Wired', none: 'Offline' }[c.type] || '';
-  const speed = !c.effectiveType ? ''
-    : (c.effectiveType === 'slow-2g' ? 'slow 2G' : c.effectiveType.toUpperCase()) + ' speed';
+  const speed = {
+    '4g': 'fast', '3g': 'medium (3G speed)', '2g': 'slow (2G speed)', 'slow-2g': 'very slow'
+  }[c.effectiveType] || '';
   return [kind, speed, c.saveData ? 'data saver' : ''].filter(Boolean).join(' · ');
+}
+
+/* Browsers round the memory down to 0.25, 0.5, 1, 2, 4 or 8 GB, so a 6 GB phone says 4: "4–8 GB". */
+function memoryText() {
+  const gb = navigator.deviceMemory;
+  if (!gb) return '';
+  return gb >= 8 ? '8 GB or more' : gb + '–' + gb * 2 + ' GB';
 }
 
 
