@@ -111,6 +111,8 @@ function deviceLogSheet() {
   }
   sheet.getRange(1, 1, 1, headings.length).setValues([headings]);
   sheet.setFrozenRows(1);
+  /* Started and Finished show the date and the time (Sheets may otherwise show the date alone). */
+  sheet.getRange('A2:B').setNumberFormat('dd mmm yyyy, hh:mm:ss');
   return sheet;
 }
 
