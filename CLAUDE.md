@@ -45,7 +45,9 @@ GitHub by anyone who finds it; `.vercelignore` only keeps it off the site.)
 
 `WEEK.date` matters: it names the week on the page, resets what each device
 remembers, sets when the answers unlock (see `answersAt` below), and sets
-the submission window (see below).
+the submission window (see below). The week is identified by its date
+alone: the theme is only a label, so fixing a typo in it does not wipe
+what a device remembers.
 
 ## Submission window
 
@@ -57,7 +59,10 @@ after the close is dropped instead of resumed. An attempt that started
 inside the window may finish and be saved after it closes.
 
 The page alone cannot truly enforce this: a device clock can be changed,
-and the Apps Script can be called directly. The Apps Script must enforce
+and the Apps Script can be called directly. The page reads the server's
+clock from the Apps Script's `Date` header and gates the window and the
+answers on it when it is within six hours of the device clock, but that
+is a mitigation only, not enforcement. The Apps Script must enforce
 the same window itself, using its own clock in Asia/Kolkata: reject
 `action:'start'` and `action:'result'` outside Saturday 00:00 to Monday
 23:59:59 with `{ error: 'closed' }`, except that a `result` with a

@@ -1168,17 +1168,43 @@ const RESULTS_CSV =
   '10/31/2026 16:05:00,Arjun,1,10,10,100%,0,0,COMPLETED\n' +
   '10/31/2026 17:00:00,Started Kid,2,,,,0,,STARTED\n';
 
-/* results.html as it stood before the 14 November tab was added to its
-   SHEETS list: the latest week is 31 October. Used by the tests for the
-   gap note and for the week before the 14 November results existed. */
-const resultsWithout14Nov = () => fs.readFileSync(RESULTS_PAGE, 'utf8').replace(/.*'14 November'.*\n/, '');
+/* This week's tab name, derived from WEEK.date, so the fixtures follow
+   the quiz date instead of one particular week: '21 November'. */
+const MONTHS_FULL = ['January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'];
+const WEEK_NAME = Number(WEEK.date.slice(8, 10)) + ' ' + MONTHS_FULL[Number(WEEK.date.slice(5, 7)) - 1];
+const sheetLine = (text, name) => text.split('\n').find(l => l.includes("'" + name + "'"));
 
-/* results.html as it will stand once this week's tab is added to its
-   SHEETS list: the latest week is this week's Saturday, so there is no
-   gap note. The added entry is served the fixture CSV under a fake gid. */
-const resultsWithThisWeek = () => fs.readFileSync(RESULTS_PAGE, 'utf8').replace(
-  "  { name: '14 November',   gid: 2120496609, theme: \"Children's Day\" }",
-  "  { name: '14 November',   gid: 2120496609, theme: \"Children's Day\" },\n  { name: '21 November',   gid: 999999999, theme: 'Science All Around Us' }");
+/* results.html with this week's real entry served the fixture CSV under a
+   fake gid: the latest week is this week's Saturday, so there is no gap
+   note. The real entry's gid is swapped out, never a second entry added,
+   so the page fetches the gid the test serves. */
+const resultsWithThisWeek = () => {
+  const text = fs.readFileSync(RESULTS_PAGE, 'utf8');
+  const line = sheetLine(text, WEEK_NAME);
+  assert.ok(line, 'this week is in results.html: ' + WEEK_NAME);
+  return text.replace(line, line.replace(/gid: \d+/, 'gid: 999999999'));
+};
+
+/* results.html with this week's entry removed: the latest week is an
+   earlier one, so the gap note shows. */
+const resultsWithoutThisWeek = () => {
+  const text = fs.readFileSync(RESULTS_PAGE, 'utf8');
+  return text.split('\n').filter(l => !l.includes("'" + WEEK_NAME + "'")).join('\n');
+};
+
+/* results.html as it stood after the week of `iso`: the latest week is
+   that week. Every SHEETS entry dated after `iso` is removed. */
+const resultsWithoutAfter = (iso) => {
+  const text = fs.readFileSync(RESULTS_PAGE, 'utf8');
+  const y = Number(WEEK.date.slice(0, 4));
+  return text.split('\n').filter(l => {
+    const m = l.match(/\{ name: '(\d+) (\w+)'/);
+    if (!m) return true;
+    const d = y + '-' + ('0' + (MONTHS_FULL.indexOf(m[2]) + 1)).slice(-2) + '-' + ('0' + m[1]).slice(-2);
+    return d <= iso;
+  }).join('\n');
+};
 
 await test('results: from Tuesday the latest week shows name, class and marks, started rows left out', async () => {
   const week = await serve(undefined, resultsWithThisWeek);
@@ -1198,7 +1224,7 @@ await test('results: from Tuesday the latest week shows name, class and marks, s
 });
 
 await test('results: before the latest week\'s Tuesday, no rows are shown', async () => {
-  const old = await serve(undefined, resultsWithout14Nov);
+  const old = await serve(undefined, () => resultsWithoutAfter('2026-10-31'));
   const s = await session(browser, { clock: BEFORE_31OCT_TUESDAY, csv: { '1788775249': RESULTS_CSV } });
   const page = await s.open(old.url + 'results.html');
   await page.waitForFunction(() => document.getElementById('status').textContent.includes('Results open on'));
@@ -1208,7 +1234,7 @@ await test('results: before the latest week\'s Tuesday, no rows are shown', asyn
 });
 
 await test('results: when the latest tab is older than the last Saturday, the page says those results are not in the sheet yet', async () => {
-  const old = await serve(undefined, resultsWithout14Nov);
+  const old = await serve(undefined, () => resultsWithoutAfter('2026-10-31'));
   const s = await session(browser, { clock: TUESDAY, csv: { '1788775249': RESULTS_CSV } });
   const page = await s.open(old.url + 'results.html');
   await page.waitForSelector('#resultsTable:not([hidden])');
@@ -1222,8 +1248,9 @@ await test('results: when the latest tab is older than the last Saturday, the pa
 });
 
 await test('results: the class filter and the name search narrow the rows', async () => {
-  const s = await session(browser, { clock: TUESDAY, csv: { '2120496609': RESULTS_CSV } });
-  const page = await s.open(site.url + 'results.html');
+  const week = await serve(undefined, resultsWithThisWeek);
+  const s = await session(browser, { clock: TUESDAY, csv: { '999999999': RESULTS_CSV } });
+  const page = await s.open(week.url + 'results.html');
   await page.waitForSelector('#resultsTable:not([hidden])');
   await page.selectOption('#classFilter', '1');
   assert.equal(await page.locator('#resultsBody tr').count(), 2);
@@ -1293,7 +1320,14 @@ await test('a new week forgets last week; damaged saved work is ignored, never a
     }, [key, bad]);
     await page.reload();
     await page.waitForSelector('#home:not([hidden])');
-    assert.equal(await visible(page, '#noticeModal'), false);
+    if (bad === wrongSig || bad === pastEnd) {
+      /* A real attempt that can no longer be used is dropped with a notice, not silently. */
+      await page.waitForSelector('#noticeModal:not([hidden])');
+      assert.match(await text(page, '#noticeText'), /could not be continued/);
+      await page.click('#noticeOk');
+    } else {
+      assert.equal(await visible(page, '#noticeModal'), false);
+    }
     assert.equal(await visible(page, '#deviceBox'), false);
     const keys = await page.evaluate(() => Object.keys(localStorage));
     assert.equal(keys.includes(key), false, 'the unusable record is cleared');
@@ -1302,6 +1336,95 @@ await test('a new week forgets last week; damaged saved work is ignored, never a
     noErrors(s);
     await s.context.close();
   }
+});
+
+
+await test('a theme change does not lose this week: an old theme-hash key is migrated to the date-only key', async () => {
+  const s0 = await session(browser);
+  const p0 = await s0.open(site.url);
+  await start(s0, p0);
+  const key = await p0.evaluate(() => Object.keys(localStorage).find(k => k.endsWith(':attempt')));
+  const good = await p0.evaluate(k => localStorage.getItem(k), key);
+  await s0.context.close();
+
+  /* Pretend the page still used the old identity: date plus a hash of the theme. */
+  const oldKey = key.replace(':attempt', '.deadbeef:attempt');
+  const s = await session(browser);
+  const page = await s.open(site.url);
+  await page.evaluate(([k, v, nk]) => {
+    localStorage.removeItem(nk);
+    localStorage.setItem(k, v);
+  }, [oldKey, good, key]);
+  await page.reload();
+  await page.waitForSelector('#quiz:not([hidden]) .opt');
+  assert.equal(await qNumber(page), 1, 'the saved quiz resumes under the new key');
+  assert.equal(await page.evaluate(k => !!localStorage.getItem(k), key), true, 'the old key was migrated');
+  assert.equal(await page.evaluate(k => !!localStorage.getItem(k), oldKey), false, 'the old key is gone');
+  noErrors(s);
+  await s.context.close();
+});
+
+await test('a reload during the 3-2-1 countdown resumes the quiz instead of losing it', async () => {
+  const s = await session(browser);
+  const page = await s.open(site.url);
+  await fillForm(page, 'Aanya Sharma', C);
+  await page.click('#startBtn');
+  await page.waitForSelector('#beginBtn:not([disabled])');
+  await page.click('#beginBtn');
+  await page.reload();   /* during the countdown, before the first question */
+  await page.waitForSelector('#quiz:not([hidden]) .opt');
+  assert.equal(await qNumber(page), 1);
+  noErrors(s);
+  await s.context.close();
+});
+
+await test('an emoji on its own is not a name', async () => {
+  const s = await session(browser);
+  const page = await s.open(site.url);
+  await fillForm(page, '😀', C);
+  await page.click('#startBtn');
+  assert.match(await text(page, '#formMsg'), /Please enter your name/);
+  assert.equal(await visible(page, '#readyModal'), false);
+  noErrors(s);
+  await s.context.close();
+});
+
+await test('an unknown server error does not start the quiz; a network failure still does', async () => {
+  const s = await session(browser, { api: { start: () => ({ ok: false }) } });
+  const page = await s.open(site.url);
+  await fillForm(page, 'Aanya Sharma', C);
+  await page.click('#startBtn');
+  await page.waitForFunction(() => document.getElementById('formMsg').textContent.includes('Could not check your name'));
+  assert.equal(await visible(page, '#readyModal'), false);
+  assert.equal(await visible(page, '#quiz'), false);
+  noErrors(s);
+  await s.context.close();
+
+  const s2 = await session(browser, { api: { start: () => 'fail' } });
+  const p2 = await s2.open(site.url);
+  await start(s2, p2);
+  assert.equal(await qNumber(p2), 1, 'a network failure still lets the student through');
+  await s2.context.close();
+});
+
+await test('the home screen lists the latest ten finished results, with a button for older ones', async () => {
+  const recs = Array.from({ length: 12 }, (_, i) => ({
+    id: 'x' + i, name: 'Student ' + (i + 1), cls: '1', sig: 'x', order: [], answers: [],
+    score: 5 + (i % 5), total: 10, unattempted: 0, leaves: 0,
+    timeTaken: 60, questionTimes: '', how: '', at: Date.now(), saved: 'yes'
+  }));
+  const s = await session(browser);
+  const page = await s.open(site.url);
+  await page.evaluate(([k, v]) => localStorage.setItem(k, v), ['gsq:' + WEEK.date + ':done', JSON.stringify(recs)]);
+  await page.reload();
+  await page.waitForSelector('#deviceBox:not([hidden])');
+  assert.equal(await page.locator('#deviceList .drow').count(), 10, 'only the latest ten at first');
+  assert.equal(await visible(page, '#olderBtn'), true);
+  await page.click('#olderBtn');
+  assert.equal(await page.locator('#deviceList .drow').count(), 12, 'ten more after one tap');
+  assert.equal(await visible(page, '#olderBtn'), false, 'no button when nothing is left');
+  noErrors(s);
+  await s.context.close();
 });
 
 await test('with browser storage switched off the quiz still runs from start to finish', async () => {

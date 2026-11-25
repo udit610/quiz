@@ -42,6 +42,13 @@ if (
 ) {
   errors.push('WEEK.date must be a real date written YYYY-MM-DD');
 }
+if (
+  WEEK &&
+  /^\d{4}-\d{2}-\d{2}$/.test(WEEK.date || '') &&
+  new Date(WEEK.date + 'T00:00:00Z').getUTCDay() !== 6
+) {
+  errors.push('WEEK.date must be a Saturday (the quiz is the Great Saturday Quiz)');
+}
 
 for (const [key, url] of Object.entries(QUESTION_IMAGES || {})) {
   if (!/^https:\/\/\S+$/.test(url) && !/^data:image\//.test(url)) {
