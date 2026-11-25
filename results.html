@@ -212,7 +212,11 @@ var DAY = 24 * 3600 * 1000;
 var $ = function (id) { return document.getElementById(id); };
 
 /* "31 October" -> "2026-10-31". The tab names carry no year, so the year
-   is the one in which that date most recently fell on or before today. */
+   is the one in which that date most recently fell on or before today,
+   unless the date is more than a month in the future, which means it
+   belongs to last year: a tab added before its Saturday must not be
+   treated as this year's, or the page would show a future, empty tab
+   as the latest results. */
 function tabISO(name) {
   var p = name.split(' ');
   var day = parseInt(p[0], 10);
@@ -221,7 +225,7 @@ function tabISO(name) {
   var today = new Date(Date.now() + 5.5 * 3600 * 1000).toISOString().slice(0, 10);
   var y = parseInt(today.slice(0, 4), 10);
   var iso = y + '-' + ('0' + (month + 1)).slice(-2) + '-' + ('0' + day).slice(-2);
-  if (iso > today) {
+  if (iso > today && (Date.parse(iso) - Date.parse(today)) / DAY > 31) {
     iso = (y - 1) + '-' + ('0' + (month + 1)).slice(-2) + '-' + ('0' + day).slice(-2);
   }
   return iso;
@@ -397,14 +401,17 @@ function loadWeek(sheet) {
       });
 
       var filter = $('classFilter');
+      /* Rebuilt on every load, and the listeners are set, not added, so a
+         retry does not stack another copy of each one. */
+      filter.options.length = 1;
       CLASS_ORDER.forEach(function (c) {
         var opt = document.createElement('option');
         opt.value = c;
         opt.textContent = classLabel(c);
         filter.appendChild(opt);
       });
-      filter.addEventListener('change', render);
-      $('nameSearch').addEventListener('input', render);
+      filter.onchange = render;
+      $('nameSearch').oninput = render;
       render();
     })
     .catch(function () {
@@ -418,15 +425,22 @@ function loadWeek(sheet) {
     });
 }
 
-/* The week shown is the latest tab. Its results open on its Tuesday
-   (quiz Saturday + 3 days, 00:00 India time). Before that Tuesday the
-   page says when the results open, and shows no rows, so nobody mistakes
-   last week's results for this week's. */
+/* The week shown is the latest tab, by date, not by its place in the
+   list: the list is written oldest first, but an entry added out of
+   order, or twice, must not make the page fetch the wrong tab. */
 (function () {
   var now = Date.now();
   var latest = null;
+  var latestISO = '';
+  var seen = {};
   SHEETS.forEach(function (sheet) {
-    if (tabISO(sheet.name)) latest = sheet;
+    var iso = tabISO(sheet.name);
+    if (!iso || seen[iso]) return;
+    seen[iso] = true;
+    if (!latest || iso > latestISO) {
+      latest = sheet;
+      latestISO = iso;
+    }
   });
 
   if (!latest) {

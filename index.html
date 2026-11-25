@@ -1196,6 +1196,7 @@
       <section class="device" id="deviceBox" hidden aria-labelledby="deviceTitle">
         <h2 id="deviceTitle">Finished on this device</h2>
         <ul id="deviceList"></ul>
+        <button class="btn" id="olderBtn" type="button" hidden>Show older results</button>
       </section>
 
       <div class="how" aria-label="How the quiz works">
@@ -1925,10 +1926,36 @@ const store = {
   }
 };
 
-const QUIZ_ID = WEEK.date + '.' + hash(WEEK.theme);
+/* The week is identified by its Saturday alone. The theme is a label, not
+   part of the identity: fixing a typo in it must not wipe what a device
+   remembers for the week. */
+const QUIZ_ID = WEEK.date;
 const K_ATT = 'gsq:' + QUIZ_ID + ':attempt';
 const K_DONE = 'gsq:' + QUIZ_ID + ':done';
 const TAB_ID = Math.random().toString(36).slice(2, 10);
+
+/*
+  One-time migration from the old identity, which was the date plus a hash
+  of the theme (gsq:2026-11-21.<hash>:attempt). Copy this week's old keys
+  to the date-only keys before tidyStorage() runs, so a theme fix does not
+  lose an in-progress quiz or a finished result.
+*/
+function migrateQuizId() {
+  try {
+    const old = /^gsq:(\d{4}-\d{2}-\d{2})\.[^:]+:(attempt|done)$/;
+    const keys = [];
+    for (let i = 0; i < localStorage.length; i++) keys.push(localStorage.key(i));
+    keys.forEach(function (k) {
+      const m = k && old.exec(k);
+      if (!m || m[1] !== WEEK.date) return;
+      const fresh = 'gsq:' + WEEK.date + ':' + m[2];
+      if (localStorage.getItem(fresh) === null) {
+        localStorage.setItem(fresh, localStorage.getItem(k));
+      }
+      localStorage.removeItem(k);
+    });
+  } catch (e) {}
+}
 
 /* Forget anything kept for earlier weeks. */
 function tidyStorage() {
@@ -1947,6 +1974,22 @@ function sigOf(cls) {
   return hash(JSON.stringify(QUIZZES[cls] || []));
 }
 
+/*
+  What an attempt is matched against: the options and the correct answers
+  only. A wording fix to a question must not strand an in-progress attempt
+  or lock a finished result out of its answer review, so the question text
+  is deliberately not part of this.
+*/
+function ansSigOf(cls) {
+  return hash(JSON.stringify((QUIZZES[cls] || []).map(function (item) {
+    return { o: item.o, a: item.a };
+  })));
+}
+
+function sigMatches(sig, cls) {
+  return sig === sigOf(cls) || sig === ansSigOf(cls);
+}
+
 
 /* ============================================================
    WHEN THE ANSWERS OPEN
@@ -1955,14 +1998,14 @@ function sigOf(cls) {
 /* UNLOCK_AT, the moment the answers open, is set below with the submission window. */
 
 function answersOpen() {
-  return Date.now() >= UNLOCK_AT;
+  return nowMs() >= UNLOCK_AT;
 }
 
 /* "today at 8:00 PM", "on Tue 24 Nov" (midnight needs no time). */
 function unlockLabel() {
   const day = isoOf(UNLOCK_AT);
   const hhmm = new Date(UNLOCK_AT + 5.5 * 3600 * 1000).toISOString().slice(11, 16);
-  const when = day === isoOf(Date.now()) ? 'today' : 'on ' + niceDate(day);
+  const when = day === isoOf(nowMs()) ? 'today' : 'on ' + niceDate(day);
   return hhmm === '00:00' ? when : when + ' at ' + niceTime(hhmm);
 }
 
@@ -1982,6 +2025,40 @@ function unlockLabel() {
   window itself (see CLAUDE.md). An attempt that started inside the
   window may finish and be saved after it closes.
 */
+/*
+  The device clock can be changed, so the window and the answers are gated
+  on the server's clock when it can be read: the Date header of the Apps
+  Script's reply. The offset is trusted only when it is small (at most
+  six hours): a large gap means the device clock and the server disagree
+  by days, and the page cannot tell which one is wrong, so it falls back
+  to the device clock. This is a mitigation only, not enforcement: the
+  Apps Script itself must enforce the window (see CLAUDE.md), because a
+  student can still call it directly.
+*/
+let serverOffsetMs = 0;
+
+function nowMs() {
+  return Date.now() + serverOffsetMs;
+}
+
+function fetchServerTime() {
+  if (!API_READY) return;
+  fetch(API_URL, { method: 'GET', cache: 'no-store' })
+    .then(function (res) {
+      const d = res.headers.get('Date');
+      if (!d) return;
+      const t = Date.parse(d);
+      if (isNaN(t)) return;
+      const off = t - Date.now();
+      if (Math.abs(off) <= 6 * 3600 * 1000) {
+        serverOffsetMs = off;
+        /* The window may have opened or closed on the server's clock. */
+        paintWindow();
+      }
+    })
+    .catch(function () {});
+}
+
 const OPEN_AT = Date.parse(WEEK.date + 'T00:00:00+05:30');
 const CLOSE_AT = OPEN_AT + RULES.windowDays * 86400000 + (24 * 3600 - 1) * 1000;
 const RESULTS_AT = CLOSE_AT + 1000;   /* Tuesday 00:00, when results open */
@@ -1999,7 +2076,7 @@ const UNLOCK_AT = (function () {
 })();
 
 function windowState() {
-  const now = Date.now();
+  const now = nowMs();
   if (now < OPEN_AT) return 'before';
   if (now <= CLOSE_AT) return 'open';
   return 'closed';
@@ -2030,7 +2107,7 @@ function paintWindow() {
     week in the sheet, which is the previous week until this week's
     results are merged into a date tab.
   */
-  resultsBtn.hidden = !(state === 'closed' && Date.now() >= RESULTS_AT);
+  resultsBtn.hidden = !(state === 'closed' && nowMs() >= RESULTS_AT);
 }
 
 
@@ -2210,6 +2287,18 @@ function startBody(name, cls) {
 const hints = { model: '', platformVersion: '', brands: null };
 let gpuCache = null;
 
+/*
+  Resolves when the client hints have answered, or after 1.5 seconds,
+  whichever comes first. askStart() waits for it, so the start call does
+  not go out with the frozen user-agent values while the real model is
+  still on its way.
+*/
+let hintsResolve = null;
+const hintsReady = new Promise(function (resolve) { hintsResolve = resolve; });
+setTimeout(function () {
+  if (hintsResolve) { hintsResolve(); hintsResolve = null; }
+}, 1500);
+
 function readDeviceHints() {
   try {
     const uad = navigator.userAgentData;
@@ -2219,10 +2308,19 @@ function readDeviceHints() {
           hints.model = v.model || '';
           hints.platformVersion = v.platformVersion || '';
           hints.brands = v.fullVersionList || null;
+          if (hintsResolve) { hintsResolve(); hintsResolve = null; }
         })
-        .catch(function () {});
+        .catch(function () {
+          if (hintsResolve) { hintsResolve(); hintsResolve = null; }
+        });
+    } else if (hintsResolve) {
+      /* No client hints on this browser: nothing to wait for. */
+      hintsResolve();
+      hintsResolve = null;
     }
-  } catch (e) {}
+  } catch (e) {
+    if (hintsResolve) { hintsResolve(); hintsResolve = null; }
+  }
   /* The graphics chip needs a WebGL context; find it once, while the home screen is idle. */
   setTimeout(gpuName, 1500);
 }
@@ -2380,9 +2478,10 @@ function nameValue() {
   return nameInput.value.replace(/\s+/g, ' ').trim();
 }
 
-/* A real name has at least two letters. */
+/* A real name has at least two letters. An emoji on its own is not a name. */
 function nameLooksReal(name) {
-  return name.replace(/[\s\d!-\/:-@\[-`{-~]/g, '').length >= 2;
+  const letters = name.match(/\p{L}/gu);
+  return !!letters && letters.length >= 2;
 }
 
 /* isWindow marks the "opens on" / "closed on" message, so it can be cleared when the window opens. */
@@ -2478,7 +2577,7 @@ function onFormChange() {
   setNameState('');
 }
 
-/* One start call per name and class: true (may start), false (duplicate), 'closed', or null (no answer). */
+/* One start call per name and class: true (may start), false (duplicate), 'closed', 'error' (the sheet's answer could not be understood), or null (no answer). */
 function askStart(name, cls) {
   const key = name + '|' + cls;
   if (check.key === key && check.result !== null) return Promise.resolve(check.result);
@@ -2488,11 +2587,24 @@ function askStart(name, cls) {
   check.result = null;
   setNameState('spin');
 
-  const p = post(startBody(name, cls), { timeout: 12000 })
+  /* Wait for the client hints first, so the start call does not go out
+     with the frozen user-agent values while the real model is on its way.
+     The wait is capped at 1.5 seconds. */
+  const p = Promise.race([hintsReady, new Promise(function (r) { setTimeout(r, 1500); })])
+    .then(function () { return post(startBody(name, cls), { timeout: 12000 }); })
     .then(function (res) {
       /* 'closed': the sheet says the window is shut (its clock is the authority). */
       if (res.data.error === 'closed') return 'closed';
-      return res.data.error !== 'duplicate';
+      if (res.data.error === 'duplicate') return false;
+      if (res.ok && res.data.ok) return true;
+      /*
+        Anything else is an answer that cannot be understood ({ok:false},
+        {error:'rate_limited'}, a page that is not JSON at all). Treat it
+        as a failure to check, not as a pass: the quiz must not start on
+        a reply nobody has verified. Only a genuine network failure
+        (below) still lets the student through.
+      */
+      return 'error';
     })
     .catch(function () {
       /* A temporary network problem must not stop the student. */
@@ -2660,6 +2772,12 @@ function onStart(e) {
         setFormMsg(DUPLICATE_MSG);
         return;
       }
+      if (v === 'error') {
+        closeReady();
+        phase = 'home';
+        setFormMsg('Could not check your name. Please check your connection and tap Start again.');
+        return;
+      }
       paintBegin('go');
       beginBtn.focus();
     });
@@ -2675,6 +2793,40 @@ function onBegin() {
     return;
   }
   const who = ready;
+  /*
+    If the first check never answered (a network failure let the sheet
+    open), ask again before starting: a duplicate found now still stops
+    the quiz. A second network failure still lets the student through,
+    as it did the first time.
+  */
+  if (API_READY && check.result === null) {
+    paintBegin('checking');
+    askStart(who.name, who.cls).then(function (v) {
+      if (!ready || ready !== who) return;
+      if (v === 'closed') {
+        closeReady();
+        phase = 'home';
+        setFormMsg(windowMessage(), true);
+        return;
+      }
+      if (v === false) {
+        closeReady();
+        phase = 'home';
+        setNameState('bad');
+        setFormMsg(DUPLICATE_MSG);
+        return;
+      }
+      if (v === 'error') {
+        closeReady();
+        phase = 'home';
+        setFormMsg('Could not check your name. Please check your connection and tap Start again.');
+        return;
+      }
+      closeReady();
+      startAttempt(who.name, who.cls);
+    });
+    return;
+  }
   closeReady();
   startAttempt(who.name, who.cls);
 }
@@ -2713,7 +2865,7 @@ function startAttempt(name, cls) {
     owner: TAB_ID,
     name: name,
     cls: cls,
-    sig: sigOf(cls),
+    sig: ansSigOf(cls),
     /* order[k] is the question shown k-th; opts[q] is the order of question q's options. */
     order: RULES.shuffleQuestions ? shuffled(n) : inOrder(n),
     opts: list.map(function (item) { return shuffled(item.o.length); }),
@@ -2732,6 +2884,14 @@ function startAttempt(name, cls) {
 
   const first = list[fresh.order[0]];
   if (first.img && !first.pic) preloadOne(imageUrl(first.img));
+
+  /*
+    Save the attempt before the countdown runs, so a reload in those few
+    seconds resumes the quiz (and counts as leaving) instead of losing
+    it and writing a second STARTED row.
+  */
+  att = fresh;
+  save();
 
   countdown().then(function () {
     fresh.beganAt = Date.now();   /* the first question appears now */
@@ -2760,13 +2920,28 @@ function emojiFor(item) {
 
 const preloaded = {};
 
+/*
+  A photo counts as preloaded only once it has actually loaded (or
+  failed). Marking it before the load meant a photo that hung never got
+  retried, and a hanging photo stalled the whole class's preload chain.
+  A photo that still has not answered after 8 seconds is given up on, so
+  the chain moves on.
+*/
 function preloadOne(url, then) {
   if (!url || preloaded[url]) { if (then) then(); return; }
-  preloaded[url] = true;
   const im = new Image();
   im.referrerPolicy = 'no-referrer';
   im.decoding = 'async';
-  im.onload = im.onerror = function () { if (then) then(); };
+  let done = false;
+  const finish = function () {
+    if (done) return;
+    done = true;
+    preloaded[url] = true;
+    if (then) then();
+  };
+  im.onload = finish;
+  im.onerror = finish;
+  setTimeout(finish, 8000);
   im.src = url;
 }
 
@@ -2838,6 +3013,10 @@ function buildMedia(item) {
       clearTimeout(tooLong);
       box.classList.remove('loading');
       box.classList.add('ready');
+      /* The blurred background is the same photo: take it from the
+         browser's cache now that the main image has loaded, instead of
+         asking for it a second time. */
+      bg.src = url;
       resolve();
     });
 
@@ -2854,7 +3033,6 @@ function buildMedia(item) {
       resolve();
     });
 
-    bg.src = url;
     main.src = url;
   });
 
@@ -2885,6 +3063,7 @@ function fitPic(box) {
 let drawId = 0;            /* which drawing of a question is current */
 let mediaReady = false;
 let pendingAdvance = false;   /* move on as soon as the notice on screen is closed */
+let tickSeenAt = 0;           /* when tick() last ran, for the clock-jump guard */
 
 function save() {
   if (att) store.set(K_ATT, att);
@@ -3088,7 +3267,26 @@ function paintClock(ms) {
 
 function tick() {
   if (!att || !att.deadline || (phase !== 'quiz' && phase !== 'ending')) return;
-  const ms = timeLeft();
+  let ms = timeLeft();
+  const now = Date.now();
+  /*
+    The device clock jumping forward (an automatic correction, a time-zone
+    change, a manual change) must not steal the question's time. While the
+    page is live and ticking, at most a fraction of a second passes between
+    ticks, so a sudden drop of more than two seconds is a jump, not real
+    time: put the deadline back so the time left is what it was. A tab
+    that was closed for an hour is different: the first tick after it
+    comes back has no recent tick to compare with, so it is left alone
+    and the question expires as it should.
+  */
+  if (tickSeenAt && now - tickSeenAt < 5000 && typeof att.left === 'number') {
+    const expectedLeft = att.left - (now - tickSeenAt);
+    if (ms < expectedLeft - 2000) {
+      att.deadline = now + att.left;
+      ms = att.left;
+    }
+  }
+  tickSeenAt = now;
   const seconds = Math.ceil(ms / 1000);
 
   if (seconds !== lastSecond) {
@@ -3559,7 +3757,7 @@ function paintAnswers(rec) {
   clearTimeout(unlockTimer);
   list.textContent = '';
 
-  if (!quiz || rec.sig !== sigOf(rec.cls)) {
+  if (!quiz || !sigMatches(rec.sig, rec.cls)) {
     lock.hidden = false;
     $('lockTitle').textContent = 'Answers are not available';
     $('lockText').textContent = 'The questions for this class have changed since this quiz was taken.';
@@ -3623,14 +3821,19 @@ function paintAnswers(rec) {
   });
 }
 
-/* The latest results finished on this device, listed on the home screen. */
+/* The latest results finished on this device, listed on the home screen.
+   Only the latest ten are shown at first, so a shared device stays
+   readable; "Show older results" reveals ten more at a time. */
+let deviceShown = 10;
+
 function paintDevice() {
   const box = $('deviceBox');
   const list = $('deviceList');
+  const older = $('olderBtn');
   list.textContent = '';
   box.hidden = doneList.length === 0;
 
-  doneList.slice(-6).reverse().forEach(function (rec) {
+  doneList.slice(-deviceShown).reverse().forEach(function (rec) {
     const li = el('li');
     const row = el('button', 'drow');
     const who = el('span', 'dname');
@@ -3653,12 +3856,21 @@ function paintDevice() {
     li.appendChild(row);
     list.appendChild(li);
   });
+
+  older.hidden = doneList.length <= deviceShown;
+  older.textContent = 'Show older results (' + (doneList.length - deviceShown) + ' more)';
 }
+
+$('olderBtn').addEventListener('click', function () {
+  deviceShown += 10;
+  paintDevice();
+});
 
 function goHome() {
   shown = null;
   clearTimeout(unlockTimer);
   phase = 'home';
+  deviceShown = 10;
   nameInput.value = '';
   selectedClass = '';
   resetCheck();
@@ -3728,12 +3940,19 @@ function confetti() {
    COMING BACK AFTER A RELOAD OR A CLOSED TAB
    ============================================================ */
 
-function usable(saved) {
+/* A record shaped like a real attempt: version 1, a name, and a class
+   this week has. Damaged records (bad JSON, wrong shape, unknown class)
+   are not real attempts and are dropped silently. */
+function looksLikeAttempt(saved) {
   return !!saved &&
     saved.v === 1 &&
     typeof saved.name === 'string' &&
-    !!QUIZZES[saved.cls] &&
-    saved.sig === sigOf(saved.cls) &&
+    !!QUIZZES[saved.cls];
+}
+
+function usable(saved) {
+  return looksLikeAttempt(saved) &&
+    sigMatches(saved.sig, saved.cls) &&
     Array.isArray(saved.order) &&
     saved.order.length === QUIZZES[saved.cls].length &&
     Array.isArray(saved.opts) &&
@@ -3822,7 +4041,7 @@ let windowTimer = null;
 
 function watchWindow() {
   clearTimeout(windowTimer);
-  const now = Date.now();
+  const now = nowMs();
   const next = [OPEN_AT, CLOSE_AT + 1, RESULTS_AT].filter(function (t) { return t > now; })[0];
   if (next && next - now < 0x7fffffff) {
     windowTimer = setTimeout(function () {
@@ -3919,6 +4138,7 @@ document.addEventListener('keydown', function (e) {
    ============================================================ */
 
 readDeviceHints();
+migrateQuizId();
 tidyStorage();
 doneList = store.get(K_DONE);
 if (!Array.isArray(doneList)) doneList = [];
@@ -3935,9 +4155,22 @@ paintDevice();
     resume(saved);
   } else {
     /* A quiz left over from after the window closed is dropped, not
-       resumed; the home screen shows the closed message instead. */
+       resumed; the home screen shows the closed message instead. A real
+       saved quiz that can no longer be used is dropped too, but the
+       student is told why instead of finding it silently gone. Damaged
+       records are dropped silently. */
+    const dropped = looksLikeAttempt(saved);
     store.del(K_ATT);
     show('home');
+    if (dropped && windowState() !== 'closed') {
+      showNotice({
+        icon: '⚠️',
+        title: 'Your last quiz could not be continued',
+        text: 'Your last quiz could not be continued. The questions for that class have changed since you started it, so the saved quiz was dropped. Please start again.',
+        ok: 'OK',
+        then: function () {}
+      });
+    }
   }
 })();
 
@@ -3947,11 +4180,11 @@ sendUnsaved();
 /*
   Apps Script web apps are slow on their first call after being idle.
   This silent request wakes the script while the student is still typing,
-  so the name check answers faster. The reply is ignored and it writes nothing.
+  so the name check answers faster. It also reads the server's clock for
+  the window and answers gating (see fetchServerTime). The reply is
+  ignored and it writes nothing.
 */
-if (API_READY) {
-  fetch(API_URL, { method: 'GET', mode: 'no-cors', cache: 'no-store' }).catch(function () {});
-}
+fetchServerTime();
 
 })();
 </script>
