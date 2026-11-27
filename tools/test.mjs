@@ -1168,17 +1168,28 @@ const RESULTS_CSV =
   '10/31/2026 16:05:00,Arjun,1,10,10,100%,0,0,COMPLETED\n' +
   '10/31/2026 17:00:00,Started Kid,2,,,,0,,STARTED\n';
 
-/* results.html as it stood before the 14 November tab was added to its
-   SHEETS list: the latest week is 31 October. Used by the tests for the
-   gap note and for the week before the 14 November results existed. */
-const resultsWithout14Nov = () => fs.readFileSync(RESULTS_PAGE, 'utf8').replace(/.*'14 November'.*\n/, '');
+/* results.html with its SHEETS list replaced by the given tabs, so these
+   tests do not depend on which weeks have been added to the real list. */
+const withSheets = tabs => () => {
+  const page = fs.readFileSync(RESULTS_PAGE, 'utf8');
+  const block = /var SHEETS = \[[\s\S]*?\n\];/;
+  assert.ok(block.test(page), 'results.html still has its SHEETS list');
+  return page.replace(block, 'var SHEETS = [\n' + tabs.map(t => '  ' + JSON.stringify(t)).join(',\n') + '\n];');
+};
+const FULL_MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const THIS_WEEK_TAB = String(new Date(quizDay).getUTCDate()).padStart(2, '0') + ' ' + FULL_MONTHS[new Date(quizDay).getUTCMonth()];
 
-/* results.html as it will stand once this week's tab is added to its
-   SHEETS list: the latest week is this week's Saturday, so there is no
-   gap note. The added entry is served the fixture CSV under a fake gid. */
-const resultsWithThisWeek = () => fs.readFileSync(RESULTS_PAGE, 'utf8').replace(
-  "  { name: '14 November',   gid: 2120496609, theme: \"Children's Day\" }",
-  "  { name: '14 November',   gid: 2120496609, theme: \"Children's Day\" },\n  { name: '21 November',   gid: 999999999, theme: 'Science All Around Us' }");
+/* The latest week is 31 October: the gap note, and the week before the 31 October results opened. */
+const resultsUpTo31Oct = withSheets([
+  { name: '24 October', gid: 597796612, theme: 'The Amazing Human Body' },
+  { name: '31 October', gid: 1788775249, theme: 'Festivals & Diwali Celebrations' }
+]);
+
+/* The latest week is this week's Saturday, so there is no gap note. It is served the fixture CSV under a fake gid. */
+const resultsWithThisWeek = withSheets([
+  { name: '31 October', gid: 1788775249, theme: 'Festivals & Diwali Celebrations' },
+  { name: THIS_WEEK_TAB, gid: 999999999, theme: WEEK.theme }
+]);
 
 await test('results: from Tuesday the latest week shows name, class and marks, started rows left out', async () => {
   const week = await serve(undefined, resultsWithThisWeek);
@@ -1198,7 +1209,7 @@ await test('results: from Tuesday the latest week shows name, class and marks, s
 });
 
 await test('results: before the latest week\'s Tuesday, no rows are shown', async () => {
-  const old = await serve(undefined, resultsWithout14Nov);
+  const old = await serve(undefined, resultsUpTo31Oct);
   const s = await session(browser, { clock: BEFORE_31OCT_TUESDAY, csv: { '1788775249': RESULTS_CSV } });
   const page = await s.open(old.url + 'results.html');
   await page.waitForFunction(() => document.getElementById('status').textContent.includes('Results open on'));
@@ -1208,7 +1219,7 @@ await test('results: before the latest week\'s Tuesday, no rows are shown', asyn
 });
 
 await test('results: when the latest tab is older than the last Saturday, the page says those results are not in the sheet yet', async () => {
-  const old = await serve(undefined, resultsWithout14Nov);
+  const old = await serve(undefined, resultsUpTo31Oct);
   const s = await session(browser, { clock: TUESDAY, csv: { '1788775249': RESULTS_CSV } });
   const page = await s.open(old.url + 'results.html');
   await page.waitForSelector('#resultsTable:not([hidden])');
@@ -1222,8 +1233,9 @@ await test('results: when the latest tab is older than the last Saturday, the pa
 });
 
 await test('results: the class filter and the name search narrow the rows', async () => {
-  const s = await session(browser, { clock: TUESDAY, csv: { '2120496609': RESULTS_CSV } });
-  const page = await s.open(site.url + 'results.html');
+  const week = await serve(undefined, resultsWithThisWeek);
+  const s = await session(browser, { clock: TUESDAY, csv: { '999999999': RESULTS_CSV } });
+  const page = await s.open(week.url + 'results.html');
   await page.waitForSelector('#resultsTable:not([hidden])');
   await page.selectOption('#classFilter', '1');
   assert.equal(await page.locator('#resultsBody tr').count(), 2);
